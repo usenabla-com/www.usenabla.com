@@ -1,0 +1,128 @@
+:root {
+  /* Shadcn color palette */
+  --sl-shadcn-primary: #753dfe;
+  --sl-shadcn-primary-light: #9370fe;
+  --sl-shadcn-primary-dark: #5d32cc;
+  --sl-shadcn-background: #fafafa;
+  --sl-shadcn-foreground: #111827;
+  --sl-shadcn-muted: #f3f4f6;
+  --sl-shadcn-muted-foreground: #6b7280;
+  --sl-shadcn-card: #ffffff;
+  --sl-shadcn-card-foreground: #111827;
+  --sl-shadcn-accent: #f3f4f6;
+  --sl-shadcn-accent-foreground: #111827;
+  --sl-shadcn-border: #e5e7eb;
+  --sl-shadcn-input: #e5e7eb;
+  --sl-shadcn-ring: #753dfe;
+
+  /* Dark mode Shadcn color palette */
+  --sl-shadcn-primary-dark-mode: #753dfe;
+  --sl-shadcn-primary-light-dark-mode: #9370fe;
+  --sl-shadcn-primary-dark-dark-mode: #5d32cc;
+  --sl-shadcn-background-dark-mode: #0f0f0f;
+  --sl-shadcn-foreground-dark-mode: #f9fafb;
+  --sl-shadcn-muted-dark-mode: #1a1a1a;
+  --sl-shadcn-muted-foreground-dark-mode: #a1a1aa;
+  --sl-shadcn-card-dark-mode: #1a1a1a;
+  --sl-shadcn-card-foreground-dark-mode: #f9fafb;
+  --sl-shadcn-accent-dark-mode: #2a2a2a;
+  --sl-shadcn-accent-foreground-dark-mode: #f9fafb;
+  --sl-shadcn-border-dark-mode: #2a2a2a;
+  --sl-shadcn-input-dark-mode: #2a2a2a;
+  --sl-shadcn-ring-dark-mode: #753dfe;
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  
+  /* Light mode colors */
+  --sl-color-accent: var(--sl-shadcn-primary);
+  --sl-color-accent-high: var(--sl-shadcn-primary-light);
+  --sl-color-accent-low: var(--sl-shadcn-primary-dark);
+  
+  --sl-color-text: var(--sl-shadcn-foreground);
+  --sl-color-text-accent: var(--sl-shadcn-primary);
+  
+  --sl-color-hairline: var(--sl-shadcn-border);
+  --sl-color-hairline-light: var(--sl-shadcn-input);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  
+  /* Dark mode colors */
+  --sl-color-accent: var(--sl-shadcn-primary-dark-mode);
+  --sl-color-accent-high: var(--sl-shadcn-primary-light-dark-mode);
+  --sl-color-accent-low: var(--sl-shadcn-primary-dark-dark-mode);
+  
+  --sl-color-text: var(--sl-shadcn-foreground-dark-mode);
+  --sl-color-text-accent: var(--sl-shadcn-primary-dark-mode);
+  
+  --sl-color-hairline: var(--sl-shadcn-border-dark-mode);
+  --sl-color-hairline-light: var(--sl-shadcn-input-dark-mode);
+}
+
+/* Shadcn-inspired component styles */
+
+/* Buttons */
+.button, 
+.action {
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+/* Cards */
+.card {
+  border-radius: 0.75rem;
+  border: 1px solid var(--sl-color-hairline);
+}
+
+/* Right sidebar and TOC */
+.right-sidebar a {
+  border-radius: 0.25rem;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.right-sidebar a:hover {
+  background-color: color-mix(in srgb, var(--sl-color-accent) 8%, transparent);
+}
+
+.right-sidebar a[aria-current="true"] {
+  color: var(--sl-color-accent);
+  font-weight: 500;
+}
+
+/* Hero section */
+.hero {
+  gap: 2rem;
+}
+
+.hero .action {
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+/* Code blocks */
+pre {
+  border-radius: 0.75rem;
+  border: 1px solid var(--sl-color-hairline);
+  background-color: var(--sl-shadcn-card-dark-mode);
+}
+
+/* Tabs */
+[role="tablist"] {
+  border-radius: 0.5rem;
+  overflow: hidden;
+  border: 1px solid var(--sl-color-hairline);
+}
+
+[role="tab"] {
+  font-weight: 500;
+}
+
+[role="tab"][aria-selected="true"] {
+  background-color: var(--sl-color-accent);
+  color: white;
+  font-weight: 600;
+} 

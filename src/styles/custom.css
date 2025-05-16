@@ -1,0 +1,155 @@
+/* Import fonts */
+@import './fonts.css';
+
+/* Import Shadcn and Neumorphic styles */
+@import './custom/shadcn.css';
+@import './custom/neumorphic.css';
+
+/* Custom font settings */
+:root {
+  --sl-font-system-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --sl-font-system-mono: 'JetBrains Mono', Menlo, Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', Courier, monospace;
+}
+
+/* Additional tweaks and customizations */
+
+/* Custom card grid for content pages */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
+  gap: 1.5rem;
+}
+
+@media (max-width: 50rem) {
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Card styling - less pronounced effect */
+.card {
+  padding: 1.5rem;
+  border: 1px solid var(--sl-color-hairline);
+  background-color: var(--sl-color-bg);
+  transition: transform 0.2s ease-in-out;
+  border-radius: 0.5rem;
+}
+
+[data-theme="light"] .card {
+  border: 1px solid rgba(235, 235, 235, 0.6);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .card {
+  border: 1px solid rgba(55, 55, 70, 0.2);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+  transform: translateY(-3px);
+}
+
+/* Button style - preserving docs feel */
+.action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1.25rem;
+  min-width: 8rem;
+  min-height: 2.5rem;
+  font-weight: 500;
+  border-radius: 0.375rem;
+  transition: all 0.2s ease;
+}
+
+[data-theme="light"] .action {
+  border: 1px solid rgba(235, 235, 235, 0.8);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .action {
+  border: 1px solid rgba(55, 55, 70, 0.3);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.action:active {
+  transform: translateY(1px);
+}
+
+/* Primary button style */
+.action[data-variant="primary"] {
+  background-color: var(--sl-color-accent);
+  color: white;
+}
+
+/* Code blocks - maintaining docs styling */
+:where(pre) {
+  overflow: auto;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  position: relative;
+}
+
+[data-theme="light"] :where(pre) {
+  background-color: rgba(246, 246, 250, 0.8);
+  border: 1px solid var(--sl-color-hairline);
+}
+
+[data-theme="dark"] :where(pre) {
+  background-color: rgba(30, 30, 40, 0.8);
+  border: 1px solid var(--sl-color-hairline);
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.875rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+/* Table of contents - standard docs styling */
+.toc {
+  padding: 1rem;
+  border-radius: 0.375rem;
+}
+
+[data-theme="light"] .toc {
+  border: 1px solid var(--sl-color-hairline);
+  background-color: var(--sl-color-bg);
+}
+
+[data-theme="dark"] .toc {
+  border: 1px solid var(--sl-color-hairline);
+  background-color: var(--sl-color-bg);
+}
+
+/* Keep Starlight's original sidebar styling */
+/* No sidebar style overrides here */
+
+/* Main content container - preserve original */
+main {
+  padding: 1.5rem;
+  /* Using Starlight's default styling */
+  border-radius: 0;
+  margin: 0;
+  background: var(--sl-color-bg);
+  box-shadow: none;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+} 

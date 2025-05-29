@@ -14,7 +14,7 @@ export function HeroSection() {
             “The state calls its own violence law, but that of the individual, crime.”
             </div>
             <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl">
-              Full Stack Solutions Engineer and Hacktivist
+              Full stack solutions engineer and indie hacker
             </h1>
             <p className="text-muted-foreground md:text-xl max-w-[600px]">
               Hey there, I'm James, I'm a full stack solutions engineer that's always up for new contracts that match my skillset and values.

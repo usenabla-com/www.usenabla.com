@@ -13,7 +13,7 @@ export function Footer() {
               <span className="text-lg font-bold">James Bohrman</span>
             </div>
             <p className="text-sm text-muted-foreground">
-            Full Stack Solutions Engineer and Hacktivist
+            Full Stack Solutions Engineer and Indie Hacker
             </p>
             <div className="flex gap-4">
               <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">

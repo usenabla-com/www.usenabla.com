@@ -15,7 +15,7 @@ export function Navbar() {
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center gap-2">
-            <Image src="/face.png" alt="Hermetic Labs Logo" width={40} height={40} className="dark:brightness-110" />
+            <Image src="/face.png" alt="James Bohrman Notion Stylized Pic" width={40} height={40} className="dark:brightness-110" />
             <span className="text-xl font-bold">James Bohrman</span>
           </Link>
         </div>
@@ -27,20 +27,16 @@ export function Navbar() {
           <Link href="#how-it-works" className="text-sm font-medium hover:text-primary transition-colors">
             How It Works
           </Link>
-          <Link href="#pricing" className="text-sm font-medium hover:text-primary transition-colors">
-            Pricing
-          </Link>
-          <Link href="#docs" className="text-sm font-medium hover:text-primary transition-colors">
-            Documentation
+          <Link href="#footer" className="text-sm font-medium hover:text-primary transition-colors">
+            Projects
           </Link>
         </nav>
 
         <div className="flex items-center gap-4">
           <ThemeToggle />
-          <Button variant="outline" className="hidden md:flex">
-            Sign In
-          </Button>
-          <Button className="hidden md:flex">Get Started</Button>
+          <Button onClick={() => window.open('https://cal.com/jbohrman/30-min', '_blank')} variant="outline" className="gap-2">
+            Talk to me
+           </Button>
 
           <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Toggle menu">
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}

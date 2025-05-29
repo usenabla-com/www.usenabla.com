@@ -15,8 +15,8 @@ export function Navbar() {
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center gap-2">
-            <Image src="/logo.svg" alt="Hermetic Labs Logo" width={40} height={40} className="dark:brightness-110" />
-            <span className="text-xl font-bold">Hermetic Labs</span>
+            <Image src="/face.png" alt="Hermetic Labs Logo" width={40} height={40} className="dark:brightness-110" />
+            <span className="text-xl font-bold">James Bohrman</span>
           </Link>
         </div>
 

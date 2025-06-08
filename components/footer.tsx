@@ -9,11 +9,11 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <Image src="/face.png" alt="Hermetic Labs Logo" width={32} height={32} className="dark:brightness-110" />
-              <span className="text-lg font-bold">James Bohrman</span>
+              <Image src="/logo.png" alt="Hermetic Labs Logo" width={32} height={32} className="dark:brightness-110" />
+              <span className="text-lg font-bold">Atelier Logos</span>
             </div>
             <p className="text-sm text-muted-foreground">
-            Full Stack Solutions Engineer and Indie Hacker
+            LLM Solutions Studio
             </p>
             <div className="flex gap-4">
               <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">

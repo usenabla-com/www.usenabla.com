@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { Cormorant_Garamond, Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
+import ProfileModalProvider from "@/components/profile-modal-provider"
 
 const cormorant = Cormorant_Garamond({ subsets: ["latin"], weight: ["400", "500", "600", "700"] })
 
@@ -29,7 +30,9 @@ export default function RootLayout({
       </head>
       <body className={cormorant.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          {children}
+          <ProfileModalProvider>
+            {children}
+          </ProfileModalProvider>
         </ThemeProvider>
         <script
           dangerouslySetInnerHTML={{
@@ -53,6 +56,12 @@ export default function RootLayout({
                     });
                 });
               }
+
+              // Listen for custom event to show user info modal (from auth callback)
+              window.addEventListener('showUserInfoModal', function() {
+                console.log('📱 Showing user info modal from auth callback');
+                window.dispatchEvent(new CustomEvent('openProfileModal'));
+              });
 
               function urlBase64ToUint8Array(base64String) {
                 const padding = '='.repeat((4 - base64String.length % 4) % 4);
@@ -158,10 +167,10 @@ export default function RootLayout({
                         '<h2 style="margin: 0 0 16px 0; font-size: 24px; font-weight: 600; color: #059669;">Notifications Enabled!</h2>' +
                         '<p style="margin: 0 0 24px 0; color: #6b7280; line-height: 1.5;">Setting up your profile...</p>';
                       
-                      // After 1.5 seconds, show the user info modal
+                      // After 1.5 seconds, trigger the React modal
                       setTimeout(() => {
                         overlay.remove();
-                        showUserInfoModal();
+                        window.dispatchEvent(new CustomEvent('openProfileModal'));
                       }, 1500);
                     } else {
                       console.log('❌ Permission denied');
@@ -201,260 +210,6 @@ export default function RootLayout({
                 });
               }
 
-              function showUserInfoModal() {
-                const overlay = document.createElement('div');
-                overlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center; z-index: 10000; backdrop-filter: blur(4px); padding: 20px; box-sizing: border-box;';
-
-                const modal = document.createElement('div');
-                modal.style.cssText = 'background: white; border-radius: 16px; padding: 32px; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); position: relative;';
-
-                modal.innerHTML = '<div style="text-align: center; margin-bottom: 24px;">' +
-                  '<div style="font-size: 48px; margin-bottom: 16px;">👤</div>' +
-                  '<h2 style="margin: 0 0 8px 0; font-size: 24px; font-weight: 600; color: #1f2937;">Create Your Atelier Profile</h2>' +
-                  '<p style="margin: 0; color: #6b7280; font-size: 14px;">We need just a few key details so we can send you curated content from Atelier Logos.</p>' +
-                '</div>' +
-                '<form id="userInfoForm" style="display: flex; flex-direction: column; gap: 16px;">' +
-                  '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">' +
-                    '<div>' +
-                      '<label style="display: block; margin-bottom: 4px; font-weight: 500; color: #374151; font-size: 14px;">First Name</label>' +
-                      '<input type="text" name="firstName" style="width: 100%; padding: 12px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 14px; box-sizing: border-box; transition: border-color 0.2s ease;" />' +
-                    '</div>' +
-                    '<div>' +
-                      '<label style="display: block; margin-bottom: 4px; font-weight: 500; color: #374151; font-size: 14px;">Last Name</label>' +
-                      '<input type="text" name="lastName" style="width: 100%; padding: 12px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 14px; box-sizing: border-box; transition: border-color 0.2s ease;" />' +
-                    '</div>' +
-                  '</div>' +
-                  '<div>' +
-                    '<label style="display: block; margin-bottom: 4px; font-weight: 500; color: #374151; font-size: 14px;">Email <span style="color: #dc2626;">*</span></label>' +
-                    '<input type="email" name="email" required style="width: 100%; padding: 12px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 14px; box-sizing: border-box; transition: border-color 0.2s ease;" />' +
-                  '</div>' +
-                  '<div>' +
-                    '<label style="display: block; margin-bottom: 4px; font-weight: 500; color: #374151; font-size: 14px;">Company Name</label>' +
-                    '<input type="text" name="company" style="width: 100%; padding: 12px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 14px; box-sizing: border-box; transition: border-color 0.2s ease;" />' +
-                  '</div>' +
-                  '<div>' +
-                    '<label style="display: block; margin-bottom: 4px; font-weight: 500; color: #374151; font-size: 14px;">LinkedIn URL</label>' +
-                    '<input type="url" name="linkedin" placeholder="https://linkedin.com/in/..." style="width: 100%; padding: 12px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 14px; box-sizing: border-box; transition: border-color 0.2s ease;" />' +
-                  '</div>' +
-                  '<div>' +
-                    '<label style="display: block; margin-bottom: 4px; font-weight: 500; color: #374151; font-size: 14px;">Curation Prompt <span style="color: #dc2626;">*</span></label>' +
-                    '<textarea name="curationPrompt" required placeholder="Tell us what kind of content you would like to see in your feed..." style="width: 100%; padding: 12px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 14px; min-height: 80px; resize: vertical; box-sizing: border-box; transition: border-color 0.2s ease;"></textarea>' +
-                  '</div>' +
-                  '<div>' +
-                    '<label style="display: block; margin-bottom: 4px; font-weight: 500; color: #374151; font-size: 14px;">Profile Picture <span style="color: #dc2626;">*</span></label>' +
-                    '<input type="file" name="profilePic" accept="image/*" required style="width: 100%; padding: 12px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 14px; box-sizing: border-box;" />' +
-                    '<div id="imagePreview" style="margin-top: 8px; text-align: center;"></div>' +
-                  '</div>' +
-                  '<div style="display: flex; gap: 12px; margin-top: 8px;">' +
-                    '<button type="button" id="cancelUserInfo" style="flex: 1; background: #f3f4f6; color: #6b7280; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;">Cancel</button>' +
-                    '<button type="submit" style="flex: 1; background: #3b82f6; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;">Continue</button>' +
-                  '</div>' +
-                '</form>';
-
-                overlay.appendChild(modal);
-                document.body.appendChild(overlay);
-
-                // Handle image preview
-                const fileInput = modal.querySelector('input[name="profilePic"]');
-                const imagePreview = modal.querySelector('#imagePreview');
-                let selectedImageFile = null;
-
-                fileInput.addEventListener('change', (e) => {
-                  const file = e.target.files[0];
-                  if (file) {
-                    selectedImageFile = file;
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                      imagePreview.innerHTML = '<img src="' + e.target.result + '" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid #e5e7eb;" />';
-                    };
-                    reader.readAsDataURL(file);
-                  }
-                });
-
-                // Handle form submission
-                const form = modal.querySelector('#userInfoForm');
-                form.addEventListener('submit', (e) => {
-                  e.preventDefault();
-                  
-                  const formData = new FormData(form);
-                  const userData = {
-                    firstName: formData.get('firstName'),
-                    lastName: formData.get('lastName'),
-                    email: formData.get('email'),
-                    company: formData.get('company'),
-                    linkedin: formData.get('linkedin'),
-                    curationPrompt: formData.get('curationPrompt'),
-                    profilePic: selectedImageFile
-                  };
-
-                  // Convert image to base64 for preview
-                  if (selectedImageFile) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                      userData.profilePicUrl = e.target.result;
-                      overlay.remove();
-                      showConfirmationModal(userData);
-                    };
-                    reader.readAsDataURL(selectedImageFile);
-                  } else {
-                    overlay.remove();
-                    showConfirmationModal(userData);
-                  }
-                });
-
-                // Handle cancel
-                modal.querySelector('#cancelUserInfo').addEventListener('click', () => {
-                  overlay.remove();
-                });
-              }
-
-              function showConfirmationModal(userData) {
-                const overlay = document.createElement('div');
-                overlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center; z-index: 10000; backdrop-filter: blur(4px); padding: 20px; box-sizing: border-box;';
-
-                const modal = document.createElement('div');
-                modal.style.cssText = 'background: white; border-radius: 16px; padding: 32px; max-width: 450px; width: 100%; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); position: relative;';
-
-                const displayName = [userData.firstName, userData.lastName].filter(Boolean).join(' ') || 'Member';
-                const profileImage = userData.profilePicUrl || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNTAiIGZpbGw9IiNmM2Y0ZjYiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjM3IiByPSIxMiIgZmlsbD0iIzZiNzI4MCIvPjxwYXRoIGQ9Im0yNSA3NWMwLTEzLjggMTEuMi0yNSAyNS0yNXMyNSAxMS4yIDI1IDI1IiBmaWxsPSIjNmI3MjgwIi8+PC9zdmc+';
-
-                modal.innerHTML = '<div style="text-align: center; margin-bottom: 24px;">' +
-                  '<div style="font-size: 48px; margin-bottom: 16px;">🎉</div>' +
-                  '<h2 style="margin: 0 0 8px 0; font-size: 24px; font-weight: 600; color: #1f2937;">Welcome to Atelier Logos!</h2>' +
-                  '<p style="margin: 0; color: #6b7280; font-size: 14px;">Please confirm your membership details</p>' +
-                '</div>' +
-                '<div id="membershipCard" style="background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 25%, #581c87 75%, #7c2d12 100%); border-radius: 12px; padding: 28px; margin-bottom: 24px; color: white; position: relative; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2); transform: perspective(1000px) rotateX(5deg); border: 1px solid rgba(255, 255, 255, 0.2);">' +
-                  '<div style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);"></div>' +
-                  '<div style="position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); border-radius: 50%;"></div>' +
-                  '<div style="position: absolute; bottom: -20px; left: -20px; width: 80px; height: 80px; background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%); border-radius: 50%;"></div>' +
-                  '<div style="position: absolute; top: 16px; right: 24px; font-size: 10px; font-weight: 600; letter-spacing: 1px; opacity: 0.7;">MEMBER</div>' +
-                  '<div style="display: flex; align-items: center; gap: 20px; position: relative; z-index: 2;">' +
-                    '<div style="position: relative;">' +
-                      '<img src="' + profileImage + '" style="width: 72px; height: 72px; border-radius: 8px; object-fit: cover; border: 2px solid rgba(255,255,255,0.4); box-shadow: 0 8px 16px rgba(0,0,0,0.3);" />' +
-                      '<div style="position: absolute; -top: 2px; -left: 2px; -right: 2px; -bottom: 2px; border: 1px solid rgba(255,255,255,0.2); border-radius: 10px;"></div>' +
-                    '</div>' +
-                    '<div style="flex: 1; text-align: left;">' +
-                      '<h3 style="margin: 0 0 6px 0; font-size: 22px; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">' + displayName + '</h3>' +
-                      '<p style="margin: 0 0 3px 0; opacity: 0.9; font-size: 13px; font-weight: 500;">' + userData.email + '</p>' +
-                      (userData.company ? '<p style="margin: 0; opacity: 0.8; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">' + userData.company + '</p>' : '') +
-                    '</div>' +
-                  '</div>' +
-                  '<div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2); position: relative; z-index: 2;">' +
-                    '<div style="display: flex; justify-content: space-between; align-items: center;">' +
-                      '<div>' +
-                        '<div style="font-size: 9px; opacity: 0.7; letter-spacing: 1px; margin-bottom: 2px;">MEMBER SINCE</div>' +
-                        '<div style="font-size: 13px; font-weight: 600;">' + new Date().getFullYear() + '</div>' +
-                      '</div>' +
-                      '<div style="text-align: right;">' +
-                        '<div style="font-size: 9px; opacity: 0.7; letter-spacing: 1px; margin-bottom: 2px;">CARD ID</div>' +
-                        '<div style="font-size: 11px; font-weight: 600; font-family: monospace;">' + 'AL-' + Date.now().toString().slice(-6) + '</div>' +
-                      '</div>' +
-                    '</div>' +
-                  '</div>' +
-                  '<div style="position: absolute; bottom: 12px; left: 24px; font-size: 8px; opacity: 0.6; letter-spacing: 2px;">ATELIER LOGOS STUDIO</div>' +
-                '</div>' +
-                '<div style="display: flex; gap: 12px; margin-bottom: 16px;">' +
-                  '<button id="downloadCard" style="flex: 1; background: #374151; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px;">📥 Download Card</button>' +
-                '</div>' +
-                '<div style="display: flex; gap: 12px;">' +
-                  '<button id="editProfile" style="flex: 1; background: #f3f4f6; color: #6b7280; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;">Edit</button>' +
-                  '<button id="confirmProfile" style="flex: 1; background: #059669; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;">Confirm & Join</button>' +
-                '</div>';
-
-                overlay.appendChild(modal);
-                document.body.appendChild(overlay);
-
-                // Handle download card
-                modal.querySelector('#downloadCard').addEventListener('click', async () => {
-                  try {
-                    const cardElement = modal.querySelector('#membershipCard');
-                    
-                    // Use html2canvas to convert the card to canvas
-                    const script = document.createElement('script');
-                    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
-                    script.onload = async () => {
-                      const canvas = await window.html2canvas(cardElement, {
-                        backgroundColor: null,
-                        scale: 2,
-                        useCORS: true,
-                        allowTaint: true
-                      });
-                      
-                      // Download the canvas as PNG
-                      const link = document.createElement('a');
-                      link.download = 'atelier-logos-membership-card.png';
-                      link.href = canvas.toDataURL('image/png');
-                      link.click();
-                    };
-                    document.head.appendChild(script);
-                  } catch (error) {
-                    console.error('Error downloading card:', error);
-                    alert('Unable to download card. Please try again.');
-                  }
-                });
-
-                // Handle edit
-                modal.querySelector('#editProfile').addEventListener('click', () => {
-                  overlay.remove();
-                  showUserInfoModal();
-                });
-
-                // Handle confirm
-                modal.querySelector('#confirmProfile').addEventListener('click', async () => {
-                  const confirmBtn = modal.querySelector('#confirmProfile');
-                  confirmBtn.innerHTML = '⏳ Creating Profile...';
-                  confirmBtn.disabled = true;
-
-                  try {
-                    // Save to Supabase (stub)
-                    await saveUserProfile(userData);
-                    
-                    // Show final success
-                    modal.innerHTML = '<div style="text-align: center;">' +
-                      '<div style="font-size: 64px; margin-bottom: 16px;">✅</div>' +
-                      '<h2 style="margin: 0 0 16px 0; font-size: 24px; font-weight: 600; color: #059669;">Welcome Aboard!</h2>' +
-                      '<p style="margin: 0 0 24px 0; color: #6b7280; line-height: 1.5;">Your Atelier Logos profile has been created successfully. You will start receiving curated content based on your preferences.</p>' +
-                      '<button id="getStartedBtn" style="background: #059669; color: white; border: none; padding: 12px 32px; border-radius: 8px; font-weight: 600; cursor: pointer;">Get Started</button>' +
-                    '</div>';
-                    
-                    modal.querySelector('#getStartedBtn').addEventListener('click', () => {
-                      overlay.remove();
-                    });
-                  } catch (error) {
-                    console.error('Error saving profile:', error);
-                    modal.innerHTML = '<div style="text-align: center;">' +
-                      '<div style="font-size: 48px; margin-bottom: 16px;">⚠️</div>' +
-                      '<h2 style="margin: 0 0 16px 0; font-size: 24px; font-weight: 600; color: #dc2626;">Something went wrong</h2>' +
-                      '<p style="margin: 0 0 24px 0; color: #6b7280; line-height: 1.5;">Unable to create your profile. Please try again later.</p>' +
-                      '<button id="continueProfileErrorBtn" style="background: #6b7280; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer;">Continue</button>' +
-                    '</div>';
-                    
-                    modal.querySelector('#continueProfileErrorBtn').addEventListener('click', () => {
-                      overlay.remove();
-                    });
-                  }
-                });
-              }
-
-              async function saveUserProfile(userData) {
-                // Supabase integration stub
-                console.log('💾 Saving user profile to Supabase:', userData);
-                
-                // Simulate API call
-                return new Promise((resolve, reject) => {
-                  setTimeout(() => {
-                    // Simulate success/failure
-                    if (Math.random() > 0.1) { // 90% success rate
-                      console.log('✅ Profile saved successfully');
-                      resolve({ success: true, id: 'user_' + Date.now() });
-                    } else {
-                      console.error('❌ Failed to save profile');
-                      reject(new Error('Database error'));
-                    }
-                  }, 2000);
-                });
-              }
-
               async function setupPushNotifications() {
                 try {
                   console.log('📋 Setting up push notifications...');
@@ -476,7 +231,9 @@ export default function RootLayout({
                     applicationServerKey: urlBase64ToUint8Array(data.publicKey)
                   });
 
-                  console.log('📤 Sending subscription to server...');
+                  console.log('📤 Saving subscription to API...');
+                  
+                  // Save to API endpoint
                   const subscribeResponse = await fetch('/api/push', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },

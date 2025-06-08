@@ -210,39 +210,39 @@ export default function RootLayout({
 
                 modal.innerHTML = '<div style="text-align: center; margin-bottom: 24px;">' +
                   '<div style="font-size: 48px; margin-bottom: 16px;">👤</div>' +
-                  '<h2 style="margin: 0 0 8px 0; font-size: 24px; font-weight: 600; color: #1f2937;">Complete Your Profile</h2>' +
-                  '<p style="margin: 0; color: #6b7280; font-size: 14px;">Join the Atelier Logos community</p>' +
+                  '<h2 style="margin: 0 0 8px 0; font-size: 24px; font-weight: 600; color: #1f2937;">Create Your Atelier Profile</h2>' +
+                  '<p style="margin: 0; color: #6b7280; font-size: 14px;">We need just a few key details so we can send you curated content from Atelier Logos.</p>' +
                 '</div>' +
                 '<form id="userInfoForm" style="display: flex; flex-direction: column; gap: 16px;">' +
                   '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">' +
                     '<div>' +
                       '<label style="display: block; margin-bottom: 4px; font-weight: 500; color: #374151; font-size: 14px;">First Name</label>' +
-                      '<input type="text" name="firstName" style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; box-sizing: border-box;" />' +
+                      '<input type="text" name="firstName" style="width: 100%; padding: 12px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 14px; box-sizing: border-box; transition: border-color 0.2s ease;" />' +
                     '</div>' +
                     '<div>' +
                       '<label style="display: block; margin-bottom: 4px; font-weight: 500; color: #374151; font-size: 14px;">Last Name</label>' +
-                      '<input type="text" name="lastName" style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; box-sizing: border-box;" />' +
+                      '<input type="text" name="lastName" style="width: 100%; padding: 12px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 14px; box-sizing: border-box; transition: border-color 0.2s ease;" />' +
                     '</div>' +
                   '</div>' +
                   '<div>' +
                     '<label style="display: block; margin-bottom: 4px; font-weight: 500; color: #374151; font-size: 14px;">Email <span style="color: #dc2626;">*</span></label>' +
-                    '<input type="email" name="email" required style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; box-sizing: border-box;" />' +
+                    '<input type="email" name="email" required style="width: 100%; padding: 12px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 14px; box-sizing: border-box; transition: border-color 0.2s ease;" />' +
                   '</div>' +
                   '<div>' +
                     '<label style="display: block; margin-bottom: 4px; font-weight: 500; color: #374151; font-size: 14px;">Company Name</label>' +
-                    '<input type="text" name="company" style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; box-sizing: border-box;" />' +
+                    '<input type="text" name="company" style="width: 100%; padding: 12px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 14px; box-sizing: border-box; transition: border-color 0.2s ease;" />' +
                   '</div>' +
                   '<div>' +
                     '<label style="display: block; margin-bottom: 4px; font-weight: 500; color: #374151; font-size: 14px;">LinkedIn URL</label>' +
-                    '<input type="url" name="linkedin" placeholder="https://linkedin.com/in/..." style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; box-sizing: border-box;" />' +
+                    '<input type="url" name="linkedin" placeholder="https://linkedin.com/in/..." style="width: 100%; padding: 12px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 14px; box-sizing: border-box; transition: border-color 0.2s ease;" />' +
                   '</div>' +
                   '<div>' +
                     '<label style="display: block; margin-bottom: 4px; font-weight: 500; color: #374151; font-size: 14px;">Curation Prompt <span style="color: #dc2626;">*</span></label>' +
-                    '<textarea name="curationPrompt" required placeholder="Tell us what kind of content you would like to see in your feed..." style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; min-height: 80px; resize: vertical; box-sizing: border-box;"></textarea>' +
+                    '<textarea name="curationPrompt" required placeholder="Tell us what kind of content you would like to see in your feed..." style="width: 100%; padding: 12px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 14px; min-height: 80px; resize: vertical; box-sizing: border-box; transition: border-color 0.2s ease;"></textarea>' +
                   '</div>' +
                   '<div>' +
                     '<label style="display: block; margin-bottom: 4px; font-weight: 500; color: #374151; font-size: 14px;">Profile Picture <span style="color: #dc2626;">*</span></label>' +
-                    '<input type="file" name="profilePic" accept="image/*" required style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; box-sizing: border-box;" />' +
+                    '<input type="file" name="profilePic" accept="image/*" required style="width: 100%; padding: 12px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 14px; box-sizing: border-box;" />' +
                     '<div id="imagePreview" style="margin-top: 8px; text-align: center;"></div>' +
                   '</div>' +
                   '<div style="display: flex; gap: 12px; margin-top: 8px;">' +
@@ -306,13 +306,6 @@ export default function RootLayout({
                 modal.querySelector('#cancelUserInfo').addEventListener('click', () => {
                   overlay.remove();
                 });
-
-                // Close on overlay click
-                overlay.addEventListener('click', (e) => {
-                  if (e.target === overlay) {
-                    overlay.remove();
-                  }
-                });
               }
 
               function showConfirmationModal(userData) {
@@ -330,23 +323,38 @@ export default function RootLayout({
                   '<h2 style="margin: 0 0 8px 0; font-size: 24px; font-weight: 600; color: #1f2937;">Welcome to Atelier Logos!</h2>' +
                   '<p style="margin: 0; color: #6b7280; font-size: 14px;">Please confirm your membership details</p>' +
                 '</div>' +
-                '<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; padding: 24px; margin-bottom: 24px; color: white; position: relative; overflow: hidden;">' +
-                  '<div style="position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>' +
-                  '<div style="position: absolute; bottom: -10px; left: -10px; width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>' +
-                  '<div style="display: flex; align-items: center; gap: 16px; position: relative;">' +
-                    '<img src="' + profileImage + '" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(255,255,255,0.3);" />' +
-                    '<div style="flex: 1;">' +
-                      '<h3 style="margin: 0 0 4px 0; font-size: 18px; font-weight: 600;">' + displayName + '</h3>' +
-                      '<p style="margin: 0 0 2px 0; opacity: 0.9; font-size: 14px;">' + userData.email + '</p>' +
-                      (userData.company ? '<p style="margin: 0; opacity: 0.8; font-size: 12px;">' + userData.company + '</p>' : '') +
+                '<div id="membershipCard" style="background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 25%, #581c87 75%, #7c2d12 100%); border-radius: 12px; padding: 28px; margin-bottom: 24px; color: white; position: relative; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2); transform: perspective(1000px) rotateX(5deg); border: 1px solid rgba(255, 255, 255, 0.2);">' +
+                  '<div style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);"></div>' +
+                  '<div style="position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); border-radius: 50%;"></div>' +
+                  '<div style="position: absolute; bottom: -20px; left: -20px; width: 80px; height: 80px; background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%); border-radius: 50%;"></div>' +
+                  '<div style="position: absolute; top: 16px; right: 24px; font-size: 10px; font-weight: 600; letter-spacing: 1px; opacity: 0.7;">MEMBER</div>' +
+                  '<div style="display: flex; align-items: center; gap: 20px; position: relative; z-index: 2;">' +
+                    '<div style="position: relative;">' +
+                      '<img src="' + profileImage + '" style="width: 72px; height: 72px; border-radius: 8px; object-fit: cover; border: 2px solid rgba(255,255,255,0.4); box-shadow: 0 8px 16px rgba(0,0,0,0.3);" />' +
+                      '<div style="position: absolute; -top: 2px; -left: 2px; -right: 2px; -bottom: 2px; border: 1px solid rgba(255,255,255,0.2); border-radius: 10px;"></div>' +
+                    '</div>' +
+                    '<div style="flex: 1; text-align: left;">' +
+                      '<h3 style="margin: 0 0 6px 0; font-size: 22px; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">' + displayName + '</h3>' +
+                      '<p style="margin: 0 0 3px 0; opacity: 0.9; font-size: 13px; font-weight: 500;">' + userData.email + '</p>' +
+                      (userData.company ? '<p style="margin: 0; opacity: 0.8; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">' + userData.company + '</p>' : '') +
                     '</div>' +
                   '</div>' +
-                  '<div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.2);">' +
+                  '<div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2); position: relative; z-index: 2;">' +
                     '<div style="display: flex; justify-content: space-between; align-items: center;">' +
-                      '<span style="font-size: 12px; opacity: 0.8;">MEMBER SINCE</span>' +
-                      '<span style="font-size: 12px; font-weight: 600;">' + new Date().getFullYear() + '</span>' +
+                      '<div>' +
+                        '<div style="font-size: 9px; opacity: 0.7; letter-spacing: 1px; margin-bottom: 2px;">MEMBER SINCE</div>' +
+                        '<div style="font-size: 13px; font-weight: 600;">' + new Date().getFullYear() + '</div>' +
+                      '</div>' +
+                      '<div style="text-align: right;">' +
+                        '<div style="font-size: 9px; opacity: 0.7; letter-spacing: 1px; margin-bottom: 2px;">CARD ID</div>' +
+                        '<div style="font-size: 11px; font-weight: 600; font-family: monospace;">' + 'AL-' + Date.now().toString().slice(-6) + '</div>' +
+                      '</div>' +
                     '</div>' +
                   '</div>' +
+                  '<div style="position: absolute; bottom: 12px; left: 24px; font-size: 8px; opacity: 0.6; letter-spacing: 2px;">ATELIER LOGOS STUDIO</div>' +
+                '</div>' +
+                '<div style="display: flex; gap: 12px; margin-bottom: 16px;">' +
+                  '<button id="downloadCard" style="flex: 1; background: #374151; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px;">📥 Download Card</button>' +
                 '</div>' +
                 '<div style="display: flex; gap: 12px;">' +
                   '<button id="editProfile" style="flex: 1; background: #f3f4f6; color: #6b7280; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;">Edit</button>' +
@@ -355,6 +363,35 @@ export default function RootLayout({
 
                 overlay.appendChild(modal);
                 document.body.appendChild(overlay);
+
+                // Handle download card
+                modal.querySelector('#downloadCard').addEventListener('click', async () => {
+                  try {
+                    const cardElement = modal.querySelector('#membershipCard');
+                    
+                    // Use html2canvas to convert the card to canvas
+                    const script = document.createElement('script');
+                    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+                    script.onload = async () => {
+                      const canvas = await window.html2canvas(cardElement, {
+                        backgroundColor: null,
+                        scale: 2,
+                        useCORS: true,
+                        allowTaint: true
+                      });
+                      
+                      // Download the canvas as PNG
+                      const link = document.createElement('a');
+                      link.download = 'atelier-logos-membership-card.png';
+                      link.href = canvas.toDataURL('image/png');
+                      link.click();
+                    };
+                    document.head.appendChild(script);
+                  } catch (error) {
+                    console.error('Error downloading card:', error);
+                    alert('Unable to download card. Please try again.');
+                  }
+                });
 
                 // Handle edit
                 modal.querySelector('#editProfile').addEventListener('click', () => {
@@ -395,13 +432,6 @@ export default function RootLayout({
                     modal.querySelector('#continueProfileErrorBtn').addEventListener('click', () => {
                       overlay.remove();
                     });
-                  }
-                });
-
-                // Close on overlay click
-                overlay.addEventListener('click', (e) => {
-                  if (e.target === overlay) {
-                    overlay.remove();
                   }
                 });
               }

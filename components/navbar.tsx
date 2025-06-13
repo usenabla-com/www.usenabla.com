@@ -5,7 +5,9 @@ import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { Menu, X } from "lucide-react"
+import { LoginModal } from "@/components/login-modal"
+import { useAuth } from "@/hooks/use-auth"
+import { Menu, X, LogIn, LogOut, User } from "lucide-react"
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -14,9 +16,22 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
+  const { user, loading, signOut } = useAuth()
+
+  const handleSignOut = async () => {
+    await signOut()
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -53,7 +68,7 @@ export function Navbar() {
                         </p>
                       </Link>
                     </NavigationMenuLink>
-                    <NavigationMenuLink asChild>
+                    {/* <NavigationMenuLink asChild>
                       <Link
                         href="/curation"
                         className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
@@ -73,8 +88,8 @@ export function Navbar() {
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           Video tutorials and demos
                         </p>
-          </Link>
-                    </NavigationMenuLink>
+                      </Link>
+                    </NavigationMenuLink> */}
                   </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
@@ -84,9 +99,36 @@ export function Navbar() {
 
         <div className="flex items-center gap-4">
           <ThemeToggle />
-          <Button onClick={() => window.open('https://cal.com/jbohrman/30-min', '_blank')} variant="outline" className="gap-2">
-            Talk to me
-           </Button>
+          
+          {loading ? (
+            <Button variant="outline" disabled>
+              Loading...
+            </Button>
+          ) : user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="gap-2">
+                  <User size={16} />
+                  {user.email}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem asChild>
+                  <Link href={`/profile/${user.id}`}>Profile</Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleSignOut} className="text-red-600">
+                  <LogOut size={16} className="mr-2" />
+                  Sign Out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Button onClick={() => setIsLoginModalOpen(true)} variant="outline" className="gap-2">
+              <LogIn size={16} />
+              Sign In
+            </Button>
+          )}
 
           <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Toggle menu">
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -123,7 +165,7 @@ export function Navbar() {
                 >
                   Blog
                 </Link>
-                <Link
+                {/* <Link
                   href="/curation"
                   className="text-sm hover:text-primary transition-colors"
                   onClick={() => setIsMenuOpen(false)}
@@ -136,7 +178,7 @@ export function Navbar() {
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Videos
-                </Link>
+                </Link> */}
               </div>
             </div>
             
@@ -154,15 +196,36 @@ export function Navbar() {
             >
               Documentation
             </Link>
+            
             <div className="flex flex-col gap-2 mt-2">
-              <Button variant="outline" className="w-full">
-                Sign In
-              </Button>
-              <Button className="w-full">Get Started</Button>
+              {user ? (
+                <>
+                  <Button variant="outline" className="w-full" asChild>
+                    <Link href={`/profile/${user.id}`}>Profile</Link>
+                  </Button>
+                  <Button variant="destructive" className="w-full" onClick={handleSignOut}>
+                    Sign Out
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button variant="outline" className="w-full" onClick={() => setIsLoginModalOpen(true)}>
+                    Sign In
+                  </Button>
+                  <Button className="w-full" onClick={() => setIsLoginModalOpen(true)}>
+                    Get Started
+                  </Button>
+                </>
+              )}
             </div>
           </nav>
         </div>
       )}
+
+      <LoginModal 
+        isOpen={isLoginModalOpen} 
+        onClose={() => setIsLoginModalOpen(false)} 
+      />
     </header>
   )
 }

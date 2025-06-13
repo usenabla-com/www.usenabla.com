@@ -1,4 +1,5 @@
-import { createClient, SupabaseClient, User, Session } from '@supabase/supabase-js'
+import { createBrowserClient } from '@supabase/ssr'
+import { SupabaseClient, User, Session } from '@supabase/supabase-js'
 
 // Database types
 export interface UserProfile {
@@ -36,7 +37,7 @@ class SupabaseService {
       throw new Error('Missing Supabase environment variables')
     }
 
-    this.client = createClient(supabaseUrl, supabaseKey)
+    this.client = createBrowserClient(supabaseUrl, supabaseKey)
   }
 
   public static getInstance(): SupabaseService {

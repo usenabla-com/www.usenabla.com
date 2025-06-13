@@ -4,7 +4,6 @@ import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { ThemeToggle } from "@/components/theme-toggle"
 import { LoginModal } from "@/components/login-modal"
 import { useAuth } from "@/hooks/use-auth"
 import { Menu, X, LogIn, LogOut, User } from "lucide-react"
@@ -54,17 +53,17 @@ export function Navbar() {
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="text-sm font-medium">Content</NavigationMenuTrigger>
+                <NavigationMenuTrigger className="text-sm font-medium">Tools & Resources</NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <div className="grid gap-3 p-4 w-[200px]">
                     <NavigationMenuLink asChild>
                       <Link
-                        href="/blog"
+                        href="/tools"
                         className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                       >
-                        <div className="text-sm font-medium leading-none">Blog</div>
+                        <div className="text-sm font-medium leading-none">Tools (coming soon)</div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                          Latest articles and insights
+                          Get access to our exclusive creations
                         </p>
                       </Link>
                     </NavigationMenuLink>
@@ -98,8 +97,6 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-4">
-          <ThemeToggle />
-          
           {loading ? (
             <Button variant="outline" disabled>
               Loading...
@@ -158,14 +155,14 @@ export function Navbar() {
             <div className="pl-4 border-l-2 border-muted">
               <div className="text-sm font-medium text-muted-foreground mb-2">Content</div>
               <div className="flex flex-col gap-2">
-                <Link
+                {/*<Link
                   href="/blog"
                   className="text-sm hover:text-primary transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Blog
                 </Link>
-                {/* <Link
+                 <Link
                   href="/curation"
                   className="text-sm hover:text-primary transition-colors"
                   onClick={() => setIsMenuOpen(false)}
@@ -178,11 +175,11 @@ export function Navbar() {
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Videos
-                </Link> */}
+                </Link>*/}
               </div>
             </div>
             
-            <Link
+            {/* <Link
               href="#pricing"
               className="text-sm font-medium hover:text-primary transition-colors"
               onClick={() => setIsMenuOpen(false)}
@@ -195,7 +192,7 @@ export function Navbar() {
               onClick={() => setIsMenuOpen(false)}
             >
               Documentation
-            </Link>
+            </Link> */}
             
             <div className="flex flex-col gap-2 mt-2">
               {user ? (

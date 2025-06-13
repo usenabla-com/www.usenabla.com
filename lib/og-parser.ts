@@ -32,7 +32,7 @@ class OGParserService {
 
     try {
       // Use a CORS proxy or serverless function to fetch the HTML
-      const response = await fetch(`/api/og-parser?url=${encodeURIComponent(url)}`)
+      const response = await fetch(`/api/parser?url=${encodeURIComponent(url)}`)
       
       if (!response.ok) {
         throw new Error(`Failed to fetch OG data: ${response.status}`)

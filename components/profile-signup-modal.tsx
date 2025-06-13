@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import supabase from '@/lib/supabase/client'
+import { X } from 'lucide-react'
 
 interface UserData {
   firstName: string
@@ -63,6 +64,18 @@ export default function ProfileSignupModal({ isOpen, onClose, initialUserData }:
       subscription.unsubscribe()
     }
   }, [isOpen, step])
+
+  // Close on esc key
+  useEffect(() => {
+    if (!isOpen) return
+
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+    }
+
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [isOpen, onClose])
 
   if (!isOpen) return null
 
@@ -194,15 +207,29 @@ export default function ProfileSignupModal({ isOpen, onClose, initialUserData }:
   const profileImage = userData.profilePicUrl || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNTAiIGZpbGw9IiNmM2Y0ZjYiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjM3IiByPSIxMiIgZmlsbD0iIzZiNzI4MCIvPjxwYXRoIGQ9Im0yNSA3NWMwLTEzLjggMTEuMi0yNSAyNS0yNXMyNSAxMS4yIDI1IDI1IiBmaWxsPSIjNmI3MjgwIi8+PC9zdmc+'
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
-      <div className="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+    <div
+      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl relative"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Close button */}
+        <button
+          type="button"
+          onClick={onClose}
+          className="absolute top-4 right-4 text-gray-500 hover:text-gray-800"
+        >
+          <X className="h-5 w-5" />
+        </button>
         
         {/* User Info Form */}
         {step === 'form' && (
           <div className="p-8">
             <div className="text-center mb-6">
               <div className="text-5xl mb-4">👤</div>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-2">Create Your Atelier Profile</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-2">Create Your Profile</h2>
               <p className="text-sm text-gray-600">We need just a few key details so we can send you curated content from Atelier Logos.</p>
             </div>
             

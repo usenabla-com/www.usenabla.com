@@ -1,7 +1,7 @@
 "use client"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Github } from "lucide-react"
+import { LightbulbIcon } from "lucide-react"
 import { siGithub } from "simple-icons/icons"
 import { useRouter } from "next/navigation"
 export function HeroSection() {
@@ -20,16 +20,12 @@ export function HeroSection() {
             We are a bespoke software studio helping clients build scalable, testable, and beautiful software while adopting LLMs in a sane manner.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 pt-4">
-              <Button onClick={() => window.open('https://github.com/jdbohrman-tech', '_blank')} className="gap-2">
-                <svg
-                  role="img"
-                  viewBox="0 0 24 24"
-                  className="h-5 w-5 fill-current"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d={siGithub.path} />
-                </svg>
-                GitHub
+              <Button
+                onClick={() => window.dispatchEvent(new CustomEvent('openProfileModal'))}
+                className="gap-2"
+              >
+                <LightbulbIcon className="h-5 w-5" />
+                Get weekly curated content
               </Button>
               <Button onClick={() => window.open('https://cal.com/jbohrman/30-min', '_blank')} variant="outline" className="gap-2">
                 Schedule a Call

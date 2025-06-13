@@ -1,9 +1,10 @@
 "use client"
-import Image from "next/image"
-import { ArrowRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+import { ArrowRight } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import Cal, { getCalApi } from '@calcom/embed-react'
+import supabase from '@/lib/supabase/client'
 
 interface BlogPost {
   id: string
@@ -25,27 +26,62 @@ interface ProjectCardProps {
 }
 
 export function HowItWorks() {
-  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([])
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const router = useRouter()
 
-  useEffect(() => {
-    async function fetchPosts() {
-      try {
-        const response = await fetch('/api/blog')
-        if (!response.ok) {
-          throw new Error('Failed to fetch blog posts')
-        }
-        const posts = await response.json()
-        setBlogPosts(posts.slice(0, 3)) // Get only the first 3 posts
-      } catch (error) {
-        console.error('Error fetching blog posts:', error)
-      } finally {
-        setLoading(false)
-      }
+  // Sign-up form state
+  const [step, setStep] = useState<'form' | 'checkEmail'>('form')
+  const [userData, setUserData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    curationPrompt: ''
+  })
+
+  // Handle form submit – send magic link
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
+    try {
+      localStorage.setItem('pendingUserData', JSON.stringify(userData))
+      await supabase.signInWithOTP(userData.email, true)
+      setStep('checkEmail')
+    } catch (error) {
+      console.error('Failed to send magic link:', error)
+    } finally {
+      setLoading(false)
     }
-    
-    fetchPosts()
+  }
+
+  // Resend link
+  const handleResend = async () => {
+    setLoading(true)
+    try {
+      await supabase.signInWithOTP(userData.email, true)
+    } catch (error) {
+      console.error('Failed to resend link:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  // Redirect after verification
+  useEffect(() => {
+    const { data: { subscription } } = supabase.onAuthStateChange((event) => {
+      if (event === 'SIGNED_IN') {
+        router.push('/')
+      }
+    })
+    return () => {
+      subscription.unsubscribe()
+    }
+  }, [router])
+
+  useEffect(() => {
+    (async function () {
+      const cal = await getCalApi({"namespace":"45-min-intro-call"});
+      cal("ui", {"theme":"light","cssVarsPerTheme":{"light":{"cal-brand":"#FC4C69"},"dark":{"cal-brand":"#FC4C69"}},"hideEventTypeDetails":false,"layout":"month_view"});
+    })();
   }, [])
 
   return (
@@ -65,80 +101,106 @@ export function HowItWorks() {
           </div>
         </div>
         <div className="mx-auto grid max-w-5xl gap-8 mt-12">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="flex flex-col items-center space-y-2 p-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-black text-white text-xl font-bold">
-                1
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Step 1 */}
+          <div className="flex flex-col items-center space-y-2 p-4">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-black text-white text-xl font-bold">1</div>
+            <h3 className="text-xl font-bold">Schedule a call</h3>
+            <p className="text-sm text-muted-foreground text-center">Schedule a call with me to discuss your implementation needs.</p>
+          </div>
+
+          {/* Step 2 */}
+          <div className="flex flex-col items-center space-y-2 p-4">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-black text-white text-xl font-bold">2</div>
+            <h3 className="text-xl font-bold">Send information</h3>
+            <p className="text-sm text-muted-foreground text-center">Send me relevant informational materials.</p>
+          </div>
+
+          {/* Step 3 */}
+          <div className="flex flex-col items-center space-y-2 p-4">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-black text-white text-xl font-bold">3</div>
+            <h3 className="text-xl font-bold">Receive a proposal</h3>
+            <p className="text-sm text-muted-foreground text-center">Receive a proposal for your project.</p>
+          </div>
+        </div>
+
+        {/* Calendar Embed with Scroll on Mobile */}
+          <div className="w-full mt-16 flex justify-center px-4">
+            <div
+              className="w-full max-w-[1100px] rounded-xl overflow-hidden shadow-md bg-white"
+              style={{ height: "700px", maxHeight: "90vh" }}
+            >
+              <div
+                className="h-full overflow-y-auto"
+                style={{ WebkitOverflowScrolling: "touch" }} // smooth scrolling on iOS
+              >
+                <Cal
+                  namespace="45-min-intro-call"
+                  calLink="team/atelier-logos/45-min-intro-call"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    minHeight: "600px",
+                    border: "none",
+                  }}
+                  config={{
+                    layout: "month_view",
+                    theme: "light",
+                  }}
+                />
               </div>
-              <h3 className="text-xl font-bold">Schedule a call</h3>
-              <p className="text-sm text-muted-foreground text-center">
-                Schedule a call with me to discuss your implementation needs.
-              </p>
-            </div>
-            <div className="flex flex-col items-center space-y-2 p-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-black text-white text-xl font-bold">
-                2
-              </div>
-              <h3 className="text-xl font-bold">Send information</h3>
-              <p className="text-sm text-muted-foreground text-center">
-                Send me relevant informational materials.
-              </p>
-            </div>
-            <div className="flex flex-col items-center space-y-2 p-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-black text-white text-xl font-bold">
-                3
-              </div>
-              <h3 className="text-xl font-bold">Receive a proposal</h3>
-              <p className="text-sm text-muted-foreground text-center">
-                Receive a proposal for your project.
-              </p>
             </div>
           </div>
-          <div className="mt-12">
-            <h3 className="text-3xl font-bold mb-6 mt-6 text-center">Our Blog</h3>
-            {loading ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="flex flex-col gap-2">
-                    <div className="bg-muted rounded-md aspect-video mb-4 animate-pulse"></div>
-                    <div className="h-6 bg-muted rounded animate-pulse mb-2"></div>
-                    <div className="h-4 bg-muted rounded animate-pulse mb-1"></div>
-                    <div className="h-4 bg-muted rounded animate-pulse w-3/4"></div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {blogPosts.map((post) => (
-                  <div 
-                    key={post.id} 
-                    className="flex flex-col gap-2 hover:opacity-75 cursor-pointer"
-                    onClick={() => router.push(post.url)}
-                  >
-                    <div className="bg-muted rounded-md aspect-video mb-4 flex items-center justify-center overflow-hidden">
-                      {post.image ? (
-                        <Image
-                          src={post.image}
-                          alt={post.title}
-                          width={400}
-                          height={225}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <span className="text-6xl">📝</span>
-                      )}
-                    </div>
-                    <h3 className="text-xl tracking-tight">{post.title}</h3>
-                    <p className="text-muted-foreground text-base">
-                      {post.summary}
-                    </p>
-                    {post.published && (
-                      <p className="text-sm text-muted-foreground">
-                        {new Date(post.published).toLocaleDateString()}
-                      </p>
-                    )}
-                  </div>
-                ))}
+          {/* Weekly curated content signup */}
+          <div className="mt-12 max-w-lg mx-auto">
+            <h3 className="text-3xl font-bold mb-6 mt-6 text-center">Want weekly curated content?</h3>
+
+            {step === 'form' && (
+              <form onSubmit={handleSubmit} className="space-y-4 bg-white shadow-md rounded-xl p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <input
+                    type="text"
+                    placeholder="First name"
+                    value={userData.firstName}
+                    onChange={(e) => setUserData(prev => ({ ...prev, firstName: e.target.value }))}
+                    className="w-full border rounded-lg p-3 text-sm bg-gray-50"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Last name"
+                    value={userData.lastName}
+                    onChange={(e) => setUserData(prev => ({ ...prev, lastName: e.target.value }))}
+                    className="w-full border rounded-lg p-3 text-sm bg-gray-50"
+                  />
+                </div>
+                <input
+                  type="email"
+                  required
+                  placeholder="Email address"
+                  value={userData.email}
+                  onChange={(e) => setUserData(prev => ({ ...prev, email: e.target.value }))}
+                  className="w-full border rounded-lg p-3 text-sm bg-gray-50"
+                />
+                <textarea
+                  required
+                  placeholder="Tell us what kind of content you'd like..."
+                  value={userData.curationPrompt}
+                  onChange={(e) => setUserData(prev => ({ ...prev, curationPrompt: e.target.value }))}
+                  className="w-full border rounded-lg p-3 text-sm bg-gray-50 min-h-[80px]"
+                />
+                <Button type="submit" disabled={loading} className="w-full">
+                  {loading ? 'Sending...' : 'Send magic link'}
+                </Button>
+              </form>
+            )}
+
+            {step === 'checkEmail' && (
+              <div className="text-center bg-white dark:bg-gray-900 shadow-md rounded-xl p-8">
+                <p className="mb-4">We sent a magic link to <strong>{userData.email}</strong>. Check your email to verify.</p>
+                <p className="text-sm text-gray-500 mb-6">After clicking the link you will be redirected automatically.</p>
+                <Button onClick={handleResend} disabled={loading} variant="outline">
+                  {loading ? 'Resending...' : 'Resend link'}
+                </Button>
               </div>
             )}
           </div>

@@ -19,6 +19,17 @@ export async function curateAllUsers() {
  * @param userId The ID of the user to curate content for
  */
 export async function curateUserFeed(userId: string) {
+  // If we're running in the browser, proxy the request to a serverless route to avoid CORS
+  if (typeof window !== 'undefined') {
+    const res = await fetch(`/api/curation?userId=${encodeURIComponent(userId)}`)
+    if (!res.ok) {
+      const text = await res.text()
+      throw new Error(`Server curation failed: ${text}`)
+    }
+    return
+  }
+
+  // Server-side execution (e.g. cron job or CLI)
   try {
     console.log(`🎯 Starting feed curation for user: ${userId}`)
     await curationService.curateForSingleUser(userId)
@@ -27,4 +38,6 @@ export async function curateUserFeed(userId: string) {
     console.error(`💥 Failed to curate feed for user ${userId}:`, error)
     throw error
   }
-} 
+}
+
+// Set default options for feed curation 

@@ -21,7 +21,7 @@ export function HeroSection() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 pt-4">
               <Button
-                onClick={() => window.dispatchEvent(new CustomEvent('openProfileModal'))}
+                onClick={() => window.open('/onboarding', '_blank')}
                 className="gap-2"
               >
                 <LightbulbIcon className="h-5 w-5" />

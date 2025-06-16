@@ -31,10 +31,7 @@ export default function RootLayout({
       </head>
       <body className={cormorant.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <ProfileModalProvider>
             {children}
-            <NotificationModal />
-          </ProfileModalProvider>
         </ThemeProvider>
       </body>
     </html>

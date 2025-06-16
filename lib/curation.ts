@@ -1,13 +1,18 @@
 import { exaService } from './exa'
-import supabaseService from '@/lib/supabase/client'
+import { createServerClient } from '@supabase/ssr'
+import { SupabaseClient } from '@supabase/supabase-js'
 
-interface UserProfile {
+interface Subscriber {
   id: string
+  email: string
+  linkedin_url: string | null
+  company: string | null
+  profile_pic: string | null
+  curation_prompt: string | null
   first_name: string | null
   last_name: string | null
-  email: string
-  curation_prompt: string
   created_at: string
+  updated_at: string
 }
 
 interface FeedItem {
@@ -20,31 +25,46 @@ interface FeedItem {
 }
 
 class CurationService {
-  async curateForAllUsers(): Promise<void> {
+  private getSupabaseClient() {
+    return createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_KEY!,
+      {
+        cookies: {
+          get(name: string) { return undefined },
+          set(name: string, value: string, options: any) {},
+          remove(name: string, options: any) {},
+        },
+      }
+    )
+  }
+
+  async curateForAllUsers(supabase?: SupabaseClient): Promise<void> {
     console.log('🚀 Starting feed curation for all users...')
     
     try {
-      // Get all users with curation prompts
-      const { data: users, error: usersError } = await supabaseService.supabase
+      const client = supabase || this.getSupabaseClient()
+      // Get all subscribers with curation prompts
+      const { data: subscribers, error: subscribersError } = await client
         .from('subscribers')
         .select('*')
         .not('curation_prompt', 'is', null)
         .neq('curation_prompt', '')
 
-      if (usersError) {
-        throw new Error(`Failed to fetch users: ${usersError.message}`)
+      if (subscribersError) {
+        throw new Error(`Failed to fetch subscribers: ${subscribersError.message}`)
       }
 
-      if (!users || users.length === 0) {
-        console.log('📭 No users with curation prompts found')
+      if (!subscribers || subscribers.length === 0) {
+        console.log('📭 No subscribers with curation prompts found')
         return
       }
 
-      console.log(`👥 Found ${users.length} users to curate content for`)
+      console.log(`👥 Found ${subscribers.length} subscribers to curate content for`)
 
-      // Process each user
+      // Process each subscriber
       const results = await Promise.allSettled(
-        users.map(user => this.curateForUser(user))
+        subscribers.map(subscriber => this.curateForUser(subscriber, client))
       )
 
       // Log results
@@ -66,17 +86,18 @@ class CurationService {
     }
   }
 
-  async curateForUser(user: UserProfile): Promise<void> {
-    console.log(`🔍 Curating content for user: ${user.email} (${user.id})`)
+  async curateForUser(subscriber: Subscriber, supabase?: SupabaseClient): Promise<void> {
+    console.log(`🔍 Curating content for subscriber: ${subscriber.email} (${subscriber.id})`)
     
     try {
+      const client = supabase || this.getSupabaseClient()
       // Ensure curation_prompt is a string and not empty
-      const curationPrompt = typeof user.curation_prompt === 'string' 
-        ? user.curation_prompt.trim()
-        : String(user.curation_prompt || '').trim()
+      const curationPrompt = typeof subscriber.curation_prompt === 'string' 
+        ? subscriber.curation_prompt.trim()
+        : String(subscriber.curation_prompt || '').trim()
       
       if (!curationPrompt) {
-        throw new Error(`User ${user.id} has no valid curation prompt`)
+        throw new Error(`Subscriber ${subscriber.id} has no valid curation prompt`)
       }
       
       console.log(`📝 Using curation prompt: "${curationPrompt}"`)
@@ -88,32 +109,32 @@ class CurationService {
       })
 
       if (searchResults.length === 0) {
-        console.log(`📭 No new content found for user: ${user.email}`)
+        console.log(`📭 No new content found for subscriber: ${subscriber.email}`)
         return
       }
 
-      console.log(`📰 Found ${searchResults.length} articles for user: ${user.email}`)
+      console.log(`📰 Found ${searchResults.length} articles for subscriber: ${subscriber.email}`)
 
       // Check for duplicates and store new items
       let newItemsCount = 0
       for (const result of searchResults) {
         try {
-          // Check if this URL already exists for this user
-          const { data: existing } = await supabaseService.supabase
+          // Check if this URL already exists for this subscriber
+          const { data: existing } = await client
             .from('feeds')
             .select('id')
-            .eq('subscriber', user.id)
+            .eq('subscriber', subscriber.id)
             .eq('url', result.url)
             .single()
 
           if (existing) {
-            console.log(`⏭️  Skipping duplicate URL for ${user.email}: ${result.url}`)
+            console.log(`⏭️  Skipping duplicate URL for ${subscriber.email}: ${result.url}`)
             continue
           }
 
           // Store the new feed item
           const feedItem: FeedItem = {
-            subscriber: user.id,
+            subscriber: subscriber.id,
             title: result.title,
             url: result.url,
             snippet: result.snippet,
@@ -121,55 +142,56 @@ class CurationService {
             published_date: result.publishedDate || null
           }
 
-          const { error: insertError } = await supabaseService.supabase
+          const { error: insertError } = await client
             .from('feeds')
             .insert(feedItem)
 
           if (insertError) {
-            console.error(`❌ Failed to store feed item for ${user.email}:`, insertError)
+            console.error(`❌ Failed to store feed item for ${subscriber.email}:`, insertError)
             continue
           }
 
           newItemsCount++
-          console.log(`✅ Stored new article for ${user.email}: ${result.title}`)
+          console.log(`✅ Stored new article for ${subscriber.email}: ${result.title}`)
 
         } catch (error) {
-          console.error(`❌ Error processing article for ${user.email}:`, error)
+          console.error(`❌ Error processing article for ${subscriber.email}:`, error)
           continue
         }
       }
 
-      console.log(`🎉 Successfully curated ${newItemsCount} new articles for user: ${user.email}`)
+      console.log(`🎉 Successfully curated ${newItemsCount} new articles for subscriber: ${subscriber.email}`)
 
     } catch (error) {
-      console.error(`💥 Failed to curate content for user ${user.email}:`, error)
+      console.error(`💥 Failed to curate content for subscriber ${subscriber.email}:`, error)
       throw error
     }
   }
 
-  async curateForSingleUser(userId: string): Promise<void> {
-    console.log(`🎯 Curating content for single user: ${userId}`)
+  async curateForSingleUser(userId: string, supabase?: SupabaseClient): Promise<void> {
+    console.log(`🎯 Curating content for single subscriber: ${userId}`)
     
     try {
-      // Get the specific user
-      const { data: user, error: userError } = await supabaseService.supabase
+      const client = supabase || this.getSupabaseClient()
+      // Get the specific subscriber
+      const { data: subscriber, error: subscriberError } = await client
         .from('subscribers')
         .select('*')
         .eq('id', userId)
         .single()
 
-      if (userError || !user) {
-        throw new Error(`User not found: ${userId}`)
+      if (subscriberError || !subscriber) {
+        throw new Error(`Subscriber not found: ${userId}`)
       }
 
-      if (!user.curation_prompt || user.curation_prompt.trim() === '') {
-        throw new Error(`User ${userId} has no curation prompt set`)
+      if (!subscriber.curation_prompt || subscriber.curation_prompt.trim() === '') {
+        throw new Error(`Subscriber ${userId} has no curation prompt set`)
       }
 
-      await this.curateForUser(user)
+      await this.curateForUser(subscriber, client)
       
     } catch (error) {
-      console.error(`💥 Failed to curate for user ${userId}:`, error)
+      console.error(`💥 Failed to curate for subscriber ${userId}:`, error)
       throw error
     }
   }
@@ -181,4 +203,6 @@ class CurationService {
   }
 }
 
-export const curationService = new CurationService() 
+// Export singleton instance
+export const curationService = new CurationService()
+export default curationService 

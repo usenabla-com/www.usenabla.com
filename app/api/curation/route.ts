@@ -29,8 +29,31 @@ export async function GET(req: NextRequest) {
 
   try {
     await curationService.curateForUser(userId, supabase)
-    return NextResponse.json({ success: true })
+    
+    // Fetch updated profile data
+    const { data: profile, error: profileError } = await supabase
+      .from('subscribers')
+      .select('*')
+      .eq('id', userId)
+      .single()
+      
+    if (profileError) {
+      throw profileError
+    }
+
+    return NextResponse.json({ 
+      success: true,
+      profile 
+    })
   } catch (error: any) {
+    // Check if the error is related to subscription
+    if (error.message?.includes('No curations remaining')) {
+      return NextResponse.json({
+        error: error.message,
+        code: 'SUBSCRIPTION_REQUIRED',
+        upgradeUrl: 'https://buy.stripe.com/aFa3cvbcw69We9nfG218c01'
+      }, { status: 402 }) // 402 Payment Required
+    }
     return NextResponse.json({ error: error.message || 'Curation failed' }, { status: 500 })
   }
 } 

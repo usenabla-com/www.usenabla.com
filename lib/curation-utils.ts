@@ -14,14 +14,32 @@ export async function curateUserFeed(userId: string, supabase?: SupabaseClient) 
       const text = await res.text()
       throw new Error(`Server curation failed: ${text}`)
     }
-    return
+    const data = await res.json()
+    return data
   }
 
   // Server-side execution
   try {
     console.log(`🎯 Starting content curation for user: ${userId}`)
     await curationService.curateForUser(userId, supabase)
+    
+    // Get updated profile
+    if (supabase) {
+      const { data: profile, error: profileError } = await supabase
+        .from('subscribers')
+        .select('*')
+        .eq('id', userId)
+        .maybeSingle()
+        
+      if (profileError) {
+        throw profileError
+      }
+      
+      return { success: true, profile }
+    }
+    
     console.log(`✅ Content curation completed for user: ${userId}`)
+    return { success: true }
   } catch (error) {
     console.error(`💥 Failed to curate content for user ${userId}:`, error)
     throw error

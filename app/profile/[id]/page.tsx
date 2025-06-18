@@ -82,6 +82,14 @@ export default function ProfilePage() {
       setFeedLoading(true)
       setFeedError(null)
 
+      // Refresh profile data before loading feed
+      if (!append) {
+        const { data: freshProfile } = await supabase.getUserProfile(currentUser.id)
+        if (freshProfile) {
+          setProfile(freshProfile)
+        }
+      }
+
       const response = await supabase.getFeedItems(currentUser.id, 10, pageNum * 10)
       if (response.error) {
         setFeedError(response.error)
@@ -110,12 +118,19 @@ export default function ProfilePage() {
 
   // Trigger curation
   const triggerCuration = async () => {
-    if (!currentUser) return
+    if (!currentUser || !profile) return
 
     setTriggering(true)
     try {
-      await curateUserFeed(currentUser.id)
-      await loadFeedItems(0, false) // Reload from beginning
+      const response = await curateUserFeed(currentUser.id)
+      
+      // Update profile with the returned data
+      if (response?.profile) {
+        setProfile(response.profile)
+      }
+      
+      // Reload feed items from beginning
+      await loadFeedItems(0, false)
       setPage(0)
     } catch (err) {
       console.error('Failed to trigger curation:', err)
@@ -494,45 +509,115 @@ export default function ProfilePage() {
             <Card className="shadow-sm">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900">Curated Content</h3>
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900">Curated Content</h3>
+                    {isOwnProfile && profile && !profile.customer && (
+                      <p className="text-sm text-gray-600 mt-1">
+                        {profile.curations} curation{profile.curations !== 1 ? 's' : ''} remaining
+                      </p>
+                    )}
+                  </div>
                   {isOwnProfile && (
-                    <Button
-                      onClick={triggerCuration}
-                      disabled={triggering}
-                      size="sm"
-                      variant="outline"
-                      className="gap-2"
-                    >
-                      {triggering ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
+                    <div className="flex items-center gap-3">
+                      {profile?.customer ? (
+                        <Badge variant="default" className="bg-gradient-to-r from-indigo-500 to-purple-500">
+                          <Sparkles className="h-3 w-3 mr-1" />
+                          Pro Member
+                        </Badge>
                       ) : (
-                        <Sparkles className="h-4 w-4" />
+                        <>
+                          <Badge variant="outline" className="border-gray-200">
+                            <span className="text-gray-600">
+                              {profile?.curations} curation{profile?.curations !== 1 ? 's' : ''} left
+                            </span>
+                          </Badge>
+                          <Link 
+                            href="https://buy.stripe.com/aFa3cvbcw69We9nfG218c01"
+                            target="_blank"
+                            className="text-sm text-purple-600 hover:text-purple-800 transition-colors"
+                          >
+                            Upgrade to Pro →
+                          </Link>
+                        </>
                       )}
-                      {triggering ? 'Curating...' : 'Refresh Content'}
-                    </Button>
+                      <div className="flex items-center gap-2">
+                        <Button
+                          onClick={triggerCuration}
+                          disabled={triggering || (!profile?.customer && profile?.curations <= 0)}
+                          size="sm"
+                          variant="default"
+                          className="gap-2 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600"
+                        >
+                          {triggering ? (
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                          ) : (
+                            <Sparkles className="h-4 w-4" />
+                          )}
+                          {triggering ? 'Curating...' : 'Curate New'}
+                        </Button>
+                        <Button
+                          onClick={() => loadFeedItems(0, false)}
+                          disabled={feedLoading}
+                          size="sm"
+                          variant="outline"
+                          className="gap-2"
+                          title="Refresh your existing feed (doesn't use a curation)"
+                        >
+                          <RefreshCw className={`h-4 w-4 ${feedLoading ? 'animate-spin' : ''}`} />
+                          Refresh
+                        </Button>
+                      </div>
+                    </div>
                   )}
                 </div>
 
                 {/* Feed Content */}
                 {isOwnProfile ? (
                   <div className="space-y-4">
-                    {feedError && (
-                      <div className="text-center py-4">
-                        <div className="text-red-500 text-sm mb-2">{feedError}</div>
-                        <Button onClick={() => loadFeedItems(0, false)} variant="outline" size="sm">
-                          Try Again
-                        </Button>
+                    {feedError ? (
+                      <div className="text-center py-6 px-4 bg-gray-50 rounded-lg">
+                        {feedError.includes('No curations remaining') ? (
+                          <>
+                            <div className="mb-4">
+                              <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <Sparkles className="h-6 w-6 text-purple-600" />
+                              </div>
+                              <h4 className="text-lg font-semibold text-gray-900 mb-2">Upgrade to Pro</h4>
+                              <p className="text-gray-600 text-sm mb-4">
+                                You've used all your free curations. Upgrade to Pro for unlimited content curation.
+                              </p>
+                              <Button 
+                                asChild
+                                className="bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600"
+                              >
+                                <Link href="https://buy.stripe.com/aFa3cvbcw69We9nfG218c01" target="_blank">
+                                  Upgrade Now
+                                </Link>
+                              </Button>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <div className="text-red-500 text-sm mb-2">{feedError}</div>
+                            <Button onClick={() => loadFeedItems(0, false)} variant="outline" size="sm">
+                              Try Again
+                            </Button>
+                          </>
+                        )}
                       </div>
-                    )}
+                    ) : null}
 
                     {feedItems.length === 0 && !feedLoading && !feedError ? (
                       <div className="text-center py-8">
                         <p className="text-gray-500 text-sm mb-2">
                           No curated content yet.
                         </p>
-                        <p className="text-xs text-gray-400">
-                          Click "Refresh Content" to find relevant articles.
-                        </p>
+                        {profile && !profile.customer && profile.curations > 0 && (
+                          <p className="text-xs text-gray-400">
+                            You have {profile.curations} free curation{profile.curations !== 1 ? 's' : ''} remaining.
+                            Click "Curate New" to discover relevant articles.
+                          </p>
+                        )}
                       </div>
                     ) : (
                       <div 

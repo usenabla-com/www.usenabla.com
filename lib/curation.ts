@@ -13,6 +13,8 @@ interface Subscriber {
   last_name: string | null
   created_at: string
   updated_at: string
+  curations: number
+  customer: boolean
 }
 
 interface ContentItem {
@@ -49,10 +51,15 @@ class CurationService {
         .from('subscribers')
         .select('*')
         .eq('id', userId)
-        .single()
+        .maybeSingle()
 
       if (subscriberError || !subscriber) {
         throw new Error(`Subscriber not found: ${userId}`)
+      }
+
+      // Check if user has remaining curations or is a paying customer
+      if (!subscriber.customer && subscriber.curations <= 0) {
+        throw new Error('No curations remaining. Please upgrade your plan at https://buy.stripe.com/aFa3cvbcw69We9nfG218c01')
       }
 
       if (!subscriber.curation_prompt || subscriber.curation_prompt.trim() === '') {
@@ -121,6 +128,25 @@ class CurationService {
         } catch (error) {
           console.error(`❌ Error processing article for ${subscriber.email}:`, error)
           continue
+        }
+      }
+
+      // If content was successfully curated and user is not a customer, decrement their curations
+      if (newItemsCount > 0 && !subscriber.customer) {
+        console.log(`Decrementing curations for user ${subscriber.email} from ${subscriber.curations} to ${subscriber.curations - 1}`)
+        const { error: updateError } = await client
+          .from('subscribers')
+          .update({ 
+            curations: subscriber.curations - 1,
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', userId)
+          .select()
+          .single()
+
+        if (updateError) {
+          console.error(`❌ Failed to update remaining curations for ${subscriber.email}:`, updateError)
+          throw new Error('Failed to update remaining curations')
         }
       }
 

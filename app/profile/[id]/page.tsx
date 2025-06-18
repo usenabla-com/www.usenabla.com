@@ -123,10 +123,19 @@ export default function ProfilePage() {
     setTriggering(true)
     try {
       const response = await curateUserFeed(currentUser.id)
+      console.log('Curation response:', response)
       
       // Update profile with the returned data
       if (response?.profile) {
+        console.log('Updating profile with:', response.profile)
         setProfile(response.profile)
+      } else {
+        console.log('No profile data in response, fetching fresh data')
+        // Fallback to fetching fresh profile data
+        const { data: freshProfile } = await supabase.getUserProfile(currentUser.id)
+        if (freshProfile) {
+          setProfile(freshProfile)
+        }
       }
       
       // Reload feed items from beginning
@@ -509,64 +518,63 @@ export default function ProfilePage() {
             <Card className="shadow-sm">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900">Curated Content</h3>
-                    {isOwnProfile && profile && !profile.customer && (
-                      <p className="text-sm text-gray-600 mt-1">
-                        {profile.curations} curation{profile.curations !== 1 ? 's' : ''} remaining
-                      </p>
-                    )}
-                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900">Curated Content</h3>
                   {isOwnProfile && (
                     <div className="flex items-center gap-3">
                       {profile?.customer ? (
-                        <Badge variant="default" className="bg-gradient-to-r from-indigo-500 to-purple-500">
-                          <Sparkles className="h-3 w-3 mr-1" />
+                        <Badge 
+                          variant="default" 
+                          className="px-3 py-1.5 bg-gradient-to-r from-indigo-500 to-purple-500"
+                        >
+                          <Sparkles className="h-3.5 w-3.5 mr-1.5" />
                           Pro Member
                         </Badge>
                       ) : (
-                        <>
-                          <Badge variant="outline" className="border-gray-200">
-                            <span className="text-gray-600">
-                              {profile?.curations} curation{profile?.curations !== 1 ? 's' : ''} left
-                            </span>
-                          </Badge>
-                          <Link 
-                            href="https://buy.stripe.com/aFa3cvbcw69We9nfG218c01"
-                            target="_blank"
-                            className="text-sm text-purple-600 hover:text-purple-800 transition-colors"
+                        <div className="flex items-center gap-2">
+                          <Badge 
+                            variant="outline" 
+                            className="px-3 py-1.5 border-gray-200 flex items-center gap-2"
                           >
-                            Upgrade to Pro →
-                          </Link>
-                        </>
-                      )}
-                      <div className="flex items-center gap-2">
-                        <Button
-                          onClick={triggerCuration}
-                          disabled={triggering || (!profile?.customer && profile?.curations <= 0)}
-                          size="sm"
-                          variant="default"
-                          className="gap-2 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600"
-                        >
-                          {triggering ? (
-                            <Loader2 className="h-4 w-4 animate-spin" />
-                          ) : (
-                            <Sparkles className="h-4 w-4" />
+                            <span className="font-medium text-gray-700">{profile?.curations}</span>
+                            <span className="text-gray-500">curations left</span>
+                          </Badge>
+                          <Button
+                            onClick={triggerCuration}
+                            disabled={triggering || profile?.curations <= 0}
+                            size="sm"
+                            variant="default"
+                            className="bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600"
+                          >
+                            {triggering ? (
+                              <Loader2 className="h-3.5 w-3.5 animate-spin mr-1.5" />
+                            ) : (
+                              <Sparkles className="h-3.5 w-3.5 mr-1.5" />
+                            )}
+                            {triggering ? 'Curating...' : 'Curate'}
+                          </Button>
+                          {profile?.curations <= 0 && (
+                            <Button 
+                              asChild
+                              size="sm"
+                              variant="outline"
+                            >
+                              <Link href="https://buy.stripe.com/aFa3cvbcw69We9nfG218c01" target="_blank">
+                                Upgrade →
+                              </Link>
+                            </Button>
                           )}
-                          {triggering ? 'Curating...' : 'Curate New'}
-                        </Button>
-                        <Button
-                          onClick={() => loadFeedItems(0, false)}
-                          disabled={feedLoading}
-                          size="sm"
-                          variant="outline"
-                          className="gap-2"
-                          title="Refresh your existing feed (doesn't use a curation)"
-                        >
-                          <RefreshCw className={`h-4 w-4 ${feedLoading ? 'animate-spin' : ''}`} />
-                          Refresh
-                        </Button>
-                      </div>
+                        </div>
+                      )}
+                      <Button
+                        onClick={() => loadFeedItems(0, false)}
+                        disabled={feedLoading}
+                        size="sm"
+                        variant="outline"
+                        className="gap-2"
+                        title="Refresh your existing feed (doesn't use a curation)"
+                      >
+                        <RefreshCw className={`h-3.5 w-3.5 ${feedLoading ? 'animate-spin' : ''}`} />
+                      </Button>
                     </div>
                   )}
                 </div>

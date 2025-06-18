@@ -28,9 +28,10 @@ export async function GET(req: NextRequest) {
   )
 
   try {
+    // Perform curation
     await curationService.curateForUser(userId, supabase)
     
-    // Fetch updated profile data
+    // Get the latest profile data
     const { data: profile, error: profileError } = await supabase
       .from('subscribers')
       .select('*')
@@ -40,6 +41,8 @@ export async function GET(req: NextRequest) {
     if (profileError) {
       throw profileError
     }
+
+    console.log('Returning updated profile data:', profile)
 
     return NextResponse.json({ 
       success: true,

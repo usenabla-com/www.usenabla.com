@@ -42,9 +42,9 @@ export default function OnboardingPage() {
     // Check if user is already logged in
     const checkUser = async () => {
       console.log('🔍 Onboarding: Checking user authentication')
-      const { data: { user } } = await supabase.supabase.auth.getUser()
+        const { data: { user } } = await supabase.supabase.auth.getUser()
       
-      if (user) {
+        if (user) {
         console.log('👤 Onboarding: Found authenticated user:', user.id)
         setIsAuthenticated(true)
         setUserId(user.id)
@@ -73,7 +73,7 @@ export default function OnboardingPage() {
         console.log('⚠️ Onboarding: No authenticated user')
         setIsAuthenticated(false)
         setUserId(null)
-      }
+        }
     }
     checkUser()
   }, [router])
@@ -153,15 +153,15 @@ export default function OnboardingPage() {
       <>
         <Navbar />
         <main className="container mx-auto px-4 py-12 flex-grow">
-          <div className="max-w-md mx-auto text-center p-8 bg-white rounded-lg shadow-md">
-            <div className="text-5xl mb-4">📧</div>
-            <h2 className="text-2xl font-semibold text-gray-900 mb-2">Check Your Email</h2>
-            <p className="text-gray-600 mb-6">
+            <div className="max-w-md mx-auto text-center p-8 bg-white rounded-lg shadow-md">
+                <div className="text-5xl mb-4">📧</div>
+                <h2 className="text-2xl font-semibold text-gray-900 mb-2">Check Your Email</h2>
+                <p className="text-gray-600 mb-6">
               We sent a magic link to <strong>{subscriberData.email}</strong>.<br />
               Click the link in your email to continue.
-            </p>
-            <Loader2 className="h-8 w-8 animate-spin mx-auto text-gray-500" />
-          </div>
+                </p>
+                <Loader2 className="h-8 w-8 animate-spin mx-auto text-gray-500" />
+            </div>
         </main>
         <Footer />
       </>
@@ -265,7 +265,7 @@ export default function OnboardingPage() {
                 placeholder="https://linkedin.com/in/username"
               />
             </div>
-
+            
             <div>
               <Label htmlFor="company">Company</Label>
               <input 
@@ -273,22 +273,22 @@ export default function OnboardingPage() {
                 type="text" 
                 value={subscriberData.company} 
                 onChange={(e) => setSubscriberData(prev => ({ ...prev, company: e.target.value }))} 
-                className="w-full mt-1 p-3 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-500 focus:border-transparent" 
+                className="w-full mt-1 p-3 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-500 focus:border-transparent"
               />
             </div>
-
+            
             <div>
               <Label htmlFor="curationPrompt">What content would you like us to curate for you?</Label>
               <textarea 
                 id="curationPrompt" 
                 value={subscriberData.curation_prompt} 
                 onChange={(e) => setSubscriberData(prev => ({ ...prev, curation_prompt: e.target.value }))} 
-                className="w-full mt-1 p-3 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-500 focus:border-transparent" 
+                className="w-full mt-1 p-3 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-500 focus:border-transparent"
                 rows={4}
                 placeholder="E.g., Latest news and insights about AI and machine learning, focusing on practical applications in business"
               />
             </div>
-
+            
             <div>
               <Label htmlFor="profilePic">Profile Picture</Label>
               <input 
@@ -312,9 +312,9 @@ export default function OnboardingPage() {
             {error && (
               <div className="text-red-500 text-sm">{error}</div>
             )}
-
-            <Button 
-              type="submit" 
+            
+            <Button
+              type="submit"
               disabled={loading} 
               className="w-full"
             >

@@ -51,7 +51,9 @@ class CurationService {
         .from('subscribers')
         .select('*')
         .eq('id', userId)
-        .maybeSingle()
+        .single()
+
+      console.log('Initial subscriber data:', subscriber)
 
       if (subscriberError || !subscriber) {
         throw new Error(`Subscriber not found: ${userId}`)
@@ -132,22 +134,80 @@ class CurationService {
       }
 
       // If content was successfully curated and user is not a customer, decrement their curations
+      console.log('Checking conditions for decrementing curations:', {
+        newItemsCount,
+        isCustomer: subscriber.customer,
+        currentCurations: subscriber.curations
+      })
+
       if (newItemsCount > 0 && !subscriber.customer) {
         console.log(`Decrementing curations for user ${subscriber.email} from ${subscriber.curations} to ${subscriber.curations - 1}`)
+        
+        // First, get the current curations count to ensure we have the latest value
+        const { data: currentData, error: fetchError } = await client
+          .from('subscribers')
+          .select('curations, customer')
+          .eq('id', userId)
+          .single()
+
+        console.log('Current subscriber data:', currentData)
+
+        if (fetchError || !currentData) {
+          console.error(`❌ Failed to fetch current curations for ${subscriber.email}:`, fetchError)
+          throw new Error('Failed to verify current curations')
+        }
+
+        // Update with the verified current count
+        const newCount = Math.max(0, currentData.curations - 1)
+        console.log(`Attempting to update curations to ${newCount}`)
+        
+        // Perform the update without expecting a return value
         const { error: updateError } = await client
           .from('subscribers')
           .update({ 
-            curations: subscriber.curations - 1,
+            curations: newCount,
             updated_at: new Date().toISOString()
           })
           .eq('id', userId)
-          .select()
-          .single()
 
         if (updateError) {
           console.error(`❌ Failed to update remaining curations for ${subscriber.email}:`, updateError)
           throw new Error('Failed to update remaining curations')
         }
+
+        // Verify the update with a separate query
+        const { data: verifyData, error: verifyError } = await client
+          .from('subscribers')
+          .select('curations')
+          .eq('id', userId)
+          .single()
+
+        console.log('Verification after update:', {
+          expected: newCount,
+          actual: verifyData?.curations,
+          error: verifyError
+        })
+
+        if (verifyError || verifyData?.curations !== newCount) {
+          console.error('❌ Update verification failed:', {
+            expected: newCount,
+            actual: verifyData?.curations,
+            error: verifyError
+          })
+          throw new Error('Failed to verify curation count update')
+        }
+
+        // Log the successful update
+        console.log(`✅ Successfully updated and verified curations for ${subscriber.email} to ${newCount}`)
+        
+        // Update the subscriber object with new count
+        subscriber.curations = newCount
+      } else {
+        console.log('Skipping curation decrement:', {
+          reason: newItemsCount === 0 ? 'no new items curated' : 'user is a customer',
+          newItemsCount,
+          isCustomer: subscriber.customer
+        })
       }
 
       console.log(`🎉 Successfully curated ${newItemsCount} new articles for user: ${userId}`)

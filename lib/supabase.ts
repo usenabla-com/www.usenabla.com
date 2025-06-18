@@ -11,6 +11,9 @@ export interface UserProfile {
   curation_prompt: string
   profile_pic: string | null
   created_at: string
+  updated_at: string
+  curations: number
+  customer: boolean
 }
 
 export interface Content {

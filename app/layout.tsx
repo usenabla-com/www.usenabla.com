@@ -9,8 +9,8 @@ import NotificationModal from "@/components/notification-modal"
 const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600", "700"] })
 
 export const metadata: Metadata = {
-  title: "Atelier Logos | LLM Solutions Studio",
-  description: "",
+  title: "Atelier Logos | LLM Solutions Studio" as const,
+  description: "We are a bespoke software studio helping clients build scalable, testable, and beautiful software while adopting LLMs in a sane manner." as const,
   generator: 'v0.dev',
   manifest: '/manifest.json'
 }
@@ -20,9 +20,18 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const title = metadata.title as string
+  const description = metadata.description as string
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <title>{title}</title>
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content="https://www.atelierlogos.studio/og-image.png" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.atelierlogos.studio" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#000000" />
         <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />

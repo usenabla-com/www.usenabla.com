@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
   )
 
   try {
-    await curationService.curateForSingleUser(userId, supabase)
+    await curationService.curateForUser(userId, supabase)
     return NextResponse.json({ success: true })
   } catch (error: any) {
     return NextResponse.json({ error: error.message || 'Curation failed' }, { status: 500 })

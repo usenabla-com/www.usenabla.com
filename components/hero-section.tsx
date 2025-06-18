@@ -22,7 +22,7 @@ export function HeroSection() {
             <div className="flex flex-col sm:flex-row gap-3 pt-4">
               <Button
                 onClick={() => window.open('/onboarding', '_blank')}
-                className="gap-2"
+                className="gap-2 bg-black text-white"
               >
                 <LightbulbIcon className="h-5 w-5" />
                 Get weekly curated content

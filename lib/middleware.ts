@@ -44,7 +44,7 @@ export async function updateSession(request: NextRequest) {
     const isAuthCallback = request.nextUrl.pathname.startsWith('/auth')
     const isOnboarding = request.nextUrl.pathname.startsWith('/onboarding')
     const isProfile = request.nextUrl.pathname.startsWith('/profile')
-    const isPublicRoute = request.nextUrl.pathname === '/'
+    const isPublicRoute = request.nextUrl.pathname === '/' || request.nextUrl.pathname === '/onboarding'
     const isServiceWorker = request.nextUrl.pathname.includes('service-worker.js')
     const isPublicAsset = request.nextUrl.pathname.match(/\.(ico|png|jpg|jpeg|svg|css|js|json)$/)
 
@@ -103,8 +103,13 @@ export async function updateSession(request: NextRequest) {
 
         // If trying to access onboarding but already has profile
         if (isOnboarding && hasProfile) {
+          const { data: user, error: userError } = await supabase.auth.getUser()
+          if (userError) {
+            console.error('❌ Middleware: Error checking user:', userError)
+            return response
+          }
           console.log('🔄 Middleware: Redirecting to home - already has profile')
-          return NextResponse.redirect(new URL('/', request.url))
+          return NextResponse.redirect(new URL(`/profile/${user.user.id}`, request.url))
         }
       }
 

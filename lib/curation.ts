@@ -15,7 +15,7 @@ interface Subscriber {
   updated_at: string
 }
 
-interface FeedItem {
+interface ContentItem {
   subscriber: string
   title: string
   url: string
@@ -39,137 +39,8 @@ class CurationService {
     )
   }
 
-  async curateForAllUsers(supabase?: SupabaseClient): Promise<void> {
-    console.log('🚀 Starting feed curation for all users...')
-    
-    try {
-      const client = supabase || this.getSupabaseClient()
-      // Get all subscribers with curation prompts
-      const { data: subscribers, error: subscribersError } = await client
-        .from('subscribers')
-        .select('*')
-        .not('curation_prompt', 'is', null)
-        .neq('curation_prompt', '')
-
-      if (subscribersError) {
-        throw new Error(`Failed to fetch subscribers: ${subscribersError.message}`)
-      }
-
-      if (!subscribers || subscribers.length === 0) {
-        console.log('📭 No subscribers with curation prompts found')
-        return
-      }
-
-      console.log(`👥 Found ${subscribers.length} subscribers to curate content for`)
-
-      // Process each subscriber
-      const results = await Promise.allSettled(
-        subscribers.map(subscriber => this.curateForUser(subscriber, client))
-      )
-
-      // Log results
-      const successful = results.filter(r => r.status === 'fulfilled').length
-      const failed = results.filter(r => r.status === 'rejected').length
-      
-      console.log(`✅ Curation completed: ${successful} successful, ${failed} failed`)
-      
-      if (failed > 0) {
-        const errors = results
-          .filter(r => r.status === 'rejected')
-          .map(r => (r as PromiseRejectedResult).reason)
-        console.error('❌ Failed curations:', errors)
-      }
-
-    } catch (error) {
-      console.error('💥 Fatal error during curation:', error)
-      throw error
-    }
-  }
-
-  async curateForUser(subscriber: Subscriber, supabase?: SupabaseClient): Promise<void> {
-    console.log(`🔍 Curating content for subscriber: ${subscriber.email} (${subscriber.id})`)
-    
-    try {
-      const client = supabase || this.getSupabaseClient()
-      // Ensure curation_prompt is a string and not empty
-      const curationPrompt = typeof subscriber.curation_prompt === 'string' 
-        ? subscriber.curation_prompt.trim()
-        : String(subscriber.curation_prompt || '').trim()
-      
-      if (!curationPrompt) {
-        throw new Error(`Subscriber ${subscriber.id} has no valid curation prompt`)
-      }
-      
-      console.log(`📝 Using curation prompt: "${curationPrompt}"`)
-      
-      // Search for content using Exa
-      const searchResults = await exaService.curateFeedForUser(curationPrompt, {
-        numResults: 5,
-        startPublishedDate: this.getLastWeekDate()
-      })
-
-      if (searchResults.length === 0) {
-        console.log(`📭 No new content found for subscriber: ${subscriber.email}`)
-        return
-      }
-
-      console.log(`📰 Found ${searchResults.length} articles for subscriber: ${subscriber.email}`)
-
-      // Check for duplicates and store new items
-      let newItemsCount = 0
-      for (const result of searchResults) {
-        try {
-          // Check if this URL already exists for this subscriber
-          const { data: existing } = await client
-            .from('feeds')
-            .select('id')
-            .eq('subscriber', subscriber.id)
-            .eq('url', result.url)
-            .single()
-
-          if (existing) {
-            console.log(`⏭️  Skipping duplicate URL for ${subscriber.email}: ${result.url}`)
-            continue
-          }
-
-          // Store the new feed item
-          const feedItem: FeedItem = {
-            subscriber: subscriber.id,
-            title: result.title,
-            url: result.url,
-            snippet: result.snippet,
-            author: result.author || null,
-            published_date: result.publishedDate || null
-          }
-
-          const { error: insertError } = await client
-            .from('feeds')
-            .insert(feedItem)
-
-          if (insertError) {
-            console.error(`❌ Failed to store feed item for ${subscriber.email}:`, insertError)
-            continue
-          }
-
-          newItemsCount++
-          console.log(`✅ Stored new article for ${subscriber.email}: ${result.title}`)
-
-        } catch (error) {
-          console.error(`❌ Error processing article for ${subscriber.email}:`, error)
-          continue
-        }
-      }
-
-      console.log(`🎉 Successfully curated ${newItemsCount} new articles for subscriber: ${subscriber.email}`)
-
-    } catch (error) {
-      console.error(`💥 Failed to curate content for subscriber ${subscriber.email}:`, error)
-      throw error
-    }
-  }
-
-  async curateForSingleUser(userId: string, supabase?: SupabaseClient): Promise<void> {
-    console.log(`🎯 Curating content for single subscriber: ${userId}`)
+  async curateForUser(userId: string, supabase?: SupabaseClient): Promise<void> {
+    console.log(`🎯 Curating content for user: ${userId}`)
     
     try {
       const client = supabase || this.getSupabaseClient()
@@ -188,10 +59,75 @@ class CurationService {
         throw new Error(`Subscriber ${userId} has no curation prompt set`)
       }
 
-      await this.curateForUser(subscriber, client)
+      // Ensure curation_prompt is a string and not empty
+      const curationPrompt = typeof subscriber.curation_prompt === 'string' 
+        ? subscriber.curation_prompt.trim()
+        : String(subscriber.curation_prompt || '').trim()
       
+      console.log(`📝 Using curation prompt: "${curationPrompt}"`)
+      
+      // Search for content using Exa
+      const searchResults = await exaService.curateFeedForUser(curationPrompt, {
+        numResults: 5,
+        startPublishedDate: this.getLastWeekDate()
+      })
+
+      if (searchResults.length === 0) {
+        console.log(`📭 No new content found for user: ${userId}`)
+        return
+      }
+
+      console.log(`📰 Found ${searchResults.length} articles for user: ${userId}`)
+
+      // Check for duplicates and store new items
+      let newItemsCount = 0
+      for (const result of searchResults) {
+        try {
+          // Check if this URL already exists for this subscriber
+          const { data: existing } = await client
+            .from('content')
+            .select('id')
+            .eq('subscriber', subscriber.id)
+            .eq('url', result.url)
+            .single()
+
+          if (existing) {
+            console.log(`⏭️  Skipping duplicate URL for ${subscriber.email}: ${result.url}`)
+            continue
+          }
+
+          // Store the new content item
+          const contentItem: ContentItem = {
+            subscriber: subscriber.id,
+            title: result.title,
+            url: result.url,
+            snippet: result.snippet,
+            author: result.author || null,
+            published_date: result.publishedDate || null
+          }
+
+          const { error: insertError } = await client
+            .from('content')
+            .insert(contentItem)
+
+          if (insertError) {
+            console.error(`❌ Failed to store content item for ${subscriber.email}:`, insertError)
+            continue
+          }
+
+          newItemsCount++
+          console.log(`✅ Stored new article for ${subscriber.email}: ${result.title}`)
+
+        } catch (error) {
+          console.error(`❌ Error processing article for ${subscriber.email}:`, error)
+          continue
+        }
+      }
+
+      console.log(`🎉 Successfully curated ${newItemsCount} new articles for user: ${userId}`)
+
     } catch (error) {
-      console.error(`💥 Failed to curate for subscriber ${userId}:`, error)
+      console.error(`💥 Failed to curate content for user ${userId}:`, error)
       throw error
     }
   }

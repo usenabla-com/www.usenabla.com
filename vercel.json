@@ -1,8 +1,0 @@
-{
-  "crons": [
-    {
-      "path": "/api/cron/curate-feeds",
-      "schedule": "0 8 * * *"
-    }
-  ]
-} 

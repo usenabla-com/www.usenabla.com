@@ -2,20 +2,6 @@ import { curationService } from './curation'
 import { SupabaseClient } from '@supabase/supabase-js'
 
 /**
- * Trigger content curation for all users
- */
-export async function curateAllUsers(supabase?: SupabaseClient) {
-  try {
-    console.log('🚀 Starting feed curation for all users...')
-    await curationService.curateForAllUsers(supabase)
-    console.log('✅ Feed curation completed for all users')
-  } catch (error) {
-    console.error('💥 Failed to curate feeds:', error)
-    throw error
-  }
-}
-
-/**
  * Trigger content curation for a specific user
  * @param userId The ID of the user to curate content for
  * @param supabase Optional Supabase client instance
@@ -31,13 +17,13 @@ export async function curateUserFeed(userId: string, supabase?: SupabaseClient) 
     return
   }
 
-  // Server-side execution (e.g. cron job or CLI)
+  // Server-side execution
   try {
-    console.log(`🎯 Starting feed curation for user: ${userId}`)
-    await curationService.curateForSingleUser(userId, supabase)
-    console.log(`✅ Feed curation completed for user: ${userId}`)
+    console.log(`🎯 Starting content curation for user: ${userId}`)
+    await curationService.curateForUser(userId, supabase)
+    console.log(`✅ Content curation completed for user: ${userId}`)
   } catch (error) {
-    console.error(`💥 Failed to curate feed for user ${userId}:`, error)
+    console.error(`💥 Failed to curate content for user ${userId}:`, error)
     throw error
   }
 }

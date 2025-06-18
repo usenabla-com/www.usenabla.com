@@ -14,7 +14,7 @@ export interface UserProfile {
   created_at: string
 }
 
-export interface Feed {
+export interface Content {
   id: string
   created_at: string
   subscriber: string
@@ -191,10 +191,10 @@ class SupabaseService {
   }
 
   // Feed methods
-  async createFeedItem(feedData: Omit<Feed, 'id' | 'created_at'>) {
+  async createFeedItem(feedData: Omit<Content, 'id' | 'created_at'>) {
     try {
       const { data, error } = await this.client
-        .from('feeds')
+        .from('content')
         .insert(feedData)
         .select()
         .single()
@@ -202,12 +202,12 @@ class SupabaseService {
       if (error) throw error
       return { data, error: null }
     } catch (error: any) {
-      console.error('Error creating feed item:', error)
+      console.error('Error creating content item:', error)
       return { data: null, error: error.message }
     }
   }
 
-  async getFeedItems(userId?: string, limit = 20, offset = 0): Promise<{ data: Feed[] | null; error: string | null }> {
+  async getFeedItems(userId?: string, limit = 20, offset = 0): Promise<{ data: Content[] | null; error: string | null }> {
     try {
       let targetUserId = userId
       if (!targetUserId) {
@@ -217,7 +217,7 @@ class SupabaseService {
       }
 
       const { data, error } = await this.client
-        .from('feeds')
+        .from('content')
         .select('*')
         .eq('subscriber', targetUserId)
         .order('created_at', { ascending: false })
@@ -226,7 +226,7 @@ class SupabaseService {
       if (error) throw error
       return { data, error: null }
     } catch (error: any) {
-      console.error('Error getting feed items:', error)
+      console.error('Error getting content items:', error)
       return { data: null, error: error.message }
     }
   }
@@ -234,14 +234,14 @@ class SupabaseService {
   async deleteFeedItem(feedId: string) {
     try {
       const { error } = await this.client
-        .from('feeds')
+        .from('content')
         .delete()
         .eq('id', feedId)
 
       if (error) throw error
       return { error: null }
     } catch (error: any) {
-      console.error('Error deleting feed item:', error)
+      console.error('Error deleting content item:', error)
       return { error: error.message }
     }
   }

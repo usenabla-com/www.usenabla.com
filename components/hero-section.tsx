@@ -4,7 +4,10 @@ import { Button } from "@/components/ui/button"
 import { LightbulbIcon } from "lucide-react"
 import { siGithub } from "simple-icons/icons"
 import { useRouter } from "next/navigation"
+import { useAnalytics } from "@/hooks/use-analytics"
+
 export function HeroSection() {
+  const analytics = useAnalytics()
   return (
     <section className="py-20 md:py-28">
       <div className="container px-4 md:px-6">
@@ -21,13 +24,19 @@ export function HeroSection() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 pt-4">
               <Button
-                onClick={() => window.open('/onboarding', '_blank')}
+                onClick={() => {
+                  analytics.track('Onboarding Button Clicked')
+                  window.open('/onboarding', '_blank')
+                }}
                 className="gap-2 bg-black text-white"
               >
                 <LightbulbIcon className="h-5 w-5" />
                 Get weekly curated content
               </Button>
-              <Button onClick={() => window.open('https://cal.com/jbohrman/30-min', '_blank')} variant="outline" className="gap-2">
+              <Button onClick={() => {
+                analytics.track('Schedule a Call Button Clicked')
+                window.open('https://cal.com/jbohrman/30-min', '_blank')
+              }} variant="outline" className="gap-2">
                 Schedule a Call
               </Button>
             </div>

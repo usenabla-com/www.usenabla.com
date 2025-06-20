@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import { Loader2 } from 'lucide-react'
+import { useAnalytics } from '@/hooks/use-analytics'
 
 interface SubscriberData {
   first_name: string
@@ -37,9 +38,11 @@ export default function OnboardingPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [userId, setUserId] = useState<string | null>(null)
   const router = useRouter()
+  const analytics = useAnalytics()
 
   useEffect(() => {
     // Check if user is already logged in
+    analytics.page('Onboarding Page Viewed')
     const checkUser = async () => {
       console.log('🔍 Onboarding: Checking user authentication')
         const { data: { user } } = await supabase.supabase.auth.getUser()
@@ -142,6 +145,7 @@ export default function OnboardingPage() {
 
       // Redirect to home after successful profile creation
       router.push('/')
+      useAnalytics().track('Profile Created')
     } catch (err: any) {
       setError(err.message || 'Failed to create subscriber profile.')
       setLoading(false)

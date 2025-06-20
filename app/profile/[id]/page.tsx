@@ -32,6 +32,7 @@ import { EnhancedFeedItem, ogParserService } from '@/lib/og-parser'
 import { curateUserFeed } from '@/lib/curation-utils'
 import FeedItem from '@/components/feed/FeedItem'
 import { PushNotificationSender } from '@/components/push-notification-sender'
+import { useAnalytics } from '@/hooks/use-analytics'
 
 export default function ProfilePage() {
   const params = useParams()
@@ -49,6 +50,7 @@ export default function ProfilePage() {
   const [hasMore, setHasMore] = useState(true)
   const [page, setPage] = useState(0)
   const feedContainerRef = useRef<HTMLDivElement>(null)
+  const analytics = useAnalytics()
 
   const profileId = params?.id as string
   const isOwnProfile = currentUser?.id === profileId
@@ -141,6 +143,7 @@ export default function ProfilePage() {
       // Reload feed items from beginning
       await loadFeedItems(0, false)
       setPage(0)
+      analytics.track('Curation Triggered')
     } catch (err) {
       console.error('Failed to trigger curation:', err)
       setFeedError(err instanceof Error ? err.message : 'Failed to trigger curation')

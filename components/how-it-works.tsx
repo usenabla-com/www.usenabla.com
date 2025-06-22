@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import Cal, { getCalApi } from '@calcom/embed-react'
 import supabase from '@/lib/supabase/client'
-
+import { useAnalytics } from '@/hooks/use-analytics'
 interface BlogPost {
   id: string
   title: string
@@ -28,7 +28,7 @@ interface ProjectCardProps {
 export function HowItWorks() {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
-
+  const analytics = useAnalytics()
   // Sign-up form state
   const [step, setStep] = useState<'form' | 'checkEmail'>('form')
   const [userData, setUserData] = useState({
@@ -136,6 +136,9 @@ export function HowItWorks() {
               >
                 <Cal
                   namespace="45-min-intro-call"
+                  onSubmit={() => {
+                    analytics.track('Call Scheduled')
+                  }}
                   calLink="team/atelier-logos/45-min-intro-call"
                   style={{
                     width: "100%",

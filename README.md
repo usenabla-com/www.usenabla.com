@@ -160,16 +160,9 @@ PUSHER_CLUSTER=your_pusher_cluster
 
 ## 📞 Support
 
-- 📧 Email: [support@atelierlogos.studio](mailto:support@atelierlogos.studio)
-- 💬 Schedule a Call: Available through our platform
-- 📚 Documentation: [docs.atelierlogos.studio](https://docs.atelierlogos.studio)
-
-## 📄 License
-
-This project is proprietary software. All rights reserved.
+- 📧 Support: [Create an account](https://www.atelierlogos.studio/onboarding) and chat with us
+- 💬 Schedule a Call: Available on the homepage
 
 ---
 
-**Built with ❤️ by the Atelier Logos Studio team**
-
-*Empowering businesses with bespoke LLM-enabled solutions*
+**Built with ❤️ in Knoxville, TN**

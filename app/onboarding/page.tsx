@@ -157,14 +157,14 @@ export default function OnboardingPage() {
       <>
         <Navbar />
         <main className="container mx-auto px-4 py-12 flex-grow">
-            <div className="max-w-md mx-auto text-center p-8 bg-white rounded-lg shadow-md">
+            <div className="max-w-md mx-auto text-center p-8 bg-card rounded-lg shadow-md border">
                 <div className="text-5xl mb-4">📧</div>
-                <h2 className="text-2xl font-semibold text-gray-900 mb-2">Check Your Email</h2>
-                <p className="text-gray-600 mb-6">
-              We sent a magic link to <strong>{subscriberData.email}</strong>.<br />
+                <h2 className="text-2xl font-semibold text-foreground mb-2">Check Your Email</h2>
+                <p className="text-muted-foreground mb-6">
+              We sent a magic link to <strong className="text-foreground">{subscriberData.email}</strong>.<br />
               Click the link in your email to continue.
                 </p>
-                <Loader2 className="h-8 w-8 animate-spin mx-auto text-gray-500" />
+                <Loader2 className="h-8 w-8 animate-spin mx-auto text-muted-foreground" />
             </div>
         </main>
         <Footer />
@@ -177,27 +177,27 @@ export default function OnboardingPage() {
       <div className="flex flex-col min-h-screen">
         <Navbar />
         <main className="container mx-auto px-4 py-12 flex-grow">
-          <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
+          <div className="max-w-md mx-auto bg-card p-8 rounded-lg shadow-md border">
             <div className="text-center mb-8">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome!</h1>
-              <p className="text-gray-600">First, let's get you signed in.</p>
+              <h1 className="text-3xl font-bold text-foreground mb-2">Welcome!</h1>
+              <p className="text-muted-foreground">First, let's get you signed in.</p>
             </div>
 
             <form onSubmit={handleAuthentication} className="space-y-6">
               <div>
-                <Label htmlFor="email">Email <span className="text-red-500">*</span></Label>
+                <Label htmlFor="email" className="text-foreground">Email <span className="text-destructive">*</span></Label>
                 <input 
                   id="email" 
                   type="email" 
                   required 
                   value={subscriberData.email} 
                   onChange={(e) => setSubscriberData(prev => ({ ...prev, email: e.target.value }))} 
-                  className="w-full mt-1 p-3 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-500 focus:border-transparent" 
+                  className="w-full mt-1 p-3 bg-background border border-border rounded-lg text-sm text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-ring focus:border-transparent" 
                 />
               </div>
 
               {error && (
-                <div className="text-red-500 text-sm">{error}</div>
+                <div className="text-destructive text-sm">{error}</div>
               )}
 
               <Button 
@@ -226,95 +226,95 @@ export default function OnboardingPage() {
     <div className="flex flex-col min-h-screen">
       <Navbar />
       <main className="container mx-auto px-4 py-12 flex-grow">
-        <div className="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-md">
+        <div className="max-w-2xl mx-auto bg-card p-8 rounded-lg shadow-md border">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Create Your Profile</h1>
-            <p className="text-gray-600">Join our curated content network. Let's get you set up.</p>
+            <h1 className="text-3xl font-bold text-foreground mb-2">Create Your Profile</h1>
+            <p className="text-muted-foreground">Join our curated content network. Let's get you set up.</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <Label htmlFor="firstName">First Name</Label>
+                <Label htmlFor="firstName" className="text-foreground">First Name</Label>
                 <input 
                   id="firstName" 
                   type="text" 
                   maxLength={50} 
                   value={subscriberData.first_name} 
                   onChange={(e) => setSubscriberData(prev => ({ ...prev, first_name: e.target.value }))} 
-                  className="w-full mt-1 p-3 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-500 focus:border-transparent" 
+                  className="w-full mt-1 p-3 bg-background border border-border rounded-lg text-sm text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-ring focus:border-transparent" 
                 />
               </div>
               <div>
-                <Label htmlFor="lastName">Last Name</Label>
+                <Label htmlFor="lastName" className="text-foreground">Last Name</Label>
                 <input 
                   id="lastName" 
                   type="text" 
                   maxLength={50} 
                   value={subscriberData.last_name} 
                   onChange={(e) => setSubscriberData(prev => ({ ...prev, last_name: e.target.value }))} 
-                  className="w-full mt-1 p-3 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-500 focus:border-transparent" 
+                  className="w-full mt-1 p-3 bg-background border border-border rounded-lg text-sm text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-ring focus:border-transparent" 
                 />
               </div>
             </div>
 
             <div>
-              <Label htmlFor="linkedin">LinkedIn URL</Label>
+              <Label htmlFor="linkedin" className="text-foreground">LinkedIn URL</Label>
               <input 
                 id="linkedin" 
                 type="url" 
                 value={subscriberData.linkedin_url} 
                 onChange={(e) => setSubscriberData(prev => ({ ...prev, linkedin_url: e.target.value }))} 
-                className="w-full mt-1 p-3 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-500 focus:border-transparent" 
+                className="w-full mt-1 p-3 bg-background border border-border rounded-lg text-sm text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-ring focus:border-transparent" 
                 placeholder="https://linkedin.com/in/username"
               />
             </div>
             
             <div>
-              <Label htmlFor="company">Company</Label>
+              <Label htmlFor="company" className="text-foreground">Company</Label>
               <input 
                 id="company" 
                 type="text" 
                 value={subscriberData.company} 
                 onChange={(e) => setSubscriberData(prev => ({ ...prev, company: e.target.value }))} 
-                className="w-full mt-1 p-3 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-500 focus:border-transparent"
+                className="w-full mt-1 p-3 bg-background border border-border rounded-lg text-sm text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-ring focus:border-transparent"
               />
             </div>
             
             <div>
-              <Label htmlFor="curationPrompt">What content would you like us to curate for you?</Label>
+              <Label htmlFor="curationPrompt" className="text-foreground">What content would you like us to curate for you?</Label>
               <textarea 
                 id="curationPrompt" 
                 value={subscriberData.curation_prompt} 
                 onChange={(e) => setSubscriberData(prev => ({ ...prev, curation_prompt: e.target.value }))} 
-                className="w-full mt-1 p-3 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-500 focus:border-transparent"
+                className="w-full mt-1 p-3 bg-background border border-border rounded-lg text-sm text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-ring focus:border-transparent"
                 rows={4}
                 placeholder="E.g., Latest news and insights about AI and machine learning, focusing on practical applications in business"
               />
             </div>
             
             <div>
-              <Label htmlFor="profilePic">Profile Picture</Label>
+              <Label htmlFor="profilePic" className="text-foreground">Profile Picture</Label>
               <input 
                 id="profilePic" 
                 type="file" 
                 accept="image/*" 
                 onChange={handleImageChange} 
-                className="w-full mt-1 p-3 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-500 focus:border-transparent" 
+                className="w-full mt-1 p-3 bg-background border border-border rounded-lg text-sm text-foreground file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90 focus:ring-2 focus:ring-ring focus:border-transparent" 
               />
               {subscriberData.profile_pic_url && (
                 <div className="mt-2">
                   <img 
                     src={subscriberData.profile_pic_url} 
                     alt="Profile preview" 
-                    className="w-20 h-20 object-cover rounded-full" 
+                    className="w-20 h-20 object-cover rounded-full border-2 border-border" 
                   />
                 </div>
               )}
             </div>
 
             {error && (
-              <div className="text-red-500 text-sm">{error}</div>
+              <div className="text-destructive text-sm">{error}</div>
             )}
             
             <Button

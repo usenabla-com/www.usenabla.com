@@ -6,7 +6,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { LoginModal } from "@/components/login-modal"
 import { useAuth } from "@/hooks/use-auth"
-import { Menu, X, LogIn, LogOut, User, ChevronDown, Settings, BookOpen, Briefcase, Mail } from "lucide-react"
+import { Menu, X, LogIn, LogOut, User, ChevronDown, Settings, BookOpen, Briefcase, Mail, MessageSquare } from "lucide-react"
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -41,6 +41,10 @@ export function Navbar() {
     setIsMobileProfileOpen(!isMobileProfileOpen)
   }
 
+  // Check if current user is the support user
+  const SUPPORT_USER_ID = 'ec241bb3-293e-4f03-9d07-591f0208d0ad'
+  const isSupportUser = user?.id === SUPPORT_USER_ID
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
@@ -62,9 +66,15 @@ export function Navbar() {
           <Link href="/blog" className="text-sm font-medium hover:text-primary transition-colors">
             Blog
           </Link>
-          <Link href="https://cal.com/team/atelier-logos/45-min-intro-call" className="text-sm font-medium hover:text-primary transition-colors">
-            Schedule a 45-min Chat
-          </Link>
+          {isSupportUser ? (
+            <Link href={`/support/${SUPPORT_USER_ID}`} className="text-sm font-medium hover:text-primary transition-colors">
+              Support Dashboard
+            </Link>
+          ) : (
+            <Link href="https://cal.com/team/atelier-logos/45-min-intro-call" className="text-sm font-medium hover:text-primary transition-colors">
+              Schedule a 45-min Chat
+            </Link>
+          )}
         </nav>
 
         {/* Desktop Auth Section */}
@@ -97,6 +107,14 @@ export function Navbar() {
                     Settings
                   </Link>
                 </DropdownMenuItem>
+                {isSupportUser && (
+                  <DropdownMenuItem asChild>
+                    <Link href={`/support/${SUPPORT_USER_ID}`} className="cursor-pointer">
+                      <MessageSquare className="mr-2 h-4 w-4" />
+                      Support Dashboard
+                    </Link>
+                  </DropdownMenuItem>
+                )}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer text-red-600">
                   <LogOut className="mr-2 h-4 w-4" />
@@ -202,6 +220,22 @@ export function Navbar() {
                       Settings
                     </Link>
                   </Button>
+                  {isSupportUser && (
+                    <Button 
+                      variant="ghost" 
+                      className="w-full justify-start gap-3 h-10 bg-background/50 hover:bg-background border border-border/50" 
+                      asChild
+                      onClick={() => {
+                        setIsMenuOpen(false)
+                        setIsMobileProfileOpen(false)
+                      }}
+                    >
+                      <Link href={`/support/${SUPPORT_USER_ID}`}>
+                        <MessageSquare size={16} />
+                        Support Dashboard
+                      </Link>
+                    </Button>
+                  )}
                   <Button 
                     variant="ghost" 
                     className="w-full justify-start gap-3 h-10 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950 border border-red-200 dark:border-red-800" 
@@ -260,14 +294,25 @@ export function Navbar() {
                 <BookOpen size={16} />
                 Blog
               </Link>
-              <Link
-                href="/support"
-                className="flex items-center gap-3 py-2 text-sm font-medium hover:text-primary transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                <Mail size={16} />
-                Support
-              </Link>
+              {isSupportUser ? (
+                <Link
+                  href={`/support/${SUPPORT_USER_ID}`}
+                  className="flex items-center gap-3 py-2 text-sm font-medium hover:text-primary transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <MessageSquare size={16} />
+                  Support Dashboard
+                </Link>
+              ) : (
+                <Link
+                  href="https://cal.com/team/atelier-logos/45-min-intro-call"
+                  className="flex items-center gap-3 py-2 text-sm font-medium hover:text-primary transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <Mail size={16} />
+                  Schedule a 45-min Chat
+                </Link>
+              )}
               
               {/* PWA Install Button for mobile */}
               <div className="py-2 flex justify-center">

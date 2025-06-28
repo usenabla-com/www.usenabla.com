@@ -43,33 +43,33 @@ export function MessageAttachment({ type, url, filename, size, mimeType, classNa
     document.body.removeChild(link)
   }
 
-  // For images, show preview
+  // For images, show compact preview
   if (type === 'image') {
     return (
-      <Card className={`max-w-sm ${className}`}>
-        <CardContent className="p-2">
+      <Card className={`max-w-xs border-border/50 ${className}`}>
+        <CardContent className="p-1">
           <div className="relative group">
             <img
               src={url}
               alt={filename}
-              className="w-full h-auto max-h-64 object-cover rounded-lg"
+              className="w-full h-auto max-h-32 object-cover rounded-md"
               loading="lazy"
             />
-            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
+            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-md flex items-center justify-center">
               <Button
                 variant="secondary"
                 size="sm"
                 onClick={handleDownload}
-                className="gap-2"
+                className="gap-1 h-7 px-2 text-xs"
               >
-                <Download className="h-4 w-4" />
+                <Download className="h-3 w-3" />
                 Download
               </Button>
             </div>
           </div>
-          <div className="mt-2 flex items-center justify-between">
+          <div className="mt-1 flex items-center justify-between">
             <p className="text-xs text-muted-foreground truncate flex-1">{filename}</p>
-            <Badge variant="secondary" className="text-xs ml-2">
+            <Badge variant="secondary" className="text-xs ml-1 h-4 px-1">
               {formatFileSize(size)}
             </Badge>
           </div>
@@ -78,22 +78,22 @@ export function MessageAttachment({ type, url, filename, size, mimeType, classNa
     )
   }
 
-  // For videos, show video player
+  // For videos, show compact video player
   if (type === 'video') {
     return (
-      <Card className={`max-w-sm ${className}`}>
-        <CardContent className="p-2">
+      <Card className={`max-w-xs border-border/50 ${className}`}>
+        <CardContent className="p-1">
           <video
             controls
-            className="w-full h-auto max-h-64 rounded-lg"
+            className="w-full h-auto max-h-32 rounded-md"
             preload="metadata"
           >
             <source src={url} type={mimeType} />
             Your browser does not support the video tag.
           </video>
-          <div className="mt-2 flex items-center justify-between">
+          <div className="mt-1 flex items-center justify-between">
             <p className="text-xs text-muted-foreground truncate flex-1">{filename}</p>
-            <Badge variant="secondary" className="text-xs ml-2">
+            <Badge variant="secondary" className="text-xs ml-1 h-4 px-1">
               {formatFileSize(size)}
             </Badge>
           </div>
@@ -102,19 +102,19 @@ export function MessageAttachment({ type, url, filename, size, mimeType, classNa
     )
   }
 
-  // For audio, show audio player
+  // For audio, show compact audio player
   if (type === 'audio') {
     return (
-      <Card className={`max-w-sm ${className}`}>
-        <CardContent className="p-3">
-          <div className="flex items-center gap-3 mb-2">
-            <Music className="h-8 w-8 text-muted-foreground" />
+      <Card className={`max-w-xs border-border/50 ${className}`}>
+        <CardContent className="p-2">
+          <div className="flex items-center gap-2 mb-1">
+            <Music className="h-5 w-5 text-muted-foreground flex-shrink-0" />
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium truncate">{filename}</p>
+              <p className="text-xs font-medium truncate">{filename}</p>
               <p className="text-xs text-muted-foreground">{formatFileSize(size)}</p>
             </div>
           </div>
-          <audio controls className="w-full">
+          <audio controls className="w-full h-8">
             <source src={url} type={mimeType} />
             Your browser does not support the audio tag.
           </audio>
@@ -123,23 +123,23 @@ export function MessageAttachment({ type, url, filename, size, mimeType, classNa
     )
   }
 
-  // For other files, show file card
+  // For other files, show compact file card
   return (
-    <Card className={`max-w-sm ${className}`}>
-      <CardContent className="p-3">
-        <div className="flex items-center gap-3">
-          <IconComponent className="h-8 w-8 text-muted-foreground" />
+    <Card className={`max-w-xs border-border/50 ${className}`}>
+      <CardContent className="p-2">
+        <div className="flex items-center gap-2">
+          <IconComponent className="h-5 w-5 text-muted-foreground flex-shrink-0" />
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium truncate">{filename}</p>
+            <p className="text-xs font-medium truncate">{filename}</p>
             <p className="text-xs text-muted-foreground">{formatFileSize(size)}</p>
           </div>
           <Button
             variant="ghost"
             size="sm"
             onClick={handleDownload}
-            className="gap-2"
+            className="gap-1 h-6 w-6 p-0"
           >
-            <Download className="h-4 w-4" />
+            <Download className="h-3 w-3" />
           </Button>
         </div>
       </CardContent>

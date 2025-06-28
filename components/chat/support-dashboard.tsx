@@ -597,7 +597,7 @@ export function SupportChatDashboard() {
             {/* Messages */}
             <div className="flex-1 overflow-hidden min-h-0">
               <ScrollArea className="h-full">
-                <div className="px-3 py-2 space-y-1 pb-32">
+                <div className="px-2 py-1 space-y-0.5 pb-20">
                   {selectedRoom.messages.map((message, index) => {
                     const isSupport = message.sender_type === 'support'
                     const messageParts = message.message ? parseMessageContent(message.message) : []
@@ -607,14 +607,14 @@ export function SupportChatDashboard() {
                     return (
                       <div 
                         key={message.id} 
-                        className={`group py-2 px-3 hover:bg-muted/30 rounded-lg transition-colors ${
+                        className={`group py-1 px-2 hover:bg-muted/20 rounded-md transition-colors ${
                           isLastMessage ? 'animate-in slide-in-from-bottom-2' : ''
                         }`}
                       >
-                        <div className="flex gap-3">
+                        <div className="flex gap-2">
                           {/* Avatar - Always on the left */}
-                          <div className="flex-shrink-0 mt-1">
-                            <Avatar className="w-8 h-8 ring-1 ring-border/20">
+                          <div className="flex-shrink-0 mt-0.5">
+                            <Avatar className="w-6 h-6 ring-1 ring-border/20">
                               {isSupport ? (
                                 <AvatarFallback className="text-xs font-medium bg-primary/10 text-primary">
                                   You
@@ -643,8 +643,8 @@ export function SupportChatDashboard() {
                           {/* Message Content */}
                           <div className="flex-1 min-w-0">
                             {/* Header with name and timestamp */}
-                            <div className="flex items-baseline gap-2 mb-1">
-                              <span className={`text-sm font-semibold ${
+                            <div className="flex items-baseline gap-2 mb-0.5">
+                              <span className={`text-xs font-semibold ${
                                 isSupport ? 'text-primary' : 'text-foreground'
                               }`}>
                                 {isSupport ? 'You' : selectedRoom.user_profile.full_name}
@@ -659,7 +659,7 @@ export function SupportChatDashboard() {
 
                             {/* Message text */}
                             {message.message && (
-                              <div className="text-sm text-foreground leading-relaxed mb-2">
+                              <div className="text-sm text-foreground leading-snug mb-1">
                                 {messageParts.map((part, index) => (
                                   <span key={index}>
                                     {part.type === 'url' ? (
@@ -681,7 +681,7 @@ export function SupportChatDashboard() {
                             
                             {/* File attachment */}
                             {message.attachment_type && message.attachment_url && (
-                              <div className="mb-2">
+                              <div className="mb-1">
                                 <MessageAttachment
                                   type={message.attachment_type}
                                   url={message.attachment_url}
@@ -694,9 +694,9 @@ export function SupportChatDashboard() {
                               
                             {/* URL Previews */}
                             {urls.length > 0 && (
-                              <div className="space-y-2">
+                              <div className="space-y-1">
                                 {urls.map((url, index) => (
-                                  <div key={index} className="max-w-md">
+                                  <div key={index} className="max-w-xs">
                                     <URLPreview url={url} />
                                   </div>
                                 ))}
@@ -713,9 +713,9 @@ export function SupportChatDashboard() {
             </div>
 
             {/* Message Input - Sticky */}
-            <div className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-md border-t border-border/50 p-3 md:hidden z-50">
+            <div className="flex-shrink-0 bg-background/95 backdrop-blur-md border-t border-border/50 p-2 md:hidden">
               <div className="pb-safe-area-inset-bottom max-w-full">
-                <div className="rounded-xl border border-border/50 bg-background/50 p-1 shadow-sm">
+                <div className="rounded-lg border border-border/50 bg-background/50 p-1 shadow-sm">
                   <EnhancedMessageInput
                     onSendMessage={sendMessage}
                     disabled={isSending}
@@ -851,7 +851,7 @@ export function SupportChatDashboard() {
               {/* Desktop Messages */}
               <div className="flex-1 overflow-hidden min-h-0">
                 <ScrollArea className="h-full">
-                  <div className="p-6 px-36 bg-background space-y-1 pb-32">
+                  <div className="p-4 space-y-1 pb-24">
                       {selectedRoom.messages.map((message, index) => {
                         const isSupport = message.sender_type === 'support'
                       const messageParts = message.message ? parseMessageContent(message.message) : []
@@ -861,14 +861,14 @@ export function SupportChatDashboard() {
                         return (
                           <div 
                             key={message.id} 
-                            className={`group py-2 px-4 hover:bg-muted/30 rounded-lg transition-colors ${
+                            className={`group py-1.5 px-3 hover:bg-muted/20 rounded-lg transition-colors ${
                               isLastMessage ? 'animate-in slide-in-from-bottom-2' : ''
                             }`}
                           >
                             <div className="flex gap-3">
                               {/* Avatar - Always on the left */}
-                              <div className="flex-shrink-0 mt-1">
-                                <Avatar className="w-10 h-10 ring-1 ring-border/20">
+                              <div className="flex-shrink-0 mt-0.5">
+                                <Avatar className="w-8 h-8 ring-1 ring-border/20">
                                   {isSupport ? (
                                     <AvatarFallback className="text-sm font-medium bg-primary/10 text-primary">
                                       You
@@ -967,7 +967,7 @@ export function SupportChatDashboard() {
               </div>
 
               {/* Desktop Message Input - Sticky */}
-              <div className="hidden md:block fixed bottom-0 left-80 right-0 bg-background/95 backdrop-blur-md border-t border-border/50 p-6 shadow-lg z-10">
+              <div className="flex-shrink-0 bg-background/95 backdrop-blur-md border-t border-border/50 p-4 shadow-lg">
                 <div className="max-w-none">
                   <div className="rounded-xl border border-border/50 bg-background/50 p-1 shadow-sm">
                     <EnhancedMessageInput

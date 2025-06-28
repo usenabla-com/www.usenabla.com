@@ -6,7 +6,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { LoginModal } from "@/components/login-modal"
 import { useAuth } from "@/hooks/use-auth"
-import { Menu, X, LogIn, LogOut, User, ChevronDown, Settings } from "lucide-react"
+import { Menu, X, LogIn, LogOut, User, ChevronDown, Settings, BookOpen, Briefcase, Mail } from "lucide-react"
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -51,38 +51,34 @@ export function Navbar() {
           </Link>
         </div>
 
+        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
-          <Link href="#features" className="text-sm font-medium hover:text-primary transition-colors">
+          <Link href="/#features" className="text-sm font-medium hover:text-primary transition-colors">
             Features
           </Link>
-          <Link href="#how-it-works" className="text-sm font-medium hover:text-primary transition-colors">
+          <Link href="/#how-it-works" className="text-sm font-medium hover:text-primary transition-colors">
             How It Works
           </Link>
-          
-          {/* Tools & Resources Dropdown */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="text-sm font-medium hover:text-primary transition-colors gap-1">
-                Tools & Resources
-                <ChevronDown className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-48">
-              <DropdownMenuItem asChild>
-                <Link href="/tools" className="cursor-pointer">
-                  Tools (coming soon)
-                </Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <Link href="/blog" className="text-sm font-medium hover:text-primary transition-colors">
+            Blog
+          </Link>
+          <Link href="https://cal.com/team/atelier-logos/45-min-intro-call" className="text-sm font-medium hover:text-primary transition-colors">
+            Schedule a 45-min Chat
+          </Link>
+        </nav>
 
-          {/* Auth Section */}
-          {user ? (
+        {/* Desktop Auth Section */}
+        <div className="hidden md:flex items-center gap-3">
+          {loading ? (
+            <Button variant="outline" disabled>
+              Loading...
+            </Button>
+          ) : user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="gap-2">
+                <Button variant="outline" className="gap-2 max-w-[200px]">
                   <User size={16} />
-                  <span className="hidden lg:inline">{user.email}</span>
+                  <span className="truncate">{user.email}</span>
                   <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
@@ -90,13 +86,19 @@ export function Navbar() {
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
-                  <Link href="/profile" className="cursor-pointer">
+                  <Link href={`/profile/${user.id}`} className="cursor-pointer">
                     <User className="mr-2 h-4 w-4" />
                     Profile
                   </Link>
                 </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/onboarding" className="cursor-pointer">
+                    <Settings className="mr-2 h-4 w-4" />
+                    Settings
+                  </Link>
+                </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer">
+                <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer text-red-600">
                   <LogOut className="mr-2 h-4 w-4" />
                   Sign Out
                 </DropdownMenuItem>
@@ -114,71 +116,39 @@ export function Navbar() {
               </Button>
               <Button 
                 className="gap-2" 
-                onClick={() => setIsLoginModalOpen(true)}
+                asChild
               >
-                Get Started
+                <Link href="/onboarding">
+                  Get Started
+                </Link>
               </Button>
             </div>
           )}
-        </nav>
+        </div>
 
-        <div className="flex items-center gap-2 sm:gap-4">
-          {loading ? (
-            <Button variant="outline" disabled className="hidden sm:flex">
-              Loading...
-            </Button>
-          ) : user ? (
-            <>
-              {/* Desktop Profile Dropdown */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild className="hidden md:flex">
-                  <Button variant="outline" className="gap-2 max-w-[200px]">
-                    <User size={16} />
-                    <span className="truncate">{user.email}</span>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
-                  <DropdownMenuItem asChild>
-                    <Link href={`/profile/${user.id}`}>
-                      <User size={16} className="mr-2" />
-                      Profile
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleSignOut} className="text-red-600">
-                    <LogOut size={16} className="mr-2" />
-                    Sign Out
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-
-              {/* Mobile Profile Button */}
-              <Button 
-                variant="outline" 
-                size="sm"
-                onClick={(e) => {
-                  e.preventDefault()
-                  e.stopPropagation()
-                  if (!isMenuOpen) {
-                    setIsMenuOpen(true)
-                  }
-                  toggleMobileProfile()
-                }}
-                className="md:hidden gap-1 px-2"
-              >
-                <User size={14} />
-                <ChevronDown size={12} className={`transition-transform ${isMobileProfileOpen ? 'rotate-180' : ''}`} />
-              </Button>
-            </>
-          ) : (
-            <Button onClick={() => setIsLoginModalOpen(true)} variant="outline" className="gap-2 hidden sm:flex">
-              <LogIn size={16} />
-              Sign In
+        {/* Mobile Menu Toggle & Profile */}
+        <div className="flex items-center gap-2 md:hidden">
+          {user && (
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                if (!isMenuOpen) {
+                  setIsMenuOpen(true)
+                }
+                toggleMobileProfile()
+              }}
+              className="gap-1 px-2"
+            >
+              <User size={14} />
+              <ChevronDown size={12} className={`transition-transform ${isMobileProfileOpen ? 'rotate-180' : ''}`} />
             </Button>
           )}
 
           <button 
-            className="md:hidden p-2 hover:bg-accent rounded-md transition-colors" 
+            className="p-2 hover:bg-accent rounded-md transition-colors" 
             onClick={() => setIsMenuOpen(!isMenuOpen)} 
             aria-label="Toggle menu"
           >
@@ -220,6 +190,20 @@ export function Navbar() {
                   </Button>
                   <Button 
                     variant="ghost" 
+                    className="w-full justify-start gap-3 h-10 bg-background/50 hover:bg-background border border-border/50" 
+                    asChild
+                    onClick={() => {
+                      setIsMenuOpen(false)
+                      setIsMobileProfileOpen(false)
+                    }}
+                  >
+                    <Link href="/onboarding">
+                      <Settings size={16} />
+                      Settings
+                    </Link>
+                  </Button>
+                  <Button 
+                    variant="ghost" 
                     className="w-full justify-start gap-3 h-10 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950 border border-red-200 dark:border-red-800" 
                     onClick={handleSignOut}
                   >
@@ -253,33 +237,37 @@ export function Navbar() {
             {/* Navigation Links */}
             <nav className="space-y-3">
               <Link
-                href="#features"
-                className="block py-2 text-sm font-medium hover:text-primary transition-colors"
+                href="/#features"
+                className="flex items-center gap-3 py-2 text-sm font-medium hover:text-primary transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
+                <Briefcase size={16} />
                 Features
               </Link>
               <Link
-                href="#how-it-works"
-                className="block py-2 text-sm font-medium hover:text-primary transition-colors"
+                href="/#how-it-works"
+                className="flex items-center gap-3 py-2 text-sm font-medium hover:text-primary transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
+                <Settings size={16} />
                 How It Works
               </Link>
-              
-              {/* Tools & Resources section for mobile */}
-              <div className="py-2">
-                <div className="text-sm font-medium text-muted-foreground mb-2">Tools & Resources</div>
-                <div className="pl-4 border-l-2 border-muted space-y-2">
-                  <Link
-                    href="/tools"
-                    className="block py-1 text-sm hover:text-primary transition-colors"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Tools (coming soon)
-                  </Link>
-                </div>
-              </div>
+              <Link
+                href="/blog"
+                className="flex items-center gap-3 py-2 text-sm font-medium hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <BookOpen size={16} />
+                Blog
+              </Link>
+              <Link
+                href="/support"
+                className="flex items-center gap-3 py-2 text-sm font-medium hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <Mail size={16} />
+                Support
+              </Link>
               
               {/* PWA Install Button for mobile */}
               <div className="py-2 flex justify-center">
@@ -302,12 +290,12 @@ export function Navbar() {
                   </Button>
                   <Button 
                     className="w-full gap-2" 
-                    onClick={() => {
-                      setIsLoginModalOpen(true)
-                      setIsMenuOpen(false)
-                    }}
+                    asChild
+                    onClick={() => setIsMenuOpen(false)}
                   >
-                    Get Started
+                    <Link href="/onboarding">
+                      Get Started
+                    </Link>
                   </Button>
                 </div>
               )}

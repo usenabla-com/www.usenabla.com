@@ -37,7 +37,7 @@ const Blog = () => (
           </div>
           <h3 className="text-xl tracking-tight">Modern Development Practices</h3>
           <p className="text-muted-foreground text-base">
-            Adopting the latest tools and methodologies to build maintainable, testable software in the AI era.
+            Adopting the latest methodologies to build maintainable, testable software in the AI era.
           </p>
         </div>
         <div className="flex flex-col gap-2 hover:opacity-75 cursor-pointer">

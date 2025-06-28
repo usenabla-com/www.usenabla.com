@@ -23,7 +23,7 @@ Next came the internal support chat, which might seem just like a bootleg versio
 
  
 
-![image.png](attachment:58e89735-6a66-455b-94b1-93a8e4be5f04:image.png)
+![image.png](/public/blog/profile.png)
 
 Both of these were built 100% with Cursor, and are a huge part of what I mean when I refer to ecosystem-building. 
 
@@ -31,7 +31,7 @@ Both of these were built 100% with Cursor, and are a huge part of what I mean wh
 
 In a world where every AI product shills extractive usage based products and pricing models, it’s important to have features or customer processes that set your brand apart from the rest of the rabble.
 
-![image.png](attachment:c2974aea-590b-474a-bad7-07fa1dd91f93:image.png)
+![image.png](https://media1.tenor.com/m/S0tTggqTZ_AAAAAd/rabble-randy-marsh.gif)
 
 These kinds of things can be specially crafted partnership portals, custom built onboarding flows, voice AI with tools like [VAPI](https://vapi.ai/) or [Pipecat](https://www.pipecat.ai/), or anything special you want to provide your users, be it processes or tech stack-based. The core concept is to build with intention, as opposed to just throwing a prompt at Cursor, setting up a paywall, and hoping it sticks. Always remember survivor bias exists, and not every founder is making $35k/mo. 
 

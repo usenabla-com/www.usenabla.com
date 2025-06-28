@@ -22,12 +22,14 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'User profile not found' }, { status: 404 })
     }
 
-    if (!profile.customer) {
-      return NextResponse.json({ 
-        error: 'Customer access required',
-        message: 'Chat support is only available for customers. Please upgrade your account to access this feature.'
-      }, { status: 403 })
-    }
+    // TODO: Uncomment this when we have a way to handle non-customer support requests
+    
+    // if (!profile.customer) {
+    //   return NextResponse.json({ 
+    //     error: 'Customer access required',
+    //     message: 'Chat support is only available for customers. Please upgrade your account to access this feature.'
+    //   }, { status: 403 })
+    // }
 
     // Check if user has an existing chat room (prefer open, but also check recent ones)
     const { data: existingRooms, error: roomError } = await supabase

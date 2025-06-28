@@ -597,7 +597,7 @@ export function SupportChatDashboard() {
             {/* Messages */}
             <div className="flex-1 overflow-hidden min-h-0">
               <ScrollArea className="h-full">
-                <div className="px-3 py-2 space-y-1 pb-24">
+                <div className="px-3 py-2 space-y-1 pb-32">
                   {selectedRoom.messages.map((message, index) => {
                     const isSupport = message.sender_type === 'support'
                     const messageParts = message.message ? parseMessageContent(message.message) : []
@@ -713,7 +713,7 @@ export function SupportChatDashboard() {
             </div>
 
             {/* Message Input - Sticky */}
-            <div className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-md border-t border-border/50 p-3 md:hidden">
+            <div className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-md border-t border-border/50 p-3 md:hidden z-50">
               <div className="pb-safe-area-inset-bottom max-w-full">
                 <div className="rounded-xl border border-border/50 bg-background/50 p-1 shadow-sm">
                   <EnhancedMessageInput
@@ -967,7 +967,7 @@ export function SupportChatDashboard() {
               </div>
 
               {/* Desktop Message Input - Sticky */}
-              <div className="hidden md:block fixed bottom-0 left-80 right-0 bg-background/95 backdrop-blur-md border-t border-border/50 p-6 shadow-lg">
+              <div className="hidden md:block fixed bottom-0 left-80 right-0 bg-background/95 backdrop-blur-md border-t border-border/50 p-6 shadow-lg z-10">
                 <div className="max-w-none">
                   <div className="rounded-xl border border-border/50 bg-background/50 p-1 shadow-sm">
                     <EnhancedMessageInput

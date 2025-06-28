@@ -221,7 +221,7 @@ export async function POST(request: NextRequest) {
                 title: `New Support Message`,
                 body: notificationBody,
                 deep_link: `${siteUrl}/support/${SUPPORT_USER_ID}`,
-                icon: `${siteUrl}/favicon.ico`,
+                icon: `${siteUrl}/web-app-manifest-192x192.png`,
               }
             }
           })

@@ -37,4 +37,4 @@ These kinds of things can be specially crafted partnership portals, custom built
 
 ## Want to talk about this more?
 
-This is obviously the type of stuff I love helping people with. So if you’d like support on how you can build using LLMs with more intention, [schedule a intro call](https://cal.com/team/atelier-logos/45-min-intro-call), or [create and account](https://www.atelierlogos.studio/onboarding) and hit me up via chat!
+This is obviously the type of stuff I love helping people with. So if you’d like support on how you can build using LLMs with more intention, [schedule a intro call](https://cal.com/team/atelier-logos/45-min-intro-call), or [create an account](https://www.atelierlogos.studio/onboarding) and hit me up via chat!

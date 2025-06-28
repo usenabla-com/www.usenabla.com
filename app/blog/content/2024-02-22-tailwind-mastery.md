@@ -1,10 +1,10 @@
 ---
-title: "Mastering Tailwind CSS: From Basics to Advanced Techniques"
-summary: "Discover how to leverage the full power of Tailwind CSS to create beautiful, responsive websites with clean and maintainable code."
-author: "Michael Park"
-published: "2024-02-22"
-image: "/images/block/placeholder-dark-1.svg"
-tags: ["Web Design", "CSS"]
+title: "Use AI to build ecosystems, not just products"
+summary: "It's time to be more creative about the projects we build with AI, and more intentional the human element"
+author: "James Bohrman"
+published: "2025-06-28"
+image: "https://zerowastecenter.org/wp-content/uploads/2023/06/ocean_reef-1080x675.jpg"
+tags: ["Ecosystems", "Software"]
 ---
 
 # Mastering Tailwind CSS: From Basics to Advanced Techniques

@@ -196,7 +196,27 @@ export async function POST(request: NextRequest) {
 
     // Send push notification to support user
     try {
+      console.log('🔔 Attempting to send push notification to support user...')
+      
       const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://localhost:3000'
+      const beamsInstanceId = process.env.NEXT_PUBLIC_BEAMS_INSTANCE_ID
+      const beamsSecretKey = process.env.BEAMS_SECRET_KEY
+      
+      console.log('📋 Push notification config check:')
+      console.log('- BEAMS_INSTANCE_ID:', beamsInstanceId ? '✅ Set' : '❌ Missing')
+      console.log('- BEAMS_SECRET_KEY:', beamsSecretKey ? '✅ Set' : '❌ Missing')
+      console.log('- SITE_URL:', siteUrl)
+      console.log('- SUPPORT_USER_ID:', SUPPORT_USER_ID)
+      
+      if (!beamsInstanceId) {
+        console.error('❌ NEXT_PUBLIC_BEAMS_INSTANCE_ID is not set')
+        throw new Error('NEXT_PUBLIC_BEAMS_INSTANCE_ID environment variable is missing')
+      }
+      
+      if (!beamsSecretKey) {
+        console.error('❌ BEAMS_SECRET_KEY is not set')
+        throw new Error('BEAMS_SECRET_KEY environment variable is missing')
+      }
       
       // Create notification body
       let notificationBody = ''
@@ -206,33 +226,54 @@ export async function POST(request: NextRequest) {
         notificationBody = `${displayName} sent ${attachment.type === 'image' ? 'an image' : attachment.type === 'video' ? 'a video' : attachment.type === 'audio' ? 'an audio file' : 'a file'}`
       }
 
+      const notificationPayload = {
+        interests: [`user-${SUPPORT_USER_ID}`],
+        web: {
+          notification: {
+            title: `New Support Message`,
+            body: notificationBody,
+            deep_link: `${siteUrl}/support/${SUPPORT_USER_ID}`,
+            icon: `${siteUrl}/favicon.ico`,
+          }
+        }
+      }
+      
+      console.log('📤 Sending notification payload:', JSON.stringify(notificationPayload, null, 2))
+
       const notificationResponse = await fetch(
-        `https://${process.env.NEXT_PUBLIC_BEAMS_INSTANCE_ID}.pushnotifications.pusher.com/publish_api/v1/instances/${process.env.NEXT_PUBLIC_BEAMS_INSTANCE_ID}/publishes`,
+        `https://${beamsInstanceId}.pushnotifications.pusher.com/publish_api/v1/instances/${beamsInstanceId}/publishes`,
         {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${process.env.BEAMS_SECRET_KEY}`
+            'Authorization': `Bearer ${beamsSecretKey}`
           },
-          body: JSON.stringify({
-            interests: [`user-${SUPPORT_USER_ID}`],
-            web: {
-              notification: {
-                title: `New Support Message`,
-                body: notificationBody,
-                deep_link: `${siteUrl}/support/${SUPPORT_USER_ID}`,
-                icon: `${siteUrl}/favicon.ico`,
-              }
-            }
-          })
+          body: JSON.stringify(notificationPayload)
         }
       )
 
+      const responseText = await notificationResponse.text()
+      console.log('📥 Push notification response status:', notificationResponse.status)
+      console.log('📥 Push notification response body:', responseText)
+
       if (!notificationResponse.ok) {
-        console.error('Push notification failed:', await notificationResponse.text())
+        console.error('❌ Push notification failed with status:', notificationResponse.status)
+        console.error('❌ Push notification error details:', responseText)
+      } else {
+        console.log('✅ Push notification sent successfully!')
+        try {
+          const responseData = JSON.parse(responseText)
+          console.log('📊 Push notification response data:', responseData)
+        } catch (e) {
+          console.log('📊 Push notification response (raw):', responseText)
+        }
       }
     } catch (notificationError) {
-      console.error('Push notification error:', notificationError)
+      console.error('❌ Push notification error:', notificationError)
+      console.error('❌ Error details:', {
+        message: notificationError instanceof Error ? notificationError.message : 'Unknown error',
+        stack: notificationError instanceof Error ? notificationError.stack : undefined
+      })
     }
 
     return NextResponse.json({ 

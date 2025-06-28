@@ -232,7 +232,7 @@ export async function POST(request: NextRequest) {
                 title: `Support Response`,
                 body: notificationBody,
                 deep_link: `${siteUrl}/profile/${chatRoom.user_id}`,
-                icon: `${siteUrl}/favicon.ico`,
+                icon: `${siteUrl}/web-app-manifest-192x192.png`,
               }
             }
           })

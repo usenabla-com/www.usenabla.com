@@ -102,11 +102,11 @@ export function ChatComponent() {
       if (!response.ok) {
         const errorData = await response.json()
         
-        if (response.status === 403 && errorData.error === 'Customer access required') {
-          setRequiresCustomer(true)
-          setError(errorData.message || 'Customer access required for chat support')
-          return
-        }
+        // if (response.status === 403 && errorData.error === 'Customer access required') {
+        //   setRequiresCustomer(true)
+        //   setError(errorData.message || 'Customer access required for chat support')
+        //   return
+        // }
         
         throw new Error(errorData.error || 'Failed to get chat room')
       }
@@ -166,27 +166,6 @@ export function ChatComponent() {
       setError(error instanceof Error ? error.message : 'Failed to load chat')
     } finally {
       setIsLoading(false)
-    }
-  }
-
-  const handleUpgradeToCustomer = async () => {
-    try {
-      const response = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-
-      if (!response.ok) {
-        throw new Error('Failed to create checkout session')
-      }
-
-      const { url } = await response.json()
-      window.location.href = url
-    } catch (error) {
-      console.error('Error creating checkout session:', error)
-      setError('Failed to start checkout process. Please try again.')
     }
   }
 
@@ -440,45 +419,46 @@ export function ChatComponent() {
     )
   }
 
-  if (requiresCustomer) {
-    return (
-      <Card className="w-full max-w-2xl mx-auto">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <MessageCircle className="h-5 w-5" />
-            Support Chat
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="text-center py-8">
-          <div className="mb-6">
-            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-              <MessageCircle className="h-8 w-8 text-primary" />
-            </div>
-            <h3 className="text-lg font-semibold mb-2">Customer Access Required</h3>
-            <p className="text-muted-foreground mb-6">
-              Chat support is exclusively available for our customers. Upgrade your account to get direct access to our support team.
-            </p>
-          </div>
+  // TODO: Uncomment this when we have a way to handle non-customer support requests
+  // if (requiresCustomer) {
+  //   return (
+  //     <Card className="w-full max-w-2xl mx-auto">
+  //       <CardHeader>
+  //         <CardTitle className="flex items-center gap-2">
+  //           <MessageCircle className="h-5 w-5" />
+  //           Support Chat
+  //         </CardTitle>
+  //       </CardHeader>
+  //       <CardContent className="text-center py-8">
+  //         <div className="mb-6">
+  //           <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+  //             <MessageCircle className="h-8 w-8 text-primary" />
+  //           </div>
+  //           <h3 className="text-lg font-semibold mb-2">Customer Access Required</h3>
+  //           <p className="text-muted-foreground mb-6">
+  //             Chat support is exclusively available for our customers. Upgrade your account to get direct access to our support team.
+  //           </p>
+  //         </div>
           
-          <div className="space-y-3">
-            <Button className="w-full" size="lg" onClick={handleUpgradeToCustomer}>
-              Subscribe for $85.99/month
-            </Button>
-            <Button variant="outline" className="w-full" onClick={() => window.location.reload()}>
-              <RefreshCw className="h-4 w-4 mr-2" />
-              Refresh Status
-            </Button>
-          </div>
+  //         <div className="space-y-3">
+  //           <Button className="w-full" size="lg">
+  //             Upgrade to Customer
+  //           </Button>
+  //           <Button variant="outline" className="w-full" onClick={() => window.location.reload()}>
+  //             <RefreshCw className="h-4 w-4 mr-2" />
+  //             Refresh Status
+  //           </Button>
+  //         </div>
           
-          <div className="mt-6 p-4 bg-muted/50 rounded-lg">
-            <p className="text-sm text-muted-foreground">
-              Monthly subscription for premium support access. Cancel anytime from your account settings.
-            </p>
-          </div>
-        </CardContent>
-      </Card>
-    )
-  }
+  //         <div className="mt-6 p-4 bg-muted/50 rounded-lg">
+  //           <p className="text-sm text-muted-foreground">
+  //             Already a customer? Your account status may take a few minutes to update after payment.
+  //           </p>
+  //         </div>
+  //       </CardContent>
+  //     </Card>
+  //   )
+  // }
 
   if (error && !requiresCustomer) {
     return (

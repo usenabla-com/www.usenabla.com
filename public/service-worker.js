@@ -1,13 +1,13 @@
 importScripts("https://js.pusher.com/beams/service-worker.js");
 
 // Basic PWA cache functionality
-const CACHE_NAME = 'atelier-logos-v2';
+const CACHE_NAME = 'atelier-logos-v3';
 const urlsToCache = [
   '/',
   '/manifest.json',
   '/favicon.ico',
   '/web-app-manifest-192x192-black.png',
-  '/web-app-manifest-512x512.png',
+  '/web-app-manifest-512x512-black.png',
   '/apple-touch-icon.png',
   '/favicon-96x96.png'
 ];

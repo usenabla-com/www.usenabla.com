@@ -108,35 +108,23 @@ export default function RootLayout({
               });
             }
             
-            // PWA Install Prompt Handler
-            let deferredPrompt;
+            // PWA Install Debug Info
             window.addEventListener('beforeinstallprompt', (e) => {
-              console.log('PWA install prompt triggered');
-              // Prevent the mini-infobar from appearing on mobile
-              e.preventDefault();
-              // Stash the event so it can be triggered later
-              deferredPrompt = e;
-              // Optionally, send analytics event that PWA install promo was shown
-              console.log('beforeinstallprompt event was fired.');
-              
-              // Show the prompt after a short delay
-              setTimeout(() => {
-                if (deferredPrompt) {
-                  deferredPrompt.prompt();
-                  deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                      console.log('User accepted the A2HS prompt');
-                    } else {
-                      console.log('User dismissed the A2HS prompt');
-                    }
-                    deferredPrompt = null;
-                  });
-                }
-              }, 3000);
+              console.log('PWA: beforeinstallprompt event fired - app is installable!');
+              console.log('PWA: Platforms:', e.platforms);
             });
             
             window.addEventListener('appinstalled', (evt) => {
-              console.log('PWA was installed');
+              console.log('PWA: App was installed');
+            });
+            
+            // Debug PWA criteria
+            window.addEventListener('load', () => {
+              console.log('PWA Debug Info:');
+              console.log('- HTTPS:', location.protocol === 'https:');
+              console.log('- Service Worker:', 'serviceWorker' in navigator);
+              console.log('- Manifest:', document.querySelector('link[rel="manifest"]') !== null);
+              console.log('- Display mode:', window.matchMedia('(display-mode: standalone)').matches ? 'standalone' : 'browser');
             });
             `
           }}

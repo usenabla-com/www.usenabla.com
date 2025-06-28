@@ -6,7 +6,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { LoginModal } from "@/components/login-modal"
 import { useAuth } from "@/hooks/use-auth"
-import { Menu, X, LogIn, LogOut, User, ChevronDown } from "lucide-react"
+import { Menu, X, LogIn, LogOut, User, ChevronDown, Settings } from "lucide-react"
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -21,7 +21,9 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu"
+import { PWAInstallButton } from "@/components/pwa-install-button"
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -57,28 +59,67 @@ export function Navbar() {
             How It Works
           </Link>
           
-          <NavigationMenu>
-            <NavigationMenuList>
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className="text-sm font-medium">Tools & Resources</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <div className="grid gap-3 p-4 w-[200px]">
-                    <NavigationMenuLink asChild>
-                      <Link
-                        href="/tools"
-                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                      >
-                        <div className="text-sm font-medium leading-none">Tools (coming soon)</div>
-                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                          Get access to our exclusive creations
-                        </p>
-                      </Link>
-                    </NavigationMenuLink>
-                  </div>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
+          {/* Tools & Resources Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="text-sm font-medium hover:text-primary transition-colors gap-1">
+                Tools & Resources
+                <ChevronDown className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48">
+              <DropdownMenuItem asChild>
+                <Link href="/tools" className="cursor-pointer">
+                  Tools (coming soon)
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* Auth Section */}
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="gap-2">
+                  <User size={16} />
+                  <span className="hidden lg:inline">{user.email}</span>
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href="/profile" className="cursor-pointer">
+                    <User className="mr-2 h-4 w-4" />
+                    Profile
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer">
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Sign Out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <div className="flex items-center gap-3">
+              <Button 
+                variant="ghost" 
+                className="gap-2" 
+                onClick={() => setIsLoginModalOpen(true)}
+              >
+                <LogIn size={16} />
+                Sign In
+              </Button>
+              <Button 
+                className="gap-2" 
+                onClick={() => setIsLoginModalOpen(true)}
+              >
+                Get Started
+              </Button>
+            </div>
+          )}
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-4">
@@ -238,6 +279,11 @@ export function Navbar() {
                     Tools (coming soon)
                   </Link>
                 </div>
+              </div>
+              
+              {/* PWA Install Button for mobile */}
+              <div className="py-2 flex justify-center">
+                <PWAInstallButton />
               </div>
               
               {/* Auth buttons for mobile when not logged in */}

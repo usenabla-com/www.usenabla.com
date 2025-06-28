@@ -6,7 +6,10 @@ const urlsToCache = [
   '/',
   '/manifest.json',
   '/favicon.ico',
-  '/logo.png'
+  '/web-app-manifest-192x192.png',
+  '/web-app-manifest-512x512.png',
+  '/apple-touch-icon.png',
+  '/favicon-96x96.png'
 ];
 
 // Install event - cache resources

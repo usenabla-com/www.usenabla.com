@@ -23,7 +23,7 @@ Next came the internal support chat, which might seem just like a bootleg versio
 
  
 
-![image.png](/public/blog/profile.png)
+![image.png](../../../public/blog/profile.png)
 
 Both of these were built 100% with Cursor, and are a huge part of what I mean when I refer to ecosystem-building. 
 

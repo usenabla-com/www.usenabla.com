@@ -113,12 +113,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'User profile not found' }, { status: 404 })
     }
 
-    if (!profile.customer) {
-      return NextResponse.json({ 
-        error: 'Customer access required',
-        message: 'Chat support is only available for customers. Please upgrade your account to access this feature.'
-      }, { status: 403 })
-    }
+    // if (!profile.customer) {
+    //   return NextResponse.json({ 
+    //     error: 'Customer access required',
+    //     message: 'Chat support is only available for customers. Please upgrade your account to access this feature.'
+    //   }, { status: 403 })
+    // }
 
     const displayName = profile ? 
       `${profile.first_name || ''} ${profile.last_name || ''}`.trim() || profile.email 

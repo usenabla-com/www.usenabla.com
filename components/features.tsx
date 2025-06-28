@@ -2,57 +2,87 @@ import { Code, FileText, Zap, Sparkles } from "lucide-react"
 
 export function Features() {
   return (
-    <section id="features" className="py-16 bg-gray-50 dark:bg-[#f9f5ec]">
+    <section id="features" className="py-24 lg:py-32">
       <div className="container px-4 md:px-6">
-        <div className="flex flex-col items-center justify-center space-y-4 text-center">
-          <div className="space-y-2">
-            <div className="inline-block rounded-lg bg-black px-3 py-1 text-sm text-white">
+        <div className="flex flex-col items-center justify-center space-y-6 text-center">
+          <div className="space-y-4">
+            <div className="inline-flex items-center rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary ring-1 ring-primary/20">
+              <Sparkles className="mr-2 h-4 w-4" />
               Features
             </div>
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              Get your project locked in
+            <h2 className="font-display text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl">
+              Get your project{" "}
+              <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                locked in
+              </span>
             </h2>
-            <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Need help finishing something you vibe coded and can't seem to take to the finish line? Hire me to help you take it all the way to a fully polished solution
+            <p className="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground lg:text-xl">
+              Need help finishing something you vibe coded and can't seem to take to the finish line? 
+              Hire me to help you take it all the way to a{" "}
+              <span className="font-medium text-foreground">fully polished solution</span>
             </p>
           </div>
         </div>
-        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 mt-12">
-          <div className="flex flex-col items-center space-y-2 rounded-lg border p-6 shadow-sm">
-            <div className="rounded-full bg-black p-3">
-              <FileText className="h-6 w-6 text-white" />
+        
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4 mt-16 lg:mt-20">
+          <div className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card/50 p-8 shadow-sm transition-all duration-300 hover:shadow-lg hover:shadow-primary/5 hover:border-primary/20 backdrop-blur-sm">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            <div className="relative z-10 flex flex-col items-center space-y-4 text-center">
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary/80 shadow-lg">
+                <FileText className="h-7 w-7 text-primary-foreground" />
+              </div>
+              <h3 className="font-display text-xl font-semibold tracking-tight text-foreground lg:text-2xl">
+                Vibe Review
+              </h3>
+              <p className="text-sm leading-relaxed text-muted-foreground lg:text-base">
+                Review your projects vibes and build a plan for any fixes
+              </p>
             </div>
-            <h3 className="text-xl font-bold">Vibe Review</h3>
-            <p className="text-sm text-muted-foreground text-center">
-              Review your projects vibes and build a plan for any fixes
-            </p>
           </div>
-          <div className="flex flex-col items-center space-y-2 rounded-lg border p-6 shadow-sm">
-            <div className="rounded-full bg-black p-3">
-              <Code className="h-6 w-6 text-white" />
+          
+          <div className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card/50 p-8 shadow-sm transition-all duration-300 hover:shadow-lg hover:shadow-primary/5 hover:border-primary/20 backdrop-blur-sm">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            <div className="relative z-10 flex flex-col items-center space-y-4 text-center">
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary/80 shadow-lg">
+                <Code className="h-7 w-7 text-primary-foreground" />
+              </div>
+              <h3 className="font-display text-xl font-semibold tracking-tight text-foreground lg:text-2xl">
+                Feature Support
+              </h3>
+              <p className="text-sm leading-relaxed text-muted-foreground lg:text-base">
+                Help implement any features and fixes you need for launch or customer needs
+              </p>
             </div>
-            <h3 className="text-xl font-bold">Feature Support</h3>
-            <p className="text-sm text-muted-foreground text-center">
-              Help implement any features and fixes you need for launch or customer needs
-            </p>
           </div>
-          <div className="flex flex-col items-center space-y-2 rounded-lg border p-6 shadow-sm">
-            <div className="rounded-full bg-black p-3">
-              <Zap className="h-6 w-6 text-white" />
+          
+          <div className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card/50 p-8 shadow-sm transition-all duration-300 hover:shadow-lg hover:shadow-primary/5 hover:border-primary/20 backdrop-blur-sm">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            <div className="relative z-10 flex flex-col items-center space-y-4 text-center">
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary/80 shadow-lg">
+                <Zap className="h-7 w-7 text-primary-foreground" />
+              </div>
+              <h3 className="font-display text-xl font-semibold tracking-tight text-foreground lg:text-2xl">
+                Fast Integration
+              </h3>
+              <p className="text-sm leading-relaxed text-muted-foreground lg:text-base">
+                Reduce implementation time from months to days with my hybrid AI × Human approach.
+              </p>
             </div>
-            <h3 className="text-xl font-bold">Fast Integration</h3>
-            <p className="text-sm text-muted-foreground text-center">
-              Reduce implementation time from months to days with my hybrid AI x Human approach.
-            </p>
           </div>
-          <div className="flex flex-col items-center space-y-2 rounded-lg border p-6 shadow-sm">
-            <div className="rounded-full bg-black p-3">
-              <Sparkles className="h-6 w-6 text-white" />
+          
+          <div className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card/50 p-8 shadow-sm transition-all duration-300 hover:shadow-lg hover:shadow-primary/5 hover:border-primary/20 backdrop-blur-sm">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            <div className="relative z-10 flex flex-col items-center space-y-4 text-center">
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary/80 shadow-lg">
+                <Sparkles className="h-7 w-7 text-primary-foreground" />
+              </div>
+              <h3 className="font-display text-xl font-semibold tracking-tight text-foreground lg:text-2xl">
+                Intelligent Testing
+              </h3>
+              <p className="text-sm leading-relaxed text-muted-foreground lg:text-base">
+                Generate test cases and validation suites for your implementations in a fraction of the time
+              </p>
             </div>
-            <h3 className="text-xl font-bold">Intelligent Testing</h3>
-            <p className="text-sm text-muted-foreground text-center">
-              Generate test cases and validation suites for your implementations in a fraction of the time
-            </p>
           </div>
         </div>
       </div>

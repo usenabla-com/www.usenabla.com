@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-const PUSHER_INSTANCE_ID = process.env.NEXT_PUBLIC_PUSHER_INSTANCE_ID!
-const PUSHER_SECRET_KEY = process.env.PUSHER_SECRET_KEY!
+const BEAMS_INSTANCE_ID = process.env.NEXT_PUBLIC_BEAMS_INSTANCE_ID!
+const BEAMS_SECRET_KEY = process.env.BEAMS_SECRET_KEY!
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,20 +14,20 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    if (!PUSHER_SECRET_KEY) {
+    if (!BEAMS_SECRET_KEY) {
       return NextResponse.json(
-        { success: false, error: 'Pusher secret key not configured' },
+        { success: false, error: 'Beams secret key not configured' },
         { status: 500 }
       )
     }
 
     const response = await fetch(
-      `https://${PUSHER_INSTANCE_ID}.pushnotifications.pusher.com/publish_api/v1/instances/${PUSHER_INSTANCE_ID}/publishes`,
+      `https://${BEAMS_INSTANCE_ID}.pushnotifications.pusher.com/publish_api/v1/instances/${BEAMS_INSTANCE_ID}/publishes`,
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${PUSHER_SECRET_KEY}`
+          'Authorization': `Bearer ${BEAMS_SECRET_KEY}`
         },
         body: JSON.stringify({
           interests,

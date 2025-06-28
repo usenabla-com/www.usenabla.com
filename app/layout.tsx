@@ -7,13 +7,61 @@ import ProfileModalProvider from "@/components/profile-modal-provider"
 import NotificationModal from "@/components/notification-modal"
 import { AnalyticsProvider } from "@/components/analytics-provider"
 
-const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600", "700"] })
+const inter = Inter({ 
+  subsets: ["latin"], 
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-inter",
+  display: "swap"
+})
+
+const cormorant = Cormorant_Garamond({ 
+  subsets: ["latin"], 
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-cormorant",
+  display: "swap"
+})
 
 export const metadata: Metadata = {
   title: "Atelier Logos | LLM Solutions Studio" as const,
   description: "We are a bespoke software studio helping clients build scalable, testable, and beautiful software while adopting LLMs in a sane manner." as const,
   generator: 'v0.dev',
-  manifest: '/manifest.json'
+  manifest: '/manifest.json',
+  keywords: ['LLM', 'AI', 'Software Development', 'Bespoke Solutions', 'Machine Learning'],
+  authors: [{ name: 'Atelier Logos' }],
+  creator: 'Atelier Logos',
+  openGraph: {
+    title: "Atelier Logos | LLM Solutions Studio",
+    description: "We are a bespoke software studio helping clients build scalable, testable, and beautiful software while adopting LLMs in a sane manner.",
+    url: "https://www.atelierlogos.studio",
+    siteName: "Atelier Logos",
+    images: [
+      {
+        url: "https://www.atelierlogos.studio/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Atelier Logos - LLM Solutions Studio"
+      }
+    ],
+    locale: "en_US",
+    type: "website"
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Atelier Logos | LLM Solutions Studio",
+    description: "We are a bespoke software studio helping clients build scalable, testable, and beautiful software while adopting LLMs in a sane manner.",
+    images: ["https://www.atelierlogos.studio/og-image.png"]
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1
+    }
+  }
 }
 
 export default function RootLayout({
@@ -25,7 +73,7 @@ export default function RootLayout({
   const description = metadata.description as string
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${cormorant.variable}`}>
       <head>
         <title>{title}</title>
         <meta property="og:title" content={title} />
@@ -34,7 +82,8 @@ export default function RootLayout({
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.atelierlogos.studio" />
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#000000" />
+        <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
         <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="shortcut icon" href="/favicon.ico" />
@@ -42,8 +91,16 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="Atelier Logos" />
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="Atelier Logos" />
+        
+        {/* Enhanced viewport for better mobile experience */}
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        
+        {/* Preconnect to external domains for performance */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link rel="preconnect" href="https://cdn.segment.com" />
         
         {/* Segment Analytics */}
         <script
@@ -57,10 +114,14 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={inter.className}> 
+      <body className={`${inter.className} antialiased min-h-screen bg-gradient-to-br from-background to-background/95 text-foreground selection:bg-primary/20 selection:text-primary-foreground`}> 
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <AnalyticsProvider />
-          {children}
+          <div className="relative flex min-h-screen flex-col">
+            <div className="flex-1">
+              {children}
+            </div>
+          </div>
         </ThemeProvider>
       </body>
     </html>

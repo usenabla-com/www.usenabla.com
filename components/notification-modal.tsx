@@ -9,6 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
+import supabaseService from '@/lib/supabase/client'
 
 interface NotificationModalProps {
   onComplete?: () => void
@@ -21,14 +22,45 @@ export default function NotificationModal({ onComplete }: NotificationModalProps
     // Initialize Pusher client and register device interest
     const initializePusherClient = async () => {
       try {
+        // Get current user to subscribe to their specific interest
+        const user = await supabaseService.getCurrentUser()
+        
+        if (!user) {
+          console.log('No authenticated user - skipping notification setup')
+          return
+        }
+
+        // Check notification permission first
+        if (typeof window !== 'undefined' && 'Notification' in window) {
+          const permission = Notification.permission
+          
+          if (permission === 'denied') {
+            console.log('Notifications are denied - dispatching event for bell to shake')
+            window.dispatchEvent(new CustomEvent('notificationsDenied'))
+            return
+          }
+          
+          if (permission === 'default') {
+            // Request permission
+            const newPermission = await Notification.requestPermission()
+            if (newPermission === 'denied') {
+              console.log('User denied notifications - dispatching event for bell to shake')
+              window.dispatchEvent(new CustomEvent('notificationsDenied'))
+              return
+            }
+          }
+        }
+
         const PusherPushNotifications = await import('@pusher/push-notifications-web')
         const client = new PusherPushNotifications.Client({
-          instanceId: process.env.NEXT_PUBLIC_PUSHER_INSTANCE_ID!,
+          instanceId: process.env.NEXT_PUBLIC_BEAMS_INSTANCE_ID!,
         })
         
         await client.start()
-        await client.addDeviceInterest('hello')
-        console.log('Successfully registered and subscribed to Pusher!')
+        
+        // Subscribe to user-specific interest for support notifications
+        await client.addDeviceInterest(`user-${user.id}`)
+        console.log(`Successfully registered for notifications: user-${user.id}`)
         
         // Check if this is a new user and show welcome modal
         await checkAndShowWelcomeModal()

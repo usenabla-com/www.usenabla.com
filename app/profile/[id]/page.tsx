@@ -33,6 +33,9 @@ import { curateUserFeed } from '@/lib/curation-utils'
 import FeedItem from '@/components/feed/FeedItem'
 import { PushNotificationSender } from '@/components/push-notification-sender'
 import { useAnalytics } from '@/hooks/use-analytics'
+import { ChatComponent } from '@/components/chat/chat-component'
+import { NotificationBell } from '@/components/notification-bell'
+import { cn } from '@/lib/utils'
 
 export default function ProfilePage() {
   const params = useParams()
@@ -184,72 +187,70 @@ export default function ProfilePage() {
     }
   }, [isOwnProfile, currentUser, loading])
 
-  const downloadMembershipCard = async () => {
-    if (!cardRef.current || !profile) return
-
-    try {
-      // Import html2canvas dynamically to avoid SSR issues
-      const html2canvas = (await import('html2canvas')).default
-      
-      const canvas = await html2canvas(cardRef.current, {
-        backgroundColor: null,
-        scale: 2,
-        logging: false
-      })
-      
-      const link = document.createElement('a')
-      link.download = `atelier-logos-membership-${profile.first_name}-${profile.last_name}.png`
-      link.href = canvas.toDataURL()
-      link.click()
-    } catch (error) {
-      console.error('Error downloading card:', error)
-    }
-  }
-
   if (loading) {
     return (
-      <main className="min-h-screen bg-gray-50">
-        <Navbar />
-        <div className="container mx-auto px-4 py-8">
-          <div className="max-w-6xl mx-auto">
-            <div className="animate-pulse">
-              <div className="bg-white rounded-lg shadow-sm p-8 mb-6">
-                <div className="flex gap-8">
-                  <div className="w-48 h-48 bg-gray-200 rounded-lg"></div>
-                  <div className="flex-1 space-y-4">
-                    <div className="h-8 bg-gray-200 rounded w-1/3"></div>
-                    <div className="h-4 bg-gray-200 rounded w-1/4"></div>
-                    <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+      <div className="relative min-h-screen overflow-hidden">
+        {/* Background patterns */}
+        <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02] pointer-events-none" />
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 pointer-events-none" />
+        
+        {/* Decorative elements */}
+        <div className="fixed top-1/4 -left-48 w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-50 pointer-events-none animate-pulse" />
+        <div className="fixed bottom-1/4 -right-48 w-96 h-96 bg-secondary/10 rounded-full blur-3xl opacity-50 pointer-events-none animate-pulse delay-1000" />
+        
+        <main className="relative z-10">
+          <Navbar />
+          <div className="container mx-auto px-4 py-8">
+            <div className="max-w-6xl mx-auto">
+              <div className="animate-pulse">
+                <div className="bg-card/80 backdrop-blur-sm border border-border/50 rounded-xl shadow-sm p-8 mb-6">
+                  <div className="flex gap-8">
+                    <div className="w-48 h-48 bg-muted/50 rounded-lg"></div>
+                    <div className="flex-1 space-y-4">
+                      <div className="h-8 bg-muted/50 rounded w-1/3"></div>
+                      <div className="h-4 bg-muted/50 rounded w-1/4"></div>
+                      <div className="h-4 bg-muted/50 rounded w-1/2"></div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <Footer />
-      </main>
+          <Footer />
+        </main>
+      </div>
     )
   }
 
   if (error || !profile) {
     return (
-      <main className="min-h-screen bg-gray-50">
-        <Navbar />
-        <div className="container mx-auto px-4 py-8">
-          <div className="max-w-6xl mx-auto text-center">
-            <div className="bg-white rounded-lg shadow-sm p-12">
-              <h1 className="text-2xl font-bold text-red-600 mb-4">Profile Not Found</h1>
-              <p className="text-gray-600 mb-6">
-                {error || 'The requested profile could not be found.'}
-              </p>
-              <Button asChild>
-                <Link href="/">Return Home</Link>
-              </Button>
+      <div className="relative min-h-screen overflow-hidden">
+        {/* Background patterns */}
+        <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02] pointer-events-none" />
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 pointer-events-none" />
+        
+        {/* Decorative elements */}
+        <div className="fixed top-1/4 -left-48 w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-50 pointer-events-none animate-pulse" />
+        <div className="fixed bottom-1/4 -right-48 w-96 h-96 bg-secondary/10 rounded-full blur-3xl opacity-50 pointer-events-none animate-pulse delay-1000" />
+        
+        <main className="relative z-10">
+          <Navbar />
+          <div className="container mx-auto px-4 py-8">
+            <div className="max-w-6xl mx-auto text-center">
+              <div className="bg-card/80 backdrop-blur-sm border border-border/50 rounded-xl shadow-sm p-12">
+                <h1 className="text-2xl font-bold text-destructive mb-4">Profile Not Found</h1>
+                <p className="text-muted-foreground mb-6">
+                  {error || 'The requested profile could not be found.'}
+                </p>
+                <Button asChild>
+                  <Link href="/">Return Home</Link>
+                </Button>
+              </div>
             </div>
           </div>
-        </div>
-        <Footer />
-      </main>
+          <Footer />
+        </main>
+      </div>
     )
   }
 
@@ -261,106 +262,128 @@ export default function ProfilePage() {
   })
 
   return (
-    <main className="min-h-screen bg-gray-50">
-      <Navbar />
+    <div className="relative min-h-screen overflow-hidden">
+      {/* Background patterns */}
+      <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02] pointer-events-none" />
+      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 pointer-events-none" />
       
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-6xl mx-auto">
-          {/* Back Navigation */}
-          <div className="mb-6">
-            <Button variant="ghost" asChild className="text-gray-600 hover:text-gray-900">
-              <Link href="/">← Back to Home</Link>
-            </Button>
-          </div>
+      {/* Decorative elements */}
+      <div className="fixed top-1/4 -left-48 w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-50 pointer-events-none animate-pulse" />
+      <div className="fixed bottom-1/4 -right-48 w-96 h-96 bg-secondary/10 rounded-full blur-3xl opacity-50 pointer-events-none animate-pulse delay-1000" />
+      
+      <main className="relative z-10">
+        <Navbar />
+        
+        <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 lg:py-8">
+          <div className="max-w-6xl mx-auto">
+            {/* Back Navigation */}
+            <div className="mb-4 sm:mb-6">
+              <Button variant="ghost" asChild className="text-muted-foreground hover:text-foreground backdrop-blur-sm text-sm sm:text-base">
+                <Link href="/">← Back to Home</Link>
+              </Button>
+            </div>
 
-          {/* Main Profile Section */}
-          <div className="bg-white rounded-lg shadow-sm mb-6">
-            <div className="p-8">
-              <div className="flex flex-col lg:flex-row gap-8">
-                {/* Profile Image */}
-                <div className="flex-shrink-0">
-                  <div className="relative w-48 h-48 rounded-lg overflow-hidden bg-gray-100 shadow-md">
-                    <Image
-                      src={profileImage}
-                      alt={displayName}
-                      fill
-                      className="object-cover"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement
-                        target.src = '/placeholder-user.jpg'
-                      }}
-                    />
-                  </div>
-                </div>
-
-                {/* Profile Info */}
-                <div className="flex-1 min-w-0">
-                  <div className="mb-6">
-                    <h1 className="text-4xl font-bold text-gray-900 mb-2">{displayName}</h1>
-                    <p className="text-xl text-gray-600 mb-4">Atelier Logos Member</p>
-                    
-                    <div className="flex items-center gap-4 mb-4">
-                      <Badge variant="secondary" className="px-3 py-1">
-                        <Calendar className="h-4 w-4 mr-2" />
-                        Member since {memberSince}
-                      </Badge>
+            {/* Main Profile Section */}
+            <div className="bg-card/80 backdrop-blur-sm border border-border/50 rounded-xl shadow-sm mb-4 sm:mb-6 relative overflow-hidden">
+              {/* Subtle gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 pointer-events-none" />
+              
+              <div className="relative p-4 sm:p-6 lg:p-8">
+                <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-8">
+                  {/* Profile Image */}
+                  <div className="flex-shrink-0 self-center lg:self-start">
+                    <div className="relative w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 rounded-xl overflow-hidden bg-muted/30 shadow-lg border border-border/50 backdrop-blur-sm">
+                      <Image
+                        src={profileImage}
+                        alt={displayName}
+                        fill
+                        className="object-cover"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement
+                          target.src = '/placeholder-user.jpg'
+                        }}
+                      />
                     </div>
                   </div>
 
-                  <Separator className="mb-6" />
-
-                  {/* Contact Information */}
-                  <div className="space-y-4">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Contact Information</h3>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
-                          <Mail className="h-5 w-5 text-blue-600" />
+                  {/* Profile Info */}
+                  <div className="flex-1 min-w-0 text-center lg:text-left">
+                    <div className="mb-4 sm:mb-6">
+                      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-3 sm:mb-4">
+                        <div className="mb-3 lg:mb-0">
+                          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-2 font-display break-words">{displayName}</h1>
+                          <p className="text-lg sm:text-xl text-muted-foreground mb-3 sm:mb-4">Atelier Logos Member</p>
                         </div>
-                        <div>
-                          <p className="text-sm font-medium text-gray-900">Email</p>
-                          <p className="text-sm text-gray-600">{profile.email}</p>
-                        </div>
+                        {isOwnProfile && (
+                          <div className="flex justify-center lg:justify-end">
+                            <NotificationBell showText />
+                          </div>
+                        )}
                       </div>
+                      
+                      <div className="flex justify-center lg:justify-start mb-4">
+                        <Badge variant="secondary" className="px-3 py-1 bg-muted/50 backdrop-blur-sm border border-border/50 text-xs sm:text-sm">
+                          <Calendar className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
+                          Member since {memberSince}
+                        </Badge>
+                      </div>
+                    </div>
 
-                      {profile.company && (
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center">
-                            <Building className="h-5 w-5 text-green-600" />
+                    <Separator className="mb-4 sm:mb-6 bg-border/50" />
+
+                    {/* Contact Information */}
+                    <div className="space-y-3 sm:space-y-4">
+                      <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4 font-display">Contact Information</h3>
+                      
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                        <div className="flex items-center gap-3 p-2 sm:p-0">
+                          <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary/10 backdrop-blur-sm rounded-lg flex items-center justify-center border border-primary/20 flex-shrink-0">
+                            <Mail className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                           </div>
-                          <div>
-                            <p className="text-sm font-medium text-gray-900">Company</p>
-                            <p className="text-sm text-gray-600">{profile.company}</p>
+                          <div className="min-w-0 flex-1">
+                            <p className="text-xs sm:text-sm font-medium text-foreground">Email</p>
+                            <p className="text-xs sm:text-sm text-muted-foreground truncate">{profile.email}</p>
                           </div>
                         </div>
-                      )}
 
-                      {profile.linkedin_url && (
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
-                            <Globe className="h-5 w-5 text-blue-600" />
+                        {profile.company && (
+                          <div className="flex items-center gap-3 p-2 sm:p-0">
+                            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-muted/30 backdrop-blur-sm rounded-lg flex items-center justify-center border border-border/50 flex-shrink-0">
+                              <User className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground" />
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <p className="text-xs sm:text-sm font-medium text-foreground">Company</p>
+                              <p className="text-xs sm:text-sm text-muted-foreground truncate">{profile.company}</p>
+                            </div>
                           </div>
-                          <div>
-                            <p className="text-sm font-medium text-gray-900">LinkedIn</p>
-                            <Link 
-                              href={profile.linkedin_url} 
-                              target="_blank"
-                              className="text-sm text-blue-600 hover:text-blue-800 transition-colors"
-                            >
-                              View Profile →
-                            </Link>
-                          </div>
-                        </div>
-                      )}
+                        )}
 
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center">
-                          <User className="h-5 w-5 text-gray-600" />
-                        </div>
-                        <div>
-                          <p className="text-sm font-medium text-gray-900">Member ID</p>
-                          <p className="text-sm text-gray-600 font-mono">{profile.id.slice(-8).toUpperCase()}</p>
+                        {profile.linkedin_url && (
+                          <div className="flex items-center gap-3 p-2 sm:p-0">
+                            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary/10 backdrop-blur-sm rounded-lg flex items-center justify-center border border-primary/20 flex-shrink-0">
+                              <Globe className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <p className="text-xs sm:text-sm font-medium text-foreground">LinkedIn</p>
+                              <Link 
+                                href={profile.linkedin_url} 
+                                target="_blank"
+                                className="text-xs sm:text-sm text-primary hover:text-primary/80 transition-colors truncate block"
+                              >
+                                View Profile →
+                              </Link>
+                            </div>
+                          </div>
+                        )}
+
+                        <div className="flex items-center gap-3 p-2 sm:p-0">
+                          <div className="w-8 h-8 sm:w-10 sm:h-10 bg-muted/30 backdrop-blur-sm rounded-lg flex items-center justify-center border border-border/50 flex-shrink-0">
+                            <User className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground" />
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <p className="text-xs sm:text-sm font-medium text-foreground">Member ID</p>
+                            <p className="text-xs sm:text-sm text-muted-foreground font-mono">{profile.id.slice(-8).toUpperCase()}</p>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -368,310 +391,268 @@ export default function ProfilePage() {
                 </div>
               </div>
             </div>
-          </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Membership Card */}
-            <Card className="shadow-sm">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900">Digital Membership Card</h3>
-                  <Button 
-                    onClick={downloadMembershipCard}
-                    size="sm"
-                    variant="outline"
-                    className="gap-2"
-                  >
-                    <Download className="h-4 w-4" />
-                    Download
-                  </Button>
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6">
+              {/* Chat Component */}
+              {isOwnProfile && (
+                <div className="order-2 xl:order-1">
+                  <ChatComponent />
                 </div>
+              )}
 
-                {/* Membership Card Design */}
-                <div 
-                  ref={cardRef}
-                  className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-black rounded-2xl overflow-hidden shadow-2xl w-64 h-96 mx-auto"
-                >
-                  {/* Background Pattern */}
-                  <div className="absolute inset-0">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-3xl -translate-y-4 translate-x-4"></div>
-                    <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-green-500/20 to-blue-500/20 rounded-full blur-2xl translate-y-4 -translate-x-4"></div>
-                    <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent"></div>
-                  </div>
-
-                  {/* Top accent line */}
-                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400"></div>
-
-                  {/* Card content */}
-                  <div className="relative z-10 p-5 h-full flex flex-col">
-                    {/* Header */}
-                    <div className="flex items-center justify-between mb-5">
-                      <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center shadow-sm p-1">
-                          <Image
-                            src="/logo.png"
-                            alt="Atelier Logos"
-                            width={24}
-                            height={24}
-                            className="object-contain"
-                          />
-                        </div>
-                        <div>
-                          <div className="text-white font-bold text-lg">ATELIER</div>
-                          <div className="text-white/60 text-xs tracking-wider">LOGOS</div>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-white/80 text-xs mb-1">VALID THRU</div>
-                        <div className="text-white font-semibold text-sm">
-                          {new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toLocaleDateString('en-US', { month: '2-digit', year: '2-digit' })}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Profile Photo */}
-                    <div className="flex justify-center mb-5">
-                      <div className="w-20 h-20 rounded-xl overflow-hidden bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg">
-                        <Image
-                          src={profileImage}
-                          alt={displayName}
-                          width={80}
-                          height={80}
-                          className="w-full h-full object-cover"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement
-                            target.src = '/placeholder-user.jpg'
-                          }}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Member Information */}
-                    <div className="text-center mb-8 flex-1">
-                      <div className="text-white font-bold text-lg mb-1 leading-tight">{displayName}</div>
-                      <div className="text-white/70 text-xs mb-2 px-2 truncate">{profile.email}</div>
-                      {profile.company && (
-                        <div className="flex items-center justify-center gap-1 mb-4">
-                          <Building className="h-3 w-3 text-white/60" />
-                          <span className="text-white/60 text-xs truncate">{profile.company}</span>
-                        </div>
-                      )}
-                      
-                      {/* Member details in compact format */}
-                      <div className="grid grid-cols-2 gap-4 text-xs px-2">
-                        <div className="text-center">
-                          <div className="text-white/40 text-xs mb-1">MEMBER ID</div>
-                          <div className="text-white font-mono text-xs tracking-wider">
-                            {profile.id.slice(-8).toUpperCase()}
+              {/* Curated Content with Feed */}
+              <Card className={cn(
+                "bg-card/80 backdrop-blur-sm border border-border/50 shadow-sm relative overflow-hidden",
+                isOwnProfile ? "order-1 xl:order-2" : "col-span-full"
+              )}>
+                {/* Subtle gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 pointer-events-none" />
+                
+                <CardContent className="relative p-4 sm:p-6">
+                  {/* Header Section */}
+                  <div className="mb-6">
+                    <div className="flex flex-col gap-4">
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-lg sm:text-xl font-semibold text-foreground font-display flex items-center gap-2">
+                          <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center border border-primary/20">
+                            <Sparkles className="h-4 w-4 text-primary" />
                           </div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-white/40 text-xs mb-1">SINCE</div>
-                          <div className="text-white text-xs">{memberSince}</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Security strip */}
-                    <div className="mt-auto">
-                      <div className="flex items-center justify-between text-xs text-white/30 border-t border-white/10 pt-2">
-                        <div className="flex items-center gap-1">
-                          <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></div>
-                          <span className="text-xs">ACTIVE</span>
-                        </div>
-                        <div className="font-mono text-xs">
-                          {profile.id.slice(0, 4).toUpperCase()}
-                        </div>
-                        <div className="text-xs">
-                          ATELIER-LOGOS.COM
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Holographic effect overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent opacity-50 pointer-events-none"></div>
-
-                  {/* Subtle border glow */}
-                  <div className="absolute inset-0 rounded-2xl border border-white/10 pointer-events-none"></div>
-                </div>
-
-                <div className="mt-6 text-center space-y-2">
-                  <p className="text-sm font-medium text-gray-900">
-                    Official Atelier Logos Membership
-                  </p>
-                  <p className="text-xs text-gray-600">
-                    Present this digital card to access member benefits, community events, and exclusive resources.
-                  </p>
-                  <div className="flex items-center justify-center gap-4 mt-4 pt-4 border-t border-gray-100">
-                    <div className="flex items-center gap-2">
-                      <QrCode className="h-4 w-4 text-gray-500" />
-                      <span className="text-xs text-gray-600">Scan for verification</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                      <span className="text-xs text-gray-600">Valid membership</span>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Curated Content with Feed */}
-            <Card className="shadow-sm">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900">Curated Content</h3>
-                  {isOwnProfile && (
-                    <div className="flex items-center gap-3">
-                      {profile?.customer ? (
-                        <Badge 
-                          variant="default" 
-                          className="px-3 py-1.5 bg-gradient-to-r from-indigo-500 to-purple-500"
-                        >
-                          <Sparkles className="h-3.5 w-3.5 mr-1.5" />
-                          Pro Member
-                        </Badge>
-                      ) : (
-                        <div className="flex items-center gap-2">
-                          <Badge 
-                            variant="outline" 
-                            className="px-3 py-1.5 border-gray-200 flex items-center gap-2"
-                          >
-                            <span className="font-medium text-gray-700">{profile?.curations}</span>
-                            <span className="text-gray-500">curations left</span>
-                          </Badge>
+                          Curated Content
+                        </h3>
+                        {isOwnProfile && (
                           <Button
-                            onClick={triggerCuration}
-                            disabled={triggering || profile?.curations <= 0}
+                            onClick={() => loadFeedItems(0, false)}
+                            disabled={feedLoading}
                             size="sm"
-                            variant="default"
-                            className="bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600"
+                            variant="ghost"
+                            className="gap-2 hover:bg-background/50 backdrop-blur-sm text-muted-foreground hover:text-foreground"
+                            title="Refresh your existing feed (doesn't use a curation)"
                           >
-                            {triggering ? (
-                              <Loader2 className="h-3.5 w-3.5 animate-spin mr-1.5" />
-                            ) : (
-                              <Sparkles className="h-3.5 w-3.5 mr-1.5" />
-                            )}
-                            {triggering ? 'Curating...' : 'Curate'}
+                            <RefreshCw className={`h-4 w-4 ${feedLoading ? 'animate-spin' : ''}`} />
+                            <span className="hidden sm:inline">Refresh</span>
                           </Button>
-                          {profile?.curations <= 0 && (
-                            <Button 
-                              asChild
-                              size="sm"
-                              variant="outline"
-                            >
-                              <Link href="https://buy.stripe.com/aFa3cvbcw69We9nfG218c01" target="_blank">
-                                Upgrade →
-                              </Link>
-                            </Button>
-                          )}
-                        </div>
-                      )}
-                      <Button
-                        onClick={() => loadFeedItems(0, false)}
-                        disabled={feedLoading}
-                        size="sm"
-                        variant="outline"
-                        className="gap-2"
-                        title="Refresh your existing feed (doesn't use a curation)"
-                      >
-                        <RefreshCw className={`h-3.5 w-3.5 ${feedLoading ? 'animate-spin' : ''}`} />
-                      </Button>
-                    </div>
-                  )}
-                </div>
-
-                {/* Feed Content */}
-                {isOwnProfile ? (
-                  <div className="space-y-4">
-                    {feedError ? (
-                      <div className="text-center py-6 px-4 bg-gray-50 rounded-lg">
-                        {feedError.includes('No curations remaining') ? (
-                          <>
-                            <div className="mb-4">
-                              <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                                <Sparkles className="h-6 w-6 text-purple-600" />
+                        )}
+                      </div>
+                      
+                      {/* Status and Controls Row */}
+                      {isOwnProfile && (
+                        <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between p-4 bg-muted/30 rounded-lg border border-border/50">
+                          <div className="flex items-center gap-3">
+                            {profile?.customer ? (
+                              <Badge 
+                                variant="default" 
+                                className="px-3 py-1.5 bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-sm font-medium"
+                              >
+                                <Sparkles className="h-4 w-4 mr-2" />
+                                Pro Member - Unlimited Curations
+                              </Badge>
+                            ) : (
+                              <div className="flex items-center gap-3">
+                                <Badge 
+                                  variant="outline" 
+                                  className="px-3 py-1.5 border-border/50 bg-background/50 backdrop-blur-sm flex items-center gap-2 text-sm"
+                                >
+                                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                                  <span className="font-medium text-foreground">{profile?.curations}</span>
+                                  <span className="text-muted-foreground">curations remaining</span>
+                                </Badge>
+                                {profile?.curations <= 0 && (
+                                  <Badge variant="destructive" className="px-3 py-1.5 text-sm">
+                                    No curations left
+                                  </Badge>
+                                )}
                               </div>
-                              <h4 className="text-lg font-semibold text-gray-900 mb-2">Upgrade to Pro</h4>
-                              <p className="text-gray-600 text-sm mb-4">
-                                You've used all your free curations. Upgrade to Pro for unlimited content curation.
-                              </p>
+                            )}
+                          </div>
+                          
+                          <div className="flex items-center gap-2">
+                            <Button
+                              onClick={triggerCuration}
+                              disabled={triggering || (!profile?.customer && profile?.curations <= 0)}
+                              size="sm"
+                              variant="default"
+                              className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground font-medium px-4 py-2"
+                            >
+                              {triggering ? (
+                                <>
+                                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                                  Curating...
+                                </>
+                              ) : (
+                                <>
+                                  <Sparkles className="h-4 w-4 mr-2" />
+                                  {profile?.customer ? 'Curate New' : 'Use Curation'}
+                                </>
+                              )}
+                            </Button>
+                            
+                            {!profile?.customer && profile?.curations <= 0 && (
                               <Button 
                                 asChild
-                                className="bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600"
+                                size="sm"
+                                variant="outline"
+                                className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white border-0 hover:from-indigo-600 hover:to-purple-600 font-medium px-4 py-2"
                               >
                                 <Link href="https://buy.stripe.com/aFa3cvbcw69We9nfG218c01" target="_blank">
-                                  Upgrade Now
+                                  Upgrade to Pro
                                 </Link>
                               </Button>
-                            </div>
-                          </>
-                        ) : (
-                          <>
-                            <div className="text-red-500 text-sm mb-2">{feedError}</div>
-                            <Button onClick={() => loadFeedItems(0, false)} variant="outline" size="sm">
-                              Try Again
-                            </Button>
-                          </>
-                        )}
-                      </div>
-                    ) : null}
-
-                    {feedItems.length === 0 && !feedLoading && !feedError ? (
-                      <div className="text-center py-8">
-                        <p className="text-gray-500 text-sm mb-2">
-                          No curated content yet.
-                        </p>
-                        {profile && !profile.customer && profile.curations > 0 && (
-                          <p className="text-xs text-gray-400">
-                            You have {profile.curations} free curation{profile.curations !== 1 ? 's' : ''} remaining.
-                            Click "Curate New" to discover relevant articles.
-                          </p>
-                        )}
-                      </div>
-                    ) : (
-                      <div 
-                        ref={feedContainerRef}
-                        className="space-y-2 max-h-[500px] overflow-y-auto pr-1 -mr-1 feed-scroll"
-                      >
-                        {feedItems.map((item) => (
-                          <div key={item.id} className="transform scale-95">
-                            <FeedItem item={item} />
+                            )}
                           </div>
-                        ))}
-                        
-                        {feedLoading && (
-                          <div className="flex items-center justify-center py-3">
-                            <Loader2 className="h-4 w-4 animate-spin text-gray-400" />
-                            <span className="ml-2 text-sm text-gray-500">Loading more...</span>
-                          </div>
-                        )}
-                        
-                        {!hasMore && feedItems.length > 0 && (
-                          <div className="text-center py-3">
-                            <p className="text-xs text-gray-400">No more items to load</p>
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  !profile.curation_prompt && (
-                    <div className="text-center py-8">
-                      <p className="text-gray-500 text-sm">
-                        This member hasn't set up content curation yet.
-                      </p>
+                        </div>
+                      )}
                     </div>
-                  )
-                )}
-              </CardContent>
-            </Card>
+                  </div>
+
+                  {/* Feed Content */}
+                  {isOwnProfile ? (
+                    <div className="space-y-4">
+                      {feedError ? (
+                        <div className="text-center py-8 px-6 bg-muted/30 backdrop-blur-sm rounded-lg border border-border/50">
+                          {feedError.includes('No curations remaining') ? (
+                            <div className="space-y-4">
+                              <div className="w-16 h-16 bg-gradient-to-br from-indigo-500/10 to-purple-500/10 rounded-full flex items-center justify-center mx-auto border border-indigo-500/20">
+                                <Sparkles className="h-8 w-8 text-indigo-500" />
+                              </div>
+                              <div>
+                                <h4 className="text-xl font-semibold text-foreground mb-2 font-display">Unlock Unlimited Curations</h4>
+                                <p className="text-muted-foreground text-sm mb-6 max-w-md mx-auto">
+                                  You've used all your free curations. Upgrade to Pro for unlimited AI-powered content curation tailored to your interests.
+                                </p>
+                                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                                  <Button 
+                                    asChild
+                                    className="bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-medium px-6"
+                                  >
+                                    <Link href="https://buy.stripe.com/aFa3cvbcw69We9nfG218c01" target="_blank">
+                                      <Sparkles className="h-4 w-4 mr-2" />
+                                      Upgrade to Pro
+                                    </Link>
+                                  </Button>
+                                  <Button 
+                                    variant="outline" 
+                                    onClick={() => loadFeedItems(0, false)}
+                                    className="bg-background/50 backdrop-blur-sm border-border/50"
+                                  >
+                                    View Existing Content
+                                  </Button>
+                                </div>
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="space-y-4">
+                              <div className="w-12 h-12 bg-destructive/10 rounded-full flex items-center justify-center mx-auto">
+                                <ExternalLink className="h-6 w-6 text-destructive" />
+                              </div>
+                              <div>
+                                <h4 className="text-lg font-semibold text-foreground mb-2">Something went wrong</h4>
+                                <p className="text-destructive text-sm mb-4">{feedError}</p>
+                                <Button 
+                                  onClick={() => loadFeedItems(0, false)} 
+                                  variant="outline" 
+                                  size="sm"
+                                  className="bg-background/50 backdrop-blur-sm border-border/50"
+                                >
+                                  <RefreshCw className="h-4 w-4 mr-2" />
+                                  Try Again
+                                </Button>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      ) : null}
+
+                      {feedItems.length === 0 && !feedLoading && !feedError ? (
+                        <div className="text-center py-12">
+                          <div className="w-16 h-16 bg-muted/50 rounded-full flex items-center justify-center mx-auto mb-4 border border-border/50">
+                            <Sparkles className="h-8 w-8 text-muted-foreground" />
+                          </div>
+                          <h4 className="text-lg font-semibold text-foreground mb-2 font-display">No content yet</h4>
+                          <p className="text-muted-foreground text-sm mb-4 max-w-sm mx-auto">
+                            Start curating personalized content based on your interests and preferences.
+                          </p>
+                          {profile && !profile.customer && profile.curations > 0 && (
+                            <div className="space-y-3">
+                              <p className="text-xs text-muted-foreground/70 bg-muted/30 px-3 py-2 rounded-lg inline-block">
+                                💡 You have {profile.curations} free curation{profile.curations !== 1 ? 's' : ''} remaining
+                              </p>
+                              <Button
+                                onClick={triggerCuration}
+                                disabled={triggering}
+                                className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground"
+                              >
+                                {triggering ? (
+                                  <>
+                                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                                    Curating...
+                                  </>
+                                ) : (
+                                  <>
+                                    <Sparkles className="h-4 w-4 mr-2" />
+                                    Get Started
+                                  </>
+                                )}
+                              </Button>
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between text-sm text-muted-foreground">
+                            <span>Your curated articles</span>
+                            <span>{feedItems.length} item{feedItems.length !== 1 ? 's' : ''}</span>
+                          </div>
+                          <div 
+                            ref={feedContainerRef}
+                            className="space-y-3 max-h-[600px] overflow-y-auto pr-2 -mr-2 feed-scroll"
+                            style={{
+                              scrollbarWidth: 'thin',
+                              scrollbarColor: 'hsl(var(--border)) transparent'
+                            }}
+                          >
+                            {feedItems.map((item) => (
+                              <div key={item.id} className="transform hover:scale-[1.02] transition-transform duration-200">
+                                <FeedItem item={item} />
+                              </div>
+                            ))}
+                            
+                            {feedLoading && (
+                              <div className="flex items-center justify-center py-6 bg-muted/20 rounded-lg border border-dashed border-border/50">
+                                <Loader2 className="h-5 w-5 animate-spin text-muted-foreground mr-3" />
+                                <span className="text-sm text-muted-foreground">Loading more articles...</span>
+                              </div>
+                            )}
+                            
+                            {!hasMore && feedItems.length > 0 && (
+                              <div className="text-center py-4 border-t border-border/50">
+                                <p className="text-xs text-muted-foreground/70">✨ You've reached the end</p>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    !profile.curation_prompt && (
+                      <div className="text-center py-12">
+                        <div className="w-16 h-16 bg-muted/50 rounded-full flex items-center justify-center mx-auto mb-4 border border-border/50">
+                          <User className="h-8 w-8 text-muted-foreground" />
+                        </div>
+                        <h4 className="text-lg font-semibold text-foreground mb-2 font-display">Private Content</h4>
+                        <p className="text-muted-foreground text-sm max-w-sm mx-auto">
+                          This member's curated content is private and not visible to other users.
+                        </p>
+                      </div>
+                    )
+                  )}
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
-      </div>
-      
-      <Footer />
-    </main>
+        
+        <Footer />
+      </main>
+    </div>
   )
 }

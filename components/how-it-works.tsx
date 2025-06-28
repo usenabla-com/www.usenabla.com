@@ -1,4 +1,5 @@
 "use client"
+import Image from "next/image"
 import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
@@ -6,6 +7,7 @@ import { useEffect, useState } from 'react'
 import Cal, { getCalApi } from '@calcom/embed-react'
 import supabase from '@/lib/supabase/client'
 import { useAnalytics } from '@/hooks/use-analytics'
+
 interface BlogPost {
   id: string
   title: string
@@ -26,7 +28,9 @@ interface ProjectCardProps {
 }
 
 export function HowItWorks() {
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([])
   const [loading, setLoading] = useState(false)
+  const [blogLoading, setBlogLoading] = useState(true)
   const router = useRouter()
   const analytics = useAnalytics()
   // Sign-up form state
@@ -76,6 +80,33 @@ export function HowItWorks() {
       subscription.unsubscribe()
     }
   }, [router])
+
+  useEffect(() => {
+    async function fetchPosts() {
+      try {
+        const response = await fetch('/api/blog')
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        const text = await response.text()
+        let posts
+        try {
+          posts = JSON.parse(text)
+        } catch (parseError) {
+          console.error('Failed to parse JSON response:', text)
+          throw new Error('Invalid JSON response from server')
+        }
+        setBlogPosts(posts.slice(0, 3)) // Get only the first 3 posts
+      } catch (error) {
+        console.error('Error fetching blog posts:', error)
+        setBlogPosts([]) // Set empty array on error
+      } finally {
+        setBlogLoading(false)
+      }
+    }
+    
+    fetchPosts()
+  }, [])
 
   useEffect(() => {
     (async function () {
@@ -154,56 +185,59 @@ export function HowItWorks() {
               </div>
             </div>
           </div>
-          {/* Weekly curated content signup */}
-          <div className="mt-12 max-w-lg mx-auto">
-            <h3 className="text-3xl font-bold mb-6 mt-6 text-center">Want weekly curated content?</h3>
 
-            {step === 'form' && (
-              <form onSubmit={handleSubmit} className="space-y-4 bg-white shadow-md rounded-xl p-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <input
-                    type="text"
-                    placeholder="First name"
-                    value={userData.firstName}
-                    onChange={(e) => setUserData(prev => ({ ...prev, firstName: e.target.value }))}
-                    className="w-full border rounded-lg p-3 text-sm bg-gray-50"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Last name"
-                    value={userData.lastName}
-                    onChange={(e) => setUserData(prev => ({ ...prev, lastName: e.target.value }))}
-                    className="w-full border rounded-lg p-3 text-sm bg-gray-50"
-                  />
-                </div>
-                <input
-                  type="email"
-                  required
-                  placeholder="Email address"
-                  value={userData.email}
-                  onChange={(e) => setUserData(prev => ({ ...prev, email: e.target.value }))}
-                  className="w-full border rounded-lg p-3 text-sm bg-gray-50"
-                />
-                <textarea
-                  required
-                  placeholder="Tell us what kind of content you'd like..."
-                  value={userData.curationPrompt}
-                  onChange={(e) => setUserData(prev => ({ ...prev, curationPrompt: e.target.value }))}
-                  className="w-full border rounded-lg p-3 text-sm bg-gray-50 min-h-[80px]"
-                />
-                <Button type="submit" disabled={loading} className="w-full">
-                  {loading ? 'Sending...' : 'Send magic link'}
-                </Button>
-              </form>
-            )}
-
-            {step === 'checkEmail' && (
-              <div className="text-center bg-white dark:bg-gray-900 shadow-md rounded-xl p-8">
-                <p className="mb-4">We sent a magic link to <strong>{userData.email}</strong>. Check your email to verify.</p>
-                <p className="text-sm text-gray-500 mb-6">After clicking the link you will be redirected automatically.</p>
-                <Button onClick={handleResend} disabled={loading} variant="outline">
-                  {loading ? 'Resending...' : 'Resend link'}
-                </Button>
+          {/* Blog Section */}
+          <div className="mt-12">
+            <h3 className="text-3xl font-bold mb-6 mt-6 text-center">Our Blog</h3>
+            {blogLoading ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="flex flex-col gap-2">
+                    <div className="bg-muted rounded-md aspect-video mb-4 animate-pulse"></div>
+                    <div className="h-6 bg-muted rounded animate-pulse mb-2"></div>
+                    <div className="h-4 bg-muted rounded animate-pulse mb-1"></div>
+                    <div className="h-4 bg-muted rounded animate-pulse w-3/4"></div>
+                  </div>
+                ))}
+              </div>
+            ) : blogPosts.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {blogPosts.map((post) => (
+                  <div 
+                    key={post.id} 
+                    className="flex flex-col gap-2 hover:opacity-75 cursor-pointer"
+                    onClick={() => router.push(post.url)}
+                  >
+                    <div className="bg-muted rounded-md aspect-video mb-4 flex items-center justify-center overflow-hidden">
+                      {post.image ? (
+                        <Image
+                          src={post.image}
+                          alt={post.title}
+                          width={400}
+                          height={225}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <span className="text-6xl">📝</span>
+                      )}
+                    </div>
+                    <h3 className="text-xl tracking-tight">{post.title}</h3>
+                    <p className="text-muted-foreground text-base">
+                      {post.summary}
+                    </p>
+                    {post.published && (
+                      <p className="text-sm text-muted-foreground">
+                        {new Date(post.published).toLocaleDateString()}
+                      </p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12">
+                <div className="text-6xl mb-4">📝</div>
+                <p className="text-muted-foreground">No blog posts available at the moment.</p>
+                <p className="text-sm text-muted-foreground mt-2">Check back soon for new content!</p>
               </div>
             )}
           </div>

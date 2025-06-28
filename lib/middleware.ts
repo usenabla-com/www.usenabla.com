@@ -42,14 +42,25 @@ export async function updateSession(request: NextRequest) {
     console.log('🔐 Middleware: User check -', user ? 'Found user' : 'No user')
 
     const isAuthCallback = request.nextUrl.pathname.startsWith('/auth')
+    const isBlogApi = request.nextUrl.pathname.startsWith('/api/blog')
+    const isBlog = request.nextUrl.pathname.startsWith('/blog')
+    const isSupport = request.nextUrl.pathname.startsWith('/support')
     const isOnboarding = request.nextUrl.pathname.startsWith('/onboarding')
     const isProfile = request.nextUrl.pathname.startsWith('/profile')
     const isPublicRoute = request.nextUrl.pathname === '/' || request.nextUrl.pathname === '/onboarding'
     const isServiceWorker = request.nextUrl.pathname.includes('service-worker.js')
     const isPublicAsset = request.nextUrl.pathname.match(/\.(ico|png|jpg|jpeg|svg|css|js|json)$/)
 
-    // Allow public assets and service worker
-    if (isServiceWorker || isPublicAsset) {
+    // Allow public assets, service worker, and blog API
+    if (isServiceWorker || isPublicAsset || isBlogApi || isBlog) {
+      return response
+    }
+
+    if (isSupport && user?.id !== 'ec241bb3-293e-4f03-9d07-591f0208d0ad') {
+      return NextResponse.redirect(new URL('/', request.url))
+    }
+
+    if (isSupport && user?.id === 'ec241bb3-293e-4f03-9d07-591f0208d0ad') {
       return response
     }
 

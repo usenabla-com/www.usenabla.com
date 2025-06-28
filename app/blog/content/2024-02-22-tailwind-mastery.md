@@ -7,9 +7,13 @@ image: "https://zerowastecenter.org/wp-content/uploads/2023/06/ocean_reef-1080x6
 tags: ["Ecosystems", "Software"]
 ---
 
+## It's time to use AI with more intention 💡
+
 It’s been about 3 years since ChatGPT dropped and created a firestorm of new AI/LLM inspiration and startup ideas. In that time thousands of fly-by-night products and startups have popped up to shill their wrappers over OpenAI to individuals and companies alike, and personally I find this to be an amazing thing (much like the dotcom era), but I also believe many of these companies struggle to actually apply creativity and the human touch to build products and services people actually want to use. This translates into high churn and low customer loyalty in a market where there are thousands of alternative options.
 
-## The human element requires individuality 🦚
+
+
+### The human element requires individuality 🦚
 
 Something I’m a huge fan of if companies displaying their own or even just the founders individuality. Let’s face it, the AI market is getting saturated. There is an insane amount of AI tools popping up and the better LLM models get, the lower the barrier to entry will be. 
 

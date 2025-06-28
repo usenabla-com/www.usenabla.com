@@ -23,7 +23,7 @@ Next came the internal support chat, which might seem just like a bootleg versio
 
  
 
-![image.png](/public/profile.png)
+![image.png](https://github.com/Atelier-Logos/www.atelierlogos.studio/blob/main/public/profile.png?raw=true)
 
 Both of these were built 100% with Cursor, and are a huge part of what I mean when I refer to ecosystem-building. 
 

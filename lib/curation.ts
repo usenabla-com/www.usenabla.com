@@ -59,9 +59,13 @@ class CurationService {
         throw new Error(`Subscriber not found: ${userId}`)
       }
 
-      // Check if user has remaining curations or is a paying customer
-      if (!subscriber.customer && subscriber.curations <= 0) {
-        throw new Error('No curations remaining. Please upgrade your plan at https://buy.stripe.com/aFa3cvbcw69We9nfG218c01')
+      // Check if user has remaining curations, unlimited curations, or is a paying customer
+      // -1 curations means unlimited (either Premium Support or Curation Plan)
+      const hasUnlimitedCurations = subscriber.curations === -1
+      const hasRemainingCurations = subscriber.curations > 0
+      
+      if (!hasUnlimitedCurations && !hasRemainingCurations) {
+        throw new Error('No curations remaining. Please upgrade to our Curation Plan ($20.99/month) or Premium Support ($85.99/month) at https://buy.stripe.com/aFa3cvbcw69We9nfG218c01')
       }
 
       if (!subscriber.curation_prompt || subscriber.curation_prompt.trim() === '') {
@@ -133,14 +137,14 @@ class CurationService {
         }
       }
 
-      // If content was successfully curated and user is not a customer, decrement their curations
+      // If content was successfully curated and user doesn't have unlimited curations, decrement their curations
       console.log('Checking conditions for decrementing curations:', {
         newItemsCount,
-        isCustomer: subscriber.customer,
+        hasUnlimitedCurations: subscriber.curations === -1,
         currentCurations: subscriber.curations
       })
 
-      if (newItemsCount > 0 && !subscriber.customer) {
+      if (newItemsCount > 0 && subscriber.curations !== -1) {
         console.log(`Decrementing curations for user ${subscriber.email} from ${subscriber.curations} to ${subscriber.curations - 1}`)
         
         // First, get the current curations count to ensure we have the latest value
@@ -157,56 +161,61 @@ class CurationService {
           throw new Error('Failed to verify current curations')
         }
 
-        // Update with the verified current count
-        const newCount = Math.max(0, currentData.curations - 1)
-        console.log(`Attempting to update curations to ${newCount}`)
-        
-        // Perform the update without expecting a return value
-        const { error: updateError } = await client
-          .from('subscribers')
-          .update({ 
-            curations: newCount,
-            updated_at: new Date().toISOString()
-          })
-          .eq('id', userId)
+        // Only decrement if they don't have unlimited curations
+        if (currentData.curations !== -1) {
+          // Update with the verified current count
+          const newCount = Math.max(0, currentData.curations - 1)
+          console.log(`Attempting to update curations to ${newCount}`)
+          
+          // Perform the update without expecting a return value
+          const { error: updateError } = await client
+            .from('subscribers')
+            .update({ 
+              curations: newCount,
+              updated_at: new Date().toISOString()
+            })
+            .eq('id', userId)
 
-        if (updateError) {
-          console.error(`❌ Failed to update remaining curations for ${subscriber.email}:`, updateError)
-          throw new Error('Failed to update remaining curations')
-        }
+          if (updateError) {
+            console.error(`❌ Failed to update remaining curations for ${subscriber.email}:`, updateError)
+            throw new Error('Failed to update remaining curations')
+          }
 
-        // Verify the update with a separate query
-        const { data: verifyData, error: verifyError } = await client
-          .from('subscribers')
-          .select('curations')
-          .eq('id', userId)
-          .single()
+          // Verify the update with a separate query
+          const { data: verifyData, error: verifyError } = await client
+            .from('subscribers')
+            .select('curations')
+            .eq('id', userId)
+            .single()
 
-        console.log('Verification after update:', {
-          expected: newCount,
-          actual: verifyData?.curations,
-          error: verifyError
-        })
-
-        if (verifyError || verifyData?.curations !== newCount) {
-          console.error('❌ Update verification failed:', {
+          console.log('Verification after update:', {
             expected: newCount,
             actual: verifyData?.curations,
             error: verifyError
           })
-          throw new Error('Failed to verify curation count update')
-        }
 
-        // Log the successful update
-        console.log(`✅ Successfully updated and verified curations for ${subscriber.email} to ${newCount}`)
-        
-        // Update the subscriber object with new count
-        subscriber.curations = newCount
+          if (verifyError || verifyData?.curations !== newCount) {
+            console.error('❌ Update verification failed:', {
+              expected: newCount,
+              actual: verifyData?.curations,
+              error: verifyError
+            })
+            throw new Error('Failed to verify curation count update')
+          }
+
+          // Log the successful update
+          console.log(`✅ Successfully updated and verified curations for ${subscriber.email} to ${newCount}`)
+          
+          // Update the subscriber object with new count
+          subscriber.curations = newCount
+        } else {
+          console.log('Skipping curation decrement: user has unlimited curations')
+        }
       } else {
         console.log('Skipping curation decrement:', {
-          reason: newItemsCount === 0 ? 'no new items curated' : 'user is a customer',
+          reason: newItemsCount === 0 ? 'no new items curated' : 'user has unlimited curations',
           newItemsCount,
-          isCustomer: subscriber.customer
+          hasUnlimitedCurations: subscriber.curations === -1
         })
       }
 
@@ -227,4 +236,4 @@ class CurationService {
 
 // Export singleton instance
 export const curationService = new CurationService()
-export default curationService 
+export default curationService

@@ -65,7 +65,7 @@ class CurationService {
       const hasRemainingCurations = subscriber.curations > 0
       
       if (!hasUnlimitedCurations && !hasRemainingCurations) {
-        throw new Error('No curations remaining. Please upgrade to our Curation Plan ($20.99/month) or Premium Support ($85.99/month) at https://buy.stripe.com/aFa3cvbcw69We9nfG218c01')
+        throw new Error('No curations remaining. Please upgrade to our Curation Plan ($20.99/month) or Premium Support ($85.99/month) at https://buy.stripe.com/4gM5kD0xSdCoc1fbpM18c03')
       }
 
       if (!subscriber.curation_prompt || subscriber.curation_prompt.trim() === '') {

@@ -12,6 +12,7 @@ import { EnhancedMessageInput } from './enhanced-message-input'
 import { URLPreview } from './url-preview'
 import { MessageAttachment } from './message-attachment'
 import { parseMessageContent, extractUrls } from '@/lib/url-utils'
+import { useAnalytics } from '@/hooks/use-analytics'
 
 interface ChatMessage {
   id: string
@@ -58,6 +59,7 @@ export function ChatComponent() {
   const [renderKey, setRenderKey] = useState(0) // Force re-render key
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const pusherRef = useRef<Pusher | null>(null)
+  const analytics = useAnalytics()
 
   console.log('Component state:', { 
     hasMessages: !!chatData?.messages.length, 
@@ -102,11 +104,11 @@ export function ChatComponent() {
       if (!response.ok) {
         const errorData = await response.json()
         
-        // if (response.status === 403 && errorData.error === 'Customer access required') {
-        //   setRequiresCustomer(true)
-        //   setError(errorData.message || 'Customer access required for chat support')
-        //   return
-        // }
+        if (response.status === 403 && errorData.error === 'Customer access required') {
+          setRequiresCustomer(true)
+          setError(errorData.message || 'Customer access required for chat support')
+          return
+        }
         
         throw new Error(errorData.error || 'Failed to get chat room')
       }
@@ -351,6 +353,19 @@ export function ChatComponent() {
           throw new Error(result.error || 'Failed to send message')
         }
       }
+
+      // Track analytics
+      analytics.track('Chat Message Sent', {
+        message: messageText,
+        attachmentType: attachmentData ? attachmentData.type : attachment ? getAttachmentType(attachment.type) : null,
+        attachmentUrl: attachmentData ? attachmentData.url : attachment ? URL.createObjectURL(attachment) : null,
+        attachmentFilename: attachmentData ? attachmentData.filename : attachment?.name,
+        attachmentSize: attachmentData ? attachmentData.size : attachment?.size,
+        attachmentMimeType: attachmentData ? attachmentData.mimeType : attachment?.type,
+        chatRoomId: chatData.room.id,
+        senderId: 'current-user',
+        senderType: 'user'
+      })
     } catch (error) {
       console.error('Error sending message:', error)
       // Remove optimistic message on error
@@ -419,46 +434,181 @@ export function ChatComponent() {
     )
   }
 
-  // TODO: Uncomment this when we have a way to handle non-customer support requests
-  // if (requiresCustomer) {
-  //   return (
-  //     <Card className="w-full max-w-2xl mx-auto">
-  //       <CardHeader>
-  //         <CardTitle className="flex items-center gap-2">
-  //           <MessageCircle className="h-5 w-5" />
-  //           Support Chat
-  //         </CardTitle>
-  //       </CardHeader>
-  //       <CardContent className="text-center py-8">
-  //         <div className="mb-6">
-  //           <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-  //             <MessageCircle className="h-8 w-8 text-primary" />
-  //           </div>
-  //           <h3 className="text-lg font-semibold mb-2">Customer Access Required</h3>
-  //           <p className="text-muted-foreground mb-6">
-  //             Chat support is exclusively available for our customers. Upgrade your account to get direct access to our support team.
-  //           </p>
-  //         </div>
+  // Customer access required UI
+  if (requiresCustomer) {
+    return (
+      <Card className="w-full max-w-3xl mx-auto bg-gradient-to-br from-card/95 to-muted/30 backdrop-blur-xl border border-border/50 shadow-2xl">
+        <CardHeader className="text-center pb-6 bg-gradient-to-r from-primary/5 to-primary/10 border-b border-border/30">
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-purple-500/20 blur-3xl opacity-30 rounded-full transform -translate-y-4"></div>
+            <div className="relative w-20 h-20 bg-gradient-to-br from-primary to-primary/80 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg ring-4 ring-primary/20">
+              <MessageCircle className="h-10 w-10 text-white" />
+            </div>
+          </div>
+          <CardTitle className="text-2xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent">
+            Premium Support Access Required
+          </CardTitle>
+          <p className="text-muted-foreground text-lg mt-2 max-w-lg mx-auto leading-relaxed">
+            Get instant access to our expert support team with real-time chat assistance
+          </p>
+        </CardHeader>
+        
+        <CardContent className="p-8">
+          {/* Feature highlights */}
+          <div className="grid md:grid-cols-2 gap-6 mb-8">
+            <div className="space-y-4">
+              <h4 className="font-semibold text-foreground flex items-center gap-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                What you get with Premium Support
+              </h4>
+              <ul className="space-y-3 text-sm text-muted-foreground">
+                <li className="flex items-start gap-3">
+                  <div className="w-5 h-5 bg-primary/10 rounded-full flex items-center justify-center mt-0.5 flex-shrink-0">
+                    <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  </div>
+                  <span><strong className="text-foreground">Real-time chat support</strong> - Direct access to our expert team</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <div className="w-5 h-5 bg-primary/10 rounded-full flex items-center justify-center mt-0.5 flex-shrink-0">
+                    <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  </div>
+                  <span><strong className="text-foreground">Unlimited content curation</strong> - Never run out of personalized content</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <div className="w-5 h-5 bg-primary/10 rounded-full flex items-center justify-center mt-0.5 flex-shrink-0">
+                    <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  </div>
+                  <span><strong className="text-foreground">Priority response</strong> - Get help when you need it most</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <div className="w-5 h-5 bg-primary/10 rounded-full flex items-center justify-center mt-0.5 flex-shrink-0">
+                    <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  </div>
+                  <span><strong className="text-foreground">File sharing & attachments</strong> - Share screenshots and documents</span>
+                </li>
+              </ul>
+            </div>
+            
+            <div className="space-y-4">
+              <h4 className="font-semibold text-foreground flex items-center gap-2">
+                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                Alternative options
+              </h4>
+              <div className="p-4 bg-muted/50 rounded-xl border border-border/30">
+                <h5 className="font-medium text-foreground mb-2">Curation Plan</h5>
+                <p className="text-sm text-muted-foreground mb-3">
+                  Get unlimited content curation without chat support
+                </p>
+                <div className="flex items-center justify-between">
+                  <span className="text-lg font-bold text-foreground">$20.99/month</span>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => {
+                      analytics.track('Stripe Signup Button Clicked', {
+                        button_location: 'chat_component_curation_plan',
+                        plan_type: 'curation_plan',
+                        price: '$20.99/month',
+                        timestamp: new Date().toISOString()
+                      })
+                      window.open('https://buy.stripe.com/4gM5kD0xSdCoc1fbpM18c03', '_blank')
+                    }}
+                    className="text-xs"
+                  >
+                    Get Curation Plan
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Pricing and CTA */}
+          <div className="text-center space-y-6">
+            <div className="bg-gradient-to-r from-primary/10 to-purple-500/10 rounded-2xl p-6 border border-primary/20">
+              <div className="flex items-center justify-center gap-4 mb-4">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-foreground">$85.99</div>
+                  <div className="text-sm text-muted-foreground">per month</div>
+                </div>
+                <div className="w-px h-12 bg-border"></div>
+                <div className="text-center">
+                  <div className="text-lg font-semibold text-green-600">7-day free trial</div>
+                  <div className="text-sm text-muted-foreground">Cancel anytime</div>
+                </div>
+              </div>
+              
+              <div className="space-y-3">
+                <Button 
+                  className="w-full bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-white font-semibold py-3 h-auto shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02]"
+                  size="lg"
+                  onClick={() => {
+                    analytics.track('Stripe Signup Button Clicked', {
+                      button_location: 'chat_component_premium_support',
+                      plan_type: 'premium_support',
+                      price: '$85.99/month',
+                      has_free_trial: true,
+                      trial_duration: '7-day',
+                      timestamp: new Date().toISOString()
+                    })
+                    window.open('https://buy.stripe.com/fZueVd4O89m88P3ctQ18c04', '_blank')
+                  }}
+                >
+                  <MessageCircle className="h-5 w-5 mr-2" />
+                  Upgrade to Premium Support
+                </Button>
+                
+                <Button 
+                  variant="ghost" 
+                  className="w-full text-muted-foreground hover:text-foreground"
+                  onClick={() => initializeChat()}
+                >
+                  <RefreshCw className="h-4 w-4 mr-2" />
+                  Refresh Status
+                </Button>
+              </div>
+            </div>
+            
+            <div className="flex items-center justify-center gap-6 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 bg-green-500/20 rounded-full flex items-center justify-center">
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                </div>
+                <span>Cancel anytime</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 bg-blue-500/20 rounded-full flex items-center justify-center">
+                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                </div>
+                <span>Instant activation</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 bg-purple-500/20 rounded-full flex items-center justify-center">
+                  <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                </div>
+                <span>30-day guarantee</span>
+              </div>
+            </div>
+          </div>
           
-  //         <div className="space-y-3">
-  //           <Button className="w-full" size="lg">
-  //             Upgrade to Customer
-  //           </Button>
-  //           <Button variant="outline" className="w-full" onClick={() => window.location.reload()}>
-  //             <RefreshCw className="h-4 w-4 mr-2" />
-  //             Refresh Status
-  //           </Button>
-  //         </div>
-          
-  //         <div className="mt-6 p-4 bg-muted/50 rounded-lg">
-  //           <p className="text-sm text-muted-foreground">
-  //             Already a customer? Your account status may take a few minutes to update after payment.
-  //           </p>
-  //         </div>
-  //       </CardContent>
-  //     </Card>
-  //   )
-  // }
+          <div className="mt-8 p-4 bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800/30 rounded-xl">
+            <div className="flex items-start gap-3">
+              <div className="w-5 h-5 bg-amber-500 rounded-full flex items-center justify-center mt-0.5 flex-shrink-0">
+                <div className="w-2 h-2 bg-white rounded-full"></div>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-amber-800 dark:text-amber-200 mb-1">
+                  Already subscribed?
+                </p>
+                <p className="text-xs text-amber-700 dark:text-amber-300">
+                  Your account status may take a few minutes to update after payment. Try refreshing in a moment.
+                </p>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    )
+  }
 
   if (error && !requiresCustomer) {
     return (

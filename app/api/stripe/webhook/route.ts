@@ -1,6 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import Stripe from 'stripe'
+import Analytics from '@segment/analytics-node'
+
+// Add analytics for server-side tracking
+declare global {
+  interface Window {
+    analytics: any
+  }
+}
+
+// Server-side analytics tracking function
+function trackServerEvent(event: string, properties?: Record<string, any>) {
+  // For server-side tracking, we can use Segment's Node.js library or HTTP API
+  // For now, we'll log the event and you can implement the actual server-side tracking
+  console.log('📊 Analytics Event:', event, properties)
+  
+  const analytics = new Analytics({
+    writeKey: process.env.SEGMENT_WRITE_KEY!
+  })
+  analytics.track({ userId: properties?.userId, event, properties })
+}
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2025-05-28.basil',
@@ -162,6 +182,21 @@ async function handleSubscriptionCreated(session: Stripe.Checkout.Session, supab
     'completed',
     supabase
   )
+
+  // Track subscription start
+  trackServerEvent('Subscription Started', {
+    userId: subscriber.id,
+    userEmail: customerEmail,
+    subscriptionId: subscriptionId,
+    customerId: customerId,
+    priceId: priceId,
+    planType: priceId === PREMIUM_SUPPORT_PRICE_ID ? 'Premium Support' : 'Curation Plan',
+    amount: session.amount_total || 0,
+    currency: session.currency || 'usd',
+    isCustomer: isCustomer,
+    curations: curations,
+    timestamp: new Date().toISOString()
+  })
 
   console.log('✅ Subscription setup completed for:', customerEmail)
 }

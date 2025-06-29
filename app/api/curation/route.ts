@@ -54,7 +54,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({
         error: error.message,
         code: 'SUBSCRIPTION_REQUIRED',
-        upgradeUrl: 'https://buy.stripe.com/aFa3cvbcw69We9nfG218c01'
+        upgradeUrl: 'https://buy.stripe.com/4gM5kD0xSdCoc1fbpM18c03'
       }, { status: 402 }) // 402 Payment Required
     }
     return NextResponse.json({ error: error.message || 'Curation failed' }, { status: 500 })

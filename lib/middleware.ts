@@ -43,6 +43,7 @@ export async function updateSession(request: NextRequest) {
 
     const isAuthCallback = request.nextUrl.pathname.startsWith('/auth')
     const isBlogApi = request.nextUrl.pathname.startsWith('/api/blog')
+    const isStripeWebhook = request.nextUrl.pathname.startsWith('/api/stripe/*')
     const isBlog = request.nextUrl.pathname.startsWith('/blog')
     const isSupport = request.nextUrl.pathname.startsWith('/support')
     const isOnboarding = request.nextUrl.pathname.startsWith('/onboarding')
@@ -52,7 +53,7 @@ export async function updateSession(request: NextRequest) {
     const isPublicAsset = request.nextUrl.pathname.match(/\.(ico|png|jpg|jpeg|svg|css|js|json)$/)
 
     // Allow public assets, service worker, and blog API
-    if (isServiceWorker || isPublicAsset || isBlogApi || isBlog) {
+    if (isServiceWorker || isPublicAsset || isBlogApi || isBlog || isStripeWebhook) {
       return response
     }
 

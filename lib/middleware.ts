@@ -43,7 +43,7 @@ export async function updateSession(request: NextRequest) {
 
     const isAuthCallback = request.nextUrl.pathname.startsWith('/auth')
     const isBlogApi = request.nextUrl.pathname.startsWith('/api/blog')
-    const isStripeWebhook = request.nextUrl.pathname.startsWith('/api/stripe/*')
+    const isStripeWebhook = request.nextUrl.pathname.startsWith('/api/stripe/webhook')
     const isBlog = request.nextUrl.pathname.startsWith('/blog')
     const isSupport = request.nextUrl.pathname.startsWith('/support')
     const isOnboarding = request.nextUrl.pathname.startsWith('/onboarding')

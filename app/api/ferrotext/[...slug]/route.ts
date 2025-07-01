@@ -453,8 +453,150 @@ async function getDocumentationText(crateName: string): Promise<string> {
   }
 }
 
-async function extractCodeExamples(crateName: string): Promise<any[]> {
-  return []
+async function extractCodeExamples(crateName: string): Promise<Array<{
+  code: string
+  description: string
+  type: string
+  language: string
+}>> {
+  try {
+    console.log(`🔍 Extracting code examples for ${crateName}...`)
+    
+    // Fetch the main docs.rs page for the crate
+    const docsUrl = `https://docs.rs/${crateName}/latest/${crateName}/`
+    const response = await fetch(docsUrl, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (compatible; RustoleumBot/1.0)'
+      }
+    })
+    
+    if (!response.ok) {
+      console.log(`❌ Failed to fetch docs for ${crateName}: ${response.status}`)
+      return []
+    }
+    
+    const html = await response.text()
+    const cheerio = await import('cheerio')
+    const $ = cheerio.load(html)
+    
+    const examples: Array<{
+      code: string
+      description: string
+      type: string
+      language: string
+    }> = []
+    
+    // Extract code examples from various sources
+    
+    // 1. Code blocks in documentation
+    $('pre code, .example-wrap pre').each((i, el) => {
+      const $el = $(el)
+      const code = $el.text().trim()
+      
+      // Filter for Rust code (contains common Rust patterns)
+      if (code.length > 20 && 
+          (code.includes('use ') || 
+           code.includes('fn ') || 
+           code.includes('let ') ||
+           code.includes('impl ') ||
+           code.includes('struct ') ||
+           code.includes('enum ') ||
+           code.includes('#[') ||
+           code.includes('::') ||
+           code.includes('.unwrap()') ||
+           code.includes('.expect('))) {
+        
+        // Try to get context/description
+        let description = ''
+        const prevElements = $el.parent().prevAll().slice(0, 3)
+        prevElements.each((j, prevEl) => {
+          const text = $(prevEl).text().trim()
+          if (text && text.length < 200 && !text.startsWith('```')) {
+            description = text
+            return false // break
+          }
+        })
+        
+        // Look for headings
+        if (!description) {
+          const heading = $el.parent().prevAll('h1, h2, h3, h4, h5, h6').first()
+          if (heading.length > 0) {
+            description = heading.text().trim()
+          }
+        }
+        
+        examples.push({
+          code: code,
+          description: description || 'Code example',
+          type: 'documentation',
+          language: 'rust'
+        })
+      }
+    })
+    
+    // 2. Look for "Examples" sections specifically
+    $('h1, h2, h3, h4, h5, h6').each((i, el) => {
+      const $heading = $(el)
+      const headingText = $heading.text().trim().toLowerCase()
+      
+      if (headingText.includes('example') || headingText.includes('usage')) {
+        // Find code blocks after this heading
+        let $next = $heading.next()
+        let attempts = 0
+        
+        while ($next.length > 0 && attempts < 5) {
+          const $code = $next.find('pre code, code').first()
+          if ($code.length > 0) {
+            const code = $code.text().trim()
+            if (code.length > 20 && code.includes('use ')) {
+              examples.push({
+                code: code,
+                description: headingText,
+                type: 'example_section',
+                language: 'rust'
+              })
+              break
+            }
+          }
+          $next = $next.next()
+          attempts++
+        }
+      }
+    })
+    
+    // 3. Extract from README-style content
+    $('.docblock').each((i, el) => {
+      const $block = $(el)
+      const text = $block.text()
+      
+      if (text.toLowerCase().includes('example') || text.toLowerCase().includes('usage')) {
+        const $code = $block.find('pre code').first()
+        if ($code.length > 0) {
+          const code = $code.text().trim()
+          if (code.length > 20) {
+            examples.push({
+              code: code,
+              description: 'Usage example from documentation',
+              type: 'docblock',
+              language: 'rust'
+            })
+          }
+        }
+      }
+    })
+    
+    // Remove duplicates and limit results
+    const uniqueExamples = examples.filter((example, index, self) => 
+      index === self.findIndex(e => e.code === example.code)
+    ).slice(0, 10) // Limit to 10 examples
+    
+    console.log(`✅ Found ${uniqueExamples.length} code examples for ${crateName}`)
+    return uniqueExamples
+    
+  } catch (error) {
+    console.error(`❌ Error extracting examples for ${crateName}:`, error instanceof Error ? error.message : 'Unknown error')
+    return []
+  }
 }
 
 async function analyzeDependencies(crateName: string): Promise<any> {

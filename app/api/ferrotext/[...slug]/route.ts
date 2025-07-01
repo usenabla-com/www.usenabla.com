@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
-import { RustApiClient } from '@/lib/rustoleum/api-client'
-import { RustDocParser } from '@/lib/rustoleum/parser'
+import { RustApiClient } from '@/lib/ferrotext/api-client'
+import { RustDocParser } from '@/lib/ferrotext/parser'
 
 // Initialize Supabase client for server-side operations
 async function createSupabaseServerClient() {
@@ -207,12 +207,21 @@ async function getCrateData(crateName: string, options: any, supabase: any) {
 
   // Enhanced extraction for full/deep tiers
   if (depth === 'full' || depth === 'deep') {
+    console.log('🔍 Enhanced extraction for depth:', depth, 'includeExamples:', options.includeExamples)
     if (options.includeExamples) {
+      console.log('🔍 Starting code example extraction for:', crateName)
       extractedData.api_usage_examples = await extractCodeExamples(crateName)
+      console.log('✅ Code example extraction completed. Found:', extractedData.api_usage_examples.length, 'examples')
+    } else {
+      console.log('⚠️ Code examples not requested (includeExamples is false)')
+      extractedData.api_usage_examples = []
     }
     if (options.includeDependencies) {
       extractedData.dependency_graph = await analyzeDependencies(crateName)
     }
+  } else {
+    console.log('⚠️ Depth is', depth, '- skipping enhanced extraction')
+    extractedData.api_usage_examples = []
   }
 
   if (depth === 'deep') {
@@ -466,7 +475,7 @@ async function extractCodeExamples(crateName: string): Promise<Array<{
     const docsUrl = `https://docs.rs/${crateName}/latest/${crateName}/`
     const response = await fetch(docsUrl, {
       headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; RustoleumBot/1.0)'
+        'User-Agent': 'Mozilla/5.0 (compatible; ferrotextBot/1.0)'
       }
     })
     

@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
-import { siGithub, siX, siCaldotcom} from "simple-icons"
+import { siGithub, siX, siCaldotcom, siSlack} from "simple-icons"
 
 export function Footer() {
   return (
@@ -16,11 +16,11 @@ export function Footer() {
             LLM Solutions Studio
             </p>
             <div className="flex gap-4">
-              <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+              <Link href="https://join.slack.com/t/atelierlogos/shared_invite/zt-384mjl0hs-X2WTb8sc1xFrrDKULcgboQ" className="text-muted-foreground hover:text-foreground transition-colors">
                 <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
-                  <path d={siGithub.path} />
+                  <path d={siSlack.path} />
                 </svg>
-                <span className="sr-only">GitHub</span>
+                <span className="sr-only">Slack</span>
               </Link>
               <Link href="" className="text-muted-foreground hover:text-foreground transition-colors">
               <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">

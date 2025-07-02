@@ -125,8 +125,8 @@ export function Navbar() {
                 className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg hover:shadow-xl transition-all duration-200" 
                 asChild
               >
-                <Link href="/onboarding">
-                  Get Started
+                <Link href="https://join.slack.com/t/atelierlogos/shared_invite/zt-384mjl0hs-X2WTb8sc1xFrrDKULcgboQ">
+                  Join Community
                 </Link>
               </Button>
             </div>

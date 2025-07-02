@@ -27,7 +27,7 @@ Next came the internal support chat, which might seem just like a bootleg versio
 
  
 
-![image.png](https://github.com/Atelier-Logos/www.atelierlogos.studio/blob/main/public/profile.png?raw=true)
+![image.png](https://github.com/Atelier-Logos/www.www.atelierlogos.studio/blob/main/public/profile.png?raw=true)
 
 Both of these were built 100% with Cursor, and are a huge part of what I mean when I refer to ecosystem-building. 
 
@@ -41,4 +41,4 @@ These kinds of things can be specially crafted partnership portals, custom built
 
 ## Want to talk about this more?
 
-This is obviously the type of stuff I love helping people with. So if you’d like support on how you can build using LLMs with more intention, [schedule a intro call](https://cal.com/team/atelier-logos/45-min-intro-call), or [create an account](https://www.atelierlogos.studio/onboarding) and hit me up via chat!
+This is obviously the type of stuff I love helping people with. So if you’d like support on how you can build using LLMs with more intention, [schedule a intro call](https://cal.com/team/atelier-logos/45-min-intro-call), or [create an account](https://www.www.atelierlogos.studio/onboarding) and hit me up via chat!

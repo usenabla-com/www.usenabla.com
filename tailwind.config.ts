@@ -19,8 +19,8 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
-        serif: ["var(--font-cormorant)", "Georgia", "serif"],
-        display: ["var(--font-cormorant)", "Georgia", "serif"],
+        serif: ["var(--font-inter)", "Georgia", "serif"],
+        display: ["var(--font-inter)", "Georgia", "serif"],
       },
       colors: {
         border: "hsl(var(--border))",

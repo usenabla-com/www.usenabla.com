@@ -1,0 +1,247 @@
+# Frequently Asked Questions
+
+Common questions and answers about the Ferropipe API. Can't find what you're looking for? Contact us at james@atelierlogos.studio.
+
+## Getting Started
+
+### What is Ferropipe?
+
+Ferropipe is a powerful API that extracts, analyzes, and serves structured documentation data from Rust crates. It provides comprehensive information about packages from crates.io, including documentation, code examples, dependencies, and metadata.
+
+### How do I get started?
+
+1. [Schedule a call with us](https://cal.com/team/atelier-logos/ferropipe-intro) to get your API key
+2. Choose your tier [See Pricing](/docs/ferropipe/pricing)
+3. Make your first request using our [Getting Started guide](/docs/ferropipe/getting-started)
+
+### Do I need an API key for all requests?
+
+Yes, all API endpoints require authentication with a valid API key. This helps us provide reliable service and track usage for billing purposes.
+
+### Can I test the API without signing up?
+
+You can explore our [API Playground](/docs/ferropipe/playground) to see example requests and responses, but you'll need an API key to make actual requests.
+
+---
+
+## Pricing and Tiers
+
+### How do the extraction depths differ?
+
+**Basic**: Package information, basic documentation, repository links, and download statistics.
+
+**Full**: Everything from Basic plus complete module documentation, function signatures, struct definitions, code examples, and dependency analysis.
+
+**Deep**: Everything from Full plus AI-optimized documentation text, enhanced examples, cross-reference analysis, and advanced dependency mapping.
+
+### What happens if I exceed my rate limit?
+
+When you exceed your rate limit, subsequent requests will receive a `429 Too Many Requests` response. Your rate limit resets on a rolling hourly basis. There are no overage charges - you simply need to wait or upgrade your plan.
+
+---
+
+## API Usage
+
+### How accurate is the extracted documentation?
+
+Our extraction engine maintains 99%+ accuracy for well-documented crates. The Deep tier includes additional validation and AI enhancement for even higher quality results. We continuously improve our extraction algorithms based on community feedback.
+
+### What happens if a crate doesn't exist?
+
+You'll receive a `404 Not Found` response with a clear error message indicating the crate wasn't found in the registry.
+
+### Can I request data for private crates?
+
+No, Ferropipe only provides data for public crates available on crates.io. We don't have access to private repositories or crates. That may be something we implement in the future, but at this time it's not on our radar.
+
+### How do I handle rate limits in my application?
+
+Best practices for rate limiting:
+
+1. **Monitor headers**: Check `X-RateLimit-Remaining` in responses
+2. **Implement caching**: Store responses locally when possible
+3. **Use appropriate depths**: Don't request Deep extraction if Basic meets your needs
+4. **Implement backoff**: Use exponential backoff when hitting rate limits
+5. **Batch requests**: Use bulk endpoints when requesting multiple crates
+
+---
+
+## Technical Questions
+
+### What programming languages can I use?
+
+Ferropipe is a REST API that works with any programming language that can make HTTP requests. We provide examples for:
+- cURL (command line)
+- JavaScript/Node.js
+- Python
+- Rust
+- And many more in our [examples section](/docs/ferropipe/examples)
+
+### How do I handle errors properly?
+
+Always check the HTTP status code and parse error responses:
+
+```javascript
+const response = await fetch(url, { headers: { 'x-api-key': apiKey } })
+
+if (!response.ok) {
+  const error = await response.json()
+  console.error(`API Error: ${error.error}`)
+  // Handle specific error codes
+  if (response.status === 429) {
+    // Rate limit exceeded - implement backoff
+  } else if (response.status === 404) {
+    // Crate not found
+  }
+  return
+}
+
+const data = await response.json()
+```
+
+### Can I cache API responses?
+
+Yes, and we encourage it! Caching reduces your API usage and improves your application's performance. Consider the cache headers we return and implement appropriate cache durations based on your needs.
+
+### What's the difference between `fresh=true` and cached responses?
+
+- **Cached responses**: Return quickly using our cached data (recommended for most use cases)
+- **Fresh responses**: Bypass cache and extract data in real-time (useful for just-published crates or when you need the absolute latest data)
+
+Note: Fresh requests count double against your rate limit and may be slower.
+
+### How do I bulk request multiple crates?
+
+Use the bulk endpoint for efficient multi-crate requests:
+
+```bash
+curl -H "x-api-key: YOUR_API_KEY" \
+  "https://www.atelierlogos.studio/api/ferropipe/bulk?crates=serde,tokio,clap"
+```
+
+Bulk limits vary by tier:
+- Basic: 5 crates per request
+- Full: 25 crates per request  
+- Deep: 100 crates per request
+
+---
+
+## Data and Format
+
+### What format is the API response?
+
+All responses are in JSON format with consistent structure. Each endpoint returns specific fields documented in our [API Reference](/docs/ferropipe/api-reference).
+
+### How is the documentation text formatted?
+
+Documentation text is provided in multiple formats:
+- **Raw documentation**: Original rustdoc text
+- **Structured data**: Parsed modules, functions, structs
+- **LLM text** (Deep tier): AI-optimized text perfect for language models
+
+### Can I get code examples from crates?
+
+Yes! Code examples are available with the `examples=true` parameter (Full tier and above). We extract examples from:
+- Documentation blocks
+- Example files in the repository
+- Tests that demonstrate usage
+- README files
+
+### What dependency information is available?
+
+With `dependencies=true`, you get:
+- Direct dependencies with version constraints
+- Optional dependencies
+- Development dependencies
+- Feature flags and their dependencies
+- Dependency tree analysis (Deep tier)
+
+---
+
+## Troubleshooting
+
+### Why am I getting authentication errors?
+
+Common authentication issues:
+- **Missing API key**: Ensure you're including the `x-api-key` header
+- **Invalid API key**: Check that your key is correct and active
+- **Expired key**: API keys don't expire, but accounts can be suspended for violations
+
+### My requests are very slow. What can I do?
+
+To improve performance:
+- Use cached responses instead of `fresh=true`
+- Request only the data you need (don't use Deep if Basic suffices)
+- Implement proper caching in your application
+- Use bulk endpoints for multiple crates
+
+### I'm getting inconsistent data. Why?
+
+This usually happens when:
+- Using `fresh=true` vs cached responses
+- Requesting different extraction depths
+- The crate was recently updated
+
+For consistency, stick to the same extraction depth and cache settings.
+
+### The API returns empty or incomplete data for a crate. Why?
+
+Some crates may have:
+- Minimal documentation
+- No examples or structured content
+- Extraction limitations for complex macros or procedural code
+
+The Deep tier provides the most comprehensive extraction and handles edge cases better.
+
+---
+
+## Enterprise and Support
+
+### Do you offer enterprise plans?
+
+Yes! Enterprise plans include:
+- Custom rate limits (10,000+ requests/hour)
+- On-premise deployment options
+- SLA guarantees
+- Dedicated support team
+- Custom billing arrangements
+
+Contact enterprise@www.atelierlogos.studio for details.
+
+### What support is available?
+
+**Basic Tier**: Community support via GitHub issues and documentation
+
+**Full Tier**: Email support with 48-hour response time during business hours
+
+**Deep Tier**: Priority support with 24-hour response time and direct access to engineering team
+
+**Enterprise**: Dedicated support team with custom SLA
+
+### Can I get a refund?
+
+We offer a 30-day money-back guarantee for all paid plans. Usage-based services are non-refundable after consumption.
+
+### Do you offer free trials?
+
+New users get a 7-day free trial of the Full tier with no credit card required. This gives you full access to test all features before committing to a paid plan.
+
+### How do I contact support?
+
+- **Email**: support@www.atelierlogos.studio
+- **Enterprise**: enterprise@www.atelierlogos.studio
+- **GitHub Issues**: For bug reports and feature requests
+- **Community**: Join our Discord for discussions and tips
+
+---
+
+## Still have questions?
+
+If you can't find the answer you're looking for:
+
+1. Check our [examples](/docs/ferropipe/examples) for implementation patterns
+2. Try the [API playground](/docs/ferropipe/playground) for interactive testing
+3. Review the [API reference](/docs/ferropipe/api-reference) for technical details
+4. Contact us at support@www.atelierlogos.studio
+
+We're here to help you succeed with Ferropipe! 🦀 

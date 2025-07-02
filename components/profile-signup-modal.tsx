@@ -146,7 +146,9 @@ export default function ProfileSignupModal({ isOpen, onClose, initialUserData }:
         company: profileUserData.company || null,
         linkedin_url: profileUserData.linkedin || null,
         curation_prompt: profileUserData.curationPrompt,
-        profile_pic: profilePicBase64
+        profile_pic: profilePicBase64,
+        customer: false,
+        curations: 0
       }
 
       console.log('💾 Creating user profile:', profileData)

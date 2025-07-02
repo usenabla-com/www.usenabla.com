@@ -1,7 +1,10 @@
 import { getPostData, getAllPosts } from '@/lib/blog'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
+import { ShareButtons } from '@/components/share-buttons'
+import { ShareWidget } from '@/components/share-widget'
 import { notFound } from 'next/navigation'
+import { Metadata } from 'next'
 
 interface BlogPostPageProps {
   params: {
@@ -16,12 +19,94 @@ export async function generateStaticParams() {
   }))
 }
 
+export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
+  const post = await getPostData(params.slug)
+
+  if (!post) {
+    return {
+      title: 'Post Not Found',
+      description: 'The requested blog post could not be found.'
+    }
+  }
+
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.www.atelierlogos.studio'
+  const postUrl = `${baseUrl}/blog/${params.slug}`
+  
+  // Ensure the image URL is absolute
+  const imageUrl = post.image.startsWith('http') 
+    ? post.image 
+    : `${baseUrl}${post.image}`
+
+  return {
+    title: `${post.title} | Atelier Logos Blog`,
+    description: post.summary,
+    keywords: post.tags,
+    authors: [{ name: post.author }],
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+      },
+    },
+    openGraph: {
+      title: post.title,
+      description: post.summary,
+      url: postUrl,
+      siteName: 'Atelier Logos',
+      type: 'article',
+      publishedTime: post.published,
+      authors: [post.author],
+      tags: post.tags,
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+          type: 'image/jpeg',
+        }
+      ],
+      locale: 'en_US',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.summary,
+      images: [imageUrl],
+      creator: '@atelierlogos',
+      site: '@atelierlogos',
+    },
+    alternates: {
+      canonical: postUrl,
+    },
+    other: {
+      // Additional meta tags for better social media compatibility
+      'og:image:width': '1200',
+      'og:image:height': '630',
+      'og:image:type': 'image/jpeg',
+      'twitter:label1': 'Written by',
+      'twitter:data1': post.author,
+      'twitter:label2': 'Reading time',
+      'twitter:data2': '5 min read',
+      'article:author': post.author,
+      'article:published_time': post.published,
+      'article:tag': post.tags.join(', '),
+    }
+  }
+}
+
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const post = await getPostData(params.slug)
 
   if (!post) {
     notFound()
   }
+
+  // Create the full URL for sharing
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.atelierlogos.studio'
+  const postUrl = `${baseUrl}/blog/${params.slug}`
 
   return (
     <main className="min-h-screen bg-background">
@@ -47,16 +132,27 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <p className="text-lg lg:text-xl text-muted-foreground mb-8 leading-relaxed max-w-3xl">
               {post.summary}
             </p>
-            <div className="flex items-center space-x-4 text-sm text-muted-foreground border-l-2 border-muted pl-4">
-              <span className="font-medium text-foreground">{post.author}</span>
-              <span className="text-muted-foreground/60">•</span>
-              <time className="font-medium">
-                {new Date(post.published).toLocaleDateString('en-US', {
-                  day: 'numeric',
-                  month: 'long',
-                  year: 'numeric'
-                })}
-              </time>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4 text-sm text-muted-foreground border-l-2 border-muted pl-4">
+                <span className="font-medium text-foreground">{post.author}</span>
+                <span className="text-muted-foreground/60">•</span>
+                <time className="font-medium">
+                  {new Date(post.published).toLocaleDateString('en-US', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                  })}
+                </time>
+              </div>
+              {/* Mobile share button in header */}
+              <div className="sm:hidden">
+                <ShareWidget 
+                  url={postUrl}
+                  title={post.title}
+                  description={post.summary}
+                  variant="minimal"
+                />
+              </div>
             </div>
           </header>
           
@@ -95,8 +191,17 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
           
+          {/* Share buttons section - hidden on mobile */}
+          <div className="mt-12 lg:mt-16 pt-8 border-t border-border hidden sm:block">
+            <ShareButtons 
+              url={postUrl}
+              title={post.title}
+              description={post.summary}
+            />
+          </div>
+          
           {/* Article footer */}
-          <footer className="mt-16 lg:mt-20 pt-8 border-t border-border">
+          <footer className="mt-8 pt-8 border-t border-border">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
                 <div className="text-sm text-muted-foreground">
@@ -117,6 +222,16 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </footer>
         </div>
       </article>
+      
+      {/* Floating share button for mobile */}
+      <ShareWidget 
+        url={postUrl}
+        title={post.title}
+        description={post.summary}
+        variant="floating"
+        className="sm:hidden"
+      />
+      
       <Footer />
     </main>
   )

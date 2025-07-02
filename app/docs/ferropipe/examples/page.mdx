@@ -1,0 +1,808 @@
+# Examples
+
+Real-world examples and integration patterns for the Ferropipe API. These examples show how to integrate Ferropipe into your applications, from simple scripts to production systems.
+
+## Quick Start Examples
+
+### Simple Crate Information
+
+**Goal**: Get basic information about a Rust crate
+
+```javascript
+// Node.js/JavaScript
+async function getCrateInfo(crateName) {
+  const response = await fetch(`https://www.atelierlogos.studio/api/ferropipe/crate/${crateName}`, {
+    headers: { 'x-api-key': process.env.FERROPIPE_API_KEY }
+  })
+  
+  if (!response.ok) {
+    throw new Error(`Failed to fetch ${crateName}: ${response.statusText}`)
+  }
+  
+  return await response.json()
+}
+
+// Usage
+const serdeInfo = await getCrateInfo('serde')
+console.log(`${serdeInfo.package_name} v${serdeInfo.version}: ${serdeInfo.description}`)
+```
+
+```python
+# Python
+import os
+import requests
+
+def get_crate_info(crate_name):
+    headers = {'x-api-key': os.environ['FERROPIPE_API_KEY']}
+    response = requests.get(
+        f'https://www.atelierlogos.studio/api/ferropipe/crate/{crate_name}',
+        headers=headers
+    )
+    response.raise_for_status()
+    return response.json()
+
+# Usage
+serde_info = get_crate_info('serde')
+print(f"{serde_info['package_name']} v{serde_info['version']}: {serde_info['description']}")
+```
+
+```rust
+// Rust
+use reqwest::Client;
+use serde_json::Value;
+use std::env;
+
+async fn get_crate_info(crate_name: &str) -> Result<Value, Box<dyn std::error::Error>> {
+    let api_key = env::var("FERROPIPE_API_KEY")?;
+    let client = Client::new();
+    
+    let response = client
+        .get(&format!("https://www.atelierlogos.studio/api/ferropipe/crate/{}", crate_name))
+        .header("x-api-key", api_key)
+        .send()
+        .await?;
+    
+    if !response.status().is_success() {
+        return Err(format!("API request failed: {}", response.status()).into());
+    }
+    
+    Ok(response.json().await?)
+}
+
+// Usage
+let serde_info = get_crate_info("serde").await?;
+println!("{} v{}: {}", 
+    serde_info["package_name"], 
+    serde_info["version"], 
+    serde_info["description"]
+);
+```
+
+---
+
+## Documentation Generator
+
+**Goal**: Build a documentation website from Rust crate data
+
+```javascript
+// Node.js - Documentation Site Generator
+const fs = require('fs').promises
+const path = require('path')
+
+class DocGenerator {
+  constructor(apiKey) {
+    this.apiKey = apiKey
+    this.baseUrl = 'https://www.atelierlogos.studio/api/ferropipe'
+  }
+
+  async generateDocs(crates, outputDir) {
+    await fs.mkdir(outputDir, { recursive: true })
+    
+    for (const crateName of crates) {
+      console.log(`Generating docs for ${crateName}...`)
+      
+      const crateData = await this.fetchCrate(crateName, { 
+        depth: 'full', 
+        examples: true 
+      })
+      
+      const markdown = this.generateMarkdown(crateData)
+      const filePath = path.join(outputDir, `${crateName}.md`)
+      
+      await fs.writeFile(filePath, markdown)
+      console.log(`✓ Generated ${filePath}`)
+    }
+  }
+
+  async fetchCrate(name, options = {}) {
+    const params = new URLSearchParams(options)
+    const response = await fetch(
+      `${this.baseUrl}/crate/${name}?${params}`,
+      { headers: { 'x-api-key': this.apiKey } }
+    )
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch ${name}: ${response.statusText}`)
+    }
+    
+    return await response.json()
+  }
+
+  generateMarkdown(crate) {
+    let md = `# ${crate.package_name}\n\n`
+    md += `**Version:** ${crate.version}\n\n`
+    md += `${crate.description}\n\n`
+    
+    if (crate.repository) {
+      md += `**Repository:** [${crate.repository}](${crate.repository})\n\n`
+    }
+    
+    // Generate module documentation
+    if (crate.key_modules) {
+      md += `## Modules\n\n`
+      
+      for (const [moduleName, moduleData] of Object.entries(crate.key_modules)) {
+        md += `### ${moduleName}\n\n`
+        md += `${moduleData.description}\n\n`
+        
+        if (moduleData.functions && moduleData.functions.length > 0) {
+          md += `#### Functions\n\n`
+          for (const func of moduleData.functions) {
+            md += `- **${func.name}**: ${func.description}\n`
+            md += `  \`\`\`rust\n  ${func.signature}\n  \`\`\`\n\n`
+          }
+        }
+      }
+    }
+    
+    return md
+  }
+}
+
+// Usage
+const generator = new DocGenerator(process.env.FERROPIPE_API_KEY)
+await generator.generateDocs(['serde', 'tokio', 'clap'], './generated-docs')
+```
+
+---
+
+## Dependency Analyzer
+
+**Goal**: Analyze and visualize crate dependencies
+
+```python
+# Python - Dependency Analysis Tool
+import requests
+import json
+import networkx as nx
+import matplotlib.pyplot as plt
+from collections import defaultdict
+
+class DependencyAnalyzer:
+    def __init__(self, api_key):
+        self.api_key = api_key
+        self.base_url = 'https://www.atelierlogos.studio/api/ferropipe'
+        self.headers = {'x-api-key': api_key}
+    
+    def analyze_dependencies(self, crate_name, max_depth=2):
+        """Analyze dependencies up to max_depth levels"""
+        graph = nx.DiGraph()
+        visited = set()
+        
+        def _explore(name, depth):
+            if depth > max_depth or name in visited:
+                return
+            
+            visited.add(name)
+            print(f"Analyzing {name} (depth {depth})...")
+            
+            try:
+                crate_data = self._fetch_crate(name, {'dependencies': True})
+                graph.add_node(name, **{
+                    'version': crate_data.get('version'),
+                    'description': crate_data.get('description', '')[:100],
+                    'downloads': crate_data.get('downloads', 0)
+                })
+                
+                for dep in crate_data.get('dependencies', []):
+                    dep_name = dep['name']
+                    graph.add_edge(name, dep_name, 
+                                 version=dep.get('version', ''),
+                                 optional=dep.get('optional', False))
+                    
+                    _explore(dep_name, depth + 1)
+                    
+            except Exception as e:
+                print(f"Failed to analyze {name}: {e}")
+        
+        _explore(crate_name, 0)
+        return graph
+    
+    def _fetch_crate(self, name, params=None):
+        url = f"{self.base_url}/crate/{name}"
+        if params:
+            url += '?' + '&'.join(f"{k}={v}" for k, v in params.items())
+        
+        response = requests.get(url, headers=self.headers)
+        response.raise_for_status()
+        return response.json()
+    
+    def visualize_dependencies(self, graph, output_file='dependencies.png'):
+        """Create a dependency graph visualization"""
+        plt.figure(figsize=(15, 10))
+        
+        # Position nodes using spring layout
+        pos = nx.spring_layout(graph, k=1, iterations=50)
+        
+        # Draw nodes with size based on download count
+        node_sizes = []
+        for node in graph.nodes():
+            downloads = graph.nodes[node].get('downloads', 0)
+            size = max(300, min(3000, downloads / 1000000 * 1000))
+            node_sizes.append(size)
+        
+        nx.draw_networkx_nodes(graph, pos, 
+                              node_size=node_sizes,
+                              node_color='lightblue',
+                              alpha=0.7)
+        
+        # Draw edges
+        nx.draw_networkx_edges(graph, pos,
+                              edge_color='gray',
+                              arrows=True,
+                              arrowsize=20,
+                              alpha=0.5)
+        
+        # Draw labels
+        nx.draw_networkx_labels(graph, pos, font_size=8)
+        
+        plt.title(f"Dependency Graph")
+        plt.axis('off')
+        plt.tight_layout()
+        plt.savefig(output_file, dpi=300, bbox_inches='tight')
+        plt.show()
+    
+    def generate_report(self, graph):
+        """Generate a dependency analysis report"""
+        report = {
+            'total_crates': len(graph.nodes()),
+            'total_dependencies': len(graph.edges()),
+            'most_popular': [],
+            'most_connected': []
+        }
+        
+        # Sort by downloads
+        by_downloads = sorted(graph.nodes(data=True),
+                            key=lambda x: x[1].get('downloads', 0),
+                            reverse=True)
+        report['most_popular'] = [(name, data['downloads']) 
+                                for name, data in by_downloads[:10]]
+        
+        # Sort by degree (number of connections)
+        by_degree = sorted(graph.degree(), key=lambda x: x[1], reverse=True)
+        report['most_connected'] = by_degree[:10]
+        
+        return report
+
+# Usage
+analyzer = DependencyAnalyzer(os.environ['FERROPIPE_API_KEY'])
+graph = analyzer.analyze_dependencies('web-sys', max_depth=2)
+report = analyzer.generate_report(graph)
+analyzer.visualize_dependencies(graph)
+
+print(json.dumps(report, indent=2))
+```
+
+---
+
+## Code Search Engine
+
+**Goal**: Build a searchable index of Rust code patterns
+
+```javascript
+// Node.js - Code Search Engine
+const { Client } = require('@elastic/elasticsearch')
+
+class RustCodeSearchEngine {
+  constructor(apiKey, elasticsearchUrl) {
+    this.apiKey = apiKey
+    this.baseUrl = 'https://www.atelierlogos.studio/api/ferropipe'
+    this.es = new Client({ node: elasticsearchUrl })
+    this.indexName = 'rust-code-patterns'
+  }
+
+  async indexPopularCrates() {
+    // Get popular crates
+    const response = await fetch(`${this.baseUrl}/popular?limit=100`, {
+      headers: { 'x-api-key': this.apiKey }
+    })
+    const popularCrates = await response.json()
+
+    // Index each crate with deep analysis
+    for (const crate of popularCrates.crates) {
+      console.log(`Indexing ${crate.name}...`)
+      
+      try {
+        const crateData = await this.fetchCrateDeep(crate.name)
+        await this.indexCrate(crateData)
+      } catch (error) {
+        console.error(`Failed to index ${crate.name}:`, error.message)
+      }
+    }
+  }
+
+  async fetchCrateDeep(crateName) {
+    const response = await fetch(
+      `${this.baseUrl}/crate/${crateName}?depth=deep&examples=true`,
+      { headers: { 'x-api-key': this.apiKey } }
+    )
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch ${crateName}`)
+    }
+    
+    return await response.json()
+  }
+
+  async indexCrate(crateData) {
+    const doc = {
+      name: crateData.package_name,
+      version: crateData.version,
+      description: crateData.description,
+      documentation: crateData.documentation,
+      llm_text: crateData.llm_text,
+      modules: this.extractModuleInfo(crateData.key_modules),
+      examples: this.extractExamples(crateData),
+      indexed_at: new Date().toISOString()
+    }
+
+    await this.es.index({
+      index: this.indexName,
+      id: `${crateData.package_name}-${crateData.version}`,
+      body: doc
+    })
+  }
+
+  extractModuleInfo(modules) {
+    if (!modules) return []
+    
+    return Object.entries(modules).map(([name, data]) => ({
+      name,
+      description: data.description,
+      functions: data.functions?.map(f => ({
+        name: f.name,
+        signature: f.signature,
+        description: f.description
+      })) || [],
+      structs: data.structs?.map(s => s.name) || [],
+      traits: data.traits?.map(t => t.name) || []
+    }))
+  }
+
+  extractExamples(crateData) {
+    // Extract code examples from various sources
+    const examples = []
+    
+    if (crateData.examples) {
+      examples.push(...crateData.examples.map(ex => ({
+        type: 'documentation',
+        code: ex.code,
+        description: ex.description
+      })))
+    }
+    
+    return examples
+  }
+
+  async search(query, options = {}) {
+    const searchBody = {
+      query: {
+        multi_match: {
+          query,
+          fields: [
+            'name^3',
+            'description^2', 
+            'documentation',
+            'modules.description',
+            'modules.functions.description',
+            'examples.description'
+          ]
+        }
+      },
+      highlight: {
+        fields: {
+          'documentation': {},
+          'modules.description': {},
+          'examples.code': {}
+        }
+      },
+      size: options.size || 20
+    }
+
+    const result = await this.es.search({
+      index: this.indexName,
+      body: searchBody
+    })
+
+    return result.body.hits.hits.map(hit => ({
+      crate: hit._source.name,
+      version: hit._source.version,
+      score: hit._score,
+      highlights: hit.highlight,
+      description: hit._source.description
+    }))
+  }
+}
+
+// Usage
+const searchEngine = new RustCodeSearchEngine(
+  process.env.FERROPIPE_API_KEY,
+  'http://localhost:9200'
+)
+
+// Index popular crates
+await searchEngine.indexPopularCrates()
+
+// Search for patterns
+const results = await searchEngine.search('async trait implementation')
+console.log(results)
+```
+
+---
+
+## API Client Library
+
+**Goal**: Create a robust client library with caching and error handling
+
+```rust
+// Rust - Complete API Client Library
+use reqwest::{Client, Error as ReqwestError};
+use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
+use std::time::{Duration, Instant};
+use tokio::time::sleep;
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct CrateData {
+    pub package_name: String,
+    pub version: String,
+    pub description: String,
+    pub documentation: String,
+    pub key_modules: Option<HashMap<String, ModuleData>>,
+    pub dependencies: Option<Vec<Dependency>>,
+    pub cache_hit: bool,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct ModuleData {
+    pub description: String,
+    pub functions: Option<Vec<Function>>,
+    pub structs: Option<Vec<Struct>>,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct Function {
+    pub name: String,
+    pub signature: String,
+    pub description: String,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct Struct {
+    pub name: String,
+    pub description: String,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct Dependency {
+    pub name: String,
+    pub version: String,
+    pub optional: bool,
+}
+
+#[derive(Debug)]
+pub enum FerropipeError {
+    Http(ReqwestError),
+    RateLimit { retry_after: u64 },
+    TierLimitation(String),
+    NotFound(String),
+    InvalidApiKey,
+    Other(String),
+}
+
+pub struct FerropipeClient {
+    client: Client,
+    api_key: String,
+    base_url: String,
+    cache: HashMap<String, (CrateData, Instant)>,
+    cache_duration: Duration,
+}
+
+impl FerropipeClient {
+    pub fn new(api_key: String) -> Self {
+        Self {
+            client: Client::new(),
+            api_key,
+            base_url: "https://www.atelierlogos.studio/api/ferropipe".to_string(),
+            cache: HashMap::new(),
+            cache_duration: Duration::from_secs(3600), // 1 hour
+        }
+    }
+
+    pub async fn get_crate(&mut self, name: &str) -> Result<CrateData, FerropipeError> {
+        self.get_crate_with_options(name, &CrateOptions::default()).await
+    }
+
+    pub async fn get_crate_with_options(
+        &mut self, 
+        name: &str, 
+        options: &CrateOptions
+    ) -> Result<CrateData, FerropipeError> {
+        let cache_key = format!("{}:{:?}", name, options);
+        
+        // Check cache first
+        if let Some((data, cached_at)) = self.cache.get(&cache_key) {
+            if cached_at.elapsed() < self.cache_duration {
+                return Ok(data.clone());
+            }
+        }
+
+        let mut retries = 0;
+        const MAX_RETRIES: u32 = 3;
+
+        loop {
+            match self.make_request(name, options).await {
+                Ok(data) => {
+                    self.cache.insert(cache_key, (data.clone(), Instant::now()));
+                    return Ok(data);
+                }
+                Err(FerropipeError::RateLimit { retry_after }) if retries < MAX_RETRIES => {
+                    retries += 1;
+                    sleep(Duration::from_secs(retry_after)).await;
+                    continue;
+                }
+                Err(e) => return Err(e),
+            }
+        }
+    }
+
+    async fn make_request(&self, name: &str, options: &CrateOptions) -> Result<CrateData, FerropipeError> {
+        let mut url = format!("{}/crate/{}", self.base_url, name);
+        
+        let mut params = Vec::new();
+        if options.version != "latest" {
+            params.push(format!("version={}", options.version));
+        }
+        if options.depth != ExtractionDepth::Basic {
+            params.push(format!("depth={:?}", options.depth).to_lowercase());
+        }
+        if options.fresh {
+            params.push("fresh=true".to_string());
+        }
+        if options.examples {
+            params.push("examples=true".to_string());
+        }
+        if options.dependencies {
+            params.push("dependencies=true".to_string());
+        }
+        
+        if !params.is_empty() {
+            url.push('?');
+            url.push_str(&params.join("&"));
+        }
+
+        let response = self.client
+            .get(&url)
+            .header("x-api-key", &self.api_key)
+            .send()
+            .await
+            .map_err(FerropipeError::Http)?;
+
+        match response.status() {
+            reqwest::StatusCode::OK => {
+                response.json::<CrateData>().await.map_err(FerropipeError::Http)
+            }
+            reqwest::StatusCode::UNAUTHORIZED => Err(FerropipeError::InvalidApiKey),
+            reqwest::StatusCode::NOT_FOUND => {
+                Err(FerropipeError::NotFound(format!("Crate '{}' not found", name)))
+            }
+            reqwest::StatusCode::TOO_MANY_REQUESTS => {
+                let retry_after = response
+                    .headers()
+                    .get("retry-after")
+                    .and_then(|h| h.to_str().ok())
+                    .and_then(|s| s.parse().ok())
+                    .unwrap_or(60);
+                Err(FerropipeError::RateLimit { retry_after })
+            }
+            reqwest::StatusCode::FORBIDDEN => {
+                let error_text = response.text().await.unwrap_or_default();
+                Err(FerropipeError::TierLimitation(error_text))
+            }
+            status => {
+                let error_text = response.text().await.unwrap_or_default();
+                Err(FerropipeError::Other(format!("HTTP {}: {}", status, error_text)))
+            }
+        }
+    }
+}
+
+#[derive(Debug, Clone)]
+pub struct CrateOptions {
+    pub version: String,
+    pub depth: ExtractionDepth,
+    pub fresh: bool,
+    pub examples: bool,
+    pub dependencies: bool,
+}
+
+impl Default for CrateOptions {
+    fn default() -> Self {
+        Self {
+            version: "latest".to_string(),
+            depth: ExtractionDepth::Basic,
+            fresh: false,
+            examples: false,
+            dependencies: false,
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub enum ExtractionDepth {
+    Basic,
+    Full,
+    Deep,
+}
+
+// Usage example
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let mut client = FerropipeClient::new(
+        std::env::var("FERROPIPE_API_KEY").expect("FERROPIPE_API_KEY must be set")
+    );
+
+    // Basic usage
+    let serde_data = client.get_crate("serde").await?;
+    println!("Serde v{}: {}", serde_data.version, serde_data.description);
+
+    // Advanced usage
+    let options = CrateOptions {
+        depth: ExtractionDepth::Full,
+        examples: true,
+        dependencies: true,
+        ..Default::default()
+    };
+    
+    let tokio_data = client.get_crate_with_options("tokio", &options).await?;
+    println!("Tokio modules: {}", tokio_data.key_modules.as_ref().unwrap().len());
+
+    Ok(())
+}
+```
+
+---
+
+## Integration Patterns
+
+### Web Dashboard
+
+```javascript
+// Next.js/React - Crate Explorer Dashboard
+import { useState, useEffect } from 'react'
+
+export default function CrateExplorer() {
+  const [searchTerm, setSearchTerm] = useState('')
+  const [results, setResults] = useState([])
+  const [selectedCrate, setSelectedCrate] = useState(null)
+  const [loading, setLoading] = useState(false)
+
+  const searchCrates = async (query) => {
+    setLoading(true)
+    try {
+      const response = await fetch(
+        `/api/ferropipe/search?q=${encodeURIComponent(query)}`,
+        { headers: { 'x-api-key': process.env.NEXT_PUBLIC_FERROPIPE_API_KEY } }
+      )
+      const data = await response.json()
+      setResults(data.results)
+    } catch (error) {
+      console.error('Search failed:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const loadCrateDetails = async (crateName) => {
+    try {
+      const response = await fetch(
+        `/api/ferropipe/crate/${crateName}?depth=full`,
+        { headers: { 'x-api-key': process.env.NEXT_PUBLIC_FERROPIPE_API_KEY } }
+      )
+      const data = await response.json()
+      setSelectedCrate(data)
+    } catch (error) {
+      console.error('Failed to load crate details:', error)
+    }
+  }
+
+  return (
+    <div className="container mx-auto p-4">
+      <div className="mb-6">
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          onKeyPress={(e) => e.key === 'Enter' && searchCrates(searchTerm)}
+          placeholder="Search Rust crates..."
+          className="w-full p-3 border rounded-lg"
+        />
+        <button 
+          onClick={() => searchCrates(searchTerm)}
+          disabled={loading}
+          className="mt-2 px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
+        >
+          {loading ? 'Searching...' : 'Search'}
+        </button>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div>
+          <h2 className="text-xl font-bold mb-4">Search Results</h2>
+          {results.map(crate => (
+            <div 
+              key={crate.name}
+              onClick={() => loadCrateDetails(crate.name)}
+              className="p-4 border rounded cursor-pointer hover:bg-gray-50"
+            >
+              <h3 className="font-semibold">{crate.name}</h3>
+              <p className="text-sm text-gray-600">{crate.description}</p>
+              <span className="text-xs text-blue-500">
+                {crate.downloads.toLocaleString()} downloads
+              </span>
+            </div>
+          ))}
+        </div>
+
+        <div>
+          {selectedCrate && (
+            <div>
+              <h2 className="text-xl font-bold mb-4">
+                {selectedCrate.package_name} v{selectedCrate.version}
+              </h2>
+              <p className="mb-4">{selectedCrate.description}</p>
+              
+              {selectedCrate.key_modules && (
+                <div>
+                  <h3 className="font-semibold mb-2">Modules</h3>
+                  {Object.entries(selectedCrate.key_modules).map(([name, module]) => (
+                    <div key={name} className="mb-4 p-3 bg-gray-50 rounded">
+                      <h4 className="font-medium">{name}</h4>
+                      <p className="text-sm text-gray-600">{module.description}</p>
+                      {module.functions && (
+                        <div className="mt-2">
+                          <span className="text-xs text-blue-600">
+                            {module.functions.length} functions
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+```
+
+These examples demonstrate various integration patterns and use cases for the Ferropipe API. Each example includes error handling, rate limiting considerations, and best practices for production use.
+
+## Next Steps
+
+- Explore the [API Playground](/docs/ferropipe/playground) to test these patterns interactively
+- Check [Pricing](/docs/ferropipe/pricing) to understand tier limitations
+- Review the [API Reference](/docs/ferropipe/api-reference) for complete endpoint documentation

@@ -5,6 +5,7 @@ import { LightbulbIcon } from "lucide-react"
 import { siGithub } from "simple-icons/icons"
 import { useRouter } from "next/navigation"
 import { useAnalytics } from "@/hooks/use-analytics"
+import { siRust } from "simple-icons"
 
 export function HeroSection() {
   const analytics = useAnalytics()
@@ -31,17 +32,19 @@ export function HeroSection() {
               <Button
                 onClick={() => {
                   analytics.track('Onboarding Button Clicked')
-                  window.open('/onboarding', '_blank')
+                  window.open('/ferropipe', '_blank')
                 }}
-                className="gap-2 bg-primary text-black"
+                className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
               >
-                <LightbulbIcon className="h-5 w-5" />
-                Get weekly curated content
+                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                  <path d={siRust.path} />
+                </svg>
+                Try Ferropipe
               </Button>
               <Button onClick={() => {
                 analytics.track('Schedule a Call Button Clicked')
                 window.open('https://cal.com/jbohrman/30-min', '_blank')
-              }} variant="outline" className="bg-black text-white gap-2">
+              }} variant="outline" className="gap-2 bg-background/90 hover:bg-background border-2 border-primary/20 hover:border-primary/40 text-foreground hover:text-primary font-semibold shadow-lg hover:shadow-xl transition-all duration-200 backdrop-blur-sm">
                 Schedule a Call
               </Button>
             </div>

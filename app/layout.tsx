@@ -1,23 +1,18 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Cormorant_Garamond, Inter } from "next/font/google"
+import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import ProfileModalProvider from "@/components/profile-modal-provider"
 import NotificationModal from "@/components/notification-modal"
 import { AnalyticsProvider } from "@/components/analytics-provider"
+import { Toaster } from "@/components/ui/toaster"
+import { AnnouncementBanner } from "@/components/announcement-banner"
 
 const inter = Inter({ 
   subsets: ["latin"], 
   weight: ["300", "400", "500", "600", "700", "800"],
   variable: "--font-inter",
-  display: "swap"
-})
-
-const cormorant = Cormorant_Garamond({ 
-  subsets: ["latin"], 
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-cormorant",
   display: "swap"
 })
 
@@ -32,11 +27,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Atelier Logos | LLM Solutions Studio",
     description: "We are a bespoke software studio helping clients build scalable, testable, and beautiful software while adopting LLMs in a sane manner.",
-    url: "https://www.atelierlogos.studio",
+    url: "https://www.www.atelierlogos.studio",
     siteName: "Atelier Logos",
     images: [
       {
-        url: "https://www.atelierlogos.studio/og-image.png",
+        url: "https://www.www.atelierlogos.studio/og-image.png",
         width: 1200,
         height: 630,
         alt: "Atelier Logos - LLM Solutions Studio"
@@ -49,7 +44,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Atelier Logos | LLM Solutions Studio",
     description: "We are a bespoke software studio helping clients build scalable, testable, and beautiful software while adopting LLMs in a sane manner.",
-    images: ["https://www.atelierlogos.studio/og-image.png"]
+    images: ["https://www.www.atelierlogos.studio/og-image.png"]
   },
   robots: {
     index: true,
@@ -73,14 +68,14 @@ export default function RootLayout({
   const description = metadata.description as string
 
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${cormorant.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${inter.variable}`}>
       <head>
         <title>{title}</title>
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
-        <meta property="og:image" content="https://www.atelierlogos.studio/og-image.png" />
+        <meta property="og:image" content="https://www.www.atelierlogos.studio/og-image.png" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.atelierlogos.studio" />
+        <meta property="og:url" content="https://www.www.atelierlogos.studio" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
         <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
@@ -153,11 +148,13 @@ export default function RootLayout({
       <body className={`${inter.className} antialiased min-h-screen bg-gradient-to-br from-background to-background/95 text-foreground selection:bg-primary/20 selection:text-primary-foreground`}> 
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <AnalyticsProvider />
+          <AnnouncementBanner />
           <div className="relative flex min-h-screen flex-col">
             <div className="flex-1">
               {children}
             </div>
           </div>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

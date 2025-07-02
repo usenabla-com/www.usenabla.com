@@ -1,0 +1,561 @@
+# Bulk Crate Requests
+
+Request documentation for multiple crates in a single API call, perfect for processing large datasets or building comprehensive documentation sites.
+
+## Endpoint
+
+```http
+POST /api/ferropipe/bulk
+```
+
+## Request Body
+
+Send a JSON array of crate requests:
+
+```json
+{
+  "crates": [
+    {
+      "name": "serde",
+      "version": "latest",
+      "depth": "full",
+      "examples": true,
+      "dependencies": true
+    },
+    {
+      "name": "tokio",
+      "version": "1.0.0",
+      "depth": "basic"
+    }
+  ],
+  "options": {
+    "fresh": false,
+    "fail_fast": false,
+    "include_errors": true
+  }
+}
+```
+
+## Parameters
+
+### Individual Crate Parameters
+
+<div className="not-prose my-8">
+  <div className="overflow-x-auto rounded-lg border border-border">
+    <table className="w-full">
+      <thead>
+        <tr className="border-b border-border bg-muted/50">
+          <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">Parameter</th>
+          <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">Type</th>
+          <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">Default</th>
+          <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">Description</th>
+        </tr>
+      </thead>
+      <tbody className="divide-y divide-border">
+        <tr className="hover:bg-muted/30 transition-colors">
+          <td className="px-6 py-4 text-sm font-mono font-medium">`name`</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">string</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">-</td>
+          <td className="px-6 py-4 text-sm"><strong>Required.</strong> Crate name</td>
+        </tr>
+        <tr className="hover:bg-muted/30 transition-colors">
+          <td className="px-6 py-4 text-sm font-mono font-medium">`version`</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">string</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">`latest`</td>
+          <td className="px-6 py-4 text-sm">Specific version or "latest"</td>
+        </tr>
+        <tr className="hover:bg-muted/30 transition-colors">
+          <td className="px-6 py-4 text-sm font-mono font-medium">`depth`</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">string</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">`basic`</td>
+          <td className="px-6 py-4 text-sm">Extraction depth: `basic`, `full`, or `deep`</td>
+        </tr>
+        <tr className="hover:bg-muted/30 transition-colors">
+          <td className="px-6 py-4 text-sm font-mono font-medium">`examples`</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">boolean</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">`false`</td>
+          <td className="px-6 py-4 text-sm">Include code examples (Full+ tier)</td>
+        </tr>
+        <tr className="hover:bg-muted/30 transition-colors">
+          <td className="px-6 py-4 text-sm font-mono font-medium">`dependencies`</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">boolean</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">`false`</td>
+          <td className="px-6 py-4 text-sm">Include dependency analysis</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+### Global Options
+
+<div className="not-prose my-8">
+  <div className="overflow-x-auto rounded-lg border border-border">
+    <table className="w-full">
+      <thead>
+        <tr className="border-b border-border bg-muted/50">
+          <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">Parameter</th>
+          <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">Type</th>
+          <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">Default</th>
+          <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">Description</th>
+        </tr>
+      </thead>
+      <tbody className="divide-y divide-border">
+        <tr className="hover:bg-muted/30 transition-colors">
+          <td className="px-6 py-4 text-sm font-mono font-medium">`fresh`</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">boolean</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">`false`</td>
+          <td className="px-6 py-4 text-sm">Bypass cache for all requests</td>
+        </tr>
+        <tr className="hover:bg-muted/30 transition-colors">
+          <td className="px-6 py-4 text-sm font-mono font-medium">`fail_fast`</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">boolean</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">`false`</td>
+          <td className="px-6 py-4 text-sm">Stop processing on first error</td>
+        </tr>
+        <tr className="hover:bg-muted/30 transition-colors">
+          <td className="px-6 py-4 text-sm font-mono font-medium">`include_errors`</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">boolean</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">`true`</td>
+          <td className="px-6 py-4 text-sm">Include failed requests in response</td>
+        </tr>
+        <tr className="hover:bg-muted/30 transition-colors">
+          <td className="px-6 py-4 text-sm font-mono font-medium">`parallel`</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">boolean</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">`true`</td>
+          <td className="px-6 py-4 text-sm">Process requests in parallel</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+## Authentication
+
+All requests require an API key in the header:
+
+```http
+x-api-key: YOUR_API_KEY
+```
+
+## Rate Limits & Batch Sizes
+
+<div className="not-prose my-8">
+  <div className="overflow-x-auto rounded-lg border border-border">
+    <table className="w-full">
+      <thead>
+        <tr className="border-b border-border bg-muted/50">
+          <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">Tier</th>
+          <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">Max Crates/Request</th>
+          <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">Bulk Requests/Hour</th>
+          <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">Total Crate-Hours</th>
+        </tr>
+      </thead>
+      <tbody className="divide-y divide-border">
+        <tr className="hover:bg-muted/30 transition-colors">
+          <td className="px-6 py-4 text-sm font-medium">Basic</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">10</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">5</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">50</td>
+        </tr>
+        <tr className="hover:bg-muted/30 transition-colors">
+          <td className="px-6 py-4 text-sm font-medium">Full</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">50</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">20</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">1,000</td>
+        </tr>
+        <tr className="hover:bg-muted/30 transition-colors">
+          <td className="px-6 py-4 text-sm font-medium">Deep</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">200</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">100</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">5,000</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+**Note:** Each crate in a bulk request counts toward your hourly rate limit.
+
+## Examples
+
+### Basic Bulk Request
+```bash
+curl -X POST \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: YOUR_API_KEY" \
+  -d '{
+    "crates": [
+      {"name": "serde"},
+      {"name": "tokio"},
+      {"name": "clap"}
+    ]
+  }' \
+  "https://www.atelierlogos.studio/api/ferropipe/bulk"
+```
+
+### Advanced Bulk Request
+```bash
+curl -X POST \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: YOUR_API_KEY" \
+  -d '{
+    "crates": [
+      {
+        "name": "serde",
+        "depth": "full",
+        "examples": true,
+        "dependencies": true
+      },
+      {
+        "name": "tokio", 
+        "version": "1.0.0",
+        "depth": "deep"
+      },
+      {
+        "name": "clap",
+        "depth": "full"
+      }
+    ],
+    "options": {
+      "fresh": true,
+      "fail_fast": false
+    }
+  }' \
+  "https://www.atelierlogos.studio/api/ferropipe/bulk"
+```
+
+### JavaScript Example
+```javascript
+async function bulkGetCrates(crateList, options = {}) {
+  const requestBody = {
+    crates: crateList,
+    options: options
+  }
+  
+  const response = await fetch(
+    'https://www.atelierlogos.studio/api/ferropipe/bulk',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': process.env.FERROPIPE_API_KEY
+      },
+      body: JSON.stringify(requestBody)
+    }
+  )
+  
+  if (!response.ok) {
+    throw new Error(`Bulk request failed: ${response.statusText}`)
+  }
+  
+  return await response.json()
+}
+
+// Usage
+const crates = [
+  { name: 'serde', depth: 'full', examples: true },
+  { name: 'tokio', depth: 'basic' },
+  { name: 'clap', version: '4.0.0', depth: 'full' }
+]
+
+const results = await bulkGetCrates(crates, {
+  fail_fast: false,
+  include_errors: true
+})
+```
+
+### Python Example
+```python
+import requests
+import json
+
+def bulk_get_crates(crate_list, options=None):
+    headers = {
+        'Content-Type': 'application/json',
+        'x-api-key': os.environ['FERROPIPE_API_KEY']
+    }
+    
+    payload = {
+        'crates': crate_list,
+        'options': options or {}
+    }
+    
+    response = requests.post(
+        'https://www.atelierlogos.studio/api/ferropipe/bulk',
+        headers=headers,
+        json=payload
+    )
+    
+    response.raise_for_status()
+    return response.json()
+
+# Usage
+crates = [
+    {'name': 'serde', 'depth': 'full', 'examples': True},
+    {'name': 'tokio', 'depth': 'basic'},
+    {'name': 'clap', 'version': '4.0.0', 'depth': 'full'}
+]
+
+results = bulk_get_crates(crates, {
+    'fail_fast': False,
+    'include_errors': True
+})
+```
+
+### Rust Example
+```rust
+use reqwest::Client;
+use serde::{Deserialize, Serialize};
+use serde_json::json;
+
+#[derive(Serialize)]
+struct CrateRequest {
+    name: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    version: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    depth: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    examples: Option<bool>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    dependencies: Option<bool>,
+}
+
+#[derive(Serialize)]
+struct BulkOptions {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    fresh: Option<bool>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    fail_fast: Option<bool>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    include_errors: Option<bool>,
+}
+
+async fn bulk_get_crates(
+    client: &Client,
+    api_key: &str,
+    crates: Vec<CrateRequest>,
+    options: Option<BulkOptions>
+) -> Result<serde_json::Value, Box<dyn std::error::Error>> {
+    let payload = json!({
+        "crates": crates,
+        "options": options.unwrap_or_default()
+    });
+    
+    let response = client
+        .post("https://www.atelierlogos.studio/api/ferropipe/bulk")
+        .header("Content-Type", "application/json")
+        .header("x-api-key", api_key)
+        .json(&payload)
+        .send()
+        .await?;
+    
+    let json: serde_json::Value = response.json().await?;
+    Ok(json)
+}
+```
+
+## Response Format
+
+### Successful Response
+```json
+{
+  "request_id": "bulk_abc123_20240112_103045",
+  "total_requested": 3,
+  "successful": 2,
+  "failed": 1,
+  "processing_time_ms": 1250,
+  "cache_hits": 1,
+  "results": [
+    {
+      "name": "serde",
+      "status": "success",
+      "data": {
+        "package_name": "serde",
+        "version": "1.0.210",
+        "extraction_depth": "full",
+        "description": "A generic serialization/deserialization framework",
+        "documentation": "...",
+        "key_modules": {...},
+        "examples": [...],
+        "dependencies": [...]
+      }
+    },
+    {
+      "name": "tokio",
+      "status": "success", 
+      "data": {
+        "package_name": "tokio",
+        "version": "1.35.1",
+        "extraction_depth": "basic",
+        "description": "An event-driven, non-blocking I/O platform",
+        "documentation": "..."
+      }
+    },
+    {
+      "name": "nonexistent-crate",
+      "status": "error",
+      "error": {
+        "code": "CRATE_NOT_FOUND",
+        "message": "Crate not found",
+        "details": "The requested crate 'nonexistent-crate' was not found in the registry."
+      }
+    }
+  ],
+  "summary": {
+    "extraction_depths": {
+      "basic": 1,
+      "full": 1,
+      "deep": 0
+    },
+    "versions_requested": {
+      "latest": 2,
+      "specific": 1
+    },
+    "rate_limit_consumed": 3
+  }
+}
+```
+
+### Error Response
+```json
+{
+  "error": "Bulk request failed",
+  "code": "BULK_REQUEST_ERROR",
+  "details": "Request exceeds maximum batch size of 50 crates for your tier."
+}
+```
+
+## Processing Options
+
+### Fail Fast
+When `fail_fast: true`, processing stops at the first error:
+
+```json
+{
+  "options": {
+    "fail_fast": true
+  }
+}
+```
+
+Response includes only processed crates up to the error.
+
+### Include Errors
+When `include_errors: false`, failed requests are excluded from results:
+
+```json
+{
+  "options": {
+    "include_errors": false
+  }
+}
+```
+
+Only successful results appear in the `results` array.
+
+### Parallel Processing
+By default, requests are processed in parallel. Disable for sequential processing:
+
+```json
+{
+  "options": {
+    "parallel": false
+  }
+}
+```
+
+Sequential processing may be slower but uses less server resources.
+
+## Error Handling
+
+### Common Bulk Errors
+
+#### Batch Size Exceeded (400)
+```json
+{
+  "error": "Batch size exceeded",
+  "code": "BATCH_SIZE_EXCEEDED",
+  "details": "Request contains 75 crates but your tier allows maximum 50."
+}
+```
+
+#### Invalid Request Format (400)
+```json
+{
+  "error": "Invalid request format",
+  "code": "INVALID_FORMAT",
+  "details": "Request body must contain 'crates' array."
+}
+```
+
+#### Rate Limit Exceeded (429)
+```json
+{
+  "error": "Rate limit exceeded",
+  "code": "RATE_LIMIT_EXCEEDED",
+  "details": "Bulk request would consume 75 requests but you have only 25 remaining this hour."
+}
+```
+
+### Individual Crate Errors
+Each crate that fails includes an error object:
+
+```json
+{
+  "name": "invalid-crate",
+  "status": "error",
+  "error": {
+    "code": "CRATE_NOT_FOUND",
+    "message": "Crate not found",
+    "details": "The requested crate 'invalid-crate' was not found."
+  }
+}
+```
+
+## Best Practices
+
+### Batch Size Optimization
+- Start with smaller batches (10-20 crates) to test
+- Use larger batches for better throughput once stable
+- Monitor rate limits to avoid rejections
+
+### Error Handling
+- Always check individual result status
+- Use `include_errors: true` for debugging
+- Implement retry logic for failed requests
+
+### Performance Tips
+- Use appropriate extraction depth for your needs
+- Leverage caching by avoiding `fresh: true` when possible
+- Consider parallel vs sequential based on server load
+
+### Rate Limit Management
+```javascript
+// Check rate limits before large bulk requests
+const estimatedCost = crateList.length
+if (estimatedCost > remainingRateLimit) {
+  // Split into smaller batches or wait
+}
+```
+
+## Use Cases
+
+### Documentation Site Generation
+Process all dependencies of a project for complete documentation coverage.
+
+### Ecosystem Analysis
+Bulk analyze popular crates in a category for research or comparison.
+
+### Data Pipeline Integration
+Efficiently integrate Rust crate data into larger data processing workflows.
+
+### Dependency Auditing
+Bulk process all dependencies in a project for security and maintenance analysis.
+
+## Next Steps
+
+- [Try bulk requests in the playground](/docs/ferropipe/playground)
+- [Learn about individual crate requests](/docs/ferropipe/api-reference/endpoints/crate)
+- [See bulk processing examples](/docs/ferropipe/examples)

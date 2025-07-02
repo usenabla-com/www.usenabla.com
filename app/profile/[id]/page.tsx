@@ -446,182 +446,36 @@ export default function ProfilePage() {
                       
                       {/* Status and Controls Row */}
                       {isOwnProfile && (
-                        <div className={cn(
-                          "rounded-lg border transition-all duration-300",
-                          profile?.customer 
-                            ? "bg-gradient-to-r from-indigo-500/10 to-purple-500/10 border-indigo-500/20 p-4"
-                            : profile?.curations <= 0 
-                              ? "bg-gradient-to-br from-amber-50/80 to-orange-50/80 dark:from-amber-950/20 dark:to-orange-950/20 border-amber-200/50 dark:border-amber-800/30 p-6"
-                              : "bg-muted/30 border-border/50 p-4"
-                        )}>
-                          {profile?.customer ? (
-                            <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
-                              <Badge 
-                                variant="default" 
-                                className="px-4 py-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-sm font-medium shadow-lg w-fit"
-                              >
-                                <Sparkles className="h-4 w-4 mr-2" />
-                                Pro Member - Unlimited Curations
-                              </Badge>
-                              <Button
-                                onClick={triggerCuration}
-                                disabled={triggering}
-                                size="sm"
-                                variant="default"
-                                className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground font-medium px-4 py-2"
-                              >
-                                {triggering ? (
-                                  <>
-                                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                                    Curating...
-                                  </>
-                                ) : (
-                                  <>
-                                    <Sparkles className="h-4 w-4 mr-2" />
-                                    Curate New Content
-                                  </>
-                                )}
-                              </Button>
-                            </div>
-                          ) : profile?.curations <= 0 ? (
-                            // Enhanced "No curations left" design
-                            <div className="space-y-4">
-                              {/* Header with icon and status */}
-                              <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center shadow-lg">
-                                  <Sparkles className="h-5 w-5 text-white" />
-                                </div>
-                                <div className="flex-1">
-                                  <h4 className="text-lg font-semibold text-foreground mb-1">No Curations Remaining</h4>
-                                  <p className="text-sm text-muted-foreground">You've used all your free curations</p>
-                                </div>
-                                <Badge 
-                                  variant="outline" 
-                                  className="px-3 py-1.5 bg-amber-100/50 dark:bg-amber-900/20 border-amber-300/50 dark:border-amber-700/50 text-amber-700 dark:text-amber-300 text-sm font-medium"
-                                >
-                                  0 left
-                                </Badge>
-                              </div>
-
-                              {/* Upgrade benefits */}
-                              <div className="bg-white/50 dark:bg-black/20 rounded-lg p-4 border border-amber-200/30 dark:border-amber-800/30">
-                                <div className="grid sm:grid-cols-2 gap-4">
-                                  <div>
-                                    <h5 className="font-medium text-foreground mb-2 flex items-center gap-2">
-                                      <div className="w-2 h-2 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full"></div>
-                                      Upgrade to Pro
-                                    </h5>
-                                    <ul className="text-sm text-muted-foreground space-y-1">
-                                      <li className="flex items-center gap-2">
-                                        <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
-                                        Unlimited AI curations
-                                      </li>
-                                      <li className="flex items-center gap-2">
-                                        <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
-                                        Premium content sources
-                                      </li>
-                                      <li className="flex items-center gap-2">
-                                        <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
-                                        Priority support
-                                      </li>
-                                    </ul>
-                                  </div>
-                                  <div className="flex flex-col justify-center">
-                                    <div className="text-center sm:text-left mb-3">
-                                      <div className="text-2xl font-bold text-foreground">$20.99</div>
-                                      <div className="text-sm text-muted-foreground">per month</div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-
-                              {/* Action buttons */}
-                              <div className="flex flex-col sm:flex-row gap-3">
-                                <Button 
-                                  asChild
-                                  className="bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-medium px-6 py-2.5 shadow-lg hover:shadow-xl transition-all duration-200 flex-1 sm:flex-initial"
-                                >
-                                  <Link 
-                                    href="https://buy.stripe.com/4gM5kD0xSdCoc1fbpM18c03" 
-                                    target="_blank"
-                                    onClick={() => {
-                                      analytics.track('Stripe Signup Button Clicked', {
-                                        buttonLocation: 'Profile Page - No Curations Left',
-                                        planType: 'Premium Support',
-                                        price: '$20.99',
-                                        userId: currentUser?.id,
-                                        timestamp: new Date().toISOString()
-                                      })
-                                    }}
-                                  >
-                                    <Sparkles className="h-4 w-4 mr-2" />
-                                    Upgrade to Pro
-                                  </Link>
-                                </Button>
-                                <Button 
-                                  variant="outline" 
-                                  onClick={() => loadFeedItems(0, false)}
-                                  className="bg-background/50 backdrop-blur-sm border-border/50 hover:bg-background/80 px-4 py-2.5"
-                                >
-                                  <RefreshCw className="h-4 w-4 mr-2" />
-                                  View Existing Content
-                                </Button>
-                              </div>
-
-                              {/* Trust indicators */}
-                              <div className="flex items-center justify-center gap-6 text-xs text-muted-foreground pt-2 border-t border-amber-200/30 dark:border-amber-800/30">
-                                <div className="flex items-center gap-1.5">
-                                  <div className="w-3 h-3 bg-green-500/20 rounded-full flex items-center justify-center">
-                                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
-                                  </div>
-                                  <span>Cancel anytime</span>
-                                </div>
-                                <div className="flex items-center gap-1.5">
-                                  <div className="w-3 h-3 bg-blue-500/20 rounded-full flex items-center justify-center">
-                                    <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
-                                  </div>
-                                  <span>Instant access</span>
-                                </div>
-                                <div className="flex items-center gap-1.5">
-                                  <div className="w-3 h-3 bg-purple-500/20 rounded-full flex items-center justify-center">
-                                    <div className="w-1.5 h-1.5 bg-purple-500 rounded-full"></div>
-                                  </div>
-                                  <span>7-day free trial</span>
-                                </div>
-                              </div>
-                            </div>
-                          ) : (
-                            // Regular state with curations remaining
-                            <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
-                              <Badge 
-                                variant="outline" 
-                                className="px-3 py-1.5 border-border/50 bg-background/50 backdrop-blur-sm flex items-center gap-2 text-sm w-fit"
-                              >
-                                <div className="w-2 h-2 bg-primary rounded-full"></div>
-                                <span className="font-medium text-foreground">{profile?.curations}</span>
-                                <span className="text-muted-foreground">curations remaining</span>
-                              </Badge>
-                              <Button
-                                onClick={triggerCuration}
-                                disabled={triggering}
-                                size="sm"
-                                variant="default"
-                                className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground font-medium px-4 py-2"
-                              >
-                                {triggering ? (
-                                  <>
-                                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                                    Curating...
-                                  </>
-                                ) : (
-                                  <>
-                                    <Sparkles className="h-4 w-4 mr-2" />
-                                    Use Curation
-                                  </>
-                                )}
-                              </Button>
-                            </div>
-                          )}
+                        <div className="bg-muted/30 border-border/50 p-4 rounded-lg border transition-all duration-300">
+                          <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+                            <Badge 
+                              variant="outline" 
+                              className="px-3 py-1.5 border-border/50 bg-background/50 backdrop-blur-sm flex items-center gap-2 text-sm w-fit"
+                            >
+                              <div className="w-2 h-2 bg-primary rounded-full"></div>
+                              <span className="font-medium text-foreground">Unlimited</span>
+                              <span className="text-muted-foreground">curations available</span>
+                            </Badge>
+                            <Button
+                              onClick={triggerCuration}
+                              disabled={triggering}
+                              size="sm"
+                              variant="default"
+                              className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground font-medium px-4 py-2"
+                            >
+                              {triggering ? (
+                                <>
+                                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                                  Curating...
+                                </>
+                              ) : (
+                                <>
+                                  <Sparkles className="h-4 w-4 mr-2" />
+                                  Curate New Content
+                                </>
+                              )}
+                            </Button>
+                          </div>
                         </div>
                       )}
                     </div>
@@ -632,68 +486,24 @@ export default function ProfilePage() {
                     <div className="space-y-4">
                       {feedError ? (
                         <div className="text-center py-8 px-6 bg-muted/30 backdrop-blur-sm rounded-lg border border-border/50">
-                          {feedError.includes('No curations remaining') ? (
-                            <div className="space-y-4">
-                              <div className="w-16 h-16 bg-gradient-to-br from-indigo-500/10 to-purple-500/10 rounded-full flex items-center justify-center mx-auto border border-indigo-500/20">
-                                <Sparkles className="h-8 w-8 text-indigo-500" />
-                              </div>
-                              <div>
-                                <h4 className="text-xl font-semibold text-foreground mb-2 font-display">Unlock Unlimited Curations</h4>
-                                <p className="text-muted-foreground text-sm mb-6 max-w-md mx-auto">
-                                  You've used all your free curations. Upgrade to Pro for unlimited AI-powered content curation tailored to your interests.
-                                </p>
-                                <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                                  <Button 
-                                    asChild
-                                    className="bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-medium px-6"
-                                  >
-                                    <Link 
-                                      href="https://buy.stripe.com/4gM5kD0xSdCoc1fbpM18c03" 
-                                      target="_blank"
-                                      onClick={() => {
-                                        analytics.track('Stripe Signup Button Clicked', {
-                                          buttonLocation: 'Profile Page - No Curations Left',
-                                          planType: 'Premium Support',
-                                          price: '$20.99',
-                                          userId: currentUser?.id,
-                                          timestamp: new Date().toISOString()
-                                        })
-                                      }}
-                                    >
-                                      <Sparkles className="h-4 w-4 mr-2" />
-                                      Upgrade to Pro
-                                    </Link>
-                                  </Button>
-                                  <Button 
-                                    variant="outline" 
-                                    onClick={() => loadFeedItems(0, false)}
-                                    className="bg-background/50 backdrop-blur-sm border-border/50"
-                                  >
-                                    View Existing Content
-                                  </Button>
-                                </div>
-                              </div>
+                          <div className="space-y-4">
+                            <div className="w-12 h-12 bg-destructive/10 rounded-full flex items-center justify-center mx-auto">
+                              <ExternalLink className="h-6 w-6 text-destructive" />
                             </div>
-                          ) : (
-                            <div className="space-y-4">
-                              <div className="w-12 h-12 bg-destructive/10 rounded-full flex items-center justify-center mx-auto">
-                                <ExternalLink className="h-6 w-6 text-destructive" />
-                              </div>
-                              <div>
-                                <h4 className="text-lg font-semibold text-foreground mb-2">Something went wrong</h4>
-                                <p className="text-destructive text-sm mb-4">{feedError}</p>
-                                <Button 
-                                  onClick={() => loadFeedItems(0, false)} 
-                                  variant="outline" 
-                                  size="sm"
-                                  className="bg-background/50 backdrop-blur-sm border-border/50"
-                                >
-                                  <RefreshCw className="h-4 w-4 mr-2" />
-                                  Try Again
-                                </Button>
-                              </div>
+                            <div>
+                              <h4 className="text-lg font-semibold text-foreground mb-2">Something went wrong</h4>
+                              <p className="text-destructive text-sm mb-4">{feedError}</p>
+                              <Button 
+                                onClick={() => loadFeedItems(0, false)} 
+                                variant="outline" 
+                                size="sm"
+                                className="bg-background/50 backdrop-blur-sm border-border/50"
+                              >
+                                <RefreshCw className="h-4 w-4 mr-2" />
+                                Try Again
+                              </Button>
                             </div>
-                          )}
+                          </div>
                         </div>
                       ) : null}
 
@@ -706,30 +516,25 @@ export default function ProfilePage() {
                           <p className="text-muted-foreground text-sm mb-4 max-w-sm mx-auto">
                             Start curating personalized content based on your interests and preferences.
                           </p>
-                          {profile && !profile.customer && profile.curations > 0 && (
-                            <div className="space-y-3">
-                              <p className="text-xs text-muted-foreground/70 bg-muted/30 px-3 py-2 rounded-lg inline-block">
-                                💡 You have {profile.curations} free curation{profile.curations !== 1 ? 's' : ''} remaining
-                              </p>
-                              <Button
-                                onClick={triggerCuration}
-                                disabled={triggering}
-                                className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground"
-                              >
-                                {triggering ? (
-                                  <>
-                                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                                    Curating...
-                                  </>
-                                ) : (
-                                  <>
-                                    <Sparkles className="h-4 w-4 mr-2" />
-                                    Get Started
-                                  </>
-                                )}
-                              </Button>
-                            </div>
-                          )}
+                          <div className="space-y-3">
+                            <Button
+                              onClick={triggerCuration}
+                              disabled={triggering}
+                              className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground"
+                            >
+                              {triggering ? (
+                                <>
+                                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                                  Curating...
+                                </>
+                              ) : (
+                                <>
+                                  <Sparkles className="h-4 w-4 mr-2" />
+                                  Get Started
+                                </>
+                              )}
+                            </Button>
+                          </div>
                         </div>
                       ) : (
                         <div className="space-y-3">

@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
     // Fetch the HTML content
     const response = await fetch(url, {
       headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; OGParser/1.0; +https://atelierlogos.studio)',
+        'User-Agent': 'Mozilla/5.0 (compatible; OGParser/1.0; +https://www.www.atelierlogos.studio)',
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
         'Accept-Language': 'en-US,en;q=0.5',
         'Accept-Encoding': 'gzip, deflate',

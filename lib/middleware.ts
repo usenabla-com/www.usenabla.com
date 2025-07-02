@@ -46,6 +46,9 @@ export async function updateSession(request: NextRequest) {
     const isStripeWebhook = request.nextUrl.pathname.startsWith('/api/stripe/webhook')
     const isBlog = request.nextUrl.pathname.startsWith('/blog')
     const isSupport = request.nextUrl.pathname.startsWith('/support')
+    const isFerropipe = request.nextUrl.pathname.startsWith('/ferropipe')
+    const isFerropipeApi = request.nextUrl.pathname.startsWith('/api/ferropipe')
+    const isFerropipeDocs = request.nextUrl.pathname.startsWith('/docs/ferropipe')
     const isOnboarding = request.nextUrl.pathname.startsWith('/onboarding')
     const isProfile = request.nextUrl.pathname.startsWith('/profile')
     const isPublicRoute = request.nextUrl.pathname === '/' || request.nextUrl.pathname === '/onboarding'
@@ -53,7 +56,7 @@ export async function updateSession(request: NextRequest) {
     const isPublicAsset = request.nextUrl.pathname.match(/\.(ico|png|jpg|jpeg|svg|css|js|json)$/)
 
     // Allow public assets, service worker, and blog API
-    if (isServiceWorker || isPublicAsset || isBlogApi || isBlog || isStripeWebhook) {
+    if (isServiceWorker || isPublicAsset || isBlogApi || isBlog || isStripeWebhook || isFerropipe || isFerropipeDocs || isFerropipeApi) {
       return response
     }
 

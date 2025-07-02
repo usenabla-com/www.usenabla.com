@@ -24,6 +24,7 @@ import {
   DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu"
 import { PWAInstallButton } from "@/components/pwa-install-button"
+import { siRust } from "simple-icons"
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -113,10 +114,12 @@ export function Navbar() {
               <Button 
                 variant="ghost" 
                 className="gap-2 hover:bg-primary/10 hover:text-primary font-medium transition-all duration-200" 
-                onClick={() => setIsLoginModalOpen(true)}
+                onClick={() => window.open('/ferropipe', '_blank')}
               >
-                <LogIn size={16} />
-                Sign In
+                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                  <path d={siRust.path} />
+                </svg>
+                Try Ferropipe
               </Button>
               <Button 
                 className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg hover:shadow-xl transition-all duration-200" 

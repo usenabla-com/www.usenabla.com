@@ -6,6 +6,7 @@ import { Check, Star, ArrowRight, Zap, Shield, Globe, Code, Database, Clock, Use
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { AnnouncementBanner } from "@/components/announcement-banner"
+import { Github } from "lucide-react"
 
 export default function FerropipePage() {
   return (
@@ -36,8 +37,7 @@ export default function FerropipePage() {
                   Intelligence Platform
                 </h1>
                 <p className="mb-8 text-xl text-muted-foreground max-w-2xl mx-auto">
-                  Deep analysis, llms.txt generation, and dependency insights for dev tools and LLMs.
-                  Power your products with advanced Rust analysis of the latest dependencies and interface insights.
+                  Advanced Rust crate insights and deep AI-powered crate intelligence for products and models.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button size="lg" className="text-lg px-8 py-6" asChild>
@@ -46,9 +46,10 @@ export default function FerropipePage() {
                       <ArrowRight className="ml-2 h-5 w-5" />
                     </Link>
                   </Button>
-                  <Button size="lg" variant="outline" className="text-lg px-8 py-6" asChild>
-                    <Link href="/docs/ferropipe/api-reference">
-                      View API Docs
+                  <Button size="lg" variant="outline" className="text-lg hover:text-black px-8 py-6" asChild>
+                    <Link href="https://github.com/Atelier-Logos/ferropipe">
+                      <Github className="ml-2 h-5 w-5" />
+                      Check out the Repo
                     </Link>
                   </Button>
                 </div>
@@ -290,26 +291,30 @@ export default function FerropipePage() {
                 <Card className="border-2 hover:border-primary/50 transition-colors">
                   <CardHeader className="text-center">
                     <CardTitle className="text-2xl">Basic</CardTitle>
-                    <div className="text-4xl font-bold text-primary">$350</div>
-                    <p className="text-sm text-muted-foreground">per month, billed annually</p>
+                    <div className="text-4xl font-bold text-primary">Free</div>
+                    <p className="text-sm text-muted-foreground">No credit card required</p>
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-3 mb-6">
                       <li className="flex items-center gap-2">
                         <Check className="h-4 w-4 text-green-500" />
-                        <span className="text-sm">100 requests/minute</span>
+                        <span className="text-sm">300 requests/month</span>
                       </li>
                       <li className="flex items-center gap-2">
                         <Check className="h-4 w-4 text-green-500" />
-                        <span className="text-sm">5 crates per bulk request</span>
+                        <span className="text-sm">Reasonable rate limits</span>
                       </li>
                       <li className="flex items-center gap-2">
                         <Check className="h-4 w-4 text-green-500" />
-                        <span className="text-sm">Basic depth crate intelligence</span>
+                        <span className="text-sm">Basic crate metadata</span>
                       </li>
                       <li className="flex items-center gap-2">
                         <Check className="h-4 w-4 text-green-500" />
-                        <span className="text-sm">Email support</span>
+                        <span className="text-sm">Email support (if needed)</span>
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <Check className="h-4 w-4 text-green-500" />
+                        <span className="text-sm">No credit card required</span>
                       </li>
                     </ul>
                     <Button className="w-full" variant="outline" asChild>
@@ -323,22 +328,18 @@ export default function FerropipePage() {
                   <CardHeader className="text-center">
                     <Badge className="mb-2 mx-auto">Most Popular</Badge>
                     <CardTitle className="text-2xl">Professional</CardTitle>
-                    <div className="text-4xl font-bold text-primary">$1,500</div>
+                    <div className="text-4xl font-bold text-primary">$560/month</div>
                     <p className="text-sm text-muted-foreground">per month, billed annually</p>
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-3 mb-6">
                       <li className="flex items-center gap-2">
                         <Check className="h-4 w-4 text-green-500" />
-                        <span className="text-sm">1,000 requests/minute</span>
+                        <span className="text-sm">Unlimited requests/month</span>
                       </li>
                       <li className="flex items-center gap-2">
                         <Check className="h-4 w-4 text-green-500" />
-                        <span className="text-sm">20 crates per bulk request</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <Check className="h-4 w-4 text-green-500" />
-                        <span className="text-sm">Full depth crate intelligence</span>
+                        <span className="text-sm">LLM-enriched crate intelligence</span>
                       </li>
                       <li className="flex items-center gap-2">
                         <Check className="h-4 w-4 text-green-500" />
@@ -346,7 +347,7 @@ export default function FerropipePage() {
                       </li>
                       <li className="flex items-center gap-2">
                         <Check className="h-4 w-4 text-green-500" />
-                        <span className="text-sm">Priority support</span>
+                        <span className="text-sm">Vulnerability insights</span>
                       </li>
                     </ul>
                     <Button className="w-full" asChild>
@@ -358,31 +359,31 @@ export default function FerropipePage() {
                 {/* Deep Plan */}
                 <Card className="border-2 hover:border-primary/50 transition-colors">
                   <CardHeader className="text-center">
-                    <CardTitle className="text-2xl">Enterprise</CardTitle>
-                    <div className="text-4xl font-bold text-primary">$4,500</div>
+                    <CardTitle className="text-2xl">Max</CardTitle>
+                    <div className="text-4xl font-bold text-primary">$1,300/month</div>
                     <p className="text-sm text-muted-foreground">per month, billed annually</p>
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-3 mb-6">
                       <li className="flex items-center gap-2">
                         <Check className="h-4 w-4 text-green-500" />
-                        <span className="text-sm">5,000 requests/minute</span>
+                        <span className="text-sm">Unlimited requests/month</span>
                       </li>
                       <li className="flex items-center gap-2">
                         <Check className="h-4 w-4 text-green-500" />
-                        <span className="text-sm">100 crates per bulk request</span>
+                        <span className="text-sm">LLM-enriched crate intelligence</span>
                       </li>
                       <li className="flex items-center gap-2">
                         <Check className="h-4 w-4 text-green-500" />
-                        <span className="text-sm">Deep depth crate intelligence</span>
+                        <span className="text-sm">Self-hosting (contact us)</span>
                       </li>
                       <li className="flex items-center gap-2">
                         <Check className="h-4 w-4 text-green-500" />
-                        <span className="text-sm">Flexible rate limits (contact us)</span>
+                        <span className="text-sm">CVE and security insights</span>
                       </li>
                       <li className="flex items-center gap-2">
                         <Check className="h-4 w-4 text-green-500" />
-                        <span className="text-sm">24/7 dedicated support</span>
+                        <span className="text-sm">24/7 dedicated support (if needed)</span>
                       </li>
                     </ul>
                     <Button className="w-full" variant="outline" asChild>
@@ -406,12 +407,13 @@ export default function FerropipePage() {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button size="lg" className="text-lg px-8 py-6" asChild>
-                    <Link href="/docs/ferropipe/getting-started">
-                      Check out the docs
+                    <Link href="https://github.com/Atelier-Logos/ferropipe">
+                      <Github className="ml-2 h-5 w-5" />
+                      Check out the repo
                       <ArrowRight className="ml-2 h-5 w-5" />
                     </Link>
                   </Button>
-                  <Button size="lg" variant="outline" className="text-lg px-8 py-6" asChild>
+                  <Button size="lg" variant="outline" className="text-lg hover:text-black px-8 py-6" asChild>
                     <Link href="https://cal.com/team/atelier-logos/45-min-intro-call">
                       Get an API key
                     </Link>

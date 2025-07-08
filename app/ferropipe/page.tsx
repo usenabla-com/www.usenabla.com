@@ -2,7 +2,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Check, Star, ArrowRight, Zap, Shield, Globe, Code, Database, Clock, Users, TrendingUp, AlertTriangle, X } from "lucide-react"
+import { Check, Star, ArrowRight, Zap, Shield, Globe, Code, Database, Clock, Users, TrendingUp, AlertTriangle, X, Book } from "lucide-react"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { AnnouncementBanner } from "@/components/announcement-banner"
@@ -47,9 +47,9 @@ export default function FerropipePage() {
                     </Link>
                   </Button>
                   <Button size="lg" variant="outline" className="text-lg hover:text-black px-8 py-6" asChild>
-                    <Link href="https://github.com/Atelier-Logos/ferropipe">
-                      <Github className="ml-2 h-5 w-5" />
-                      Check out the Repo
+                    <Link href="/docs/getting-started">
+                      <Book className="ml-2 h-5 w-5" />
+                      Read the docs
                     </Link>
                   </Button>
                 </div>
@@ -407,9 +407,9 @@ export default function FerropipePage() {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button size="lg" className="text-lg px-8 py-6" asChild>
-                    <Link href="https://github.com/Atelier-Logos/ferropipe">
-                      <Github className="ml-2 h-5 w-5" />
-                      Check out the repo
+                    <Link href="/docs">
+                      <Book className="ml-2 h-5 w-5" />
+                      Read the docs
                       <ArrowRight className="ml-2 h-5 w-5" />
                     </Link>
                   </Button>

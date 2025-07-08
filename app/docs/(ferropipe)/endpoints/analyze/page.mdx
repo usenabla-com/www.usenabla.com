@@ -1,0 +1,91 @@
+# Analyze Crate
+
+Extract comprehensive documentation and metadata for a specific Rust crate from crates.io.
+
+## Endpoint
+
+```http
+POST htps://platform.atelierlogos.studio/analyze
+```
+
+## Request Parameters
+
+<div className="not-prose my-8">
+  <div className="overflow-x-auto rounded-lg border border-border">
+    <table className="w-full">
+      <thead>
+        <tr className="border-b border-border bg-muted/50">
+          <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">Parameter</th>
+          <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">Type</th>
+          <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">Default</th>
+          <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">Required</th>
+          <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">Description</th>
+        </tr>
+      </thead>
+      <tbody className="divide-y divide-border">
+        <tr className="hover:bg-muted/30 transition-colors">
+          <td className="px-6 py-4 text-sm font-mono font-medium">`name`</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">string</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">`n/a`</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">Yes</td>
+          <td className="px-6 py-4 text-sm">The name of the crate</td>
+        </tr>
+        <tr className="hover:bg-muted/30 transition-colors">
+          <td className="px-6 py-4 text-sm font-mono font-medium">`version`</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">string</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">`latest`</td>
+          <td className="px-6 py-4 text-sm text-muted-foreground">No</td>
+          <td className="px-6 py-4 text-sm">Specific version or "latest" for the most recent</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+## Authentication
+
+All requests require an API key in the Authorization header:
+
+```http
+Authorization: Bearer YOUR_API_KEY"
+```
+
+## Example Request
+
+### Basic Request
+```bash
+ curl -X POST http://localhost:8080/analyze \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer fp_7e9f2c80-b1d4-4c7b-9df3-b0e8e4aa0101" \
+  -d '{
+    "name": "serde",
+    "version": "1.0.197"
+  }'
+```
+
+## Response Format
+
+### Basic Response
+```json
+{
+  "package_name": "serde",
+  "version": "1.0.210",
+  "extraction_depth": "basic",
+  "description": "A generic serialization/deserialization framework",
+  "documentation": "Serde is a framework for serializing and deserializing Rust data structures...",
+  "repository": "https://github.com/serde-rs/serde",
+  "homepage": "https://serde.rs",
+  "documentation_url": "https://docs.rs/serde",
+  "license": "MIT OR Apache-2.0",
+  "downloads": 1234567890,
+  "created_at": "2014-04-20T17:48:00.000Z",
+  "updated_at": "2024-01-15T09:23:00.000Z",
+  "cache_hit": true,
+  "extracted_at": "2025-01-12T10:30:00Z"
+}
+```
+
+## Next Steps
+
+- [Get an API key](https://cal.com/team/atelier-logos/ferropipe-intro)
+- [Join the community](https://join.slack.com/t/atelierlogos/shared_invite/zt-384mjl0hs-X2WTb8sc1xFrrDKULcgboQ)

@@ -49,12 +49,13 @@ export async function updateSession(request: NextRequest) {
     const isOnboarding = request.nextUrl.pathname.startsWith('/onboarding')
     const isProfile = request.nextUrl.pathname.startsWith('/profile')
     const isFerropipe = request.nextUrl.pathname.includes('/ferropipe')
+    const isDocs = request.nextUrl.pathname.includes('/docs')
     const isPublicRoute = request.nextUrl.pathname === '/' || request.nextUrl.pathname === '/onboarding'
     const isServiceWorker = request.nextUrl.pathname.includes('service-worker.js')
     const isPublicAsset = request.nextUrl.pathname.match(/\.(ico|png|jpg|jpeg|svg|css|js|json)$/)
 
     // Allow public assets, service worker, and blog API
-    if (isServiceWorker || isPublicAsset || isBlogApi || isBlog || isStripeWebhook || isFerropipe) {
+    if (isServiceWorker || isPublicAsset || isBlogApi || isBlog || isStripeWebhook || isFerropipe || isDocs) {
       return response
     }
 

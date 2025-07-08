@@ -7,7 +7,7 @@ image: "https://github.com/Atelier-Logos/www.atelierlogos.studio/blob/main/publi
 tags: ["Ecosystems", "Software"]
 ---
 
-## The internet is great, don't fuck it up
+## The internet is great, don't muck it up
 
 I love the internet. I remember when I was a kid begging my parents to get high speed internet so I could play some obscure game that was an MMO back in the early 2000s. 
 

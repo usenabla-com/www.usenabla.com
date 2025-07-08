@@ -47,7 +47,7 @@ export default function FerropipePage() {
                     </Link>
                   </Button>
                   <Button size="lg" variant="outline" className="text-lg hover:text-black px-8 py-6" asChild>
-                    <Link href="/docs/getting-started">
+                    <Link href="/docs">
                       <Book className="ml-2 h-5 w-5" />
                       Read the docs
                     </Link>

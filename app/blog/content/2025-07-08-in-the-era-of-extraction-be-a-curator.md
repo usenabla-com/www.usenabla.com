@@ -3,7 +3,7 @@ title: "In the era of extraction, be a curator"
 summary: "It's easy to strip mine the web for content, but have we ever thought about a class of people who carefully curate data while respecting the work put into building the web?"
 author: "James Bohrman"
 published: "2025-07-08"
-image: "https://chatgpt.com/s/m_686ce5c035648191b4f8663f13993ef3"
+image: "https://github.com/Atelier-Logos/www.atelierlogos.studio/blob/main/public/extraction.png?raw=true"
 tags: ["Ecosystems", "Software"]
 ---
 

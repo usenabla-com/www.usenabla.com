@@ -8,10 +8,13 @@ import { Footer } from "@/components/footer"
 import { AnnouncementBanner } from "@/components/announcement-banner"
 import { Github } from "lucide-react"
 import { useAnalytics } from '@/hooks/use-analytics'
+import { useEffect } from "react"
 
 export default function FerropipePage() {
   const analytics = useAnalytics()
-
+  useEffect(() => {
+    analytics.page('Landing Page Viewed')
+  })
   return (
     <div className="relative min-h-screen overflow-hidden">
       {/* Subtle background patterns */}

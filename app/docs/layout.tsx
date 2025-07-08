@@ -6,6 +6,7 @@ import { ChevronRight, FileText, Zap, Code, HelpCircle, Play, Calendar } from 'l
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { useAnalytics } from '@/hooks/use-analytics'
+import { useEffect } from "react"
 
 const navigation = [
   {
@@ -137,7 +138,9 @@ export default function DocsLayout({
 }) {
   const currentPath = usePathname()
   const analytics = useAnalytics()
-
+  useEffect(() => {
+    analytics.page('Landing Page Viewed')
+  })
   return (
     <div className="min-h-screen bg-background font-sans">
       <div className="flex">

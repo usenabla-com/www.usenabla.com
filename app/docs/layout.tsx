@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import { ChevronRight, FileText, Zap, Code, HelpCircle, Play, Calendar } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { useAnalytics } from '@/hooks/use-analytics'
 
 const navigation = [
   {
@@ -135,6 +136,7 @@ export default function DocsLayout({
   children: React.ReactNode
 }) {
   const currentPath = usePathname()
+  const analytics = useAnalytics()
 
   return (
     <div className="min-h-screen bg-background font-sans">
@@ -209,10 +211,20 @@ export default function DocsLayout({
                     Was this page helpful?
                   </div>
                   <div className="flex gap-2">
-                    <Button size="sm" variant="outline" className="font-sans">
+                    <Button 
+                      onClick={() => analytics.track('Docs Helpful: Yes', { path: currentPath })} 
+                      size="sm" 
+                      variant="outline" 
+                      className="font-sans"
+                    >
                       Yes
                     </Button>
-                    <Button size="sm" variant="outline" className="font-sans">
+                    <Button 
+                      onClick={() => analytics.track('Docs Helpful: No', { path: currentPath })} 
+                      size="sm" 
+                      variant="outline" 
+                      className="font-sans"
+                    >
                       No
                     </Button>
                   </div>

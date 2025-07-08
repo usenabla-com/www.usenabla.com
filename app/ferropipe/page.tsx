@@ -7,8 +7,11 @@ import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { AnnouncementBanner } from "@/components/announcement-banner"
 import { Github } from "lucide-react"
+import { useAnalytics } from '@/hooks/use-analytics'
 
 export default function FerropipePage() {
+  const analytics = useAnalytics()
+
   return (
     <div className="relative min-h-screen overflow-hidden">
       {/* Subtle background patterns */}

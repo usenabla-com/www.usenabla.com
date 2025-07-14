@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   title: "Atelier Logos | LLM Solutions Studio" as const,
   description: "We are a bespoke software studio helping clients build scalable, testable, and beautiful software while adopting LLMs in a sane manner." as const,
   generator: 'v0.dev',
-  manifest: '/manifest.json',
+
   keywords: ['LLM', 'AI', 'Software Development', 'Bespoke Solutions', 'Machine Learning'],
   authors: [{ name: 'Atelier Logos' }],
   creator: 'Atelier Logos',
@@ -76,7 +76,7 @@ export default function RootLayout({
         <meta property="og:image" content="https://www.www.atelierlogos.studio/og-image.png" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.www.atelierlogos.studio" />
-        <link rel="manifest" href="/manifest.json" />
+
         <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
         <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
         <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
@@ -87,46 +87,9 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="Atelier Logos" />
         
-        {/* Service Worker Registration */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-            if ('serviceWorker' in navigator) {
-              window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/service-worker.js')
-                  .then(function(registration) {
-                    console.log('SW registered: ', registration);
-                  })
-                  .catch(function(registrationError) {
-                    console.log('SW registration failed: ', registrationError);
-                  });
-              });
-            }
-            
-            // PWA Install Debug Info
-            window.addEventListener('beforeinstallprompt', (e) => {
-              console.log('PWA: beforeinstallprompt event fired - app is installable!');
-              console.log('PWA: Platforms:', e.platforms);
-            });
-            
-            window.addEventListener('appinstalled', (evt) => {
-              console.log('PWA: App was installed');
-            });
-            
-            // Debug PWA criteria
-            window.addEventListener('load', () => {
-              console.log('PWA Debug Info:');
-              console.log('- HTTPS:', location.protocol === 'https:');
-              console.log('- Service Worker:', 'serviceWorker' in navigator);
-              console.log('- Manifest:', document.querySelector('link[rel="manifest"]') !== null);
-              console.log('- Display mode:', window.matchMedia('(display-mode: standalone)').matches ? 'standalone' : 'browser');
-            });
-            `
-          }}
-        />
+
         
-        {/* Enhanced viewport for better mobile experience */}
-        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
         
         {/* Preconnect to external domains for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />

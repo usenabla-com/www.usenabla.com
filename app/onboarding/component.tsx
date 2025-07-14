@@ -39,11 +39,14 @@ export default function OnboardingContent() {
       body: JSON.stringify({ api_key, ...form })
     })
 
+    const payload = await res.json()
+
     if (res.ok) {
-      router.push('/dashboard')
+      // Send user to confirm page to wait for magic link click
+      const { uid, api_key: apiKeyResp, email } = payload
+      router.push(`/confirm?uid=${uid}&api_key=${apiKeyResp}&email=${encodeURIComponent(email)}`)
     } else {
-      const msg = await res.text()
-      setError(msg)
+      setError(payload?.error || 'Unexpected error')
     }
     setLoading(false)
   }

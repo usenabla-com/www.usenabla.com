@@ -23,16 +23,18 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'api_key and email required' }, { status: 400 })
   }
 
-  // 1️⃣  Store customer details
-  const { error: customerError } = await supabase.from('customers').upsert({
-    api_key,
-    first_name,
-    last_name,
-    email,
-    company,
-    referred_by,
-    onboarded: true
-  })
+  // 1️⃣  Update customer details collected earlier by the Stripe webhook
+  const { error: customerError } = await supabase
+    .from('customers')
+    .update({
+      first_name,
+      last_name,
+      email,
+      company,
+      referred_by,
+      onboarded: true
+    })
+    .eq('api_key', api_key)
 
   if (customerError) {
     console.error('❌  Failed to upsert customer:', customerError)
@@ -44,10 +46,18 @@ export async function POST(request: NextRequest) {
     data: { api_key }
   })
 
+  // 2.5️⃣  Link api_keys.user_id immediately so confirm page is optional
+  if (adminCreated?.user?.id) {
+    await supabase
+      .from('api_keys')
+      .update({ user_id: adminCreated.user.id })
+      .eq('api_key', api_key)
+  }
+
   if (authError || !adminCreated?.user) {
     console.error('❌  Failed to create auth user:', authError)
     return NextResponse.json({ error: 'auth error' }, { status: 500 })
   }
 
-  return NextResponse.json({ uid: adminCreated.user.id, api_key })
+  return NextResponse.json({ uid: adminCreated.user.id, api_key, email })
 }

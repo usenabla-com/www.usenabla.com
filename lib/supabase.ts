@@ -103,6 +103,11 @@ class SupabaseService {
   get supabase() {
     return this.client
   }
+
+  // Expose auth for convenience (allows supabase.auth.*)
+  get auth() {
+    return this.client.auth
+  }
 }
 
 // Export singleton instance

@@ -19,11 +19,12 @@ export async function POST(request: NextRequest) {
     referred_by
   } = data
 
-  if (!api_key) {
-    return new NextResponse('api_key is required', { status: 400 })
+  if (!api_key || !email) {
+    return NextResponse.json({ error: 'api_key and email required' }, { status: 400 })
   }
 
-  const { error } = await supabase.from('customers').upsert({
+  // 1️⃣  Store customer details
+  const { error: customerError } = await supabase.from('customers').upsert({
     api_key,
     first_name,
     last_name,
@@ -33,10 +34,20 @@ export async function POST(request: NextRequest) {
     onboarded: true
   })
 
-  if (error) {
-    console.error('❌  Failed to upsert customer:', error)
-    return new NextResponse('Database error', { status: 500 })
+  if (customerError) {
+    console.error('❌  Failed to upsert customer:', customerError)
+    return NextResponse.json({ error: 'db error' }, { status: 500 })
   }
 
-  return NextResponse.json({ success: true })
+  // 2️⃣  Create an Auth user & send magic-link (invite)
+  const { data: adminCreated, error: authError } = await supabase.auth.admin.inviteUserByEmail(email, {
+    data: { api_key }
+  })
+
+  if (authError || !adminCreated?.user) {
+    console.error('❌  Failed to create auth user:', authError)
+    return NextResponse.json({ error: 'auth error' }, { status: 500 })
+  }
+
+  return NextResponse.json({ uid: adminCreated.user.id, api_key })
 }

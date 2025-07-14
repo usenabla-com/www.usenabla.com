@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import { AnnouncementBanner } from '@/components/announcement-banner'
@@ -10,7 +10,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 
-export default function OnboardingPage() {
+function OnboardingContent() {
   const router = useRouter()
   const search = useSearchParams()
   const api_key = search.get('api_key') || ''

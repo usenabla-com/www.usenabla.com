@@ -68,6 +68,7 @@ export async function POST(request: NextRequest) {
 
     // Insert into api_keys table
     const { error: apiKeyError } = await supabase.from('api_keys').insert({
+      session_id: session.id,
       user_id: userId,
       key_name: `${plan} Key`,
       api_key: apiKey,

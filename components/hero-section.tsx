@@ -32,14 +32,11 @@ export function HeroSection() {
               <Button
                 onClick={() => {
                   analytics.track('Onboarding Button Clicked')
-                  window.open('/ferropipe', '_blank')
+                  window.open('/platform', '_blank')
                 }}
                 className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
               >
-                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-                  <path d={siRust.path} />
-                </svg>
-                Try Ferropipe
+                Get a Platform API Key
               </Button>
               <Button onClick={() => {
                 analytics.track('Schedule a Call Button Clicked')

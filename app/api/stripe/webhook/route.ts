@@ -1,454 +1,94 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase/server'
-import Stripe from 'stripe'
-import Analytics from '@segment/analytics-node'
+"use server"
 
-// Add analytics for server-side tracking
-declare global {
-  interface Window {
-    analytics: any
+import { NextRequest, NextResponse } from 'next/server'
+import Stripe from 'stripe'
+import { createClient } from '@supabase/supabase-js'
+import { randomBytes } from 'crypto'
+
+
+
+// Initialize Stripe client
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string)
+
+const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET as string
+
+// Helper to generate api_key values that look like sk_5rGvZqTb...
+function generateApiKey() {
+  const rand = randomBytes(24).toString('base64url') // ~32 chars URL-safe
+  return `sk_${rand}`
+}
+
+function planToRateLimit(plan: string): number {
+  switch (plan) {
+    case 'Crate Intelligence':
+      return 60
+    case 'SBOM Builder':
+      return 120
+    case 'Binary Analysis':
+      return 30
+    default:
+      return 60
   }
 }
-
-// Server-side analytics tracking function
-function trackServerEvent(event: string, properties?: Record<string, any>) {
-  // For server-side tracking, we can use Segment's Node.js library or HTTP API
-  // For now, we'll log the event and you can implement the actual server-side tracking
-  console.log('📊 Analytics Event:', event, properties)
-  
-  const analytics = new Analytics({
-    writeKey: process.env.SEGMENT_WRITE_KEY!
-  })
-  analytics.track({ userId: properties?.userId, event, properties })
-}
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-05-28.basil',
-})
-
-const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!
-
-// Product price IDs for our subscriptions
-const PREMIUM_SUPPORT_PRICE_ID = process.env.STRIPE_PREMIUM_SUPPORT_PRICE_ID! // $85.99/month
-const CURATION_PLAN_PRICE_ID = process.env.STRIPE_CURATION_PLAN_PRICE_ID! // $20.99/month
 
 export async function POST(request: NextRequest) {
-  const body = await request.text()
-  const sig = request.headers.get('stripe-signature')!
+  const rawBody = await request.text()
+  const signature = request.headers.get('stripe-signature') as string | null
+
+  if (!signature || !WEBHOOK_SECRET) {
+    return new NextResponse('Webhook configuration error', { status: 500 })
+  }
 
   let event: Stripe.Event
-
   try {
-    event = stripe.webhooks.constructEvent(body, sig, endpointSecret)
+    event = stripe.webhooks.constructEvent(rawBody, signature, WEBHOOK_SECRET)
   } catch (err: any) {
-    console.error('⚠️  Webhook signature verification failed.', err.message)
-    return NextResponse.json({ error: 'Webhook signature verification failed' }, { status: 400 })
+    console.error('❌  Stripe webhook signature verification failed.', err.message)
+    return new NextResponse(`Webhook Error: ${err.message}`, { status: 400 })
   }
 
-  console.log('🔔 Received Stripe webhook event:', event.type)
+  if (event.type === 'checkout.session.completed') {
+    const session = event.data.object as Stripe.Checkout.Session
 
-  try {
-    const supabase = await createClient()
+    const userId = session.metadata?.user_id as string | undefined
+    const plan = session.metadata?.plan as string | undefined
 
-    switch (event.type) {
-      case 'checkout.session.completed': {
-        const session = event.data.object as Stripe.Checkout.Session
-        console.log('✅ Checkout session completed:', session.id)
-
-        if (session.mode === 'subscription' && session.customer) {
-          await handleSubscriptionCreated(session, supabase)
-        }
-        break
-      }
-
-      case 'customer.subscription.created':
-      case 'customer.subscription.updated': {
-        const subscription = event.data.object as Stripe.Subscription
-        console.log(`📝 Subscription ${event.type}:`, subscription.id)
-
-        await handleSubscriptionChange(subscription, supabase)
-        break
-      }
-
-      case 'customer.subscription.deleted': {
-        const subscription = event.data.object as Stripe.Subscription
-        console.log('🗑️ Subscription deleted:', subscription.id)
-
-        await handleSubscriptionCanceled(subscription, supabase)
-        break
-      }
-
-      case 'invoice.payment_succeeded': {
-        const invoice = event.data.object as Stripe.Invoice
-        console.log('💰 Invoice payment succeeded:', invoice.id)
-
-        await handlePaymentSucceeded(invoice, supabase)
-        break
-      }
-
-      case 'invoice.payment_failed': {
-        const invoice = event.data.object as Stripe.Invoice
-        console.log('❌ Invoice payment failed:', invoice.id)
-
-        await handlePaymentFailed(invoice, supabase)
-        break
-      }
-
-      default:
-        console.log(`🤷‍♂️ Unhandled event type: ${event.type}`)
+    if (!userId || !plan) {
+      console.warn('Session missing required metadata – user_id or plan.')
+      return NextResponse.json({ received: true })
     }
 
-    return NextResponse.json({ received: true })
-  } catch (error) {
-    console.error('💥 Error processing webhook:', error)
-    return NextResponse.json(
-      { error: 'Webhook processing failed' },
-      { status: 500 }
-    )
-  }
-}
+    const apiKey = generateApiKey()
+    const rateLimit = planToRateLimit(plan)
 
-async function handleSubscriptionCreated(session: Stripe.Checkout.Session, supabase: any) {
-  const customerId = session.customer as string
-  const subscriptionId = session.subscription as string
-
-  // Get the subscription details from Stripe
-  const subscription = await stripe.subscriptions.retrieve(subscriptionId)
-  const customer = await stripe.customers.retrieve(customerId)
-
-  if (!customer || customer.deleted) {
-    console.error('❌ Customer not found or deleted:', customerId)
-    return
-  }
-
-  const customerEmail = customer.email
-  if (!customerEmail) {
-    console.error('❌ Customer email not found:', customerId)
-    return
-  }
-
-  // Find user by email
-  const { data: subscriber, error: subscriberError } = await supabase
-    .from('subscribers')
-    .select('*')
-    .eq('email', customerEmail)
-    .single()
-
-  if (subscriberError || !subscriber) {
-    console.error('❌ Subscriber not found for email:', customerEmail)
-    return
-  }
-
-  // Determine subscription type and set appropriate values
-  const priceId = subscription.items.data[0]?.price.id
-  let isCustomer = false
-  let curations = subscriber.curations
-
-  if (priceId === PREMIUM_SUPPORT_PRICE_ID) {
-    // Premium Support Plan - $85.99/month
-    isCustomer = true
-    curations = -1 // Unlimited curations (we use -1 to indicate unlimited)
-    console.log('🎉 Premium Support subscription activated for:', customerEmail)
-  } else if (priceId === CURATION_PLAN_PRICE_ID) {
-    // Curation Plan - $20.99/month
-    // Only set customer to false, unlimited curations for curation plan
-    curations = -1 // Unlimited curations but not customer status
-    console.log('📊 Curation Plan subscription activated for:', customerEmail)
-  }
-
-  // Update subscriber
-  const { error: updateError } = await supabase
-    .from('subscribers')
-    .update({
-      customer: isCustomer,
-      curations: curations,
-      stripe_customer_id: customerId,
-      updated_at: new Date().toISOString()
-    })
-    .eq('id', subscriber.id)
-
-  if (updateError) {
-    console.error('❌ Failed to update subscriber:', updateError)
-    return
-  }
-
-  // Create purchase record
-  await createPurchaseRecord(
-    subscriber.id,
-    session.id,
-    customerId,
-    session.amount_total || 0,
-    session.currency || 'usd',
-    'completed',
-    supabase
-  )
-
-  // Track subscription start
-  trackServerEvent('Subscription Started', {
-    userId: subscriber.id,
-    userEmail: customerEmail,
-    subscriptionId: subscriptionId,
-    customerId: customerId,
-    priceId: priceId,
-    planType: priceId === PREMIUM_SUPPORT_PRICE_ID ? 'Premium Support' : 'Curation Plan',
-    amount: session.amount_total || 0,
-    currency: session.currency || 'usd',
-    isCustomer: isCustomer,
-    curations: curations,
-    timestamp: new Date().toISOString()
-  })
-
-  console.log('✅ Subscription setup completed for:', customerEmail)
-}
-
-async function handleSubscriptionChange(subscription: Stripe.Subscription, supabase: any) {
-  const customerId = subscription.customer as string
-  
-  // Get customer details
-  const customer = await stripe.customers.retrieve(customerId)
-  if (!customer || customer.deleted) {
-    console.error('❌ Customer not found:', customerId)
-    return
-  }
-
-  const customerEmail = customer.email
-  if (!customerEmail) {
-    console.error('❌ Customer email not found:', customerId)
-    return
-  }
-
-  // Find subscriber
-  const { data: subscriber, error: subscriberError } = await supabase
-    .from('subscribers')
-    .select('*')
-    .eq('email', customerEmail)
-    .single()
-
-  if (subscriberError || !subscriber) {
-    console.error('❌ Subscriber not found for email:', customerEmail)
-    return
-  }
-
-  // Check subscription status and active items
-  const isActive = subscription.status === 'active'
-  const priceId = subscription.items.data[0]?.price.id
-
-  let isCustomer = false
-  let curations = subscriber.curations
-
-  if (isActive) {
-    if (priceId === PREMIUM_SUPPORT_PRICE_ID) {
-      // Premium Support Plan
-      isCustomer = true
-      curations = -1 // Unlimited
-    } else if (priceId === CURATION_PLAN_PRICE_ID) {
-      // Curation Plan
-      curations = -1 // Unlimited curations but not customer status
-    }
-  } else {
-    // Subscription is not active, check if they have other active subscriptions
-    const customerSubscriptions = await stripe.subscriptions.list({
-      customer: customerId,
-      status: 'active',
-    })
-
-    // Check if they have any active subscriptions
-    const hasPremiumSupport = customerSubscriptions.data.some(sub => 
-      sub.items.data.some(item => item.price.id === PREMIUM_SUPPORT_PRICE_ID)
-    )
-    const hasCurationPlan = customerSubscriptions.data.some(sub => 
-      sub.items.data.some(item => item.price.id === CURATION_PLAN_PRICE_ID)
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL as string,
+      process.env.SUPABASE_SERVICE_ROLE_KEY as string // service-role for RLS bypass
     )
 
-    if (hasPremiumSupport) {
-      isCustomer = true
-      curations = -1
-    } else if (hasCurationPlan) {
-      curations = -1
-    } else {
-      // No active subscriptions, reset to default
-      isCustomer = false
-      curations = 3 // Default number of curations for non-customers
-    }
-  }
-
-  // Update subscriber
-  const { error: updateError } = await supabase
-    .from('subscribers')
-    .update({
-      customer: isCustomer,
-      curations: curations,
-      stripe_customer_id: customerId,
-      updated_at: new Date().toISOString()
-    })
-    .eq('id', subscriber.id)
-
-  if (updateError) {
-    console.error('❌ Failed to update subscriber:', updateError)
-  } else {
-    console.log('✅ Subscriber updated for subscription change:', customerEmail)
-  }
-}
-
-async function handleSubscriptionCanceled(subscription: Stripe.Subscription, supabase: any) {
-  const customerId = subscription.customer as string
-  
-  // Get customer details
-  const customer = await stripe.customers.retrieve(customerId)
-  if (!customer || customer.deleted) {
-    console.error('❌ Customer not found:', customerId)
-    return
-  }
-
-  const customerEmail = customer.email
-  if (!customerEmail) {
-    console.error('❌ Customer email not found:', customerId)
-    return
-  }
-
-  // Find subscriber
-  const { data: subscriber, error: subscriberError } = await supabase
-    .from('subscribers')
-    .select('*')
-    .eq('email', customerEmail)
-    .single()
-
-  if (subscriberError || !subscriber) {
-    console.error('❌ Subscriber not found for email:', customerEmail)
-    return
-  }
-
-  // Check if they have other active subscriptions
-  const customerSubscriptions = await stripe.subscriptions.list({
-    customer: customerId,
-    status: 'active',
-  })
-
-  const hasPremiumSupport = customerSubscriptions.data.some(sub => 
-    sub.items.data.some(item => item.price.id === PREMIUM_SUPPORT_PRICE_ID)
-  )
-  const hasCurationPlan = customerSubscriptions.data.some(sub => 
-    sub.items.data.some(item => item.price.id === CURATION_PLAN_PRICE_ID)
-  )
-
-  let isCustomer = false
-  let curations = 3 // Default number of curations
-
-  if (hasPremiumSupport) {
-    isCustomer = true
-    curations = -1
-  } else if (hasCurationPlan) {
-    curations = -1
-  }
-
-  // Update subscriber
-  const { error: updateError } = await supabase
-    .from('subscribers')
-    .update({
-      customer: isCustomer,
-      curations: curations,
-      updated_at: new Date().toISOString()
-    })
-    .eq('id', subscriber.id)
-
-  if (updateError) {
-    console.error('❌ Failed to update subscriber after cancellation:', updateError)
-  } else {
-    console.log('✅ Subscriber updated after subscription cancellation:', customerEmail)
-  }
-}
-
-async function handlePaymentSucceeded(invoice: Stripe.Invoice, supabase: any) {
-  const customerId = invoice.customer as string
-
-  // Update purchase record if it exists
-  const { error: updateError } = await supabase
-    .from('purchases')
-    .update({
-      status: 'completed',
-      updated_at: new Date().toISOString()
-    })
-    .eq('stripe_customer_id', customerId)
-    .eq('status', 'pending')
-
-  if (updateError) {
-    console.log('⚠️  Could not update purchase record:', updateError)
-  }
-
-  console.log('✅ Payment succeeded for customer:', customerId)
-}
-
-async function handlePaymentFailed(invoice: Stripe.Invoice, supabase: any) {
-  const customerId = invoice.customer as string
-
-  // Get customer details
-  const customer = await stripe.customers.retrieve(customerId)
-  if (!customer || customer.deleted) {
-    console.error('❌ Customer not found:', customerId)
-    return
-  }
-
-  const customerEmail = customer.email
-  if (!customerEmail) {
-    console.error('❌ Customer email not found:', customerId)
-    return
-  }
-
-  // Find subscriber
-  const { data: subscriber, error: subscriberError } = await supabase
-    .from('subscribers')
-    .select('*')
-    .eq('email', customerEmail)
-    .single()
-
-  if (subscriberError || !subscriber) {
-    console.error('❌ Subscriber not found for email:', customerEmail)
-    return
-  }
-
-  // On payment failure, we might want to downgrade the user or send a notification
-  // For now, we'll just log it and potentially update purchase status
-  const { error: updateError } = await supabase
-    .from('purchases')
-    .update({
-      status: 'failed',
-      updated_at: new Date().toISOString()
-    })
-    .eq('stripe_customer_id', customerId)
-    .eq('status', 'pending')
-
-  if (updateError) {
-    console.log('⚠️  Could not update purchase record:', updateError)
-  }
-
-  console.log('⚠️  Payment failed for customer:', customerEmail)
-}
-
-async function createPurchaseRecord(
-  userId: string,
-  sessionId: string,
-  customerId: string,
-  amountTotal: number,
-  currency: string,
-  status: string,
-  supabase: any
-) {
-  const { error } = await supabase
-    .from('purchases')
-    .insert({
+    // Insert into api_keys table
+    const { error: apiKeyError } = await supabase.from('api_keys').insert({
       user_id: userId,
-      stripe_session_id: sessionId,
-      stripe_customer_id: customerId,
-      amount_total: amountTotal,
-      currency: currency,
-      status: status,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      key_name: `${plan} Key`,
+      api_key: apiKey,
+      plan,
+      rate_limit_per_minute: rateLimit,
+      is_active: true
     })
 
-  if (error) {
-    console.error('❌ Failed to create purchase record:', error)
-  } else {
-    console.log('✅ Purchase record created successfully')
+    if (apiKeyError) {
+      console.error('❌  Failed to insert api_key:', apiKeyError)
+      return new NextResponse('Database insert error', { status: 500 })
+    }
+
+    // Create a minimal customers record so onboarding can update it later
+    await supabase.from('customers').upsert({
+      api_key: apiKey,
+      email: session.customer_details?.email || null,
+      onboarded: false
+    })
   }
-} 
+
+  // Return a 200 to acknowledge receipt of the event
+  return NextResponse.json({ received: true })
+}

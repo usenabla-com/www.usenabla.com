@@ -24,7 +24,7 @@ function planToRateLimit(plan: string): number {
       return 60
     case 'SBOM Builder':
       return 120
-    case 'Binary Analysis':
+    case 'Binary Composition Analysis':
       return 30
     default:
       return 60

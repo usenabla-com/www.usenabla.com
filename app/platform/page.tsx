@@ -247,7 +247,7 @@ export default function PlatformPage() {
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
                 {/* Basic Plan */}
                 <Card className="border-2 hover:border-primary/50 transition-colors">
                   <CardHeader className="text-center">
@@ -279,12 +279,44 @@ export default function PlatformPage() {
                       </li>
                     </ul>
                     <Button className="w-full" variant="outline" asChild>
-                      <Link href="https://buy.stripe.com/test_cNifZa2bHeOFa7y6wm97G00?client_reference_id=Binary%20Composition%20Analysis">Get Started</Link>
+                      <Link href="https://buy.stripe.com/test_cNifZa2bHeOFa7y6wm97G00?client_reference_id=Crate%20Intelligence">Get Started</Link>
                     </Button>
                   </CardContent>
                 </Card>
 
-                {/* Full Plan */}
+                {/* SBOM Builder Plan */}
+                <Card className="border-2 border-primary shadow-lg scale-105">
+                  <CardHeader className="text-center">
+                    <CardTitle className="text-2xl">SBOM Builder</CardTitle>
+                    <div className="text-4xl font-bold text-primary">$640/month</div>
+                    <p className="text-sm text-muted-foreground">per month, billed monthly</p>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-3 mb-6">
+                      <li className="flex items-center gap-2">
+                        <Check className="h-4 w-4 text-green-500" />
+                        <span className="text-sm">Everything in Crate Intelligence</span>
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <Check className="h-4 w-4 text-green-500" />
+                        <span className="text-sm">SBOM generation</span>
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <Check className="h-4 w-4 text-green-500" />
+                        <span className="text-sm">CycloneDX Format</span>
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <Check className="h-4 w-4 text-green-500" />
+                        <span className="text-sm">Email support (if needed)</span>
+                      </li>
+                    </ul>
+                    <Button className="w-full" variant="outline" asChild>
+                      <Link href="https://buy.stripe.com/test_3cIdR24jP5e57ZqcUK97G02?client_reference_id=SBOM%20Builder">Get Started</Link>
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                {/* BCA Plan */}
                 <Card className="border-2 border-primary shadow-lg scale-105">
                   <CardHeader className="text-center">
                     <CardTitle className="text-2xl">Binary Composition Analysis</CardTitle>
@@ -311,7 +343,7 @@ export default function PlatformPage() {
                       </li>
                     </ul>
                     <Button className="w-full" variant="outline" asChild>
-                      <Link href="https://buy.stripe.com/test_cNifZa2bHeOFa7y6wm97G00?client_reference_id=Binary%20Composition%20Analysis">Get Started</Link>
+                      <Link href="https://buy.stripe.com/test_7sY5kwaId7md6Vm07Y97G01?client_reference_id=Binary%20Composition%20Analysis">Get Started</Link>
                     </Button>
                   </CardContent>
                 </Card>

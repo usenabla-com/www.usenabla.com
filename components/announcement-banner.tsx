@@ -11,8 +11,8 @@ export function AnnouncementBanner() {
   const pathname = usePathname()
 
   useEffect(() => {
-    // Don't show banner on docs or platform pages
-    if (pathname.startsWith('/docs') || pathname.startsWith('/platform')) {
+    // Don't show banner on platform pages
+    if (pathname.startsWith('/platform')) {
       setIsVisible(false)
       return
     }

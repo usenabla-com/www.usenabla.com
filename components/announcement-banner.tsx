@@ -11,8 +11,8 @@ export function AnnouncementBanner() {
   const pathname = usePathname()
 
   useEffect(() => {
-    // Don't show banner on docs or ferropipe pages
-    if (pathname.startsWith('/docs') || pathname.startsWith('/ferropipe')) {
+    // Don't show banner on docs or platform pages
+    if (pathname.startsWith('/docs') || pathname.startsWith('/platform')) {
       setIsVisible(false)
       return
     }
@@ -58,7 +58,7 @@ export function AnnouncementBanner() {
               className="text-xs px-3 py-1 h-7 bg-white/20 hover:bg-white/30 text-primary-foreground border-white/30"
               asChild
             >
-              <Link href="/ferropipe">
+              <Link href="/platform">
                 Learn More
                 <ArrowRight className="ml-1 h-3 w-3" />
               </Link>

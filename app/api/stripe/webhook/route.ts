@@ -50,11 +50,13 @@ export async function POST(request: NextRequest) {
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object as Stripe.Checkout.Session
 
-    const userId = session.metadata?.user_id as string | undefined
-    const plan = session.metadata?.plan as string | undefined
+    const userId = session.metadata?.user_id as string | null | undefined
+    // Plan can come from metadata or fall back to client_reference_id (useful for Stripe-hosted checkout links)
+    const plan = (session.metadata?.plan as string | undefined) || (session.client_reference_id as string | undefined)
 
-    if (!userId || !plan) {
-      console.warn('Session missing required metadata – user_id or plan.')
+    // Plan is required for provisioning; userId may be null until the customer completes onboarding.
+    if (!plan) {
+      console.warn('Session missing required metadata – plan.')
       return NextResponse.json({ received: true })
     }
 
@@ -69,7 +71,8 @@ export async function POST(request: NextRequest) {
     // Insert into api_keys table
     const { error: apiKeyError } = await supabase.from('api_keys').insert({
       session_id: session.id,
-      user_id: userId,
+      // user_id may be null until the customer finishes onboarding
+      user_id: userId ?? null,
       key_name: `${plan} Key`,
       api_key: apiKey,
       plan,

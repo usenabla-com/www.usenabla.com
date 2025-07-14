@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Check, Star, ArrowRight, Zap, Shield, Globe, Code, Database, Clock, Users, TrendingUp, AlertTriangle, X, Book, BinaryIcon, HammerIcon, GavelIcon, KeyRound, LockIcon, LockKeyholeIcon, CpuIcon } from "lucide-react"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
-import { AnnouncementBanner } from "@/components/announcement-banner"
+
 import { Github } from "lucide-react"
 import { useAnalytics } from '@/hooks/use-analytics'
 import { useEffect } from "react"
@@ -24,7 +24,6 @@ export default function PlatformPage() {
       
       {/* Main content */}
       <main className="relative z-10">
-        <AnnouncementBanner />
         <Navbar />
         
         <div className="bg-gradient-to-b from-background to-muted/20">
@@ -280,7 +279,7 @@ export default function PlatformPage() {
                       </li>
                     </ul>
                     <Button className="w-full" variant="outline" asChild>
-                      <Link href="https://buy.stripe.com/test_cNifZa2bHeOFa7y6wm97G00">Get Started</Link>
+                      <Link href="https://buy.stripe.com/test_cNifZa2bHeOFa7y6wm97G00?client_reference_id=Binary%20Composition%20Analysis">Get Started</Link>
                     </Button>
                   </CardContent>
                 </Card>
@@ -312,7 +311,7 @@ export default function PlatformPage() {
                       </li>
                     </ul>
                     <Button className="w-full" variant="outline" asChild>
-                      <Link href="https://buy.stripe.com/test_cNifZa2bHeOFa7y6wm97G00">Get Started</Link>
+                      <Link href="https://buy.stripe.com/test_cNifZa2bHeOFa7y6wm97G00?client_reference_id=Binary%20Composition%20Analysis">Get Started</Link>
                     </Button>
                   </CardContent>
                 </Card>

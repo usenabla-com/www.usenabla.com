@@ -48,8 +48,8 @@ export async function updateSession(request: NextRequest) {
     const isPlatform = request.nextUrl.pathname.includes('/platform')
     const isPublicRoute = request.nextUrl.pathname === '/'
     const isPublicAsset = request.nextUrl.pathname.match(/\.(ico|png|jpg|jpeg|svg|css|js|json)$/)
-    const isOnboarding = request.nextUrl.pathname.startsWith('/onboarding')
-    const isOnboardingApi = request.nextUrl.pathname.startsWith('/api/onboarding')
+    const isOnboarding = request.nextUrl.pathname.includes('/onboarding')
+    const isOnboardingApi = request.nextUrl.pathname.includes('/api/onboarding')
     // Allow public assets, service worker, and blog API
     if (isPublicAsset || isBlogApi || isBlog || isStripeWebhook || isPlatform || isPublicRoute || isOnboarding || isOnboardingApi) {
       return response

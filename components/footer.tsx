@@ -32,7 +32,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-12 pt-8 border-t text-center text-sm text-muted-foreground">
-          © {new Date().getFullYear()} James Bohrman. All rights reserved.
+          © {new Date().getFullYear()} Atelier Logos LLC. All rights reserved.
         </div>
       </div>
     </footer>

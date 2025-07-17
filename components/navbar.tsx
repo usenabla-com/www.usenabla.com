@@ -1,11 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { LoginModal } from "@/components/login-modal"
 import { useAuth } from "@/hooks/use-auth"
+import { supabase } from "@/lib/supabase"
 import { Menu, X, LogIn, LogOut, User, ChevronDown, Settings, BookOpen, Briefcase, Mail, MessageSquare } from "lucide-react"
 import {
   NavigationMenu,
@@ -23,7 +24,6 @@ import {
   DropdownMenuTrigger,
   DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu"
-import { PWAInstallButton } from "@/components/pwa-install-button"
 import { siRust } from "simple-icons"
 
 export function Navbar() {
@@ -31,6 +31,45 @@ export function Navbar() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
   const [isMobileProfileOpen, setIsMobileProfileOpen] = useState(false)
   const { user, loading, signOut } = useAuth()
+
+  const [keyId, setKeyId] = useState<string | null>(null);
+  const userId = user?.id;
+
+  // Fetch the first keyId for the logged-in user
+  useEffect(() => {
+    const fetchKeyId = async () => {
+      if (!userId) {
+        console.log('No userId available');
+        setKeyId(null);
+        return;
+      }
+      try {
+        console.log('Fetching keyId for userId:', userId);
+        const { data, error } = await supabase.supabase
+          .from("api_keys")
+          .select("id")
+          .eq("user_id", userId)
+          .limit(1);
+        
+        console.log('API Keys response:', { data, error });
+        
+        if (error) {
+          console.error('Error fetching keyId:', error);
+          setKeyId(null);
+        } else if (!data || data.length === 0) {
+          console.log('No API keys found for user');
+          setKeyId(null);
+        } else {
+          console.log('Found keyId:', data[0].id);
+          setKeyId(data[0].id);
+        }
+      } catch (e) {
+        console.error('Exception fetching keyId:', e);
+        setKeyId(null);
+      }
+    };
+    fetchKeyId();
+  }, [userId]);
 
   const handleSignOut = async () => {
     await signOut()
@@ -41,10 +80,6 @@ export function Navbar() {
   const toggleMobileProfile = () => {
     setIsMobileProfileOpen(!isMobileProfileOpen)
   }
-
-  // Check if current user is the support user
-  const SUPPORT_USER_ID = 'ec241bb3-293e-4f03-9d07-591f0208d0ad'
-  const isSupportUser = user?.id === SUPPORT_USER_ID
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -79,7 +114,17 @@ export function Navbar() {
               Loading...
             </Button>
           ) : user ? (
-            <DropdownMenu>
+            <>
+              <Button
+                variant="ghost"
+                className="gap-2 hover:bg-primary/10 hover:text-primary font-medium transition-all duration-200"
+                asChild
+              >
+                <Link href={`/dashboard?keyId=${keyId}&userId=${user.id}`}>
+                  Dashboard
+                </Link>
+              </Button>
+              <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="gap-2 max-w-[200px]">
                   <User size={16} />
@@ -109,22 +154,22 @@ export function Navbar() {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+            </>
           ) : (
             <div className="flex items-center gap-3">
-              <Button 
-                variant="ghost" 
-                className="gap-2 hover:bg-primary/10 hover:text-primary font-medium transition-all duration-200" 
+              <Button
+                variant="ghost"
+                className="gap-2 hover:bg-primary/10 hover:text-primary font-medium transition-all duration-200"
                 onClick={() => window.open('https://docs.atelierlogos.studio', '_blank')}
               >
                 Learn about the Platform
               </Button>
-              <Button 
-                className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg hover:shadow-xl transition-all duration-200" 
-                asChild
+              <Button
+                className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
+                onClick={() => setIsLoginModalOpen(true)}
               >
-                <Link href="https://join.slack.com/t/atelierlogos/shared_invite/zt-384mjl0hs-X2WTb8sc1xFrrDKULcgboQ">
-                  Join Community
-                </Link>
+                <LogIn size={16} />
+                Sign In / Join
               </Button>
             </div>
           )}
@@ -133,8 +178,8 @@ export function Navbar() {
         {/* Mobile Menu Toggle & Profile */}
         <div className="flex items-center gap-2 md:hidden">
           {user && (
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               size="sm"
               onClick={(e) => {
                 e.preventDefault()
@@ -151,9 +196,9 @@ export function Navbar() {
             </Button>
           )}
 
-          <button 
-            className="p-2 hover:bg-accent rounded-md transition-colors" 
-            onClick={() => setIsMenuOpen(!isMenuOpen)} 
+          <button
+            className="p-2 hover:bg-accent rounded-md transition-colors"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
           >
             {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -178,9 +223,9 @@ export function Navbar() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Button 
-                    variant="ghost" 
-                    className="w-full justify-start gap-3 h-10 bg-background/50 hover:bg-background border border-border/50" 
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start gap-3 h-10 bg-background/50 hover:bg-background border border-border/50"
                     asChild
                     onClick={() => {
                       setIsMenuOpen(false)
@@ -192,9 +237,9 @@ export function Navbar() {
                       View Profile
                     </Link>
                   </Button>
-                  <Button 
-                    variant="ghost" 
-                    className="w-full justify-start gap-3 h-10 bg-background/50 hover:bg-background border border-border/50" 
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start gap-3 h-10 bg-background/50 hover:bg-background border border-border/50"
                     asChild
                     onClick={() => {
                       setIsMenuOpen(false)
@@ -206,9 +251,9 @@ export function Navbar() {
                       Settings
                     </Link>
                   </Button>
-                  <Button 
-                    variant="ghost" 
-                    className="w-full justify-start gap-3 h-10 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950 border border-red-200 dark:border-red-800" 
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start gap-3 h-10 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950 border border-red-200 dark:border-red-800"
                     onClick={handleSignOut}
                   >
                     <LogOut size={16} />
@@ -226,8 +271,8 @@ export function Navbar() {
                     <User size={16} className="text-muted-foreground" />
                     <span className="text-sm text-muted-foreground">Tap profile icon to access your account</span>
                   </div>
-                  <Button 
-                    variant="ghost" 
+                  <Button
+                    variant="ghost"
                     size="sm"
                     onClick={toggleMobileProfile}
                     className="text-xs px-2 py-1 h-auto"
@@ -272,18 +317,13 @@ export function Navbar() {
                 <Mail size={16} />
                 Schedule a 45-min Chat
               </Link>
-              
-              {/* PWA Install Button for mobile */}
-              <div className="py-2 flex justify-center">
-                <PWAInstallButton />
-              </div>
-              
+
               {/* Auth buttons for mobile when not logged in */}
               {!user && (
                 <div className="pt-4 mt-4 border-t border-border/50 space-y-2">
-                  <Button 
-                    variant="outline" 
-                    className="w-full gap-2 bg-background/90 hover:bg-background border-2 border-primary/20 hover:border-primary/40 text-foreground hover:text-primary font-medium shadow-lg hover:shadow-xl transition-all duration-200 backdrop-blur-sm" 
+                  <Button
+                    variant="outline"
+                    className="w-full gap-2 bg-background/90 hover:bg-background border-2 border-primary/20 hover:border-primary/40 text-foreground hover:text-primary font-medium shadow-lg hover:shadow-xl transition-all duration-200 backdrop-blur-sm"
                     onClick={() => {
                       setIsLoginModalOpen(true)
                       setIsMenuOpen(false)
@@ -292,8 +332,8 @@ export function Navbar() {
                     <LogIn size={16} />
                     Sign In
                   </Button>
-                  <Button 
-                    className="w-full gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg hover:shadow-xl transition-all duration-200" 
+                  <Button
+                    className="w-full gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
                     asChild
                     onClick={() => setIsMenuOpen(false)}
                   >
@@ -308,9 +348,9 @@ export function Navbar() {
         </div>
       )}
 
-      <LoginModal 
-        isOpen={isLoginModalOpen} 
-        onClose={() => setIsLoginModalOpen(false)} 
+      <LoginModal
+        isOpen={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)}
       />
     </header>
   )

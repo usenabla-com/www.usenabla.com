@@ -53,10 +53,11 @@ export async function updateSession(request: NextRequest) {
     const isOnboardingRedirect = request.nextUrl.pathname.includes('/api/onboarding-redirect')
     const isConfirm = request.nextUrl.pathname.includes('/confirm')
     const isApiKeyLink = request.nextUrl.pathname.includes('/link-api-key')
+    // Dashboard route - require authentication
     const isDashboard = request.nextUrl.pathname.includes('/dashboard')
     const isDashboardApi = request.nextUrl.pathname.includes('/api/dashboard')
     // Allow public assets, service worker, and blog API
-    if (isPublicAsset || isBlogApi || isBlog || isStripeWebhook || isPlatform || isPublicRoute || isOnboarding || isOnboardingApi || isOnboardingRedirect || isConfirm || isApiKeyLink || isDashboard || isDashboardApi) {
+    if (isPublicAsset || isBlogApi || isBlog || isStripeWebhook || isPlatform || isPublicRoute || isOnboarding || isOnboardingApi || isOnboardingRedirect || isConfirm || isApiKeyLink || isDashboardApi) {
       return response
     }
 

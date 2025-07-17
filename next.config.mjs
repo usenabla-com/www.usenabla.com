@@ -1,7 +1,35 @@
 import createMDX from '@next/mdx'
-
+import CopyPlugin from "copy-webpack-plugin";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.plugins.push(
+        new CopyPlugin({
+          patterns: [
+            {
+              from: "node_modules/pdfkit/js/data",
+              to: "vendor-chunks/data",
+            },
+          ],
+        })
+      );
+    }
+    config.externals = config.externals || [];
+    config.externals.push(
+      "chrome-aws-lambda",
+      "puppeteer",
+      /^puppeteer[/\\]/,
+      /^chrome-aws-lambda[/\\]/
+    );
+    // Ensure `fs` is disabled for client-side bundles
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+    };
+    return config;
+  }, 
+  
   eslint: {
     ignoreDuringBuilds: true,
   },

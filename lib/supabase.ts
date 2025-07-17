@@ -99,6 +99,31 @@ class SupabaseService {
   }
 
 
+    // Fetch user profile from 'profiles' table
+  async getUserProfile(userId?: string) {
+    try {
+      let uid: string | undefined = userId
+      if (!uid) {
+        const user = await this.getCurrentUser()
+        uid = user?.id
+      }
+      if (!uid) return null
+      const { data, error } = await this.client
+        .from('profiles')
+        .select('*')
+        .eq('id', uid)
+        .single()
+      if (error) {
+        console.warn('Supabase getUserProfile error:', error.message)
+        return null
+      }
+      return data
+    } catch (error) {
+      console.error('Error fetching user profile', error)
+      return null
+    }
+  }
+
   // Direct client access for advanced queries
   get supabase() {
     return this.client

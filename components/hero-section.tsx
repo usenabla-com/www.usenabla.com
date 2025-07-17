@@ -18,7 +18,7 @@ export function HeroSection() {
               <span className="font-semibold text-foreground">Atelier</span> (atelier) - A workshop or studio where artists work. |{" "}
               <span className="font-semibold text-foreground">Logos</span> (λόγος) - The act of speaking, discourse, or argument.
             </div>
-            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl opacity-90 text-white leading-tight">
+            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl opacity-90 text-black leading-tight">
             A Bespoke{" "}
             <span className="bg-primary bg-clip-text text-transparent">
                 LLM-enabled

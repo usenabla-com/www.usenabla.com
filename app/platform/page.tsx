@@ -37,10 +37,10 @@ export default function PlatformPage() {
                 </Badge>
                 <h1 className="mb-6 text-4xl font-bold tracking-tight text-foreground sm:text-6xl">
                   The Everymans{" "}
-                  <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-secondary">
                   Fairsource 
                   </span>{" "}
-                  Snyk Alternative
+                  SCA/SAST API
                 </h1>
                 <p className="mb-8 text-xl text-muted-foreground max-w-2xl mx-auto">
                   Advanced AI-powered Rust crate insights and binary composition analysis at a fraction of the cost of alternative options.

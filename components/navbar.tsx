@@ -169,7 +169,7 @@ export function Navbar() {
                 onClick={() => setIsLoginModalOpen(true)}
               >
                 <LogIn size={16} />
-                Sign In / Join
+                Sign In
               </Button>
             </div>
           )}

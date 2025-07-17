@@ -1,6 +1,6 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Forum } from "next/font/google"
+import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import ProfileModalProvider from "@/components/profile-modal-provider"
@@ -9,7 +9,7 @@ import { AnalyticsProvider } from "@/components/analytics-provider"
 import { Toaster } from "@/components/ui/toaster"
 import { AnnouncementBanner } from "@/components/announcement-banner"
 
-const forum = Forum({ 
+const inter = Inter({ 
   subsets: ["latin"], 
   weight: ["400"],
   variable: "--font-forum",
@@ -68,7 +68,7 @@ export default function RootLayout({
   const description = metadata.description as string
 
   return (
-    <html lang="en" suppressHydrationWarning className={`${forum.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${inter.variable}`}>
       <head>
         <title>{title}</title>
         <meta property="og:title" content={title} />
@@ -108,7 +108,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${forum.className} antialiased min-h-screen bg-gradient-to-br from-background to-background/95 text-foreground selection:bg-primary/20 selection:text-primary-foreground`}> 
+      <body className={`${inter.className} antialiased min-h-screen bg-gradient-to-br from-background to-background/95 text-foreground selection:bg-primary/20 selection:text-primary-foreground`}> 
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <AnalyticsProvider />
           <AnnouncementBanner />

@@ -23,20 +23,18 @@ class SupabaseService {
     return SupabaseService.instance
   }
 
-  // Auth methods
-  async signInWithOTP(email: string, shouldCreateUser = true) {
+  async signInWithOTP(email: string, shouldCreateUser = true): Promise<{ data: any; error: string | null }> {
     try {
+      localStorage.setItem('magic_email', email)
       const { data, error } = await this.client.auth.signInWithOtp({
         email,
         options: {
-          shouldCreateUser,
-          emailRedirectTo: `${window.location.origin}/auth/callback`,
+          shouldCreateUser: false,
           data: {
-            email_action_type: 'signup'
-          }
-        }
+            email_action_type: 'signup',
+          },
+        },
       })
-
       if (error) throw error
       return { data, error: null }
     } catch (error: any) {
@@ -44,6 +42,7 @@ class SupabaseService {
       return { data: null, error: error.message }
     }
   }
+
 
   async verifyOTP(email: string, token: string) {
     try {

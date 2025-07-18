@@ -12,7 +12,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { Mail, Loader2 } from 'lucide-react'
-import supabase from '@/lib/supabase/client'
+import supabase from '@/lib/supabase'
 
 interface LoginModalProps {
   isOpen: boolean

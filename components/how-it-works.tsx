@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import Cal, { getCalApi } from '@calcom/embed-react'
-import supabase from '@/lib/supabase/client'
+import supabase from '@/lib/supabase'
 import { useAnalytics } from '@/hooks/use-analytics'
 
 interface BlogPost {

@@ -451,14 +451,13 @@ export default function SecurityDashboard() {
       <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02] pointer-events-none" />
       <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 pointer-events-none" />
       <main className="relative z-10">
-        <AnnouncementBanner />
         <Navbar />
 
         <section className="py-20 lg:py-32">
           <div className="container max-w-6xl">
-            <h1 className="text-3xl font-bold mb-4">Security Dashboard</h1>
+            <h1 className="text-3xl font-bold mb-4">Example Security Dashboard</h1>
             <p className="text-muted-foreground mb-8">
-              Track analysis results across binaries and packages.
+              Here's an example of a security dashboard that can be built using the Atelier Logos platform and using real data from the API. 
             </p>
 
             <Tabs value={tab} onValueChange={setTab} className="space-y-6">

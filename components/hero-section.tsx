@@ -34,7 +34,7 @@ export function HeroSection() {
                   analytics.track('Onboarding Button Clicked')
                   window.open('/platform', '_blank')
                 }}
-                className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
+                className="gap-2 bg-primary hover:bg-black text-primary-foreground font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
               >
                 Get a Platform API Key
               </Button>

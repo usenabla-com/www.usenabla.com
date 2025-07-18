@@ -32,7 +32,7 @@ export function AnnouncementBanner() {
   if (!isVisible) return null
 
   return (
-    <div className="relative z-50 bg-gradient-to-r from-primary/90 to-primary text-primary-foreground">
+    <div className="relative z-50 bg-gradient-to-r from-secondary to-primary text-primary-foreground">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between py-3">
           <div className="flex items-center gap-3 flex-1">

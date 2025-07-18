@@ -1,58 +1,69 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import supabase from '@/lib/supabase'
 
 export default function AuthCallback() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading')
   const [message, setMessage] = useState('')
 
   useEffect(() => {
-    const handleAuthCallback = async () => {
+    const handleMagicLink = async () => {
+      const code = searchParams.get('code')
+
+      if (!code) {
+        setStatus('error')
+        setMessage('Missing verification code. Please try again.')
+        return
+      }
+
+      // You also need the user's email. In some flows, this is stored in localStorage.
+      const email = searchParams.get('email')
+
+      if (!email) {
+        setStatus('error')
+        setMessage('Missing email. Please restart login.')
+        return
+      }
+
       try {
-        // Get the current session
-        const session = await supabase.getCurrentSession()
-        
-        if (session?.user) {
-          console.log('✅ User authenticated via magic link:', session.user.email)
-          
-          // Check if user profile exists
-          const { data: profile, error } = await supabase.getUserProfile()
-          
-          if (profile) {
-            // User has a complete profile, redirect to home
-            setStatus('success')
-            setMessage('Welcome back! Redirecting to dashboard...')
-            setTimeout(() => router.push('/'), 1500)
-          } else {
-            // New user from magic link, needs to complete profile setup
-            setStatus('success')
-            setMessage('Magic link verified! Completing your profile setup...')
-            
-            // Redirect to home and trigger profile modal to continue
-            setTimeout(() => {
-              router.push('/')
-              // Small delay to ensure page loads before triggering modal
-              setTimeout(() => {
-                window.dispatchEvent(new CustomEvent('openProfileModal'))
-              }, 500)
-            }, 1000)
-          }
+        const { data, error } = await supabase.auth.verifyOtp({
+          email,
+          token: code,
+          type: 'magiclink',
+        })
+
+        if (error) {
+          console.error('❌ Verification error:', error.message)
+          setStatus('error')
+          setMessage('Authentication failed. The magic link may have expired.')
+          return
+        }
+
+        const user = data?.user
+        if (user) {
+          console.log('✅ User authenticated via magic link:', user.email)
+
+          // Optional: fetch user profile here
+          setStatus('success')
+          setMessage('Welcome back! Redirecting to dashboard...')
+          setTimeout(() => router.push('/'), 1500)
         } else {
           setStatus('error')
-          setMessage('Magic link authentication failed. The link may have expired.')
+          setMessage('Authentication failed. No user found.')
         }
-      } catch (error) {
-        console.error('Auth callback error:', error)
+      } catch (err) {
+        console.error('🔥 Unexpected error during verification:', err)
         setStatus('error')
-        setMessage('Something went wrong during authentication. Please try again.')
+        setMessage('Something went wrong. Please try again.')
       }
     }
 
-    handleAuthCallback()
-  }, [router])
+    handleMagicLink()
+  }, [router, searchParams])
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -65,7 +76,7 @@ export default function AuthCallback() {
               <p className="text-gray-600 mt-2">Please wait while we authenticate your account.</p>
             </>
           )}
-          
+
           {status === 'success' && (
             <>
               <div className="text-green-500 text-5xl mb-4">✅</div>
@@ -73,7 +84,7 @@ export default function AuthCallback() {
               <p className="text-gray-600 mt-2">{message}</p>
             </>
           )}
-          
+
           {status === 'error' && (
             <>
               <div className="text-red-500 text-5xl mb-4">❌</div>
@@ -91,4 +102,4 @@ export default function AuthCallback() {
       </div>
     </div>
   )
-} 
+}

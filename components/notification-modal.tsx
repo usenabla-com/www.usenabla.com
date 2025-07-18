@@ -9,7 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import supabaseService from '@/lib/supabase/client'
+import supabaseService from '@/lib/supabase'
 
 interface NotificationModalProps {
   onComplete?: () => void

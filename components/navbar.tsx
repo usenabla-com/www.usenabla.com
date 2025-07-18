@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { LoginModal } from "@/components/login-modal"
 import { useAuth } from "@/hooks/use-auth"
 import { supabase } from "@/lib/supabase"
-import { Menu, X, LogIn, LogOut, User, ChevronDown, Settings, BookOpen, Briefcase, Mail, MessageSquare } from "lucide-react"
+import { Menu, X, LogIn, LogOut, User, ChevronDown, Settings, BookOpen, Briefcase, Mail, MessageSquare, PhoneCallIcon } from "lucide-react"
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -160,16 +160,16 @@ export function Navbar() {
               <Button
                 variant="ghost"
                 className="gap-2 hover:bg-primary/10 hover:text-primary font-medium transition-all duration-200"
-                onClick={() => window.open('https://docs.atelierlogos.studio', '_blank')}
+                onClick={() => window.open('/platform', '_blank')}
               >
                 Learn about the Platform
               </Button>
               <Button
-                className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
-                onClick={() => setIsLoginModalOpen(true)}
+                className="gap-2 bg-primary hover:bg-black text-primary-foreground font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
+                onClick={() => window.open('https://cal.com/team/atelier-logos/platform-intro', '_blank')}
               >
-                <LogIn size={16} />
-                Sign In
+                <PhoneCallIcon size={16} />
+                Schedule a Call
               </Button>
             </div>
           )}
@@ -324,21 +324,18 @@ export function Navbar() {
                   <Button
                     variant="outline"
                     className="w-full gap-2 bg-background/90 hover:bg-background border-2 border-primary/20 hover:border-primary/40 text-foreground hover:text-primary font-medium shadow-lg hover:shadow-xl transition-all duration-200 backdrop-blur-sm"
-                    onClick={() => {
-                      setIsLoginModalOpen(true)
-                      setIsMenuOpen(false)
-                    }}
+                    onClick={() => window.open('https://cal.com/team/atelier-logos/platform-intro', '_blank')}
                   >
-                    <LogIn size={16} />
-                    Sign In
+                    <PhoneCallIcon size={16} />
+                    Schedule a Call
                   </Button>
                   <Button
                     className="w-full gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
                     asChild
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    <Link href="/onboarding">
-                      Get Started
+                    <Link href="/platform" target="_blank">
+                      Learn more
                     </Link>
                   </Button>
                 </div>

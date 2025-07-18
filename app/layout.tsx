@@ -8,6 +8,7 @@ import NotificationModal from "@/components/notification-modal"
 import { AnalyticsProvider } from "@/components/analytics-provider"
 import { Toaster } from "@/components/ui/toaster"
 import { AnnouncementBanner } from "@/components/announcement-banner"
+import MagicLinkListenerProvider from '@/components/providers/magic-link'
 
 const inter = Inter({ 
   subsets: ["latin"], 
@@ -110,6 +111,7 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} antialiased min-h-screen bg-gradient-to-br from-background to-background/95 text-foreground selection:bg-primary/20 selection:text-primary-foreground`}> 
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <MagicLinkListenerProvider>
           <AnalyticsProvider />
           <AnnouncementBanner />
           <div className="relative flex min-h-screen flex-col">
@@ -118,6 +120,7 @@ export default function RootLayout({
             </div>
           </div>
           <Toaster />
+          </MagicLinkListenerProvider>
         </ThemeProvider>
       </body>
     </html>

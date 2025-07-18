@@ -62,17 +62,16 @@ export async function updateSession(request: NextRequest) {
     }
 
     // If no user, only allow public routes and auth callbacks
-    if (!user) {
-      console.log('⚠️ Middleware: No authenticated user')
-      if (!isPublicRoute && !isAuthCallback) {
-        console.log('🔄 Middleware: Redirecting to home - no auth')
-        return NextResponse.redirect(new URL('/', request.url))
-      }
-      return response
-    }
+    // if (!user) {
+    //   console.log('⚠️ Middleware: No authenticated user')
+    //   if (!isPublicRoute && !isAuthCallback) {
+    //     console.log('🔄 Middleware: Redirecting to home - no auth')
+    //     return NextResponse.redirect(new URL('/', request.url))
+    //   }
+    //   return response
+    // }
     
     // We have an authenticated user
-    console.log('👤 Middleware: Authenticated user:', user.id)
 
     // Allow access to all other routes
     return response

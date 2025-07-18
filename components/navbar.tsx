@@ -102,8 +102,8 @@ export function Navbar() {
           <Link href="/blog" className="text-sm font-medium hover:text-primary transition-colors">
             Blog
           </Link>
-          <Link href="https://cal.com/team/atelier-logos/45-min-intro-call" className="text-sm font-medium hover:text-primary transition-colors">
-            Schedule a 45-min Chat
+          <Link href={`/dashboard?keyId=d6cde410-3f92-4d6e-bcd6-297b070866af&userId=86b43ee2-3559-4b90-90ac-f2beac19e9db`} className="text-sm font-medium hover:text-primary transition-colors">
+            Example SCA/SAST Dashboard
           </Link>
         </nav>
 

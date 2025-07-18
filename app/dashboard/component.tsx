@@ -459,6 +459,7 @@ export default function SecurityDashboard() {
             <p className="text-muted-foreground mb-8">
               Here's an example of a security dashboard that can be built using the Atelier Logos platform and using real data from the API. 
             </p>
+            <h3 className="text-xl font-semibold mb-4">IMPORTANT: This is an DEMONSTRATION dashboard, do not send any sensitive binaries</h3>
 
             <Tabs value={tab} onValueChange={setTab} className="space-y-6">
               <TabsList className="grid grid-cols-3 w-full mb-6">

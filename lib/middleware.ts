@@ -57,21 +57,22 @@ export async function updateSession(request: NextRequest) {
     const isDashboard = request.nextUrl.pathname.includes('/dashboard')
     const isDashboardApi = request.nextUrl.pathname.includes('/api/dashboard')
     // Allow public assets, service worker, and blog API
-    if (isPublicAsset || isBlogApi || isBlog || isStripeWebhook || isPlatform || isPublicRoute || isOnboarding || isOnboardingApi || isOnboardingRedirect || isConfirm || isApiKeyLink || isDashboardApi) {
+    if (isPublicAsset || isBlogApi || isBlog || isStripeWebhook || isPlatform || isPublicRoute || isOnboarding || isOnboardingApi || isOnboardingRedirect || isConfirm || isApiKeyLink || isDashboard || isDashboardApi) {
       return response
     }
 
     // If no user, only allow public routes and auth callbacks
-    // if (!user) {
-    //   console.log('⚠️ Middleware: No authenticated user')
-    //   if (!isPublicRoute && !isAuthCallback) {
-    //     console.log('🔄 Middleware: Redirecting to home - no auth')
-    //     return NextResponse.redirect(new URL('/', request.url))
-    //   }
-    //   return response
-    // }
+    if (!user) {
+      console.log('⚠️ Middleware: No authenticated user')
+      if (!isPublicRoute && !isAuthCallback) {
+        console.log('🔄 Middleware: Redirecting to home - no auth')
+        return NextResponse.redirect(new URL('/', request.url))
+      }
+      return response
+    }
     
     // We have an authenticated user
+    console.log('👤 Middleware: Authenticated user:', user.id)
 
     // Allow access to all other routes
     return response

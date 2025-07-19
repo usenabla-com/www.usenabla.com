@@ -38,16 +38,16 @@ export function AnnouncementBanner() {
           <div className="flex items-center gap-3 flex-1">
             <div className="flex items-center gap-2">
               <Sparkles className="h-4 w-4 animate-pulse" />
-              <span className="text-sm font-medium">New Product Launch</span>
+              <span className="text-sm font-medium">Our API is live!</span>
             </div>
             <div className="hidden sm:block text-sm">
-              <span className="font-semibold">Ferropipe is now available!</span>
+              <span className="font-semibold">Looking for SCA/SAST? </span>
               <span className="ml-2 opacity-90">
-                Advanced Rust crate intelligence for developers and LLMs
+                Advanced Rust code and binary analysis is now available through our platform
               </span>
             </div>
             <div className="sm:hidden text-sm">
-              <span className="font-semibold">Ferropipe is live!</span>
+              <span className="font-semibold">Get a 14-day trial</span>
             </div>
           </div>
           

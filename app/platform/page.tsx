@@ -279,7 +279,7 @@ export default function PlatformPage() {
                       </li>
                     </ul>
                     <Button className="w-full" variant="outline" asChild>
-                      <Link href="https://buy.stripe.com/test_cNifZa2bHeOFa7y6wm97G00?client_reference_id=Crate%20Intelligence">Get Started</Link>
+                      <Link href="https://buy.stripe.com/6oU00jdkE0PC4yNgK618c06?client_reference_id=Crate%20Intelligence">Get Started</Link>
                     </Button>
                   </CardContent>
                 </Card>
@@ -311,7 +311,7 @@ export default function PlatformPage() {
                       </li>
                     </ul>
                     <Button className="w-full" variant="outline" asChild>
-                      <Link href="https://buy.stripe.com/test_3cIdR24jP5e57ZqcUK97G02?client_reference_id=SBOM%20Builder">Get Started</Link>
+                      <Link href="https://buy.stripe.com/14AeVdcgAgOA8P39hE18c07?client_reference_id=SBOM%20Builder">Get Started</Link>
                     </Button>
                   </CardContent>
                 </Card>
@@ -343,7 +343,7 @@ export default function PlatformPage() {
                       </li>
                     </ul>
                     <Button className="w-full" variant="outline" asChild>
-                      <Link href="https://buy.stripe.com/test_7sY5kwaId7md6Vm07Y97G01?client_reference_id=Binary%20Composition%20Analysis">Get Started</Link>
+                      <Link href="https://buy.stripe.com/bJe4gza8s8i4e9nalI18c05?client_reference_id=Binary%20Composition%20Analysis">Get Started</Link>
                     </Button>
                   </CardContent>
                 </Card>

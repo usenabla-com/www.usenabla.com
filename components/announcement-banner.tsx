@@ -12,7 +12,7 @@ export function AnnouncementBanner() {
 
   useEffect(() => {
     // Don't show banner on platform pages
-    if (pathname.startsWith('/platform')) {
+    if (pathname.startsWith('/nabla')) {
       setIsVisible(false)
       return
     }
@@ -32,7 +32,7 @@ export function AnnouncementBanner() {
   if (!isVisible) return null
 
   return (
-    <div className="relative z-50 bg-gradient-to-r from-secondary to-primary text-primary-foreground">
+    <div className="relative z-50 bg-gradient-to-r from-black to-primary text-primary-foreground">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between py-3">
           <div className="flex items-center gap-3 flex-1">
@@ -58,7 +58,7 @@ export function AnnouncementBanner() {
               className="text-xs px-3 py-1 h-7 bg-white/20 hover:bg-white/30 text-primary-foreground border-white/30"
               asChild
             >
-              <Link href="/platform">
+              <Link href="/nabla">
                 Learn More
                 <ArrowRight className="ml-1 h-3 w-3" />
               </Link>

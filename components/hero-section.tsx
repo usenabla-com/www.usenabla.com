@@ -1,66 +1,86 @@
 "use client"
-import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { LightbulbIcon } from "lucide-react"
-import { siGithub } from "simple-icons/icons"
-import { useRouter } from "next/navigation"
 import { useAnalytics } from "@/hooks/use-analytics"
-import { siRust } from "simple-icons"
+import Image from "next/image"
+import Link from "next/link"
 
 export function HeroSection() {
   const analytics = useAnalytics()
+
   return (
-    <section className="py-20 md:py-28">
-      <div className="container px-4 md:px-6">
-        <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-          <div className="flex flex-col justify-center space-y-4">
-          <div className="inline-block rounded-lg bg-muted/80 backdrop-blur-sm px-4 py-3 text-sm font-medium text-foreground/90 italic border border-border/50 shadow-sm">
-              <span className="font-semibold text-foreground">Atelier</span> (atelier) - A workshop or studio where artists work. |{" "}
-              <span className="font-semibold text-foreground">Logos</span> (λόγος) - The act of speaking, discourse, or argument.
-            </div>
-            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl opacity-90 text-black leading-tight">
-            A Bespoke{" "}
-            <span className="bg-primary bg-clip-text text-transparent">
-                LLM-enabled
-              </span>{" "}
-              Solutions Studio
-            </h1>
-            <p className="text-muted-foreground opacity-90 text-lg md:text-xl max-w-[600px] leading-relaxed">
-            We are a bespoke software studio helping clients build scalable, testable, and beautiful software while adopting LLMs in a sane manner.
-            </p>
-            <div className="flex flex-col opacity-90 sm:flex-row gap-3 pt-4">
-              <Button
-                onClick={() => {
-                  analytics.track('Onboarding Button Clicked')
-                  window.open('/platform', '_blank')
-                }}
-                className="gap-2 bg-primary hover:bg-black text-primary-foreground font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
-              >
-                Get a Platform API Key
-              </Button>
-              <Button onClick={() => {
-                analytics.track('Schedule a Call Button Clicked')
-                window.open('https://cal.com/jbohrman/30-min', '_blank')
-              }} variant="outline" className="gap-2 bg-background/90 hover:bg-background border-2 border-primary/20 hover:border-primary/40 text-foreground hover:text-primary font-semibold shadow-lg hover:shadow-xl transition-all duration-200 backdrop-blur-sm">
-                Schedule a Call
-              </Button>
-            </div>
-          </div>
-          <div className="flex justify-center lg:justify-end relative">
-            <div className="relative w-full max-w-[500px] aspect-square">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Image
-                  src="/logo.png"
-                  alt="Hero illustration"
-                  width={500}
-                  height={500}
-                  className="rounded-lg object-cover"
-                  priority
-                />
-              </div>
-            </div>
-          </div>
+    <section className="relative overflow-hidden py-24 md:py-32 bg-white font-sans">
+      {/* Grid background */}
+      <div
+        className="absolute inset-0 z-0 pointer-events-none bg-[length:32px_32px] opacity-60"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, rgba(0,0,0,0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.08) 1px, transparent 1px)",
+        }}
+      />
+
+      <div className="container relative z-10 px-4 md:px-8 max-w-6xl mx-auto text-center space-y-12">
+        {/* Quote Box */}
+        <div className="inline-block rounded-xl bg-muted/70 backdrop-blur-sm px-6 py-4 text-sm md:text-base text-foreground/80 font-medium italic border border-border/40 shadow-md leading-snug font-serif">
+          <span className="font-semibold text-foreground">Atelier</span> (atelier) – a workshop or studio where artists work. |{" "}
+          <span className="font-semibold text-foreground">Logos</span> (λόγος) – the act of speaking, discourse, or reasoned thought.
         </div>
+
+        {/* Headline */}
+        <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.15] text-black max-w-5xl mx-auto">
+          Fresh 🧠-to-silicon solutions <br className="hidden sm:inline" /> delivered with a human touch.
+        </h1>
+
+        {/* Subheadline */}
+        <p className="text-muted-foreground text-lg md:text-xl max-w-3xl mx-auto leading-relaxed tracking-tight">
+          We help clients build scalable, testable, and beautiful software — thoughtfully integrating LLMs where they bring real value.
+        </p>
+
+        {/* CTA Buttons */}
+        <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
+          <Button
+            onClick={() => {
+              analytics.track('Onboarding Button Clicked')
+              window.open('/nabla', '_blank')
+            }}
+            className="px-6 py-3 text-base md:text-lg bg-black hover:bg-black text-primary-foreground font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
+          >
+            Get a Nabla API Key
+          </Button>
+
+          <Button
+            onClick={() => {
+              analytics.track('Schedule a Call Button Clicked')
+              window.open('https://cal.com/team/atelier-logos/45-min-intro-call', '_blank')
+            }}
+            variant="outline"
+            className="px-6 py-3 text-base md:text-lg bg-background/90 hover:bg-background border-2 border-primary/20 hover:border-primary/40 text-foreground hover:text-primary font-semibold shadow-lg hover:shadow-xl transition-all duration-200 backdrop-blur-sm"
+          >
+            Talk with us
+          </Button>
+        </div>
+        
+          {/* Project Card with Link */}
+          <Link
+          href="https://github.com/Atelier-Logos/nabla"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block"
+        >
+          <div className="mx-auto mt-12 max-w-md w-full bg-muted/60 border border-border/30 backdrop-blur-md rounded-2xl p-6 shadow-md flex items-center gap-4 justify-center transition hover:scale-[1.02] hover:shadow-lg">
+            <div className="w-12 h-12 relative">
+              <Image
+                src="/nabla.png"
+                alt="Nabla logo"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <div className="text-left">
+              <div className="text-sm text-muted-foreground font-medium">Our latest project</div>
+              <div className="text-xl font-semibold text-foreground">Nabla</div>
+            </div>
+          </div>
+        </Link>
       </div>
     </section>
   )

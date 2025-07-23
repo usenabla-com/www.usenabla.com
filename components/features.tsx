@@ -11,15 +11,14 @@ export function Features() {
               Features
             </div>
             <h2 className="font-display text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl">
-              Get your project{" "}
+              Like farm-to-table,{" "}
               <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-black">
-                locked in
+                but for ideas
               </span>
             </h2>
             <p className="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground lg:text-xl">
-              Need help finishing something you vibe coded and can't seem to take to the finish line? 
-              Hire me to help you take it all the way to a{" "}
-              <span className="font-medium text-foreground">fully polished solution</span>
+              Need help finishing something you vibe coded and can't seem to take to the finish line? <span className="font-bold text-black">Your ideas matter. </span> 
+              Hire us to help you take it all the way home.
             </p>
           </div>
         </div>

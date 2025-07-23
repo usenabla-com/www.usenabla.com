@@ -102,9 +102,6 @@ export function Navbar() {
           <Link href="/blog" className="text-sm font-medium hover:text-primary transition-colors">
             Blog
           </Link>
-          <Link href={`/dashboard?keyId=ba95f5bd-6a9c-469f-a0a9-171a7a7c2182&userId=5167db16-ccd1-4c22-9315-1a8ad24589b4`} className="text-sm font-medium hover:text-primary transition-colors">
-            Example SCA/SAST Dashboard
-          </Link>
         </nav>
 
         {/* Desktop Auth Section */}
@@ -160,12 +157,12 @@ export function Navbar() {
               <Button
                 variant="ghost"
                 className="gap-2 hover:bg-primary/10 hover:text-primary font-medium transition-all duration-200"
-                onClick={() => window.open('/platform', '_blank')}
+                onClick={() => window.open('https://www.atelierlogos.studio/nabla', '_blank')}
               >
-                Learn about the Platform
+                Try Nabla
               </Button>
               <Button
-                className="gap-2 bg-primary hover:bg-black text-primary-foreground font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
+                className="gap-2 bg-black hover:bg-primary text-primary-foreground font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
                 onClick={() => window.open('https://cal.com/team/atelier-logos/platform-intro', '_blank')}
               >
                 <PhoneCallIcon size={16} />
@@ -334,7 +331,7 @@ export function Navbar() {
                     asChild
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    <Link href="/platform" target="_blank">
+                    <Link href="/nabla" target="_blank">
                       Learn more
                     </Link>
                   </Button>

@@ -36,14 +36,13 @@ export default function PlatformPage() {
                   An Atelier Logos Product
                 </Badge>
                 <h1 className="mb-6 text-4xl font-bold tracking-tight text-foreground sm:text-6xl">
-                  The Everymans{" "}
-                  <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-secondary">
-                  Fairsource 
-                  </span>{" "}
-                  SCA/SAST API
+                  Introducing Nabla:{" "}
+                  Detect the vectors of risk 
+                  {" "}
+                  within your code
                 </h1>
                 <p className="mb-8 text-xl text-muted-foreground max-w-2xl mx-auto">
-                  Advanced AI-powered Rust crate insights and binary composition analysis at a fraction of the cost of alternative options.
+                Nabla is a binary-first, fair-source, secure API for SAST/SCA tasks — designed to analyze, monitor, and validate the binaries used in your tools, applications, or infrastructure.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button size="lg" className="text-lg px-8 py-6" asChild>
@@ -235,121 +234,7 @@ export default function PlatformPage() {
             </div>
           </section>
 
-          {/* Pricing Section */}
-          <section className="py-24 bg-muted/30">
-            <div className="container">
-              <div className="mx-auto max-w-2xl text-center mb-16">
-                <h2 className="text-3xl font-bold tracking-tight mb-4">
-                  Simple, transparent pricing
-                </h2>
-                <p className="text-lg text-muted-foreground">
-                  Choose the service that works best for your team and projects
-                </p>
-              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                {/* Basic Plan */}
-                <Card className="border-2 hover:border-primary/50 transition-colors">
-                  <CardHeader className="text-center">
-                    <CardTitle className="text-2xl">Package Intelligence</CardTitle>
-                    <div className="text-4xl font-bold text-primary">$65/month</div>
-                    <p className="text-sm text-muted-foreground">per month, billed monthly</p>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-3 mb-6">
-                      <li className="flex items-center gap-2">
-                        <Check className="h-4 w-4 text-green-500" />
-                        <span className="text-sm">Unlimited requests</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <Check className="h-4 w-4 text-green-500" />
-                        <span className="text-sm">Reasonable rate limits</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <Check className="h-4 w-4 text-green-500" />
-                        <span className="text-sm">Full crate metadata</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <Check className="h-4 w-4 text-green-500" />
-                        <span className="text-sm">Email support (if needed)</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <Check className="h-4 w-4 text-green-500" />
-                        <span className="text-sm">14-day free trial</span>
-                      </li>
-                    </ul>
-                    <Button className="w-full" variant="outline" asChild>
-                      <Link href="https://buy.stripe.com/6oU00jdkE0PC4yNgK618c06?client_reference_id=Crate%20Intelligence">Get Started</Link>
-                    </Button>
-                  </CardContent>
-                </Card>
-
-                {/* SBOM Builder Plan */}
-                <Card className="border-2 border-primary shadow-lg scale-105">
-                  <CardHeader className="text-center">
-                    <CardTitle className="text-2xl">SBOM Builder</CardTitle>
-                    <div className="text-4xl font-bold text-primary">$640/month</div>
-                    <p className="text-sm text-muted-foreground">per month, billed monthly</p>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-3 mb-6">
-                      <li className="flex items-center gap-2">
-                        <Check className="h-4 w-4 text-green-500" />
-                        <span className="text-sm">Everything in Crate Intelligence</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <Check className="h-4 w-4 text-green-500" />
-                        <span className="text-sm">SBOM generation</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <Check className="h-4 w-4 text-green-500" />
-                        <span className="text-sm">CycloneDX Format</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <Check className="h-4 w-4 text-green-500" />
-                        <span className="text-sm">Email support (if needed)</span>
-                      </li>
-                    </ul>
-                    <Button className="w-full" variant="outline" asChild>
-                      <Link href="https://buy.stripe.com/14AeVdcgAgOA8P39hE18c07?client_reference_id=SBOM%20Builder">Get Started</Link>
-                    </Button>
-                  </CardContent>
-                </Card>
-
-                {/* BCA Plan */}
-                <Card className="border-2 border-primary shadow-lg scale-105">
-                  <CardHeader className="text-center">
-                    <CardTitle className="text-2xl">Binary Composition Analysis</CardTitle>
-                    <div className="text-4xl font-bold text-primary">$2600/month</div>
-                    <p className="text-sm text-muted-foreground">per month, billed monthly</p>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-3 mb-6">
-                      <li className="flex items-center gap-2">
-                        <Check className="h-4 w-4 text-green-500" />
-                        <span className="text-sm">Unlimited requests</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <Check className="h-4 w-4 text-green-500" />
-                        <span className="text-sm">SBOM generation</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <Check className="h-4 w-4 text-green-500" />
-                        <span className="text-sm">Secrets scanning</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <Check className="h-4 w-4 text-green-500" />
-                        <span className="text-sm">Vulnerability insights</span>
-                      </li>
-                    </ul>
-                    <Button className="w-full" variant="outline" asChild>
-                      <Link href="https://buy.stripe.com/bJe4gza8s8i4e9nalI18c05?client_reference_id=Binary%20Composition%20Analysis">Get Started</Link>
-                    </Button>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
-          </section>
 
           {/* CTA Section */}
           <section className="py-24">

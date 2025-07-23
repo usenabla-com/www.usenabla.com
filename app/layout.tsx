@@ -13,7 +13,7 @@ import MagicLinkListenerProvider from '@/components/providers/magic-link'
 const inter = Inter({ 
   subsets: ["latin"], 
   weight: ["400"],
-  variable: "--font-forum",
+  variable: "--font-inter",
   display: "swap"
 })
 
@@ -108,7 +108,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${inter.className} antialiased min-h-screen bg-gradient-to-br from-background to-background/95 text-foreground selection:bg-primary/20 selection:text-primary-foreground`}> 
+      <body className={`${inter.className} antialiased min-h-screen bg-gradient-to-br from-background to-background/95 text-foreground selection:bg-black selection:text-white`}> 
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <MagicLinkListenerProvider>
           <AnalyticsProvider />

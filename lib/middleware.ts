@@ -45,7 +45,7 @@ export async function updateSession(request: NextRequest) {
     const isBlogApi = request.nextUrl.pathname.startsWith('/api/blog')
     const isStripeWebhook = request.nextUrl.pathname.startsWith('/api/stripe/webhook')
     const isBlog = request.nextUrl.pathname.startsWith('/blog')
-    const isPlatform = request.nextUrl.pathname.includes('/platform')
+    const isNabla = request.nextUrl.pathname.includes('/nabla')
     const isPublicRoute = request.nextUrl.pathname === '/'
     const isPublicAsset = request.nextUrl.pathname.match(/\.(ico|png|jpg|jpeg|svg|css|js|json)$/)
     const isOnboarding = request.nextUrl.pathname.includes('/onboarding')
@@ -57,7 +57,7 @@ export async function updateSession(request: NextRequest) {
     const isDashboard = request.nextUrl.pathname.includes('/dashboard')
     const isDashboardApi = request.nextUrl.pathname.includes('/api/dashboard')
     // Allow public assets, service worker, and blog API
-    if (isPublicAsset || isBlogApi || isBlog || isStripeWebhook || isPlatform || isPublicRoute || isOnboarding || isOnboardingApi || isOnboardingRedirect || isConfirm || isApiKeyLink || isDashboard || isDashboardApi) {
+    if (isPublicAsset || isBlogApi || isBlog || isStripeWebhook || isNabla || isPublicRoute || isOnboarding || isOnboardingApi || isOnboardingRedirect || isConfirm || isApiKeyLink || isDashboard || isDashboardApi) {
       return response
     }
 

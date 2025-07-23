@@ -49,15 +49,9 @@ export async function updateSession(request: NextRequest) {
     const isPublicRoute = request.nextUrl.pathname === '/'
     const isPublicAsset = request.nextUrl.pathname.match(/\.(ico|png|jpg|jpeg|svg|css|js|json)$/)
     const isOnboarding = request.nextUrl.pathname.includes('/onboarding')
-    const isOnboardingApi = request.nextUrl.pathname.includes('/api/onboarding')
-    const isOnboardingRedirect = request.nextUrl.pathname.includes('/api/onboarding-redirect')
     const isConfirm = request.nextUrl.pathname.includes('/confirm')
-    const isApiKeyLink = request.nextUrl.pathname.includes('/link-api-key')
-    // Dashboard route - require authentication
-    const isDashboard = request.nextUrl.pathname.includes('/dashboard')
-    const isDashboardApi = request.nextUrl.pathname.includes('/api/dashboard')
-    // Allow public assets, service worker, and blog API
-    if (isPublicAsset || isBlogApi || isBlog || isStripeWebhook || isNabla || isPublicRoute || isOnboarding || isOnboardingApi || isOnboardingRedirect || isConfirm || isApiKeyLink || isDashboard || isDashboardApi) {
+    // Allow public assets, service worker, and blog API, docs, and dashboard
+    if (isPublicAsset || isBlogApi || isBlog || isStripeWebhook || isNabla || isPublicRoute || isOnboarding || isConfirm) {
       return response
     }
 

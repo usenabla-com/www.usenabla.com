@@ -56,7 +56,7 @@ export default function PlatformPage() {
                     className="text-lg hover:text-black px-8 py-6 bg-transparent"
                     asChild
                   >
-                    <Link href="https://docs.atelierlogos.studio">
+                    <Link href="https://github.com/Atelier-Logos/nabla/wiki">
                       <Book className="ml-2 h-5 w-5" />
                       Read the docs
                     </Link>
@@ -356,7 +356,7 @@ export default function PlatformPage() {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button size="lg" className="text-lg px-8 py-6" asChild>
-                    <Link href="/docs">
+                    <Link href="https://github.com/Atelier-Logos/nabla/wiki">
                       <Book className="ml-2 h-5 w-5" />
                       Read the docs
                       <ArrowRight className="ml-2 h-5 w-5" />

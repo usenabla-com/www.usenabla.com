@@ -41,9 +41,9 @@ export function AnnouncementBanner() {
               <span className="text-sm font-medium">Our API is live!</span>
             </div>
             <div className="hidden sm:block text-sm">
-              <span className="font-semibold">Looking for SCA/SAST? </span>
+              <span className="font-semibold">Looking for SCA/SAST?</span>
               <span className="ml-2 opacity-90">
-                Advanced Rust code and binary analysis is now available through our platform
+              Detect the vectors of risk in your binaries with Nabla, our fair-source SAST/SCA API
               </span>
             </div>
             <div className="sm:hidden text-sm">

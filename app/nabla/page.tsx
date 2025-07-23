@@ -74,7 +74,7 @@ export default function PlatformPage() {
             <div className="container">
               <div className="mx-auto max-w-2xl text-center mb-16">
                 <h2 className="text-3xl font-bold tracking-tight mb-4">
-                  Use our API to detect the risk vectors within your code
+                  Use our API to detect dark patterns of risk within your binaries
                 </h2>
                 <p className="text-lg text-muted-foreground">
                   Analyze, monitor, and validate the binaries used in your tools, applications, or infrastructure.

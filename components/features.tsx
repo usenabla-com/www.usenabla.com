@@ -1,4 +1,5 @@
-import { Code, FileText, Zap, Sparkles } from "lucide-react"
+import { GitHubLogoIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons"
+import { Code, Microchip, Zap, Sparkles, Lock, Radar, RecycleIcon, Bot, MessageCircle, MagnetIcon } from "lucide-react"
 
 export function Features() {
   return (
@@ -11,14 +12,14 @@ export function Features() {
               Features
             </div>
             <h2 className="font-display text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl">
-              Like farm-to-table,{" "}
-              <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-black">
-                but for ideas
+              We're bringing DevSecOps{" "}  
+              <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-foreground">
+                to the firmware world{" "}
               </span>
             </h2>
             <p className="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground lg:text-xl">
-              Need help finishing something you vibe coded and can't seem to take to the finish line? <span className="font-bold text-black">Your ideas matter. </span> 
-              Hire us to help you take it all the way home.
+              Firmware security is an overlooked risk — but it doesn't have to be.
+              Nabla helps you automate firmware security testing, vulnerability discovery, and the exploitability of those vulnerabilities.
             </p>
           </div>
         </div>
@@ -28,13 +29,13 @@ export function Features() {
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
             <div className="relative z-10 flex flex-col items-center space-y-4 text-center">
               <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary/80 shadow-lg">
-                <FileText className="h-7 w-7 text-primary" />
+                <MessageCircle className="h-7 w-7 text-primary-foreground" />
               </div>
               <h3 className="font-display text-xl font-semibold tracking-tight text-foreground lg:text-2xl">
-                Vibe Review
+                LLM Inference
               </h3>
               <p className="text-sm leading-relaxed text-muted-foreground lg:text-base">
-                Review your projects vibes and build a plan for any fixes
+                With the CLI, you can "chat with" your binary (Technically the analysis output)
               </p>
             </div>
           </div>
@@ -43,13 +44,13 @@ export function Features() {
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
             <div className="relative z-10 flex flex-col items-center space-y-4 text-center">
               <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary/80 shadow-lg">
-                <Code className="h-7 w-7 text-primary" />
+                <Code className="h-7 w-7 text-primary-foreground" />
               </div>
               <h3 className="font-display text-xl font-semibold tracking-tight text-foreground lg:text-2xl">
-                Feature Support
+                Binary Analysis
               </h3>
               <p className="text-sm leading-relaxed text-muted-foreground lg:text-base">
-                Help implement any features and fixes you need for launch or customer needs
+                Check your binaries automatically for known vulnerabilities and security issues
               </p>
             </div>
           </div>
@@ -58,13 +59,13 @@ export function Features() {
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
             <div className="relative z-10 flex flex-col items-center space-y-4 text-center">
               <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary/80 shadow-lg">
-                <Zap className="h-7 w-7 text-primary" />
+                <GitHubLogoIcon className="h-7 w-7 text-primary-foreground" />
               </div>
               <h3 className="font-display text-xl font-semibold tracking-tight text-foreground lg:text-2xl">
-                Fast Integration
+                Github App
               </h3>
               <p className="text-sm leading-relaxed text-muted-foreground lg:text-base">
-                Reduce implementation time from months to days with my hybrid AI × Human approach.
+                Enforce checks and catch security issues on firmware builds via our GitHub app 
               </p>
             </div>
           </div>
@@ -73,13 +74,13 @@ export function Features() {
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
             <div className="relative z-10 flex flex-col items-center space-y-4 text-center">
               <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary/80 shadow-lg">
-                <Sparkles className="h-7 w-7 text-primary" />
+                <MagnifyingGlassIcon className="h-7 w-7 text-primary-foreground" />
               </div>
               <h3 className="font-display text-xl font-semibold tracking-tight text-foreground lg:text-2xl">
-                Intelligent Testing
+                Hidden Insights
               </h3>
               <p className="text-sm leading-relaxed text-muted-foreground lg:text-base">
-                Generate test cases and validation suites for your implementations in a fraction of the time
+                Integrate the CLI with chat into your CI/CD pipeline to discover hidden issues in your firmware
               </p>
             </div>
           </div>

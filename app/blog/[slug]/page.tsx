@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     : `${baseUrl}${post.image}`
 
   return {
-    title: `${post.title} | Atelier Logos Blog`,
+    title: `${post.title} | Nabla Blog`,
     description: post.summary,
     keywords: post.tags,
     authors: [{ name: post.author }],
@@ -54,7 +54,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       title: post.title,
       description: post.summary,
       url: postUrl,
-      siteName: 'Atelier Logos',
+      siteName: 'Nabla',
       type: 'article',
       publishedTime: post.published,
       authors: [post.author],

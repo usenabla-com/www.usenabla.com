@@ -3,12 +3,8 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
-import ProfileModalProvider from "@/components/profile-modal-provider"
-import NotificationModal from "@/components/notification-modal"
 import { AnalyticsProvider } from "@/components/analytics-provider"
 import { Toaster } from "@/components/ui/toaster"
-import { AnnouncementBanner } from "@/components/announcement-banner"
-import MagicLinkListenerProvider from '@/components/providers/magic-link'
 
 const inter = Inter({ 
   subsets: ["latin"], 
@@ -18,24 +14,24 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "Atelier Logos | LLM Solutions Studio" as const,
+  title: "Nabla | The shift-left platform for firmware security automation." as const,
   description: "We are a bespoke software studio helping clients build scalable, testable, and beautiful software while adopting LLMs in a sane manner." as const,
   generator: 'v0.dev',
 
   keywords: ['LLM', 'AI', 'Software Development', 'Bespoke Solutions', 'Machine Learning'],
-  authors: [{ name: 'Atelier Logos' }],
-  creator: 'Atelier Logos',
+  authors: [{ name: 'Nabla' }],
+  creator: 'Nabla',
   openGraph: {
-    title: "Atelier Logos | LLM Solutions Studio",
+    title: "Nabla | The shift-left platform for firmware security automation.",
     description: "We are a bespoke software studio helping clients build scalable, testable, and beautiful software while adopting LLMs in a sane manner.",
-    url: "https://www.www.atelierlogos.studio",
-    siteName: "Atelier Logos",
+    url: "https://www.www.usenabla.com",
+    siteName: "Nabla",
     images: [
       {
         url: "https://www.www.atelierlogos.studio/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Atelier Logos - LLM Solutions Studio"
+        alt: "Nabla - The shift-left platform for firmware security automation."
       }
     ],
     locale: "en_US",
@@ -43,9 +39,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Atelier Logos | LLM Solutions Studio",
+    title: "Nabla | The shift-left platform for firmware security automation.",
     description: "We are a bespoke software studio helping clients build scalable, testable, and beautiful software while adopting LLMs in a sane manner.",
-    images: ["https://www.www.atelierlogos.studio/og-image.png"]
+    images: ["https://www.www.usenabla.com/og-image.png"]
   },
   robots: {
     index: true,
@@ -74,18 +70,19 @@ export default function RootLayout({
         <title>{title}</title>
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
-        <meta property="og:image" content="https://www.www.atelierlogos.studio/og-image.png" />
+        <meta property="og:image" content="https://www.www.usenabla.com/og-image.png" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.www.atelierlogos.studio" />
+        <meta property="og:url" content="https://www.www.usenabla.com" />
 
         <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#0f0f23" media="(prefers-color-scheme: dark)" />
         <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="apple-mobile-web-app-title" content="Atelier Logos" />
+        <meta name="apple-mobile-web-app-title" content="Nabla" />
         
 
         
@@ -108,18 +105,15 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${inter.className} antialiased min-h-screen bg-gradient-to-br from-background to-background/95 text-foreground selection:bg-black selection:text-white`}> 
+      <body className={`${inter.className} antialiased min-h-screen bg-gradient-to-br from-background to-background/95 text-foreground selection:bg-primary selection:text-primary-foreground`}> 
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <MagicLinkListenerProvider>
           <AnalyticsProvider />
-          <AnnouncementBanner />
           <div className="relative flex min-h-screen flex-col">
             <div className="flex-1">
               {children}
             </div>
           </div>
           <Toaster />
-          </MagicLinkListenerProvider>
         </ThemeProvider>
       </body>
     </html>

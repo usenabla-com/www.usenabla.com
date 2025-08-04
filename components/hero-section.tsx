@@ -1,5 +1,7 @@
 "use client"
 import { Button } from "@/components/ui/button"
+import { CodeSnippet } from "@/components/code-snippet"
+import { GitHubStarButtonClient } from "@/components/github-star-button-client"
 import { useAnalytics } from "@/hooks/use-analytics"
 import Image from "next/image"
 import Link from "next/link"
@@ -8,79 +10,53 @@ export function HeroSection() {
   const analytics = useAnalytics()
 
   return (
-    <section className="relative overflow-hidden py-24 md:py-32 bg-white font-sans">
+    <section className="relative overflow-hidden py-24 md:py-32 bg-background font-sans">
       {/* Grid background */}
-      <div
-        className="absolute inset-0 z-0 pointer-events-none bg-[length:32px_32px] opacity-60"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, rgba(0,0,0,0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.08) 1px, transparent 1px)",
-        }}
-      />
+      <div className="absolute inset-0 z-0 pointer-events-none bg-grid-black/[0.02] dark:bg-grid-white/[0.02]" />
 
-      <div className="container relative z-10 px-4 md:px-8 max-w-6xl mx-auto text-center space-y-12">
-        {/* Quote Box */}
-        <div className="inline-block rounded-xl bg-muted/70 backdrop-blur-sm px-6 py-4 text-sm md:text-base text-foreground/80 font-medium italic border border-border/40 shadow-md leading-snug font-serif">
-          <span className="font-semibold text-foreground">Atelier</span> (atelier) – a workshop or studio where artists work. |{" "}
-          <span className="font-semibold text-foreground">Logos</span> (λόγος) – the act of speaking, discourse, or reasoned thought.
-        </div>
+      <div className="container relative z-10 px-4 md:px-8 max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center min-h-[80vh]">
+          
+          {/* Left side - Content */}
+          <div className="text-center lg:text-left space-y-8 lg:space-y-12">
 
-        {/* Headline */}
-        <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.15] text-black max-w-5xl mx-auto">
-          Fresh 🧠-to-silicon solutions <br className="hidden sm:inline" /> delivered with a human touch.
-        </h1>
+            {/* Headline */}
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.15] text-foreground">
+              The OSS platform <br className="hidden sm:inline" /> for firmware security automation.
+            </h1>
 
-        {/* Subheadline */}
-        <p className="text-muted-foreground text-lg md:text-xl max-w-3xl mx-auto leading-relaxed tracking-tight">
-          We help clients build scalable, testable, and beautiful software — thoughtfully integrating LLMs where they bring real value.
-        </p>
+            {/* Subheadline */}
+            <p className="text-muted-foreground text-lg md:text-xl leading-relaxed tracking-tight">
+              Nabla uses OSS libraries like Goblin, Capstone, and Petgraph to show you what's inside your firmware, the good and the bad.
+            </p>
 
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
-          <Button
-            onClick={() => {
-              analytics.track('Onboarding Button Clicked')
-              window.open('/nabla', '_blank')
-            }}
-            className="px-6 py-3 text-base md:text-lg bg-black hover:bg-black text-primary-foreground font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
-          >
-            Get a Nabla API Key
-          </Button>
-
-          <Button
-            onClick={() => {
-              analytics.track('Schedule a Call Button Clicked')
-              window.open('https://cal.com/team/atelier-logos/45-min-intro-call', '_blank')
-            }}
-            variant="outline"
-            className="px-6 py-3 text-base md:text-lg bg-background/90 hover:bg-background border-2 border-primary/20 hover:border-primary/40 text-foreground hover:text-primary font-semibold shadow-lg hover:shadow-xl transition-all duration-200 backdrop-blur-sm"
-          >
-            Talk with us
-          </Button>
-        </div>
-        
-          {/* Project Card with Link */}
-          <Link
-          href="https://github.com/Atelier-Logos/nabla"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block"
-        >
-          <div className="mx-auto mt-12 max-w-md w-full bg-muted/60 border border-border/30 backdrop-blur-md rounded-2xl p-6 shadow-md flex items-center gap-4 justify-center transition hover:scale-[1.02] hover:shadow-lg">
-            <div className="w-12 h-12 relative">
-              <Image
-                src="/nabla.png"
-                alt="Nabla logo"
-                fill
-                className="object-contain"
+            {/* Install Command and GitHub Stars */}
+            <div className="pt-4 space-y-4">
+              <CodeSnippet 
+                code="cargo install nabla-cli" 
+                className="max-w-md mx-auto lg:mx-0"
               />
-            </div>
-            <div className="text-left">
-              <div className="text-sm text-muted-foreground font-medium">Our latest project</div>
-              <div className="text-xl font-semibold text-foreground">Nabla</div>
+              <div className="flex justify-center lg:justify-start">
+                <GitHubStarButtonClient />
+              </div>
             </div>
           </div>
-        </Link>
+
+          {/* Right side - Security Image */}
+          <div className="flex items-center justify-center lg:justify-end">
+            <div className="relative w-full max-w-lg">
+              <Image
+                src="/shield.png"
+                alt="Security platform illustration showing shield, chip, and lock representing firmware security automation"
+                width={600}
+                height={600}
+                className="w-full h-auto object-contain"
+                priority
+              />
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
   )

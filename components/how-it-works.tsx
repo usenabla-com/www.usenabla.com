@@ -111,7 +111,7 @@ export function HowItWorks() {
   useEffect(() => {
     (async function () {
       const cal = await getCalApi({"namespace":"45-min-intro-call"});
-      cal("ui", {"theme":"light","cssVarsPerTheme":{"light":{"cal-brand":"#FC4C69"},"dark":{"cal-brand":"#FC4C69"}},"hideEventTypeDetails":false,"layout":"month_view"});
+      cal("ui", {"theme":"auto","cssVarsPerTheme":{"light":{"cal-brand":"#FF6B35"},"dark":{"cal-brand":"#FF6B35"}},"hideEventTypeDetails":false,"layout":"month_view"});
     })();
   }, [])
 
@@ -120,14 +120,14 @@ export function HowItWorks() {
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">
-            <div className="inline-block rounded-lg bg-black px-3 py-1 text-sm text-white">
-              How It Works
+            <div className="inline-block rounded-lg bg-primary px-3 py-1 text-sm text-primary-foreground">
+              Get in touch
             </div>
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              Human-first AI pairings
+              Put good in, get good out
             </h2>
             <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-            We love LLM's, but we know they work best when they are paired with a skilled human engineer who treats the development process as a collaborative endeavor, as opposed to an AI spray and pray.
+            We take advantage of the best open source Rust libraries such as Goblin for binary parsing, Capstone for disassembly, and Petgraph for reachability analysis to provide you with a comprehensive view of your firmware's internals.
             </p>
           </div>
         </div>
@@ -135,21 +135,21 @@ export function HowItWorks() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Step 1 */}
           <div className="flex flex-col items-center space-y-2 p-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-black text-white text-xl font-bold">1</div>
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground text-xl font-bold">1</div>
             <h3 className="text-xl font-bold">Schedule a call</h3>
             <p className="text-sm text-muted-foreground text-center">Schedule a call with me to discuss your implementation needs.</p>
           </div>
 
           {/* Step 2 */}
           <div className="flex flex-col items-center space-y-2 p-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-black text-white text-xl font-bold">2</div>
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground text-xl font-bold">2</div>
             <h3 className="text-xl font-bold">Send information</h3>
             <p className="text-sm text-muted-foreground text-center">Send me relevant informational materials.</p>
           </div>
 
           {/* Step 3 */}
           <div className="flex flex-col items-center space-y-2 p-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-black text-white text-xl font-bold">3</div>
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground text-xl font-bold">3</div>
             <h3 className="text-xl font-bold">Receive a proposal</h3>
             <p className="text-sm text-muted-foreground text-center">Receive a proposal for your project.</p>
           </div>
@@ -158,7 +158,7 @@ export function HowItWorks() {
         {/* Calendar Embed with Scroll on Mobile */}
           <div className="w-full mt-16 flex justify-center px-4">
             <div
-              className="w-full max-w-[1100px] rounded-xl overflow-hidden shadow-md bg-white"
+              className="w-full max-w-[1100px] rounded-xl overflow-hidden shadow-md bg-card"
               style={{ height: "700px", maxHeight: "90vh" }}
             >
               <div
@@ -179,7 +179,7 @@ export function HowItWorks() {
                   }}
                   config={{
                     layout: "month_view",
-                    theme: "light",
+                    theme: "auto",
                   }}
                 />
               </div>
@@ -252,7 +252,7 @@ function ProjectCard({ title, description, tag, link }: ProjectCardProps) {
   return (
     <div className="group relative overflow-hidden rounded-lg border bg-background transition-all hover:shadow-md">
       <div className="absolute top-4 left-4">
-        <div className="rounded-full bg-gray-100/90 dark:bg-gray-900/90 px-3 py-1 text-xs font-medium text-gray-700 dark:text-gray-300">
+        <div className="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">
           {tag}
         </div>
       </div>
@@ -260,7 +260,7 @@ function ProjectCard({ title, description, tag, link }: ProjectCardProps) {
         <h3 className="text-lg font-bold">{title}</h3>
         <p className="mt-2 text-sm text-muted-foreground">{description}</p>
         <div className="mt-4">
-          <Button variant="link" onClick={() => router.push(link)} className="h-8 p-0 text-gray-600 dark:text-gray-400 gap-1 group-hover:underline">
+          <Button variant="link" onClick={() => router.push(link)} className="h-8 p-0 text-muted-foreground gap-1 group-hover:underline">
             View details
             <ArrowRight className="h-4 w-4" />
           </Button>

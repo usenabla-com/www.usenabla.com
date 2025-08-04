@@ -11,7 +11,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
     --primary: 24, 100%, 58%;
-    --primary-foreground: 0 0% 98%;
+    --primary-foreground: 240 10% 3.9%;
     --secondary: 24, 100%, 58%;
     --secondary-foreground: 240 5.9% 10%;
     --muted: 240 4.8% 95.9%;
@@ -24,6 +24,28 @@
     --input: 240 5.9% 90%;
     --ring: 24, 100%, 58%;
     --radius: 0.5rem; 
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 24, 100%, 58%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 24, 100%, 58%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 24, 100%, 58%;
   }
 }
 
@@ -46,8 +68,8 @@
   }
   
   .bg-grid-white\/\[0\.02\] {
-    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                      linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
     background-size: 50px 50px;
   }
   
@@ -124,6 +146,25 @@
     background-color: rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
+
+  /* Button gradient borders on hover */
+  .button-gradient-hover {
+    position: relative;
+    background: #2b2a2a;
+    border: 2px solid transparent;
+    transition: background 0.2s ease;
+  }
+
+  .button-gradient-hover:hover {
+    background: linear-gradient(135deg, #ff6b2b, #2b2a2a) !important;
+    border: 2px solid transparent !important;
+  }
+
+  .dark .button-gradient-hover:hover {
+    background: linear-gradient(#2b2a2a, #2b2a2a) padding-box,
+                linear-gradient(135deg, #ff6b2b, white) border-box !important;
+    border: 2px solid transparent !important;
+  }
 }
 
 @theme inline {
@@ -139,5 +180,16 @@
         translateY(calc(var(--radius) * 1px))
         rotate(calc((var(--angle) * -1deg) - 360deg));
     }
+  }
+}
+
+
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }

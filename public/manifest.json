@@ -1,7 +1,7 @@
 {
-  "name": "Atelier Logos | LLM Solutions Studio",
-  "short_name": "Atelier Logos",
-  "description": "LLM Solutions Studio - Bespoke software development with AI integration",
+  "name": "Nabla | The shift-left platform for firmware security automation.",
+  "short_name": "Nabla",
+  "description": "The shift-left platform for firmware security automation.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

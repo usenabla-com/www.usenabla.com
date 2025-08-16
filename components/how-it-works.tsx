@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import Cal, { getCalApi } from '@calcom/embed-react'
-import supabase from '@/lib/supabase'
 import { useAnalytics } from '@/hooks/use-analytics'
 import { SimplePricing } from '@/components/ui/simple-pricing'
 import { CTA } from '@/components/ui/call-to-action'
@@ -43,45 +42,6 @@ export function HowItWorks() {
     email: '',
     curationPrompt: ''
   })
-
-  // Handle form submit – send magic link
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    try {
-      localStorage.setItem('pendingUserData', JSON.stringify(userData))
-      await supabase.signInWithOTP(userData.email, true)
-      setStep('checkEmail')
-    } catch (error) {
-      console.error('Failed to send magic link:', error)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  // Resend link
-  const handleResend = async () => {
-    setLoading(true)
-    try {
-      await supabase.signInWithOTP(userData.email, true)
-    } catch (error) {
-      console.error('Failed to resend link:', error)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  // Redirect after verification
-  useEffect(() => {
-    const { data: { subscription } } = supabase.onAuthStateChange((event) => {
-      if (event === 'SIGNED_IN') {
-        router.push('/')
-      }
-    })
-    return () => {
-      subscription.unsubscribe()
-    }
-  }, [router])
 
   useEffect(() => {
     async function fetchPosts() {

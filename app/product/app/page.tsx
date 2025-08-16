@@ -12,32 +12,31 @@ export default function CLIPage() {
     <PageLayout>
       <ProductHero 
         badge={{
-          text: "Open Source",
-          highlight: "CLI Tool"
+          text: "Powered by",
+          highlight: "OSS Rust libraries"
         }}
-        headline="Command-line firmware analysis"
-        subheadline="The open-source CLI for binary composition analysis. Extract components, detect vulnerabilities, and generate SBOMs from your terminal."
+        headline="First we deconstruct, then we analyze, then we feed. "
+        subheadline="Our analsysis engine is built on a three step process of deonstructing the binary, analyzing the components, and feeding the results into our LLM for deep insights."
         featureIcons={[
           {
-            icon: <Terminal className="h-5 w-5" />,
-            label: "CLI Interface"
+            icon: <GitHubLogoIcon className="h-5 w-5" />,
+            label: "Github App"
           },
           {
             icon: <Code className="h-5 w-5" />,
-            label: "Open Source"
+            label: "Deteministic Deconstruction"
           },
           {
             icon: <Download className="h-5 w-5" />,
             label: "Easy Install"
           }
         ]}
-        installCommand="cargo install nabla-cli"
         cta={{
-          onClick: () => window.open('https://github.com/Atelier-Logos/nabla', '_blank'),
+          onClick: () => window.open('https://github.com/apps/nabla-secure/', '_blank'),
           icon: <GitHubLogoIcon className="h-6 w-6" />,
           subtitle: "Get started today",
-          title: "View on GitHub",
-          analyticsEvent: "CLI GitHub Button Clicked"
+          title: "Install the App",
+          analyticsEvent: "Github App Button Clicked"
         }}
         image={{
           src: "/demo.gif",
@@ -49,17 +48,17 @@ export default function CLIPage() {
         }}
       />
       <Feature 
-        badge="CLI Features"
-        title="Command-line power for developers and security teams"
-        description="Everything you need to analyze firmware from your terminal, with scriptable commands and integration-ready output formats."
+        badge="Github App Features"
+        title="DevSecOps powers for firmware security teams"
+        description="Everything you need to analyze firmware security and more from your automatically in your repos"
         features={[
           {
-            title: "Terminal Native",
-            description: "Built for command-line workflows with intuitive commands and helpful output formatting."
+            title: "Github Native",
+            description: "Built for Github and GHES workflows with intuitive automations and check runs."
           },
           {
-            title: "Scriptable Output",
-            description: "JSON, YAML, and structured formats perfect for automation and CI/CD integration."
+            title: "Multi-format Support",
+            description: "ELF, PE, and embedded file systems supported out of the box with no configuration."
           },
           {
             title: "Cross Platform",
@@ -67,15 +66,15 @@ export default function CLIPage() {
           },
           {
             title: "Lightweight Install",
-            description: "Single binary installation with no external dependencies or runtime requirements."
+            description: "Just install the app and hit the ground running with a 14-day free trial."
           },
           {
-            title: "Offline Capable",
-            description: "Perform analysis without network connectivity, with optional online vulnerability updates."
+            title: "Enterprise Ready",
+            description: "Request a demo to install the app on your own GHES instance with enterprise support."
           },
           {
             title: "Developer Friendly",
-            description: "Rich help system, command completion, and detailed error messages for easy adoption."
+            description: "Built with Rust for performance and reliability, with a focus on developer experience."
           }
         ]}
       />
@@ -84,9 +83,9 @@ export default function CLIPage() {
         title="Secure your firmware today"
         description="Get comprehensive binary analysis, vulnerability detection, and SBOM generation for your embedded systems
 and IoT devices. Start protecting your firmware with our advanced security platform."
-        primaryButtonText="Download the CLI"
+        primaryButtonText="Install the GitHub App"
         secondaryButtonText="Book a Demo"
-        primaryButtonHref="https://github.com/usenabla-com/nabla"
+        primaryButtonHref="https://github.com/apps/nabla-secure/"
         secondaryButtonHref="#"
       />
     </PageLayout>

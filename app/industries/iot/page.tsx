@@ -4,6 +4,7 @@ import { ProductHero } from "@/components/product-hero"
 import { Features } from "@/components/blocks/features-4" 
 import { Faq5 } from "@/components/ui/faq-5"
 import { Wifi, Shield, Cpu, Globe, Zap, Lock } from "lucide-react"
+import { GitHubLogoIcon } from "@radix-ui/react-icons"
 
 export default function IoTPage() {
   return (
@@ -30,10 +31,10 @@ export default function IoTPage() {
           }
         ]}
         cta={{
-          onClick: () => window.open('https://cal.com/team/atelier-logos/iot-demo', '_blank'),
-          icon: <Wifi className="h-6 w-6" />,
+          onClick: () => window.open('https://github.com/apps/nabla-secure/', '_blank'),
+          icon: <GitHubLogoIcon className="h-6 w-6" />,
           subtitle: "Ready to secure your IoT fleet?",
-          title: "Request IoT Demo",
+          title: "Install Github App",
           analyticsEvent: "IoT Demo Button Clicked"
         }}
         image={{

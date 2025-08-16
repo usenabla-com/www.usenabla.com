@@ -30,7 +30,7 @@ export default function AutomotivePage() {
           }
         ]}
         cta={{
-          onClick: () => window.open('https://cal.com/team/atelier-logos/automotive-demo', '_blank'),
+          onClick: () => window.open('https://cal.com/jbohrman/30-min', '_blank'),
           icon: <Car className="h-6 w-6" />,
           subtitle: "Ready to secure your fleet?",
           title: "Request Automotive Demo",

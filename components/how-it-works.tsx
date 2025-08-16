@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react'
 import Cal, { getCalApi } from '@calcom/embed-react'
 import supabase from '@/lib/supabase'
 import { useAnalytics } from '@/hooks/use-analytics'
+import { SimplePricing } from '@/components/ui/simple-pricing'
+import { CTA } from '@/components/ui/call-to-action'
 
 interface BlogPost {
   id: string
@@ -136,26 +138,26 @@ export function HowItWorks() {
           {/* Step 1 */}
           <div className="flex flex-col items-center space-y-2 p-4">
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground text-xl font-bold">1</div>
-            <h3 className="text-xl font-bold">Schedule a call</h3>
-            <p className="text-sm text-muted-foreground text-center">Schedule a call with me to discuss your implementation needs.</p>
+            <h3 className="text-xl font-bold">Install the app</h3>
+            <p className="text-sm text-muted-foreground text-center">Install Nabla into your Github environment and start your 14-day trial. No credit card required.</p>
           </div>
 
           {/* Step 2 */}
           <div className="flex flex-col items-center space-y-2 p-4">
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground text-xl font-bold">2</div>
-            <h3 className="text-xl font-bold">Send information</h3>
-            <p className="text-sm text-muted-foreground text-center">Send me relevant informational materials.</p>
+            <h3 className="text-xl font-bold">Evaluate your results</h3>
+            <p className="text-sm text-muted-foreground text-center">Over your 14 days, evaluate the results of your binary analysis and decide if Nabla is right for you</p>
           </div>
 
           {/* Step 3 */}
           <div className="flex flex-col items-center space-y-2 p-4">
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground text-xl font-bold">3</div>
-            <h3 className="text-xl font-bold">Receive a proposal</h3>
-            <p className="text-sm text-muted-foreground text-center">Receive a proposal for your project.</p>
+            <h3 className="text-xl font-bold">Upgrade or Pass</h3>
+            <p className="text-sm text-muted-foreground text-center">At the end of 14 days, if you like your results then you can purchase a plan or persue other options</p>
           </div>
         </div>
 
-        {/* Calendar Embed with Scroll on Mobile */}
+        {/* Calendar Embed with Scroll on Mobile 
           <div className="w-full mt-16 flex justify-center px-4">
             <div
               className="w-full max-w-[1100px] rounded-xl overflow-hidden shadow-md bg-card"
@@ -184,9 +186,12 @@ export function HowItWorks() {
                 />
               </div>
             </div>
-          </div>
+          </div>*/}
 
-          {/* Blog Section */}
+          {/* Pricing Section */}
+          <SimplePricing />
+
+          {/* Blog Section 
           <div className="mt-12">
             <h3 className="text-3xl font-bold mb-6 mt-6 text-center">Our Blog</h3>
             {blogLoading ? (
@@ -241,6 +246,17 @@ export function HowItWorks() {
               </div>
             )}
           </div>
+          */}
+        <CTA 
+        badge="Ready to Start?"
+        title="Secure your firmware today"
+        description="Get comprehensive binary analysis, vulnerability detection, and SBOM generation for your embedded systems
+and IoT devices. Start protecting your firmware with our advanced security platform."
+        primaryButtonText="Install the GitHub App"
+        secondaryButtonText="Book a Demo"
+        primaryButtonHref="https://github.com/apps/nabla-secure/"
+        secondaryButtonHref="https://cal.com/jbohrman/30-min"
+      />
         </div>
       </div>
     </section>

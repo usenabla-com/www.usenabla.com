@@ -28,7 +28,7 @@ export function Footer() {
                 </svg>
                 <span className="sr-only">Slack</span>
               </Link>
-              <Link href="https://cal.com/team/atelier-logos/platform-intro" className="text-muted-foreground hover:text-foreground transition-colors">
+              <Link href="https://cal.com/jbohrman/30-min" className="text-muted-foreground hover:text-foreground transition-colors">
                 <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
                   <path d={siCaldotcom.path} />
                 </svg>
@@ -40,14 +40,14 @@ export function Footer() {
           <div className="space-y-4">
             <h3 className="text-sm font-semibold">Product</h3>
             <nav className="space-y-2">
-              <Link href="/product/nabla-secure" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
-                Nabla Secure
+              <Link href="/product/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
+                About
               </Link>
               <Link href="/product/features" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
                 Features
               </Link>
               <Link href="/product/cli" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
-                CLI
+                Github App
               </Link>
             </nav>
           </div>

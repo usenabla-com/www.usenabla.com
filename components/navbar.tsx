@@ -39,12 +39,12 @@ export function Navbar() {
                 <div className="grid gap-3 p-6 w-[400px]">
                   <NavigationMenuLink asChild>
                     <Link
-                      href="/product/nabla-secure"
+                      href="/product/about"
                       className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                     >
-                      <div className="text-sm font-medium leading-none">Nabla Secure</div>
+                      <div className="text-sm font-medium leading-none">About</div>
                       <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                        Our enterprise-level addons and Github app for Nabla
+                        The influences that went into building Nabla over traditional static analysis-based security tools
                       </p>
                     </Link>
                   </NavigationMenuLink>
@@ -64,9 +64,9 @@ export function Navbar() {
                       href="/product/cli"
                       className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                     >
-                      <div className="text-sm font-medium leading-none">CLI</div>
+                      <div className="text-sm font-medium leading-none">Github App</div>
                       <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                        The open-source CLI for binary composition analysis
+                        Our LLM-driven binary analysis tool for firmware security
                       </p>
                     </Link>
                   </NavigationMenuLink>
@@ -114,13 +114,6 @@ export function Navbar() {
                 </div>
               </NavigationMenuContent>
             </NavigationMenuItem>
-            <NavigationMenuItem>
-              <Link href="" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Schedule a 45-min Chat
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
 
@@ -129,10 +122,10 @@ export function Navbar() {
           <ThemeToggle />
           <Button
             className="gap-2 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-200 button-gradient-hover"
-            onClick={() => window.open('https://github.com/usenabla-com/nabla', '_blank')}
+            onClick={() => window.open('https://github.com/apps/nabla-secure/', '_blank')}
           >
             <GitHubLogoIcon />
-            Leave a Star
+            Install the App
           </Button>
         </div>
 
@@ -194,7 +187,7 @@ export function Navbar() {
                   variant="outline"
                   className="w-full gap-2 bg-background/90 hover:bg-primary hover:text-white dark:hover:text-white border-2 border-primary/20 hover:border-primary font-medium shadow-lg hover:shadow-xl transition-all duration-200 backdrop-blur-sm"
                   onClick={() => {
-                    window.open('https://cal.com/team/atelier-logos/platform-intro', '_blank')
+                    window.open('https://cal.com/jbohrman/30-min', '_blank')
                     setIsMenuOpen(false)
                   }}
                 >

@@ -10,8 +10,8 @@ export default function NablaSecurePage() {
     <PageLayout>
       <ProductHero 
         badge={{
-          text: "Built on top of",
-          highlight: "Nabla OSS"
+          text: "Built with",
+          highlight: "Rust"
         }}
         headline="DevSecOps for mission-critical firmware"
         subheadline="The complete enterprise solution for firmware security automation. GitHub App integration, advanced analytics, and enterprise-grade support."
@@ -30,11 +30,11 @@ export default function NablaSecurePage() {
           }
         ]}
         cta={{
-          onClick: () => window.open('https://cal.com/team/atelier-logos/enterprise-demo', '_blank'),
-          icon: <Shield className="h-6 w-6" />,
+          onClick: () => window.open('https://github.com/apps/nabla-secure/', '_blank'),
+          icon: <GitHubLogoIcon className="h-6 w-6" />,
           subtitle: "Ready to get started?",
-          title: "Request Enterprise Demo",
-          analyticsEvent: "Enterprise Demo Button Clicked"
+          title: "Install the GitHub App",
+          analyticsEvent: "Install Button Clicked"
         }}
         image={{
           src: "/shield.png",

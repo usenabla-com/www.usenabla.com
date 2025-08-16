@@ -5,12 +5,14 @@ import { GitHubStarButtonClient } from "@/components/github-star-button-client"
 import { useAnalytics } from "@/hooks/use-analytics"
 import Image from "next/image"
 import Link from "next/link"
+import { useEffect } from "react"
+import { GitHubLogoIcon } from "@radix-ui/react-icons"
 
 export function HeroSection() {
   const analytics = useAnalytics()
 
   return (
-    <section className="relative overflow-hidden py-24 md:py-32 bg-background font-sans">
+    <section className="relative overflow-hidden py-12 md:py-12 bg-background font-sans">
       {/* Grid background */}
       <div className="absolute inset-0 z-0 pointer-events-none bg-grid-black/[0.02] dark:bg-grid-white/[0.02]" />
 
@@ -18,11 +20,11 @@ export function HeroSection() {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center min-h-[80vh]">
           
           {/* Left side - Content */}
-          <div className="text-center lg:text-left space-y-8 lg:space-y-12">
+          <div className="text-center lg:text-left space-y-4 lg:space-y-8">
 
             {/* Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.15] text-foreground">
-              The OSS platform <br className="hidden sm:inline" /> for firmware security automation.
+              The AI platform <br className="hidden sm:inline" /> for firmware security automation.
             </h1>
 
             {/* Subheadline */}
@@ -30,16 +32,6 @@ export function HeroSection() {
               Nabla uses OSS libraries like Goblin, Capstone, and Petgraph to show you what's inside your firmware, the good and the bad.
             </p>
 
-            {/* Install Command and GitHub Stars */}
-            <div className="pt-4 space-y-4">
-              <CodeSnippet 
-                code="cargo install nabla-cli" 
-                className="max-w-md mx-auto lg:mx-0"
-              />
-              <div className="flex justify-center lg:justify-start">
-                <GitHubStarButtonClient />
-              </div>
-            </div>
           </div>
 
           {/* Right side - Security Image */}

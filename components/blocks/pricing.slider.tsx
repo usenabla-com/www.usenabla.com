@@ -2,42 +2,37 @@ import React, { useState } from "react";
 import { cn } from "@/lib/utils"; // Optional utility if using clsx or cn for class merging
 
 const PRICING_BREAKPOINTS = [
-  { maxFTE: 500, price: 0 },
-  { maxFTE: 5000, price: 49 },
-  { maxFTE: 10000, price: 99 },
-  { maxFTE: 15000, price: 149 },
-  { maxFTE: 25000, price: 199 },
-  { maxFTE: 50000, price: 249 },
-  { maxFTE: 100000, price: 399 },
-  { maxFTE: 150000, price: 599 },
-  { maxFTE: 200000, price: 799 },
+  { maxFTE: 50, price: 599 },     // entry point, just above $10/employee
+  { maxFTE: 250, price: 1499 },   // ~3x price for 5x scale
+  { maxFTE: 500, price: 2999 },   // steeper jump, aligns w/ SMB → mid-market
+  { maxFTE: 1000, price: 4999 },  // ~2x for 2x scale
+  { maxFTE: 2500, price: 7999 },  // larger jump, enterprise mid
+  { maxFTE: 5000, price: 11_999 },// clean anchor at $12k
+  { maxFTE: 10000, price: 19_999 },// psychological <20k
+  { maxFTE: 25000, price: 39_999 },// keeps scaling expectation
+  { maxFTE: 50000, price: 74_999 },// major enterprise anchor
 ];
 
-const BREAKPOINT_SUB_VALUES = [
-  ...Array.from({ length: 11 }, (_, i) => i * 100),
-  5000, 10000, 15000, 25000, 50000, 100000, 150000, 200000,
-  300000, 400000, 500000, 600000, 700000, 800000, 900000, 1000000,
+const BREAKPOINT_FTE_VALUES = [
+  10, 25, 50, 100, 150, 200, 250, 300, 400, 500, 750, 1000, 1500, 2000, 2500, 
+  3000, 4000, 5000, 7500, 10000, 15000, 20000, 25000, 30000, 40000, 50000, 75000, 100000
 ];
 
-const getPriceForSubscribers = (subs: number): { price: number | null; label: string } => {
-  if (subs === 1000000) return { price: null, label: ">1M Subscribers" };
+const getPriceForFTEs = (ftes: number): { price: number | null; label: string } => {
+  if (ftes >= 100000) return { price: null, label: ">100K FTEs" };
 
-  const breakpoint = PRICING_BREAKPOINTS.find((tier) => subs <= tier.maxFTE);
-  if (breakpoint) return { price: breakpoint.price, label: `${subs.toLocaleString()} subscribers` };
+  const breakpoint = PRICING_BREAKPOINTS.find((tier) => ftes <= tier.maxFTE);
+  if (breakpoint) return { price: breakpoint.price, label: `${ftes.toLocaleString()} FTEs` };
 
-  // After 200k, add $400 for every additional 100k up to 1M
-  const basePrice = 799;
-  const extraSubs = subs - 200000;
-  const extraUnits = Math.ceil(extraSubs / 100000);
-  const price = basePrice + extraUnits * 400;
-  return { price, label: `${subs.toLocaleString()} subscribers` };
+  // After 50k, custom pricing
+  return { price: null, label: `${ftes.toLocaleString()} FTEs` };
 };
 
-export const LoopsPricingSlider: React.FC = () => {
+export const PricingSlider: React.FC = () => {
   const [sliderIndex, setSliderIndex] = useState(0);
 
-  const subscribers = BREAKPOINT_SUB_VALUES[sliderIndex];
-  const { price, label } = getPriceForSubscribers(subscribers);
+  const ftes = BREAKPOINT_FTE_VALUES[sliderIndex];
+  const { price, label } = getPriceForFTEs(ftes);
 
   const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSliderIndex(Number(e.target.value));
@@ -69,15 +64,15 @@ export const LoopsPricingSlider: React.FC = () => {
               <input
                 type="range"
                 min={0}
-                max={BREAKPOINT_SUB_VALUES.length - 1}
+                max={BREAKPOINT_FTE_VALUES.length - 1}
                 step={1}
                 value={sliderIndex}
                 onChange={handleSliderChange}
                 className="w-full appearance-none h-3 rounded bg-muted mb-12"
                 style={{
                   background: `linear-gradient(to right, hsl(var(--primary)) 0%, hsl(var(--primary)) ${
-                    (sliderIndex / (BREAKPOINT_SUB_VALUES.length - 1)) * 100
-                  }%, hsl(var(--muted)) ${(sliderIndex / (BREAKPOINT_SUB_VALUES.length - 1)) * 100}%, hsl(var(--muted)) 100%)`,
+                    (sliderIndex / (BREAKPOINT_FTE_VALUES.length - 1)) * 100
+                  }%, hsl(var(--muted)) ${(sliderIndex / (BREAKPOINT_FTE_VALUES.length - 1)) * 100}%, hsl(var(--muted)) 100%)`,
                 }}
               />
 
@@ -141,7 +136,7 @@ export const LoopsPricingSlider: React.FC = () => {
                   : "Full access to enterprise-grade firmware security analysis, CI/CD integration, and priority support. All features included."}
               </p>
               <a
-                href={price === null ? "mailto:hello@usenabla.com?subject=Enterprise%20pricing" : "https://cal.com/team/atelier-logos/enterprise-demo"}
+                href={price === null ? "mailto:hello@usenabla.com?subject=Enterprise%20pricing" : "https://cal.com/jbohrman/30-min"}
                 className="mt-8 inline-block bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-3 rounded-md font-semibold text-sm transition-colors"
               >
                 {price === null ? "Contact us" : "Get started"}

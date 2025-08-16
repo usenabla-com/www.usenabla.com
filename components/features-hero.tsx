@@ -64,7 +64,7 @@ export function FeaturesHero() {
             <div
               onClick={() => {
                 analytics.track('Try Demo Button Clicked')
-                window.open('https://github.com/Atelier-Logos/nabla', '_blank')
+                window.open('https://cal.com/jbohrman/30-min', '_blank')
               }}
               className="mx-auto lg:mx-0 mt-8 max-w-md w-full bg-gradient-to-r from-primary to-primary/90 border border-primary/20 backdrop-blur-md rounded-2xl p-6 shadow-lg cursor-pointer group transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
             >

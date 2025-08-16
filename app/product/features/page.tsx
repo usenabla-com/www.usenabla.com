@@ -55,7 +55,7 @@ export default function FeaturesPage() {
       />
       <Feature 
         badge="Feature Deep Dive"
-        title="Advanced capabilities for comprehensive firmware analysis"
+        title="LLM-driven firmware analysis that understands your full binary context"
         description="Explore the technical details behind our binary composition analysis engine and security detection capabilities."
         features={[
           {
@@ -88,10 +88,10 @@ export default function FeaturesPage() {
         badge="Ready to Start?"
         title="Secure your firmware today"
         description="Get comprehensive binary analysis, vulnerability detection, and SBOM generation for your embedded systems and IoT devices. Start protecting your firmware with our advanced security platform."
-        primaryButtonText="Start Free Analysis"
+        primaryButtonText="Install the GitHub App"
         secondaryButtonText="Book a Demo"
-        primaryButtonHref="#"
-        secondaryButtonHref="#"
+        primaryButtonHref="https://github.com/apps/nabla-secure/"
+        secondaryButtonHref="https://cal.com/jbohrman/30-min"
       />
     </PageLayout>
   )

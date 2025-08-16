@@ -24,13 +24,13 @@ export function NablaSecureHero() {
             <div className="inline-flex items-center gap-3 rounded-xl bg-muted/70 backdrop-blur-sm px-6 py-4 text-sm md:text-base text-foreground/80 font-medium border border-border/40 shadow-md">
               <div className="w-6 h-6 relative">
                 <Image
-                  src="/logo.png"
-                  alt="Nabla logo"
+                  src="/rust.png"
+                  alt="Rust logo"
                   fill
                   className="object-contain"
                 />
               </div>
-              <span className="text-foreground">Built on top of <span className="font-semibold">Nabla OSS</span></span>
+              <span className="text-foreground">Built with <span className="font-semibold">Rust</span></span>
             </div>
 
             {/* Headline */}
@@ -65,7 +65,7 @@ export function NablaSecureHero() {
             <div
               onClick={() => {
                 analytics.track('Enterprise Demo Button Clicked')
-                window.open('https://cal.com/team/atelier-logos/enterprise-demo', '_blank')
+                window.open('https://cal.com/jbohrman/30-min', '_blank')
               }}
               className="mx-auto lg:mx-0 mt-8 max-w-md w-full bg-gradient-to-r from-primary to-primary/90 border border-primary/20 backdrop-blur-md rounded-2xl p-6 shadow-lg cursor-pointer group transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
             >

@@ -39,42 +39,63 @@ export const PricingSlider: React.FC = () => {
   };
 
   return (
-    <section className="relative w-full py-16 md:py-24 bg-background">
+    <section className="relative w-full py-8 sm:py-12 md:py-16 lg:py-24 bg-background overflow-hidden">
       {/* Grid background */}
       <div className="absolute inset-0 z-0 pointer-events-none bg-grid-black/[0.02] dark:bg-grid-white/[0.02]" />
       
-      <div className="container relative z-10 mx-auto px-4">
+      <div className="container relative z-10 mx-auto px-2 sm:px-3 md:px-6 lg:px-8 max-w-7xl">
         {/* Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground mb-4">
-            Pricing
+        <div className="text-center mb-6 sm:mb-8 md:mb-12 lg:mb-16">
+          <div className="inline-block rounded-full bg-primary/10 px-4 py-2 mb-4">
+            <span className="text-sm font-medium text-primary">Flexible Pricing</span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-foreground mb-3 sm:mb-4">
+            Pricing that scales with you
           </h2>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            We want to meet you where you are, so we have a sliding pricing model based on your company size
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed px-1 sm:px-2 md:px-0">
+            Simple, transparent pricing based on your team size. No hidden fees, no surprises.
           </p>
         </div>
 
         {/* Pricing Cards */}
-        <div className="max-w-4xl mx-auto">
-          <div className="flex flex-col md:flex-row gap-6">
+        <div className="w-full max-w-6xl mx-auto">
+          <div className="flex flex-col lg:flex-row gap-2 sm:gap-3 md:gap-4 lg:gap-6">
             {/* Left Card */}
-            <div className="flex-1 rounded-xl border border-border bg-card p-8 relative">
-              <h3 className="text-sm font-semibold text-foreground mb-4">Calculate your pricing</h3>
-              <div className="text-3xl font-bold text-foreground mb-8">{label}</div>
-              <input
-                type="range"
-                min={0}
-                max={BREAKPOINT_FTE_VALUES.length - 1}
-                step={1}
-                value={sliderIndex}
-                onChange={handleSliderChange}
-                className="w-full appearance-none h-3 rounded bg-muted mb-12"
-                style={{
-                  background: `linear-gradient(to right, hsl(var(--primary)) 0%, hsl(var(--primary)) ${
-                    (sliderIndex / (BREAKPOINT_FTE_VALUES.length - 1)) * 100
-                  }%, hsl(var(--muted)) ${(sliderIndex / (BREAKPOINT_FTE_VALUES.length - 1)) * 100}%, hsl(var(--muted)) 100%)`,
-                }}
-              />
+            <div className="flex-1 rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm p-5 sm:p-6 md:p-8 relative min-h-[320px] sm:min-h-[360px] shadow-sm hover:shadow-md transition-all duration-300">
+              <div className="flex items-center gap-2 mb-5">
+                <div className="w-2 h-2 rounded-full bg-primary"></div>
+                <h3 className="text-sm font-semibold text-foreground">Team Size Calculator</h3>
+              </div>
+              
+              <div className="mb-6 sm:mb-8">
+                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2">{label}</div>
+                <div className="text-sm sm:text-base text-muted-foreground">Drag the slider to adjust your team size</div>
+              </div>
+              
+              <div className="mb-8 sm:mb-10">
+                <input
+                  type="range"
+                  min={0}
+                  max={BREAKPOINT_FTE_VALUES.length - 1}
+                  step={1}
+                  value={sliderIndex}
+                  onChange={handleSliderChange}
+                  className="w-full appearance-none h-3 sm:h-4 rounded-full bg-muted/50 mb-6 cursor-pointer touch-manipulation"
+                  style={{
+                    background: `linear-gradient(to right, hsl(var(--primary)) 0%, hsl(var(--primary)) ${
+                      (sliderIndex / (BREAKPOINT_FTE_VALUES.length - 1)) * 100
+                    }%, hsl(var(--muted)) ${(sliderIndex / (BREAKPOINT_FTE_VALUES.length - 1)) * 100}%, hsl(var(--muted)) 100%)`,
+                  }}
+                />
+                
+                {/* Range indicators */}
+                <div className="flex justify-between text-sm text-muted-foreground px-2">
+                  <span className="font-medium">10</span>
+                  <span className="font-medium">1K</span>
+                  <span className="font-medium">10K</span>
+                  <span className="font-medium">100K+</span>
+                </div>
+              </div>
 
               <style>{`
                 input[type='range']::-webkit-slider-thumb {
@@ -82,65 +103,119 @@ export const PricingSlider: React.FC = () => {
                   appearance: none;
                   width: 28px;
                   height: 28px;
-                  background: hsl(var(--background));
-                  border: 2px solid hsl(var(--border));
+                  background: hsl(var(--primary));
+                  border: 4px solid hsl(var(--background));
                   border-radius: 50%;
                   cursor: pointer;
-                  margin-top: -1px;
-                  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
-                  position: relative;
+                  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2), 0 0 0 1px hsl(var(--border));
+                  transition: all 0.15s ease;
+                }
+                input[type='range']::-webkit-slider-thumb:hover {
+                  transform: scale(1.15);
+                  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25), 0 0 0 1px hsl(var(--border));
                 }
                 input[type='range']::-moz-range-thumb {
-                  width: 26px;
-                  height: 26px;
-                  background: hsl(var(--background));
-                  border: 2px solid hsl(var(--border));
+                  width: 24px;
+                  height: 24px;
+                  background: hsl(var(--primary));
+                  border: 4px solid hsl(var(--background));
                   border-radius: 50%;
                   cursor: pointer;
-                  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+                  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
                 }
-                @media (prefers-color-scheme: dark) {
+                @media (max-width: 640px) {
                   input[type='range']::-webkit-slider-thumb {
-                    box-shadow: 0 1px 5px rgba(255, 255, 255, 0.1);
+                    width: 32px;
+                    height: 32px;
                   }
                   input[type='range']::-moz-range-thumb {
-                    box-shadow: 0 1px 5px rgba(255, 255, 255, 0.1);
+                    width: 28px;
+                    height: 28px;
                   }
                 }
               `}</style>
 
-              <div className="absolute bottom-8 left-8 right-8 flex items-center justify-between text-sm text-muted-foreground">
-                <span>Need a custom solution?</span>
-                <a
-                  href="mailto:hello@usenabla.com?subject=Enterprise%20pricing"
-                  className="text-foreground font-medium flex items-center hover:text-primary transition-colors"
-                >
-                  Contact us <span className="ml-1">→</span>
-                </a>
+              <div className="absolute bottom-5 sm:bottom-6 md:bottom-8 left-5 sm:left-6 md:left-8 right-5 sm:right-6 md:right-8">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 p-4 rounded-xl bg-muted/40 border border-border/40 backdrop-blur-sm">
+                  <span className="text-sm text-muted-foreground font-medium">Need custom pricing?</span>
+                  <a
+                    href="mailto:hello@usenabla.com?subject=Enterprise%20pricing"
+                    className="text-primary font-semibold text-sm flex items-center hover:text-primary/80 transition-colors group"
+                  >
+                    Contact us 
+                    <span className="ml-1 group-hover:translate-x-0.5 transition-transform">→</span>
+                  </a>
+                </div>
               </div>
             </div>
 
             {/* Right Card */}
-            <div className="flex-1 rounded-xl border border-border bg-muted/30 p-8">
-              <h3 className="text-sm font-semibold text-foreground mb-4">Your plan</h3>
-              <div className="mb-2">
-                <h4 className="text-3xl font-bold text-foreground mb-6">
-                  {price === 0 ? "Free" : price === null ? "Contact us" : `$${price} / mo`}
-                </h4>
+            <div className="flex-1 rounded-2xl border border-border/50 bg-gradient-to-br from-primary/5 to-primary/10 p-5 sm:p-6 md:p-8 relative min-h-[320px] sm:min-h-[360px] shadow-sm hover:shadow-md transition-all duration-300">
+              <div className="flex items-center gap-2 mb-5">
+                <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                <h3 className="text-sm font-semibold text-foreground">Your Plan</h3>
               </div>
-              <p className="text-sm text-muted-foreground leading-relaxed mt-8">
-                {price === 0
-                  ? "Our free plan includes basic firmware analysis with limited scans per month. Perfect for getting started with Nabla Secure."
-                  : price === null
-                  ? "Need custom support for enterprise-scale operations? Contact us for custom pricing and dedicated support."
-                  : "Full access to enterprise-grade firmware security analysis, CI/CD integration, and priority support. All features included."}
-              </p>
-              <a
-                href={price === null ? "mailto:hello@usenabla.com?subject=Enterprise%20pricing" : "https://cal.com/jbohrman/30-min"}
-                className="mt-8 inline-block bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-3 rounded-md font-semibold text-sm transition-colors"
-              >
-                {price === null ? "Contact us" : "Get started"}
-              </a>
+              
+              <div className="mb-6 sm:mb-8">
+                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2">
+                  {price === 0 ? "Free" : price === null ? "Custom" : `$${price.toLocaleString()}`}
+                  {price !== null && price > 0 && <span className="text-base sm:text-lg md:text-xl font-normal text-muted-foreground"> / month</span>}
+                </div>
+                <div className="text-sm sm:text-base text-muted-foreground">
+                  {price === null ? "Enterprise pricing" : "Per month, billed annually"}
+                </div>
+              </div>
+              
+              {/* Mobile: Card-based features, Desktop: List-based features */}
+              <div className="mb-8 sm:mb-10">
+                {/* Mobile version: 2x2 grid of feature cards */}
+                <div className="grid grid-cols-2 gap-2 sm:hidden">
+                  <div className="p-2.5 rounded-lg bg-card/60 border border-border/30">
+                    <div className="text-xs font-medium text-foreground">Complete Analysis</div>
+                  </div>
+                  <div className="p-2.5 rounded-lg bg-card/60 border border-border/30">
+                    <div className="text-xs font-medium text-foreground">Vulnerability Detection</div>
+                  </div>
+                  <div className="p-2.5 rounded-lg bg-card/60 border border-border/30">
+                    <div className="text-xs font-medium text-foreground">CI/CD Integration</div>
+                  </div>
+                  <div className="p-2.5 rounded-lg bg-card/60 border border-border/30">
+                    <div className="text-xs font-medium text-foreground">Priority Support</div>
+                  </div>
+                </div>
+                
+                {/* Desktop version: Traditional bullet list */}
+                <div className="hidden sm:block space-y-3">
+                  <div className="flex items-center gap-3 text-sm">
+                    <div className="w-2 h-2 rounded-full bg-green-500 flex-shrink-0"></div>
+                    <span className="text-foreground font-medium">Complete firmware analysis</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm">
+                    <div className="w-2 h-2 rounded-full bg-green-500 flex-shrink-0"></div>
+                    <span className="text-foreground font-medium">Vulnerability detection</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm">
+                    <div className="w-2 h-2 rounded-full bg-green-500 flex-shrink-0"></div>
+                    <span className="text-foreground font-medium">CI/CD integration</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm">
+                    <div className="w-2 h-2 rounded-full bg-green-500 flex-shrink-0"></div>
+                    <span className="text-foreground font-medium">Priority support</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="absolute bottom-5 sm:bottom-6 md:bottom-8 left-5 sm:left-6 md:left-8 right-5 sm:right-6 md:right-8">
+                <a
+                  href={price === null ? "mailto:hello@usenabla.com?subject=Enterprise%20pricing" : "https://cal.com/jbohrman/30-min"}
+                  className="block w-full bg-primary text-primary-foreground hover:bg-primary/90 px-4 sm:px-6 py-3.5 sm:py-4 rounded-xl font-semibold text-sm sm:text-base text-center transition-all duration-200 hover:scale-105 hover:shadow-lg active:scale-95"
+                >
+                  {price === null ? "Contact Sales" : "Start Free Trial"}
+                </a>
+                <div className="text-center mt-3">
+                  <span className="text-xs sm:text-sm text-muted-foreground">14-day free trial • No credit card required</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -78,42 +78,44 @@ export function HowItWorks() {
   }, [])
 
   return (
-    <section id="how-it-works" className="py-16">
-      <div className="container px-4 md:px-6">
-        <div className="flex flex-col items-center justify-center space-y-4 text-center">
-          <div className="space-y-2">
+    <section id="how-it-works" className="w-full py-8 sm:py-12 lg:py-16">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full flex flex-col items-center justify-center space-y-4 text-center">
+          <div className="w-full space-y-2">
             <div className="inline-block rounded-lg bg-primary px-3 py-1 text-sm text-primary-foreground">
               Get in touch
             </div>
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+            <h2 className="w-full text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold tracking-tighter">
               Put good in, get good out
             </h2>
-            <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-            We take advantage of the best open source Rust libraries such as Goblin for binary parsing, Capstone for disassembly, and Petgraph for reachability analysis to provide you with a comprehensive view of your firmware's internals.
-            </p>
+            <div className="w-full flex justify-center">
+              <p className="max-w-4xl text-sm sm:text-base lg:text-lg text-muted-foreground px-4">
+              We take advantage of the best open source Rust libraries such as Goblin for binary parsing, Capstone for disassembly, and Petgraph for reachability analysis to provide you with a comprehensive view of your firmware's internals.
+              </p>
+            </div>
           </div>
         </div>
-        <div className="mx-auto grid max-w-5xl gap-8 mt-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="w-full max-w-6xl mx-auto mt-8 sm:mt-12">
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 px-4 sm:px-0">
           {/* Step 1 */}
-          <div className="flex flex-col items-center space-y-2 p-4">
+          <div className="w-full flex flex-col items-center space-y-3 p-4 sm:p-6">
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground text-xl font-bold">1</div>
-            <h3 className="text-xl font-bold">Install the app</h3>
-            <p className="text-sm text-muted-foreground text-center">Install Nabla into your Github environment and start your 14-day trial. No credit card required.</p>
+            <h3 className="text-lg sm:text-xl font-bold text-center">Install the app</h3>
+            <p className="text-sm sm:text-base text-muted-foreground text-center max-w-xs">Install Nabla into your Github environment and start your 14-day trial. No credit card required.</p>
           </div>
 
           {/* Step 2 */}
-          <div className="flex flex-col items-center space-y-2 p-4">
+          <div className="w-full flex flex-col items-center space-y-3 p-4 sm:p-6">
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground text-xl font-bold">2</div>
-            <h3 className="text-xl font-bold">Evaluate your results</h3>
-            <p className="text-sm text-muted-foreground text-center">Over your 14 days, evaluate the results of your binary analysis and decide if Nabla is right for you</p>
+            <h3 className="text-lg sm:text-xl font-bold text-center">Evaluate your results</h3>
+            <p className="text-sm sm:text-base text-muted-foreground text-center max-w-xs">Over your 14 days, evaluate the results of your binary analysis and decide if Nabla is right for you</p>
           </div>
 
           {/* Step 3 */}
-          <div className="flex flex-col items-center space-y-2 p-4">
+          <div className="w-full flex flex-col items-center space-y-3 p-4 sm:p-6">
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground text-xl font-bold">3</div>
-            <h3 className="text-xl font-bold">Upgrade or Pass</h3>
-            <p className="text-sm text-muted-foreground text-center">At the end of 14 days, if you like your results then you can purchase a plan or persue other options</p>
+            <h3 className="text-lg sm:text-xl font-bold text-center">Upgrade or Pass</h3>
+            <p className="text-sm sm:text-base text-muted-foreground text-center max-w-xs">At the end of 14 days, if you like your results then you can purchase a plan or persue other options</p>
           </div>
         </div>
 
@@ -213,7 +215,9 @@ export function HowItWorks() {
         description="Get comprehensive binary analysis, vulnerability detection, and SBOM generation for your embedded systems
 and IoT devices. Start protecting your firmware with our advanced security platform."
         primaryButtonText="Install the GitHub App"
+        primaryButtonTextMobile="Install App"
         secondaryButtonText="Book a Demo"
+        secondaryButtonTextMobile="Book Demo"
         primaryButtonHref="https://github.com/apps/nabla-secure/"
         secondaryButtonHref="https://cal.com/jbohrman/30-min"
       />

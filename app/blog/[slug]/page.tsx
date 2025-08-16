@@ -105,7 +105,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   // Create the full URL for sharing
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.atelierlogos.studio'
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.usenabla.com'
   const postUrl = `${baseUrl}/blog/${params.slug}`
 
   return (

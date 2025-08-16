@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     siteName: "Nabla",
     images: [
       {
-        url: "https://www.www.usenabla.com/og-image.png",
+        url: "https://www.usenabla.com/og-image.png",
         width: 1200,
         height: 630,
         alt: "Nabla - The shift-left platform for firmware security automation."
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Nabla | The shift-left platform for firmware security automation.",
     description: "We provide automated BCA for mission-critical firmware security",
-    images: ["https://www.www.usenabla.com/og-image.png"]
+    images: ["https://www.usenabla.com/og-image.png"]
   },
   robots: {
     index: true,
@@ -70,7 +70,7 @@ export default function RootLayout({
         <title>{title}</title>
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
-        <meta property="og:image" content="https://www.www.usenabla.com/og-image.png" />
+        <meta property="og:image" content="https://www.usenabla.com/og-image.png" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.www.usenabla.com" />
 

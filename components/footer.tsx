@@ -46,7 +46,7 @@ export function Footer() {
               <Link href="/product/features" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
                 Features
               </Link>
-              <Link href="/product/cli" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
+              <Link href="/product/app" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
                 Github App
               </Link>
             </nav>

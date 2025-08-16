@@ -32,10 +32,10 @@ export function Features() {
                 <MessageCircle className="h-7 w-7 text-primary-foreground" />
               </div>
               <h3 className="font-display text-xl font-semibold tracking-tight text-foreground lg:text-2xl">
-                LLM Inference
+                LLM Powered
               </h3>
               <p className="text-sm leading-relaxed text-muted-foreground lg:text-base">
-                With the CLI, you can "chat with" your binary (Technically the analysis output)
+                We use LLMs and OSS to deconstruct, analyze, and report on firmware
               </p>
             </div>
           </div>
@@ -80,7 +80,7 @@ export function Features() {
                 Hidden Insights
               </h3>
               <p className="text-sm leading-relaxed text-muted-foreground lg:text-base">
-                Integrate the CLI with chat into your CI/CD pipeline to discover hidden issues in your firmware
+                Leverage LLMs to drum up hidden gotchas in your compiled firmware you may have missed
               </p>
             </div>
           </div>

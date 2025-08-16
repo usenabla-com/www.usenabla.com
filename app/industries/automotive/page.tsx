@@ -33,7 +33,7 @@ export default function AutomotivePage() {
           onClick: () => window.open('https://cal.com/jbohrman/30-min', '_blank'),
           icon: <Car className="h-6 w-6" />,
           subtitle: "Ready to secure your fleet?",
-          title: "Request Automotive Demo",
+          title: "Request a consultation",
           analyticsEvent: "Automotive Demo Button Clicked"
         }}
       />

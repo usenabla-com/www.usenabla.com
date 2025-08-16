@@ -51,7 +51,6 @@
     "@types/cheerio": "^1.0.0",
     "@types/html2canvas": "^1.0.0",
     "@types/mdx": "^2.0.13",
-    "@types/pdfkit": "^0.17.0",
     "@types/react-syntax-highlighter": "^15.5.13",
     "@vercel/og": "^0.7.2",
     "autoprefixer": "^10.4.20",

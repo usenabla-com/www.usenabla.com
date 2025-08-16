@@ -24,7 +24,7 @@ export function HeroSection() {
 
             {/* Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.15] text-foreground">
-              The AI platform <br className="hidden sm:inline" /> for firmware security automation.
+            Automated BCA for mission-critical firmware security
             </h1>
 
             {/* Subheadline */}

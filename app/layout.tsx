@@ -15,20 +15,20 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Nabla | The shift-left platform for firmware security automation." as const,
-  description: "We are a bespoke software studio helping clients build scalable, testable, and beautiful software while adopting LLMs in a sane manner." as const,
+  description: "" as const,
   generator: 'v0.dev',
 
   keywords: ['LLM', 'AI', 'Software Development', 'Bespoke Solutions', 'Machine Learning'],
   authors: [{ name: 'Nabla' }],
   creator: 'Nabla',
   openGraph: {
-    title: "Nabla | The shift-left platform for firmware security automation.",
-    description: "We are a bespoke software studio helping clients build scalable, testable, and beautiful software while adopting LLMs in a sane manner.",
+    title: "Nabla | DevSecOps for mission-critical firmware",
+    description: "LLM-driven firmware security automation. Built with Rust and open source libraries.",
     url: "https://www.www.usenabla.com",
     siteName: "Nabla",
     images: [
       {
-        url: "https://www.www.atelierlogos.studio/og-image.png",
+        url: "https://www.www.usenabla.com/og-image.png",
         width: 1200,
         height: 630,
         alt: "Nabla - The shift-left platform for firmware security automation."

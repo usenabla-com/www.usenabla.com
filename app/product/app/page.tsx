@@ -15,7 +15,7 @@ export default function CLIPage() {
           text: "Powered by",
           highlight: "OSS Rust libraries"
         }}
-        headline="First we deconstruct, then we analyze, then we feed. "
+        headline="First we deconstruct, then we analyze, then we feed."
         subheadline="Our analsysis engine is built on a three step process of deonstructing the binary, analyzing the components, and feeding the results into our LLM for deep insights."
         featureIcons={[
           {

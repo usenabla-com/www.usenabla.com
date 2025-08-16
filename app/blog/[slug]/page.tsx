@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     }
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.www.atelierlogos.studio'
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.usenabla.com'
   const postUrl = `${baseUrl}/blog/${params.slug}`
   
   // Ensure the image URL is absolute

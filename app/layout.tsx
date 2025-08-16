@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Nabla | The shift-left platform for firmware security automation.",
-    description: "We are a bespoke software studio helping clients build scalable, testable, and beautiful software while adopting LLMs in a sane manner.",
+    description: "We provide automated BCA for mission-critical firmware security",
     images: ["https://www.www.usenabla.com/og-image.png"]
   },
   robots: {

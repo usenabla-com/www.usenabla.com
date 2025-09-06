@@ -86,11 +86,11 @@ export function HowItWorks() {
               Get in touch
             </div>
             <h2 className="w-full text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold tracking-tighter">
-              Put good in, get good out
+              Ready to learn more?
             </h2>
             <div className="w-full flex justify-center">
               <p className="max-w-4xl text-sm sm:text-base lg:text-lg text-muted-foreground px-4">
-              We take advantage of the best open source Rust libraries such as Goblin for binary parsing, Capstone for disassembly, and Petgraph for reachability analysis to provide you with a comprehensive view of your firmware's internals.
+              Getting started couldn't be simpler. Follow these three easy steps to talk to use and get a license key.
               </p>
             </div>
           </div>
@@ -100,22 +100,22 @@ export function HowItWorks() {
           {/* Step 1 */}
           <div className="w-full flex flex-col items-center space-y-3 p-4 sm:p-6">
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground text-xl font-bold">1</div>
-            <h3 className="text-lg sm:text-xl font-bold text-center">Install the app</h3>
-            <p className="text-sm sm:text-base text-muted-foreground text-center max-w-xs">Install Nabla into your Github environment and start your 14-day trial. No credit card required.</p>
+            <h3 className="text-lg sm:text-xl font-bold text-center">Schedule an onboarding call</h3>
+            <p className="text-sm sm:text-base text-muted-foreground text-center max-w-xs">Schedule a time to meet with us for a quick 45-min session to get a 14-day trial license</p>
           </div>
 
           {/* Step 2 */}
           <div className="w-full flex flex-col items-center space-y-3 p-4 sm:p-6">
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground text-xl font-bold">2</div>
-            <h3 className="text-lg sm:text-xl font-bold text-center">Evaluate your results</h3>
-            <p className="text-sm sm:text-base text-muted-foreground text-center max-w-xs">Over your 14 days, evaluate the results of your binary analysis and decide if Nabla is right for you</p>
+            <h3 className="text-lg sm:text-xl font-bold text-center">Install the CLI</h3>
+            <p className="text-sm sm:text-base text-muted-foreground text-center max-w-xs">When your trial starts, install the CLI and create a few OSCAL reports</p>
           </div>
 
           {/* Step 3 */}
           <div className="w-full flex flex-col items-center space-y-3 p-4 sm:p-6">
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground text-xl font-bold">3</div>
-            <h3 className="text-lg sm:text-xl font-bold text-center">Upgrade or Pass</h3>
-            <p className="text-sm sm:text-base text-muted-foreground text-center max-w-xs">At the end of 14 days, if you like your results then you can purchase a plan or persue other options</p>
+            <h3 className="text-lg sm:text-xl font-bold text-center">Choose a plan</h3>
+            <p className="text-sm sm:text-base text-muted-foreground text-center max-w-xs">At the end of 14 days, purchase a license in the format that best suits your usage patterns</p>
           </div>
         </div>
 
@@ -211,15 +211,14 @@ export function HowItWorks() {
           */}
         <CTA 
         badge="Ready to Start?"
-        title="Secure your firmware today"
-        description="Get comprehensive binary analysis, vulnerability detection, and SBOM generation for your embedded systems
-and IoT devices. Start protecting your firmware with our advanced security platform."
-        primaryButtonText="Install the GitHub App"
-        primaryButtonTextMobile="Install App"
-        secondaryButtonText="Book a Demo"
-        secondaryButtonTextMobile="Book Demo"
-        primaryButtonHref="https://github.com/apps/nabla-secure/"
-        secondaryButtonHref="https://cal.com/jbohrman/30-min"
+        title="Pass your next audit with confidence"
+        description="Start generating OSCAL reports from your firmware binaries within 24 hours of signing up. No credit card required."
+        primaryButtonText="Join Discord Community"
+        primaryButtonTextMobile="Join Discord"
+        secondaryButtonText="Contact Sales"
+        secondaryButtonTextMobile="Contact Sales"
+        primaryButtonHref="https://discord.gg/QvsUwuExe6"
+        secondaryButtonHref="mailto:trial@usenabla.com"
       />
         </div>
       </div>

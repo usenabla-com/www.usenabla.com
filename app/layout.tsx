@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   authors: [{ name: 'Nabla' }],
   creator: 'Nabla',
   openGraph: {
-    title: "Nabla | DevSecOps for mission-critical firmware",
+    title: "Nabla | GRC automation tooling for firmware.",
     description: "LLM-driven firmware security automation. Built with Rust and open source libraries.",
     url: "https://www.www.usenabla.com",
     siteName: "Nabla",

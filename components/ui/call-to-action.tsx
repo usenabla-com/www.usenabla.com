@@ -1,6 +1,7 @@
-import { MoveRight, PhoneCall } from "lucide-react";
+import { MailIcon, MoveRight, PhoneCall } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { DiscordLogoIcon } from "@radix-ui/react-icons";
 
 interface CTAProps {
   badge?: string;
@@ -59,7 +60,7 @@ function CTA({
                 <a href={secondaryButtonHref} className="group">
                   <span className="sm:hidden">{secondaryButtonTextMobile || secondaryButtonText}</span>
                   <span className="hidden sm:inline">{secondaryButtonText}</span>
-                  <PhoneCall className="w-4 h-4 group-hover:rotate-12 transition-transform" />
+                  <MailIcon className="w-4 h-4 group-hover:rotate-12 transition-transform" />
                 </a>
               </Button>
               
@@ -70,7 +71,7 @@ function CTA({
                 <a href={primaryButtonHref} className="group">
                   <span className="sm:hidden">{primaryButtonTextMobile || primaryButtonText}</span>
                   <span className="hidden sm:inline">{primaryButtonText}</span>
-                  <MoveRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <DiscordLogoIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </a>
               </Button>
             </div>

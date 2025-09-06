@@ -1,4 +1,4 @@
-import { HeroSection } from "@/components/hero-section"
+import { Hero } from "@/components/ui/animated-hero"
 import { Navbar } from "@/components/navbar"
 import { Features } from "@/components/features"
 import { HowItWorks } from "@/components/how-it-works"
@@ -20,7 +20,7 @@ export default function Home() {
         {/* Hero Section with enhanced spacing */}
         <section className="relative">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background pointer-events-none" />
-          <HeroSection />
+          <Hero />
         </section>
         
         {/* Features Section with subtle separation */}

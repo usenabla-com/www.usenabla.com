@@ -1,5 +1,5 @@
 import { GitHubLogoIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons"
-import { Code, Microchip, Zap, Sparkles, Lock, Radar, RecycleIcon, Bot, MessageCircle, MagnetIcon } from "lucide-react"
+import { Code, Microchip, Zap, Sparkles, Lock, Radar, RecycleIcon, Bot, MessageCircle, MagnetIcon, BotIcon, TerminalIcon, NotebookIcon } from "lucide-react"
 
 export function Features() {
   return (
@@ -12,14 +12,13 @@ export function Features() {
               Features
             </div>
             <h2 className="font-display text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl">
-              We're bringing DevSecOps{" "}  
+              Machine readable OSCAL reports{" "}  
               <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-foreground">
-                to the firmware world{" "}
+                to help you pass audits{" "}
               </span>
             </h2>
             <p className="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground lg:text-xl">
-              Firmware security is an overlooked risk — but it doesn't have to be.
-              Nabla helps you automate firmware security testing, vulnerability discovery, and the exploitability of those vulnerabilities.
+              Whether you just want to assess your positioning or you have an audit coming up, we can help you generate OSCAL documents in minutes, not weeks.
             </p>
           </div>
         </div>
@@ -29,13 +28,13 @@ export function Features() {
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
             <div className="relative z-10 flex flex-col items-center space-y-4 text-center">
               <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary/80 shadow-lg">
-                <MessageCircle className="h-7 w-7 text-primary-foreground" />
+                <BotIcon className="h-7 w-7 text-primary-foreground" />
               </div>
               <h3 className="font-display text-xl font-semibold tracking-tight text-foreground lg:text-2xl">
-                LLM Powered
+                YARA + LLMs 
               </h3>
               <p className="text-sm leading-relaxed text-muted-foreground lg:text-base">
-                We use LLMs and OSS to deconstruct, analyze, and report on firmware
+                We use deterministic tools and LLMs to analyze your firmware and generate OSCAL reports
               </p>
             </div>
           </div>
@@ -59,13 +58,13 @@ export function Features() {
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
             <div className="relative z-10 flex flex-col items-center space-y-4 text-center">
               <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary/80 shadow-lg">
-                <GitHubLogoIcon className="h-7 w-7 text-primary-foreground" />
+                <TerminalIcon className="h-7 w-7 text-primary-foreground" />
               </div>
               <h3 className="font-display text-xl font-semibold tracking-tight text-foreground lg:text-2xl">
-                Github App
+                Simple CLI
               </h3>
               <p className="text-sm leading-relaxed text-muted-foreground lg:text-base">
-                Enforce checks and catch security issues on firmware builds via our GitHub app 
+                Our CLI is simple and can be integrated into your CI/CD pipelines with ease
               </p>
             </div>
           </div>
@@ -74,13 +73,13 @@ export function Features() {
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
             <div className="relative z-10 flex flex-col items-center space-y-4 text-center">
               <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary/80 shadow-lg">
-                <MagnifyingGlassIcon className="h-7 w-7 text-primary-foreground" />
+                <NotebookIcon className="h-7 w-7 text-primary-foreground" />
               </div>
               <h3 className="font-display text-xl font-semibold tracking-tight text-foreground lg:text-2xl">
-                Hidden Insights
+                Supercatalog
               </h3>
               <p className="text-sm leading-relaxed text-muted-foreground lg:text-base">
-                Leverage LLMs to drum up hidden gotchas in your compiled firmware you may have missed
+                Use our supercatalog with controls from over 11 compliance frameworks
               </p>
             </div>
           </div>

@@ -65,7 +65,28 @@ function Hero() {
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 px-4">
-            <Button size="lg" className="gap-4 sm:gap-4 px-5 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base" variant="outline">
+            <Button 
+              size="lg" 
+              className="gap-4 sm:gap-4 px-5 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base" 
+              variant="outline"
+              onClick={async () => {
+                try {
+                  const response = await fetch('https://raw.githubusercontent.com/usenabla-com/www.usenabla.com/refs/heads/main/oscal-test.json');
+                  const data = await response.text();
+                  const blob = new Blob([data], { type: 'application/json' });
+                  const url = URL.createObjectURL(blob);
+                  const link = document.createElement('a');
+                  link.href = url;
+                  link.download = 'oscal-sample.json';
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
+                  URL.revokeObjectURL(url);
+                } catch (error) {
+                  console.error('Failed to download OSCAL sample:', error);
+                }
+              }}
+            >
               Download a OSCAL sample <DownloadIcon className="w-4 h-4" />
             </Button>
             <Button size="lg" className="gap-4 sm:gap-4 px-5 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base">

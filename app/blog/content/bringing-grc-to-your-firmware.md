@@ -70,7 +70,7 @@ pub struct BinaryAnalysis {
 }
 ```
 
-What's more exciting is that we did about 85% of this using Claude Code. And if you were to ask me what made this possible I would tell you without hesitation that having the fully built out type system in advance is what made the LLM spit out repeatable suggestions to us when we needed them.
+What's more exciting is that we did about 65% of this using Claude Code. And if you were to ask me what made this possible I would tell you without hesitation that having the fully built out type system in advance is what made the LLM spit out repeatable suggestions to us when we needed them.
 
 ### The power of structured extraction
 

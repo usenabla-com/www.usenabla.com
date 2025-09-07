@@ -1,7 +1,7 @@
 {
-  "name": "Nabla | The shift-left platform for firmware security automation.",
+  "name": "Nabla | Automated GRC for mission-critical firmware compliance.",
   "short_name": "Nabla",
-  "description": "The shift-left platform for firmware security automation.",
+  "description": "Automated GRC for mission-critical firmware compliance.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

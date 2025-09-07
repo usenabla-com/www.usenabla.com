@@ -14,7 +14,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "Nabla | The shift-left platform for firmware security automation." as const,
+  title: "Nabla | LLM-powered GRC tooling for your next firmware audit." as const,
   description: "" as const,
   generator: 'v0.dev',
 
@@ -22,8 +22,8 @@ export const metadata: Metadata = {
   authors: [{ name: 'Nabla' }],
   creator: 'Nabla',
   openGraph: {
-    title: "Nabla | GRC automation tooling for firmware.",
-    description: "LLM-driven firmware security automation. Built with Rust and open source libraries.",
+    title: "Nabla | LLM-powered GRC tooling for your next firmware audit.",
+    description: "We provide automated OSCAL report generation for mission-critical firmware audits",
     url: "https://www.www.usenabla.com",
     siteName: "Nabla",
     images: [
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
         url: "https://www.usenabla.com/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Nabla - The shift-left platform for firmware security automation."
+        alt: "Nabla | LLM-powered GRC tooling for your next firmware audit.."
       }
     ],
     locale: "en_US",
@@ -39,8 +39,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nabla | The shift-left platform for firmware security automation.",
-    description: "We provide automated BCA for mission-critical firmware security",
+    title: "Nabla | LLM-powered GRC tooling for your next firmware audit.",
+    description: "We provide automated OSCAL generation for mission-critical firmware audits",
     images: ["https://www.usenabla.com/og-image.png"]
   },
   robots: {

@@ -103,8 +103,7 @@ Rather than reinventing the wheel, we built Nabla to leverage the existing ecosy
 - **Binwalk** for format identification and extraction
 - **Radare2** for disassembly and analysis
 - **YARA** for pattern matching and signature detection
-- **File** for format identification
-- **Strings** for basic text extraction (with enhanced filtering)
+- **OpenAI Compatible LLM Layer** for AI analysis, false positive filtering, and OSCAL report generation
 
 The key innovation is how we structure and normalize the output from these tools. Instead of requiring analysts to manually correlate results from different tools, our Rust type system enforces consistency and completeness across all analysis methods.  
 
@@ -167,7 +166,7 @@ This multi-signal approach is what allows us to achieve our low false positive r
 
 ### False positive filtering: The make-or-break feature
 
-In our early versions, we had an 80% false positive rate. That's completely unusable for compliance reporting – imagine presenting an auditor with 1000 potential security issues when only 200 are actually relevant. They'd lose confidence in the entire assessment.
+In our early implementation, we found that relying solely on the LLM for analysis created a large amount of false positive identifications, but also drummed up issues that we weren't finding with deterministic analysis. So we decided to combine the two approaches for a more reliable compliance automation experience.
 
 Our false positive filtering uses a multi-layer approach:
 

@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { DownloadIcon, KeyIcon, KeyRound, MoveRight, PhoneCall } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 function Hero() {
   const [titleNumber, setTitleNumber] = useState(0);
@@ -27,9 +28,11 @@ function Hero() {
       <div className="container mx-auto">
         <div className="flex gap-8 py-20 lg:py-40 items-center justify-center flex-col">
           <div>
-            <Button variant="secondary" size="sm" className="gap-4">
-              Read our launch article <MoveRight className="w-4 h-4" />
-            </Button>
+            <Link href="/blog/bringing-grc-to-your-firmware">
+              <Button variant="secondary" size="sm" className="gap-4">
+                Read our launch article <MoveRight className="w-4 h-4" />
+              </Button>
+            </Link>
           </div>
           <div className="flex gap-4 flex-col">
             <h1 className="text-5xl md:text-7xl max-w-5xl tracking-tighter text-center font-bold">

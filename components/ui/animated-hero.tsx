@@ -8,7 +8,7 @@ import Link from "next/link";
 function Hero() {
   const [titleNumber, setTitleNumber] = useState(0);
   const titles = useMemo(
-    () => ["Automative", "Space", "Healthcare", "IoT", "Aerospace"],
+    () => ["ISO/SAE 21434", "NIST SP 800", "ECSS-Q-ST-80", "GSMA IoT", "NISTIR 8259A/B" ],
     []
   );
 
@@ -36,7 +36,7 @@ function Hero() {
           </div>
           <div className="flex gap-4 flex-col">
             <h1 className="text-5xl md:text-7xl max-w-5xl tracking-tighter text-center font-bold">
-              <span className="text-spektr-cyan-50 font-bold">Firmware compliance tools for</span>
+              <span className="text-spektr-cyan-50 font-bold">Accelerate firmware compliance for</span>
               <span className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1">
                 &nbsp;
                 {titles.map((title, index) => (
@@ -64,7 +64,7 @@ function Hero() {
             </h1>
 
             <p className="text-lg md:text-xl leading-relaxed tracking-tight text-foreground max-w-2xl text-center mx-auto">
-              You don't have to neglect your firmware security anymore. You can make your audits a breeze with our AI-powered OSCAL generation tool with deterministic initial analysis.
+              Save time and money on your next firmware audit with binary analysis and automated OSCAL report generation.
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 px-4">
@@ -92,9 +92,11 @@ function Hero() {
             >
               Download a OSCAL sample <DownloadIcon className="w-4 h-4" />
             </Button>
-            <Button size="lg" className="gap-4 sm:gap-4 px-5 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base">
-              Get a 14-day trial license <KeyRound className="w-4 h-4" />
-            </Button>
+            <Link href="mailto:trial@usenabla.com">
+              <Button size="lg" className="gap-4 sm:gap-4 px-5 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base">
+                Get a 14-day trial license <KeyRound className="w-4 h-4" />
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

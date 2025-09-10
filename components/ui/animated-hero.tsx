@@ -75,7 +75,7 @@ function Hero() {
               variant="outline"
               onClick={async () => {
                 try {
-                  const response = await fetch('https://raw.githubusercontent.com/usenabla-com/www.usenabla.com/refs/heads/main/fda_assessment.json');
+                  const response = await fetch('https://raw.githubusercontent.com/usenabla-com/www.usenabla.com/refs/heads/main/fda_assessment.json?token=GHSAT0AAAAAADIEQYEXPIT6GNWNUMFKGM6G2GBVU7Q');
                   const data = await response.text();
                   const blob = new Blob([data], { type: 'application/json' });
                   const url = URL.createObjectURL(blob);

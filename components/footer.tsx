@@ -52,9 +52,9 @@ export function Footer() {
            <div className="space-y-4">
             <h3 className="text-sm font-semibold">Company</h3>
             <nav className="space-y-2">
-              <Link href="/trial-terms" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
+              {/* <Link href="/trial-terms" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
                 Trial Terms
-              </Link>
+              </Link> */}
               <Link href="mailto:media@usenabla.com" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
                 Press
               </Link>

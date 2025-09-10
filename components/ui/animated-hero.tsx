@@ -75,13 +75,13 @@ function Hero() {
               variant="outline"
               onClick={async () => {
                 try {
-                  const response = await fetch('https://raw.githubusercontent.com/usenabla-com/www.usenabla.com/refs/heads/main/fda_assessment.json?token=GHSAT0AAAAAADIEQYEXPIT6GNWNUMFKGM6G2GBVU7Q');
+                  const response = await fetch('https://gist.githubusercontent.com/jdbohrman/cc0b8f444a4d48258864bf99ff61131a/raw/fda_assessment.json');
                   const data = await response.text();
                   const blob = new Blob([data], { type: 'application/json' });
                   const url = URL.createObjectURL(blob);
                   const link = document.createElement('a');
                   link.href = url;
-                  link.download = 'oscal-sample.json';
+                  link.download = 'fda_assessment.json';
                   document.body.appendChild(link);
                   link.click();
                   document.body.removeChild(link);

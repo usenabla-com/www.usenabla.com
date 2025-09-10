@@ -311,7 +311,7 @@ export default function TrialTermsPage() {
                   </div>
                   <div>
                     <h4 className="font-semibold mb-2">Sales & Billing</h4>
-                    <p className="text-sm text-muted-foreground">Email: james@usenabla.com</p>
+                    <p className="text-sm text-muted-foreground">Email: sales@usenabla.com</p>
                     <p className="text-sm text-muted-foreground">For enterprise inquiries and pricing</p>
                   </div>
                 </div>

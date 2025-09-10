@@ -47,7 +47,7 @@ export function Navbar() {
           <ThemeToggle />
           <Button
             className="gap-2 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
-            onClick={() => window.open('https://discord.gg/QvsUwuExe6', '_blank')}
+            onClick={() => window.open('https://discord.gg/SYwGtsBT6S', '_blank')}
           >
             <DiscordLogoIcon />
             Join the Discord
@@ -104,7 +104,7 @@ export function Navbar() {
                   variant="outline"
                   className="w-full gap-2 bg-background/90 hover:bg-primary hover:text-white dark:hover:text-white border-2 border-primary/20 hover:border-primary font-medium shadow-lg hover:shadow-xl transition-all duration-200 backdrop-blur-sm"
                   onClick={() => {
-                    window.open('https://discord.gg/QvsUwuExe6', '_blank')
+                    window.open('https://discord.gg/SYwGtsBT6S', '_blank')
                     setIsMenuOpen(false)
                   }}
                 >

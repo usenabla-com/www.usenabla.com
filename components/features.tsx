@@ -1,5 +1,11 @@
 import { GitHubLogoIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons"
-import { Code, Microchip, Zap, Sparkles, Lock, Radar, RecycleIcon, Bot, MessageCircle, MagnetIcon, BotIcon, TerminalIcon, NotebookIcon } from "lucide-react"
+import { Code, Microchip, Zap, Sparkles, Lock, Radar, RecycleIcon, Bot, MessageCircle, MagnetIcon, TerminalIcon, NotebookIcon, VideoOff, DotIcon, Video, ActivitySquare, ReceiptIcon, Receipt, ReceiptText } from "lucide-react"
+
+const OpenAIIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="currentColor">
+    <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142-.0852 4.783-2.7582a.7712.7712 0 0 0 .7806 0l5.8428 3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zm-2.4569-11.0537a4.4714 4.4714 0 0 1 2.3456-1.9765V9.74a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 .6031 7.2833zm16.5651 3.6963l-5.8428-3.3685V5.2611c0-.0804.0332-.0804.0804-.0332L15.814 7.2833a4.4992 4.4992 0 0 1 1.6464 6.1408 4.4708 4.4708 0 0 1-.5346 3.0137l-.142-.0804z"/>
+  </svg>
+)
 
 export function Features() {
   return (
@@ -28,13 +34,13 @@ export function Features() {
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
             <div className="relative z-10 flex flex-col items-center space-y-4 text-center">
               <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary/80 shadow-lg">
-                <BotIcon className="h-7 w-7 text-primary-foreground" />
+                <OpenAIIcon className="h-7 w-7 text-primary-foreground" />
               </div>
               <h3 className="font-display text-xl font-semibold tracking-tight text-foreground lg:text-2xl">
-                YARA + LLMs 
+                OpenAI Compatible
               </h3>
               <p className="text-sm leading-relaxed text-muted-foreground lg:text-base">
-                We use deterministic tools and LLMs to analyze your firmware and generate OSCAL reports
+                Use hosted LLMs, GovCloud, or your own private models to analyze your firmware
               </p>
             </div>
           </div>
@@ -43,13 +49,13 @@ export function Features() {
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
             <div className="relative z-10 flex flex-col items-center space-y-4 text-center">
               <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary/80 shadow-lg">
-                <Code className="h-7 w-7 text-primary-foreground" />
+                <ActivitySquare className="h-7 w-7 text-primary-foreground" />
               </div>
               <h3 className="font-display text-xl font-semibold tracking-tight text-foreground lg:text-2xl">
-                Binary Analysis
+                Live Hardware Support
               </h3>
               <p className="text-sm leading-relaxed text-muted-foreground lg:text-base">
-                Check your binaries automatically for known vulnerabilities and security issues
+                Use the `--live-mode` flag to connect real hardware over serial for controls that require live hardware
               </p>
             </div>
           </div>
@@ -58,13 +64,13 @@ export function Features() {
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
             <div className="relative z-10 flex flex-col items-center space-y-4 text-center">
               <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary/80 shadow-lg">
-                <TerminalIcon className="h-7 w-7 text-primary-foreground" />
+                <ReceiptText className="h-7 w-7 text-primary-foreground" />
               </div>
               <h3 className="font-display text-xl font-semibold tracking-tight text-foreground lg:text-2xl">
-                Simple CLI
+                SBOM Generation
               </h3>
               <p className="text-sm leading-relaxed text-muted-foreground lg:text-base">
-                Our CLI is simple and can be integrated into your CI/CD pipelines with ease
+                Generate SBOMs in CycloneDX formwat for your firmware images
               </p>
             </div>
           </div>
@@ -76,10 +82,10 @@ export function Features() {
                 <NotebookIcon className="h-7 w-7 text-primary-foreground" />
               </div>
               <h3 className="font-display text-xl font-semibold tracking-tight text-foreground lg:text-2xl">
-                Supercatalog
+                OSCAL Supercatalog
               </h3>
               <p className="text-sm leading-relaxed text-muted-foreground lg:text-base">
-                Use our supercatalog with controls from over 11 compliance frameworks
+                Use our firmare supercatalog with over 122 different controls
               </p>
             </div>
           </div>

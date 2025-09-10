@@ -1,3 +1,4 @@
+"use client"
 import { Hero } from "@/components/ui/animated-hero"
 import { Navbar } from "@/components/navbar"
 import { Features } from "@/components/features"

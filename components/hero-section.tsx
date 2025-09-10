@@ -34,17 +34,35 @@ export function HeroSection() {
 
           </div>
 
-          {/* Right side - Security Image */}
+          {/* Right side - Demo Card */}
           <div className="flex items-center justify-center lg:justify-end">
-            <div className="relative w-full max-w-lg">
-              <Image
-                src="/shield.png"
-                alt="Security platform illustration showing shield, chip, and lock representing firmware security automation"
-                width={600}
-                height={600}
-                className="w-full h-auto object-contain"
-                priority
-              />
+            <div className="relative w-full max-w-2xl">
+              <div className="group relative overflow-hidden rounded-3xl border border-border/50 bg-card/50 p-6 shadow-2xl transition-all duration-500 hover:shadow-3xl hover:shadow-primary/10 hover:border-primary/20 backdrop-blur-sm">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-display text-lg font-semibold tracking-tight text-foreground">
+                      Live Demo
+                    </h3>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                      <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                    </div>
+                  </div>
+                  <div className="relative overflow-hidden rounded-xl bg-black/90">
+                    <Image
+                      src="/demo.gif"
+                      alt="Live demo of Nabla firmware analysis in action"
+                      width={800}
+                      height={500}
+                      className="w-full h-auto object-contain"
+                      priority
+                      unoptimized
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 

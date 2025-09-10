@@ -23,13 +23,13 @@ export function Footer() {
                 </svg>
                 <span className="sr-only">GitHub</span>
               </Link>
-              <Link href="https://discord.gg/QvsUwuExe6" className="text-muted-foreground hover:text-foreground transition-colors">
+              <Link href="https://discord.gg/SYwGtsBT6S" className="text-muted-foreground hover:text-foreground transition-colors">
                 <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
                   <path d={siDiscord.path} />
                 </svg>
                 <span className="sr-only">Slack</span>
               </Link>
-              <Link href="mailto:james@usenabla.com" className="text-muted-foreground hover:text-foreground transition-colors">
+              <Link href="mailto:hello@usenabla.com" className="text-muted-foreground hover:text-foreground transition-colors">
                 <MailIcon className="h-5 w-5" />
               </Link>
             </div>
@@ -41,11 +41,25 @@ export function Footer() {
               <Link href="/blog" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
                 Blog
               </Link>
-              <Link href="https://github.com/Atelier-Logos/nabla" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
-                GitHub
+              <Link href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
+                Docs (Coming Soon)
               </Link>
-              <Link href="https://join.slack.com/t/atelierlogos/shared_invite/zt-384mjl0hs-X2WTb8sc1xFrrDKULcgboQ" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
-                Slack Community
+              <Link href="https://discord.gg/SYwGtsBT6S" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
+                Discord
+              </Link>
+            </nav>
+          </div>
+           <div className="space-y-4">
+            <h3 className="text-sm font-semibold">Company</h3>
+            <nav className="space-y-2">
+              <Link href="/trial-terms" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
+                Trial Terms
+              </Link>
+              <Link href="mailto:media@usenabla.com" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
+                Press
+              </Link>
+              <Link href="mailto:support@usenabla.com" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
+                Support
               </Link>
             </nav>
           </div>

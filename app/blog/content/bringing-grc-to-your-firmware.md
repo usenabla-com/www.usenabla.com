@@ -11,13 +11,13 @@ In 2025, we started a journey to build a general binary composition analysis too
 
 But this transformation didn't happen overnight, and it certainly wasn't planned from day one. Like many startups, we started with one vision and pivoted based on what we learned from our users and the market reality. The firmware security landscape is fragmented, complex, and desperately needs tooling that bridges the gap between deep technical analysis and the governance frameworks that organizations actually need to comply with.
 
-The problem we initially set out to solve was simple: firmware analysis is hard, time-consuming, and requires specialized knowledge that most organizations don't have in-house. Traditional static analysis tools are either too generic (missing firmware-specific insights) or too specialized (requiring deep reverse engineering expertise). Meanwhile, compliance frameworks like NIST SP 800-193, ISO/SAE 21434, and others demand specific evidence and documentation that current tools simply don't provide in the right format.
+The problem we initially set out to solve was simple: firmware analysis is hard, time-consuming, and requires specialized knowledge that most organizations don't have in-house. Traditional static analysis tools are either too generic (missing firmware-specific insights) or too specialized (requiring deep reverse engineering expertise). Meanwhile, guidances like NIST SP 800-193, ISO/SAE 21434, and others demand specific evidence and documentation that current tools simply don't provide in the right format.
 
 We didn't start out with this approach, and this blog is going to dive into some of the unique approaches to programming we took to build this tool while ensuring resiliency and code cleanliness. More importantly, we'll share the lessons we learned about building a product that serves both the technical teams doing the analysis and the compliance teams who need to present results to auditors.
 
 ## The firmware security compliance gap
 
-Before diving into our technical approach, it's worth understanding the landscape that led us here. Firmware security isn't just about finding vulnerabilities anymore – it's about proving compliance with an ever-growing list of regulatory frameworks. Whether you're building IoT devices for the EU market (ETSI EN 303 645), automotive systems (ISO/SAE 21434), or federal systems (NIST SP 800-193), you need more than just a list of CVEs.
+Before diving into our technical approach, it's worth understanding the landscape that led us here. Firmware security isn't just about finding vulnerabilities anymore – it's about proving compliance with an ever-growing list of regulatory guidances. Whether you're building IoT devices for the EU market (ETSI EN 303 645), automotive systems (ISO/SAE 21434), or federal systems (NIST SP 800-193), you need more than just a list of CVEs.
 
 You need auditable evidence that your firmware meets specific security controls. You need documentation that maps technical findings to regulatory requirements. And you need this process to be repeatable, because compliance isn't a one-time event – it's an ongoing requirement that evolves with every firmware update.
 
@@ -83,7 +83,7 @@ Each field in our `BinaryAnalysis` struct serves a specific purpose in the secur
 - **String extraction** often reveals hardcoded credentials, API keys, or configuration details
 - **Import/export analysis** maps the attack surface and identifies external dependencies
 
-The hash values (`sha256` and `blake3`) provide cryptographic integrity verification, which is crucial for compliance frameworks that require evidence of tamper-free analysis.
+The hash values (`sha256` and `blake3`) provide cryptographic integrity verification, which is crucial for complying with published guidances that require evidence of tamper-free analysis.
 
 ### Handling the long tail of formats
 
@@ -188,17 +188,17 @@ This approach reduced our false positive rate to under 15% while maintaining a 9
 
 With our deterministic signal foundation proving reliable, we started exploring how to make our analysis output more useful for compliance teams. The feedback we received consistently pointed to the same problem: technical vulnerability reports don't map cleanly to regulatory requirements.
 
-A conversation with a close friend of the company who has extensive GRC engineering experience proved transformative. During our discussion about NIST frameworks and firmware auditing requirements, we realized we were solving the wrong problem. Organizations don't just need better vulnerability detection – they need vulnerability detection that speaks the language of compliance frameworks.
+A conversation with a close friend of the company who has extensive GRC engineering experience proved transformative. During our discussion about NIST guidances and firmware auditing requirements, we realized we were solving the wrong problem. Organizations don't just need better vulnerability detection – they need vulnerability detection that speaks the language of published regulatory guidances.
 
 This insight fundamentally shifted our approach. Instead of building a general-purpose binary analysis tool that happened to find security issues, we pivoted to building a compliance-focused tool that uses binary analysis as the foundation for regulatory reporting.
 
 The key realization was that technical teams and compliance teams operate in completely different worlds. Technical teams think in terms of CVEs, attack vectors, and code quality metrics. Compliance teams think in terms of controls, evidence packages, and audit readiness. Most security tools serve the technical side well but leave compliance teams to manually translate findings into regulatory language.
 
-We saw an opportunity to bridge this gap through structured documentation that automatically maps technical findings to regulatory requirements. OSCAL (Open Security Controls Assessment Language) became the cornerstone of this approach, providing a standardized format that both technical and compliance teams could work with. Currently, we cover several controls in [NIST SP 800-193](https://csrc.nist.gov/pubs/sp/800/193/final), with plans to expand across multiple frameworks.
+We saw an opportunity to bridge this gap through structured documentation that automatically maps technical findings to regulatory requirements. OSCAL (Open Security Controls Assessment Language) became the cornerstone of this approach, providing a standardized format that both technical and compliance teams could work with. Currently, we alight with much of the guidance in [NIST SP 800-193](https://csrc.nist.gov/pubs/sp/800/193/final), with plans to expand across multiple published guidances.
 
 ## We plan to develop a "supercatalog" for firmware controls
 
-Our long-term roadmap involves a few things, but the key focus we want to address at the moment is the development of a firmware-focused supercatalog that covers various rules and controls from all of these frameworks:
+Our long-term roadmap involves a few things, but the key focus we want to address at the moment is the development of a firmware-focused supercatalog that covers various rules and controls from multiple regulatory guidances:
 
 ### Current coverage:
 - **NIST SP 800-193** (Partial): Platform firmware resiliency controls
@@ -216,16 +216,16 @@ Our long-term roadmap involves a few things, but the key focus we want to addres
 
 ### The supercatalog vision
 
-The supercatalog isn't just about adding more frameworks – it's about creating intelligent mappings between overlapping requirements. Many firmware security controls appear across multiple frameworks but with different terminology, emphasis, or implementation requirements.
+The supercatalog isn't just about adding more coverage – it's about creating intelligent mappings between overlapping requirements. Many firmware security  statements and implementation guidances have patterns that appear across multiple published documents but with different terminology, emphasis, or implementation requirements.
 
 Our goal is to build a unified control library that:
 
-- **Maps overlapping controls** across different frameworks automatically
-- **Identifies conflicts** where frameworks have contradictory requirements
-- **Prioritizes findings** based on which frameworks apply to the specific use case
+- **Maps overlapping controls** across different regulatory guidances automatically
+- **Identifies conflicts** where published guidances have contradictory requirements
+- **Prioritizes findings** based on which regulatory guidances apply to the specific use case
 - **Provides implementation guidance** that satisfies multiple framework requirements simultaneously
 
-For example, cryptographic key management appears in FIPS 140-3, ISO/SAE 21434, and ETSI EN 303 645, but each framework has different requirements for key storage, rotation, and validation. Our supercatalog would identify these overlaps and provide guidance that satisfies all applicable frameworks.
+For example, cryptographic key management appears in FIPS 140-3, ISO/SAE 21434, and ETSI EN 303 645, but each framework has different requirements for key storage, rotation, and validation. Our supercatalog would identify these overlaps and provide guidance that satisfies all applicable controls across multiple guidances.
 
 ## Why bring GRC into binary analysis?
 
@@ -239,7 +239,7 @@ For firmware analysis, OSCAL provides several key benefits:
 
 **Standardized Evidence**: Instead of custom reports that vary by vendor, OSCAL provides a consistent format that auditors and regulators can rely on.
 
-**Automated Compliance Mapping**: Technical findings can be automatically mapped to specific controls in various frameworks (NIST, ISO, etc.).
+**Automated Compliance Mapping**: Technical findings can be automatically mapped to specific controls within their respective standards-setting org (NIST, ISO, etc.).
 
 **Traceability**: Every finding is linked back to the specific binary location and extraction method that discovered it.
 

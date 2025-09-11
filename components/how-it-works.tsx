@@ -102,11 +102,12 @@ export function HowItWorks() {
                 <h3 className="text-xl font-semibold text-green-800 mb-2">Message Sent!</h3>
                 <p className="text-muted-foreground mb-4">Thank you for reaching out. We'll get back to you soon.</p>
                 <Button 
-                  onClick={() => setIsSuccess(false)}
-                  variant="outline"
+                  asChild
                   className="mt-2"
                 >
-                  Send Another Message
+                  <a href="https://cal.com/team/nabla/45-min-intro-call" target="_blank" rel="noopener noreferrer">
+                    Schedule a Call
+                  </a>
                 </Button>
               </div>
             ) : (

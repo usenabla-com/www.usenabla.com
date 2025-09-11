@@ -21,11 +21,11 @@ export function Features() {
             <h2 className="font-display text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl">
               Machine readable OSCAL reports{" "}  
               <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-foreground">
-                to help you pass audits{" "}
+                to help you pass assessments{" "}
               </span>
             </h2>
             <p className="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground lg:text-xl">
-              Whether you just want to assess your positioning or you have an audit coming up, we can help you generate OSCAL documents in minutes, not weeks.
+              Whether you just want to assess your positioning or you have an assessments coming up, we can help you generate OSCAL documents in minutes, not weeks.
             </p>
           </div>
         </div>

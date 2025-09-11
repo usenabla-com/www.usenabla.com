@@ -5,8 +5,17 @@ import { Features } from "@/components/features"
 import { HowItWorks } from "@/components/how-it-works"
 import { Footer } from "@/components/footer"
 import { useAnalytics } from '@/hooks/use-analytics'
+import { useEffect } from "react"
+import { getCalApi } from "@calcom/embed-react";
 
 export default function Home() {
+  useEffect(() => {
+    (async function () {
+      const cal = await getCalApi({"namespace":"45-min-intro-call"});
+      cal("floatingButton", {"calLink":"team/nabla/45-min-intro-call","config":{"layout":"month_view"},"buttonText":"Schedule a demo"});
+      cal("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#FF5F1F"},"dark":{"cal-brand":"#FF5F1F"}},"hideEventTypeDetails":false,"layout":"month_view"});
+    })();
+  }, [])
   useAnalytics().page()
   return (
     <div className="relative min-h-screen overflow-hidden">

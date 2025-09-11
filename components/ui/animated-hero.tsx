@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { DownloadIcon, KeyIcon, KeyRound, MailPlus, MoveRight, PhoneCall } from "lucide-react";
+import { Calendar, DownloadIcon, KeyIcon, KeyRound, MailPlus, MoveRight, PhoneCall } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
@@ -65,7 +65,7 @@ function Hero() {
             </h1>
 
             <p className="text-lg md:text-xl leading-relaxed tracking-tight text-foreground max-w-2xl text-center mx-auto">
-              Save time and money on your next firmware audit with binary analysis and automated OSCAL report generation.
+              Save time and money on your next firmware assessment with binary analysis and automated OSCAL report generation.
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 px-4">
@@ -93,9 +93,9 @@ function Hero() {
             >
               Get an OSCAL sample <DownloadIcon className="w-4 h-4" />
             </Button>
-            <Link href="mailto:trial@usenabla.com">
+            <Link href="https://cal.com/team/nabla/45-min-intro-call">
               <Button size="lg" className="gap-4 sm:gap-4 px-5 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base">
-               Send us an Email <MailPlus className="w-4 h-4" />
+               Schedule a demo <Calendar className="w-4 h-4" />
               </Button>
             </Link>
           </div>

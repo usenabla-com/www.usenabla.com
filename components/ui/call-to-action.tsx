@@ -76,21 +76,6 @@ function CTA({
               </Button>
             </div>
             
-            {/* Trust indicators */}
-            <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-6 text-xs sm:text-sm text-muted-foreground mt-2 sm:mt-4">
-              <div className="flex items-center gap-1.5">
-                <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                <span>Free 14-day trial</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <div className="w-2 h-2 rounded-full bg-blue-500"></div>
-                <span>No credit card required</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <div className="w-2 h-2 rounded-full bg-purple-500"></div>
-                <span>Cancel anytime</span>
-              </div>
-            </div>
           </div>
         </div>
       </div>

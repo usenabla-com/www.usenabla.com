@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { Calendar, DownloadIcon, KeyIcon, KeyRound, MailPlus, MoveRight, PhoneCall } from "lucide-react";
+import { Book, Calendar, DownloadIcon, KeyIcon, KeyRound, MailPlus, MoveRight, PhoneCall } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
@@ -9,7 +9,7 @@ import Image from "next/image";
 function Hero() {
   const [titleNumber, setTitleNumber] = useState(0);
   const titles = useMemo(
-    () => ["IoT", "Healthcare", "Industrial", "Automotive", "Manufacturing" ],
+    () => ["Compliance Evidence", "Security Automation", "Stakeholder Reports", "Vulnerability Research" ],
     []
   );
 
@@ -29,15 +29,15 @@ function Hero() {
       <div className="container mx-auto">
         <div className="flex gap-8 py-20 lg:py-40 items-center justify-center flex-col">
           <div>
-            <Link href="/blog/bringing-grc-to-your-firmware">
+            <Link href="https://docs.usenabla.com">
               <Button variant="secondary" size="sm" className="gap-4">
-                Read our launch article <MoveRight className="w-4 h-4" />
+               🎉 Nabla 1.2.0 just dropped <MoveRight className="w-4 h-4" />
               </Button>
             </Link>
           </div>
           <div className="flex gap-4 flex-col">
             <h1 className="text-5xl md:text-7xl max-w-5xl tracking-tighter text-center font-bold">
-              <span className="text-spektr-cyan-50 font-bold">Accelerate firmware compliance for</span>
+              <span className="text-spektr-cyan-50 font-bold">Enterprise binary analysis for</span>
               <span className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1">
                 &nbsp;
                 {titles.map((title, index) => (
@@ -65,37 +65,22 @@ function Hero() {
             </h1>
 
             <p className="text-lg md:text-xl leading-relaxed tracking-tight text-foreground max-w-2xl text-center mx-auto">
-              Save time and money on your next firmware assessment with binary analysis and automated OSCAL report generation.
+              We save teams hundreds of security and compliance hours with advanced Binary Composition Analysis (BCA), SBOM generation, and compliance assessment for mission critical firmware
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 px-4">
+            <Link href="https://docs.usenabla.com">
             <Button 
               size="lg" 
               className="gap-4 sm:gap-4 px-5 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base" 
               variant="outline"
-              onClick={async () => {
-                try {
-                  const response = await fetch('https://gist.githubusercontent.com/jdbohrman/cc0b8f444a4d48258864bf99ff61131a/raw/fda_assessment.json');
-                  const data = await response.text();
-                  const blob = new Blob([data], { type: 'application/json' });
-                  const url = URL.createObjectURL(blob);
-                  const link = document.createElement('a');
-                  link.href = url;
-                  link.download = 'fda_assessment.json';
-                  document.body.appendChild(link);
-                  link.click();
-                  document.body.removeChild(link);
-                  URL.revokeObjectURL(url);
-                } catch (error) {
-                  console.error('Failed to download OSCAL sample:', error);
-                }
-              }}
             >
-              Get an OSCAL sample <DownloadIcon className="w-4 h-4" />
+              Check out the docs <Book className="w-4 h-4" />
             </Button>
-            <Link href="https://cal.com/team/nabla/45-min-intro-call">
+            </Link>
+            <Link href="https://cal.com/team/nabla/nabla-pilot-interest-call">
               <Button size="lg" className="gap-4 sm:gap-4 px-5 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base">
-               Schedule a demo <Calendar className="w-4 h-4" />
+               Schedule a demo<Calendar className="w-4 h-4" />
               </Button>
             </Link>
           </div>

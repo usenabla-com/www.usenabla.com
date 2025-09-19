@@ -41,8 +41,8 @@ export function Footer() {
               <Link href="/blog" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
                 Blog
               </Link>
-              <Link href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
-                Docs (Coming Soon)
+              <Link href="/docs" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
+                Docs
               </Link>
               <Link href="https://discord.gg/SYwGtsBT6S" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
                 Discord

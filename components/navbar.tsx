@@ -39,6 +39,12 @@ export function Navbar() {
         {/* Desktop Actions */}
         <div className="hidden md:flex items-center gap-3">
           <Link
+            href="/docs"
+            className="text-sm font-medium hover:text-primary transition-colors px-3 py-2"
+          >
+            Docs
+          </Link>
+          <Link
             href="/blog"
             className="text-sm font-medium hover:text-primary transition-colors px-3 py-2"
           >
@@ -80,6 +86,14 @@ export function Navbar() {
               >
                 <Settings size={16} />
                 How It Works
+              </Link>
+              <Link
+                href="/docs"
+                className="flex items-center gap-3 py-2 text-sm font-medium hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <BookOpen size={16} />
+                Docs
               </Link>
               <Link
                 href="/blog"

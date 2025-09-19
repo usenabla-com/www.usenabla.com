@@ -1,5 +1,5 @@
 import { GitHubLogoIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons"
-import { Code, Microchip, Zap, Sparkles, Lock, Radar, RecycleIcon, Bot, MessageCircle, MagnetIcon, TerminalIcon, NotebookIcon, VideoOff, DotIcon, Video, ActivitySquare, ReceiptIcon, Receipt, ReceiptText } from "lucide-react"
+import { Code, Microchip, Zap, Sparkles, Lock, Radar, RecycleIcon, Bot, MessageCircle, MagnetIcon, TerminalIcon, NotebookIcon, VideoOff, DotIcon, Video, ActivitySquare, ReceiptIcon, Receipt, ReceiptText, BrainCircuit } from "lucide-react"
 
 const OpenAIIcon = ({ className }: { className?: string }) => (
   <svg fill="currentColor" fillRule="evenodd" height="1em" style={{flex: "none", lineHeight: 1}} viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" className={className}>
@@ -19,13 +19,13 @@ export function Features() {
               Features
             </div>
             <h2 className="font-display text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl">
-              Machine readable OSCAL reports{" "}  
+              Machine readable evidence generation{" "}  
               <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-foreground">
-                to help you pass assessments{" "}
+                for true CI-native firmware analysis{" "}
               </span>
             </h2>
             <p className="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground lg:text-xl">
-              Whether you just want to assess your positioning or you have an assessments coming up, we can help you generate OSCAL documents in minutes, not weeks.
+              Generate SARIF reports and take advantage of --fail-on flags to fail your CI/CD pipelines when vulnerabilities are found in your firmware images
             </p>
           </div>
         </div>
@@ -35,13 +35,13 @@ export function Features() {
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
             <div className="relative z-10 flex flex-col items-center space-y-4 text-center">
               <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary/80 shadow-lg">
-                <OpenAIIcon className="h-7 w-7 text-primary-foreground" />
+                <BrainCircuit className="h-7 w-7 text-primary-foreground" />
               </div>
               <h3 className="font-display text-xl font-semibold tracking-tight text-foreground lg:text-2xl">
-                OpenAI Compatible
+                Deterministic
               </h3>
               <p className="text-sm leading-relaxed text-muted-foreground lg:text-base">
-                Use hosted LLMs, GovCloud, or your own private models to analyze your firmware
+                No LLMs, no randomness. Just pure deterministic analysis that you can trust
               </p>
             </div>
           </div>
@@ -53,10 +53,10 @@ export function Features() {
                 <ActivitySquare className="h-7 w-7 text-primary-foreground" />
               </div>
               <h3 className="font-display text-xl font-semibold tracking-tight text-foreground lg:text-2xl">
-                Live Hardware Support
+                Workflow Integration
               </h3>
               <p className="text-sm leading-relaxed text-muted-foreground lg:text-base">
-                Use the `--live-mode` flag to connect real hardware over serial for controls that require live hardware
+               Integrates seamliessly into your existing CI/CD workflows
               </p>
             </div>
           </div>
@@ -83,10 +83,10 @@ export function Features() {
                 <NotebookIcon className="h-7 w-7 text-primary-foreground" />
               </div>
               <h3 className="font-display text-xl font-semibold tracking-tight text-foreground lg:text-2xl">
-                OSCAL Supercatalog
+                Customizable Rules
               </h3>
               <p className="text-sm leading-relaxed text-muted-foreground lg:text-base">
-                Use our firmare supercatalog with over 122 different controls
+                Use our firmare rules supercatalog, or bring your own custom Rhai scripts
               </p>
             </div>
           </div>

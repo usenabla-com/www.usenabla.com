@@ -110,14 +110,14 @@ export function HowItWorks() {
 
         <CTA 
           badge="Ready to Start?"
-          title="Pass your next assessment with confidence"
-          description="Start generating OSCAL reports from your firmware binaries within 24 hours of signing up. No credit card required."
+          title="Tap into firmware insights you didn't know existed"
+          description="Start generating deep machine readable evidence from your firmware binaries within 24 hours of your demo."
           primaryButtonText="Join Discord Community"
           primaryButtonTextMobile="Join Discord"
-          secondaryButtonText="Contact Sales"
+          secondaryButtonText="Schedule demo"
           secondaryButtonTextMobile="Contact Sales"
           primaryButtonHref="https://discord.gg/SYwGtsBT6S"
-          secondaryButtonHref="mailto:trial@usenabla.com"
+          secondaryButtonHref="https://cal.com/team/nabla/nabla-pilot-interest-callm"
         />
       </div>
     </section>

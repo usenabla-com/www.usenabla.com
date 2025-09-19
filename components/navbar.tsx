@@ -39,7 +39,7 @@ export function Navbar() {
         {/* Desktop Actions */}
         <div className="hidden md:flex items-center gap-3">
           <Link
-            href="/docs"
+            href="https://docs.usenabla.com"
             className="text-sm font-medium hover:text-primary transition-colors px-3 py-2"
           >
             Docs
@@ -88,7 +88,7 @@ export function Navbar() {
                 How It Works
               </Link>
               <Link
-                href="/docs"
+                href="https://docs.usenabla.com"
                 className="flex items-center gap-3 py-2 text-sm font-medium hover:text-primary transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >

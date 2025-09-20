@@ -14,7 +14,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "Nabla | LLM-powered GRC tooling for your next firmware audit." as const,
+  title: "Nabla Packwatch™ | We save engineers hundreds of labor hours on firmware security verification." as const,
   description: "" as const,
   generator: 'v0.dev',
 
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   authors: [{ name: 'Nabla' }],
   creator: 'Nabla',
   openGraph: {
-    title: "Nabla | LLM-powered GRC tooling for your next firmware audit.",
+    title: "Nabla Packwatch™ | We save engineers hundreds of labor hours on firmware security verification.",
     description: "We provide automated OSCAL report generation for mission-critical firmware audits",
     url: "https://www.www.usenabla.com",
     siteName: "Nabla",
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
         url: "https://www.usenabla.com/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Nabla | LLM-powered GRC tooling for your next firmware audit.."
+        alt: "Nabla Packwatch™ | We save engineers hundreds of labor hours on firmware security verification."
       }
     ],
     locale: "en_US",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nabla | LLM-powered GRC tooling for your next firmware audit.",
+    title: "Nabla Packwatch™ | We save engineers hundreds of labor hours on firmware security verification.",
     description: "We provide automated OSCAL generation for mission-critical firmware audits",
     images: ["https://www.usenabla.com/og-image.png"]
   },

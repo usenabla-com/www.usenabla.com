@@ -133,4 +133,4 @@ git log v1.1.0..v1.2.0
 
 ## 🙏 Thanks
 
-Special thanks to early testers for feedback on SBOMs and assessment outputs—your input shaped the new config system, policies, and CLI ergonomics.
+Special thanks to early testers for feedback on SBOMs and assessment outputs—your input shaped the new config system, policies, and CLI ergonomics.x

@@ -14,16 +14,16 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "Nabla Packwatch™ | We save engineers hundreds of labor hours on firmware security verification." as const,
+  title: "Nabla Packwatch™" as const,
   description: "" as const,
   generator: 'v0.dev',
 
-  keywords: ['LLM', 'AI', 'Software Development', 'Bespoke Solutions', 'Machine Learning'],
+  keywords: ['Binary Analysis', 'Firmware', 'Security Automation', 'Reverse Engineering', 'IoT'],
   authors: [{ name: 'Nabla' }],
   creator: 'Nabla',
   openGraph: {
-    title: "Nabla Packwatch™ | We save engineers hundreds of labor hours on firmware security verification.",
-    description: "We provide automated OSCAL report generation for mission-critical firmware audits",
+    title: "Nabla Packwatch™",
+    description: "We save engineers hundreds of labor hours on firmware security verification.",
     url: "https://www.www.usenabla.com",
     siteName: "Nabla",
     images: [
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
         url: "https://www.usenabla.com/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Nabla Packwatch™ | We save engineers hundreds of labor hours on firmware security verification."
+        alt: "Nabla Packwatch™"
       }
     ],
     locale: "en_US",
@@ -39,8 +39,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nabla Packwatch™ | We save engineers hundreds of labor hours on firmware security verification.",
-    description: "We provide automated OSCAL generation for mission-critical firmware audits",
+    title: "Nabla Packwatch™",
+    description: "We save engineers hundreds of labor hours on firmware security verification.",
     images: ["https://www.usenabla.com/og-image.png"]
   },
   robots: {

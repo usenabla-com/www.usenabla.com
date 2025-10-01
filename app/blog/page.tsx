@@ -28,7 +28,7 @@ export default async function BlogPage() {
       <Navbar />
       <Blog8 
         heading="Our Blog"
-        description="Discover the latest insights and tutorials about modern web development, AI integration, and software engineering best practices."
+        description="Discover the latest insights about GRC, FedRamp, and compliance topics."
         posts={transformedPosts}
       />
       <Footer />

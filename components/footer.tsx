@@ -14,7 +14,7 @@ export function Footer() {
               <span className="text-lg font-bold">Nabla</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              Automated GRC for mission-critical firmware compliance.
+              The FedRamp 20x evidence relay
             </p>
             <div className="flex gap-4">
               <Link href="https://github.com/usenabla-com" className="text-muted-foreground hover:text-foreground transition-colors">
@@ -40,9 +40,6 @@ export function Footer() {
             <nav className="space-y-2">
               <Link href="/blog" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
                 Blog
-              </Link>
-              <Link href="https://docs.usenabla.com" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
-                Docs
               </Link>
               <Link href="https://discord.gg/SYwGtsBT6S" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
                 Discord

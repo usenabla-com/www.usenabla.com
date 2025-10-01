@@ -22,7 +22,7 @@ interface Blog8Props {
 
 const Blog8 = ({
   heading = "Blog Posts",
-  description = "Discover the latest insights and tutorials about modern web development, UI design, and component-driven architecture.",
+  description = "Discover the latest insights about GRC, FedRamp, and compliance topics.",
   posts = [
     {
       id: "post-1",

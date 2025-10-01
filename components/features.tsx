@@ -1,5 +1,5 @@
 import { GitHubLogoIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons"
-import { Code, Microchip, Zap, Sparkles, Lock, Radar, RecycleIcon, Bot, MessageCircle, MagnetIcon, TerminalIcon, NotebookIcon, VideoOff, DotIcon, Video, ActivitySquare, ReceiptIcon, Receipt, ReceiptText, BrainCircuit } from "lucide-react"
+import { Code, Microchip, Zap, Sparkles, Lock, Radar, RecycleIcon, Bot, MessageCircle, MagnetIcon, TerminalIcon, NotebookIcon, VideoOff, DotIcon, Video, ActivitySquare, ReceiptIcon, Receipt, ReceiptText, BrainCircuit, LucideGitGraph, Archive, MapIcon } from "lucide-react"
 
 const OpenAIIcon = ({ className }: { className?: string }) => (
   <svg fill="currentColor" fillRule="evenodd" height="1em" style={{flex: "none", lineHeight: 1}} viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg" className={className}>
@@ -10,7 +10,7 @@ const OpenAIIcon = ({ className }: { className?: string }) => (
 
 export function Features() {
   return (
-    <section id="features" className="py-24 lg:py-32">
+    <section id="features" className="py-12 lg:py-12">
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-6 text-center">
           <div className="space-y-4">
@@ -19,13 +19,13 @@ export function Features() {
               Features
             </div>
             <h2 className="font-display text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl">
-              Machine readable evidence generation{" "}  
+             Generate FedRamp-ready evidence{" "}  
               <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-foreground">
-                for true CI-native firmware analysis{" "}
+                via a stateless API{" "}
               </span>
             </h2>
             <p className="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground lg:text-xl">
-              Generate SARIF reports and take advantage of --fail-on flags to fail your CI/CD pipelines when vulnerabilities are found in your firmware images
+              Whether for internal use or for your customers, Nabla automates the generation of critical FedRamp documentation and reports, enabling you to focus on what matters most: building secure and compliant products.
             </p>
           </div>
         </div>
@@ -53,7 +53,7 @@ export function Features() {
                 <ActivitySquare className="h-7 w-7 text-primary-foreground" />
               </div>
               <h3 className="font-display text-xl font-semibold tracking-tight text-foreground lg:text-2xl">
-                Workflow Integration
+                CI Integration
               </h3>
               <p className="text-sm leading-relaxed text-muted-foreground lg:text-base">
                Integrates seamliessly into your existing CI/CD workflows
@@ -68,10 +68,10 @@ export function Features() {
                 <ReceiptText className="h-7 w-7 text-primary-foreground" />
               </div>
               <h3 className="font-display text-xl font-semibold tracking-tight text-foreground lg:text-2xl">
-                SBOM Generation
+                20x Ready
               </h3>
               <p className="text-sm leading-relaxed text-muted-foreground lg:text-base">
-                Generate SBOMs in CycloneDX formwat for your firmware images
+                We generate OSCAL and support KSI mappings out of the box
               </p>
             </div>
           </div>
@@ -80,13 +80,13 @@ export function Features() {
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
             <div className="relative z-10 flex flex-col items-center space-y-4 text-center">
               <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary/80 shadow-lg">
-                <NotebookIcon className="h-7 w-7 text-primary-foreground" />
+                <MapIcon className="h-7 w-7 text-primary-foreground" />
               </div>
               <h3 className="font-display text-xl font-semibold tracking-tight text-foreground lg:text-2xl">
-                Customizable Rules
+                ABD Diagrams
               </h3>
               <p className="text-sm leading-relaxed text-muted-foreground lg:text-base">
-                Use our firmare rules supercatalog, or bring your own custom Rhai scripts
+                Generate architecture boundary diagrams from IaC files
               </p>
             </div>
           </div>

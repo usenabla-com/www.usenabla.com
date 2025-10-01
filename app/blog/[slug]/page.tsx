@@ -3,6 +3,7 @@ import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import { ShareButtons } from '@/components/share-buttons'
 import { ShareWidget } from '@/components/share-widget'
+import { CTA } from '@/components/ui/call-to-action'
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 
@@ -210,7 +211,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               </div>
               <div className="flex space-x-2">
                 {post.tags.map((tag) => (
-                  <span 
+                  <span
                     key={tag}
                     className="text-xs px-2 py-1 bg-muted rounded-md text-muted-foreground font-medium"
                   >
@@ -222,6 +223,21 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </footer>
         </div>
       </article>
+
+      {/* CTA Section */}
+      <div className="container max-w-7xl px-4 md:px-6 pb-16 lg:pb-24">
+        <CTA
+          badge="Ready to Start?"
+          title="Start ingesting missing critical evidence today"
+          description="Request a 30-day pilot to begin enriching your evidence pipeline with FedRamp-ready assessments, ABDs, and firmware analysis."
+          primaryButtonText="Download a evidence sample"
+          primaryButtonTextMobile="Download Sample"
+          secondaryButtonText="Request 30-day pilot"
+          secondaryButtonTextMobile="Request Pilot"
+          primaryButtonHref="https://cdn.usenabla.com/assessment_results.json"
+          secondaryButtonHref="https://cal.com/team/nabla/nabla-pilot-interest-call"
+        />
+      </div>
       
       {/* Floating share button for mobile */}
       <ShareWidget 

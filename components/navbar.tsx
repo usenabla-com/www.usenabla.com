@@ -5,7 +5,6 @@ import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Menu, X, Settings, BookOpen, Briefcase, Mail, PhoneCallIcon } from "lucide-react"
-import { ThemeToggle } from "@/components/theme-toggle"
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -50,7 +49,6 @@ export function Navbar() {
           >
             Blog
           </Link>
-          <ThemeToggle />
           <Button
             className="gap-2 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
             onClick={() => window.open('https://discord.gg/SYwGtsBT6S', '_blank')}
@@ -62,7 +60,6 @@ export function Navbar() {
 
         {/* Mobile Menu Toggle */}
         <div className="flex items-center gap-2 md:hidden">
-          <ThemeToggle />
           <button
             className="p-2 hover:bg-accent rounded-md transition-colors"
             onClick={() => setIsMenuOpen(!isMenuOpen)}

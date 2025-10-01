@@ -1,7 +1,7 @@
 {
-  "name": "Nabla | Automated GRC for mission-critical firmware compliance.",
+  "name": "Nabla | The FedRamp 20x evidence relay.",
   "short_name": "Nabla",
-  "description": "Automated GRC for mission-critical firmware compliance.",
+  "description": "The FedRamp 20x evidence relay.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

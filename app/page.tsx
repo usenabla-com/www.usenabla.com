@@ -2,20 +2,15 @@
 import { Hero } from "@/components/ui/animated-hero"
 import { Navbar } from "@/components/navbar"
 import { Features } from "@/components/features"
-import { HowItWorks } from "@/components/how-it-works"
+import { PilotScheduler } from "@/components/pilot-scheduler"
+import { Blog8 } from "@/components/blocks/blog8"
 import { Footer } from "@/components/footer"
 import { useAnalytics } from '@/hooks/use-analytics'
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { getCalApi } from "@calcom/embed-react";
+import { Integrations } from "@/components/integrations"
 
 export default function Home() {
-  useEffect(() => {
-    (async function () {
-      const cal = await getCalApi({"namespace":"45-min-intro-call"});
-      cal("floatingButton", {"calLink":"team/nabla/45-min-intro-call","config":{"layout":"month_view"},"buttonText":"Schedule a demo"});
-      cal("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#FF5F1F"},"dark":{"cal-brand":"#FF5F1F"}},"hideEventTypeDetails":false,"layout":"month_view"});
-    })();
-  }, [])
   useAnalytics().page()
   return (
     <div className="relative min-h-screen overflow-hidden">
@@ -40,16 +35,24 @@ export default function Home() {
             <Features />
           </div>
         </section>
+
+        {/* Integrations Section with subtle separation */}
+        <section className="relative py-8 lg:py-8">
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/20 to-background pointer-events-none" />
+          <div className="relative z-10">
+            <Integrations />
+          </div>
+        </section>
         
         {/* How It Works Section with distinct background */}
         <section className="relative py-8 lg:py-16 bg-gradient-to-b from-background to-muted/30">
           <div className="absolute inset-0 bg-dot-black/[0.1] dark:bg-dot-white/[0.1] pointer-events-none" />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent pointer-events-none" />
           <div className="relative z-10">
-            <HowItWorks />
+            <PilotScheduler />
           </div>
         </section>
-        
+
         {/* Footer with smooth transition */}
         <section className="relative bg-gradient-to-b from-muted/30 to-background">
           <Footer />

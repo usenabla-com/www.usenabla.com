@@ -14,16 +14,16 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "Nabla Packwatch™" as const,
+  title: "Nabla Relay™" as const,
   description: "" as const,
   generator: 'v0.dev',
 
-  keywords: ['Binary Analysis', 'Firmware', 'Security Automation', 'Reverse Engineering', 'IoT'],
+  keywords: ['FedRamp', 'Cloud', 'GRC', 'Compliance', 'FISMA'],
   authors: [{ name: 'Nabla' }],
   creator: 'Nabla',
   openGraph: {
-    title: "Nabla Packwatch™",
-    description: "We save engineers hundreds of labor hours on firmware security verification.",
+    title: "Nabla Relay™",
+    description: "We assess your customers .tfstate (And other IaC) to auto-generate FedRamp 20x-ready OSCAL and architectural diagrams.",
     url: "https://www.www.usenabla.com",
     siteName: "Nabla",
     images: [
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
         url: "https://www.usenabla.com/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Nabla Packwatch™"
+        alt: "Nabla Relay™"
       }
     ],
     locale: "en_US",
@@ -39,8 +39,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nabla Packwatch™",
-    description: "We save engineers hundreds of labor hours on firmware security verification.",
+    title: "Nabla Relay™",
+    description: "We assess your customers .tfstate (And other IaC) to auto-generate FedRamp 20x-ready OSCAL and architectural diagrams.",
     images: ["https://www.usenabla.com/og-image.png"]
   },
   robots: {
@@ -75,7 +75,6 @@ export default function RootLayout({
         <meta property="og:url" content="https://www.www.usenabla.com" />
 
         <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
-        <meta name="theme-color" content="#0f0f23" media="(prefers-color-scheme: dark)" />
         <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="shortcut icon" href="/favicon.ico" />
@@ -106,7 +105,7 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.className} antialiased min-h-screen bg-gradient-to-br from-background to-background/95 text-foreground selection:bg-primary selection:text-primary-foreground`}> 
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} disableTransitionOnChange>
           <AnalyticsProvider />
           <div className="relative flex min-h-screen flex-col">
             <div className="flex-1">

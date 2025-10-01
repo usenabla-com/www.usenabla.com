@@ -1,8 +1,9 @@
-import { MailIcon, MoveRight, PhoneCall } from "lucide-react";
+"use client";
+import { Calendar, DownloadIcon, MailIcon, MoveRight, PhoneCall, PlaneIcon, RocketIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { DiscordLogoIcon } from "@radix-ui/react-icons";
-
+import Cal, { getCalApi } from "@calcom/embed-react";
+import { useEffect } from "react";
 interface CTAProps {
   badge?: string;
   title?: string;
@@ -13,20 +14,27 @@ interface CTAProps {
   secondaryButtonTextMobile?: string;
   primaryButtonHref?: string;
   secondaryButtonHref?: string;
+  primaryButtonDownload?: boolean;
 }
 
 function CTA({
   badge = "Get started",
   title = "Try our platform today!",
   description = "Managing a small business today is already tough. Avoid further complications by ditching outdated, tedious trade methods. Our goal is to streamline SMB trade, making it easier and faster than ever.",
-  primaryButtonText = "Sign up here",
-  primaryButtonTextMobile,
   secondaryButtonText = "Jump on a call",
   secondaryButtonTextMobile,
   primaryButtonHref = "#",
-  secondaryButtonHref = "#"
+  secondaryButtonHref = "#",
+  primaryButtonDownload = false
 }: CTAProps) {
+    useEffect(() => {
+    (async function () {
+      const cal = await getCalApi({"namespace":"nabla-pilot-interest-call"});
+      cal("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#FF5F1F"},"dark":{"cal-brand":"#FF5F1F"}},"hideEventTypeDetails":false,"layout":"month_view"});
+    })();
+  }, [])
   return (
+    
     <div className="w-full py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24 overflow-hidden">
       <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 max-w-6xl">
         <div className="relative">
@@ -50,32 +58,11 @@ function CTA({
                 </p>
               </div>
             </div>
-            
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto max-w-md sm:max-w-none">
-              <Button 
-                className="gap-2 sm:gap-3 w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold rounded-xl sm:rounded-2xl transition-all duration-200 hover:scale-105 active:scale-95 border-2" 
-                variant="outline" 
-                asChild
-              >
-                <a href={secondaryButtonHref} className="group">
-                  <span className="sm:hidden">{secondaryButtonTextMobile || secondaryButtonText}</span>
-                  <span className="hidden sm:inline">{secondaryButtonText}</span>
-                  <MailIcon className="w-4 h-4 group-hover:rotate-12 transition-transform" />
-                </a>
-              </Button>
-              
-              <Button 
-                className="gap-2 sm:gap-3 w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold rounded-xl sm:rounded-2xl transition-all duration-200 hover:scale-105 hover:shadow-lg active:scale-95 bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary" 
-                asChild
-              >
-                <a href={primaryButtonHref} className="group">
-                  <span className="sm:hidden">{primaryButtonTextMobile || primaryButtonText}</span>
-                  <span className="hidden sm:inline">{primaryButtonText}</span>
-                  <DiscordLogoIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </a>
-              </Button>
-            </div>
-            
+            <Cal namespace="nabla-pilot-interest-call"
+    calLink="team/nabla/nabla-pilot-interest-call"
+    style={{width:"100%",height:"100%",overflow:"scroll"}}
+    config={{"layout":"month_view"}}
+  />;
           </div>
         </div>
       </div>

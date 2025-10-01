@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { Book, Calendar, DownloadIcon, KeyIcon, KeyRound, MailPlus, MoveRight, PhoneCall, MicrochipIcon } from "lucide-react";
+import { Book, Calendar, DownloadIcon, KeyIcon, KeyRound, MailPlus, MoveRight, PhoneCall, MicrochipIcon, Notebook, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
@@ -30,13 +30,6 @@ function Hero() {
     <div className="w-full">
       <div className="container mx-auto">
         <div className="flex gap-8 py-20 lg:py-40 items-center justify-center flex-col">
-          <div>
-            <Link href="https://docs.usenabla.com">
-              <Button variant="secondary" size="sm" className="gap-4">
-               🎉 Nabla 1.2.0 just dropped <MoveRight className="w-4 h-4" />
-              </Button>
-            </Link>
-          </div>
           <div className="flex gap-4 flex-col">
             <h1 className="text-5xl md:text-7xl max-w-5xl tracking-tighter text-center font-bold">
               <span className="text-spektr-cyan-50 font-bold">The FedRamp 20x relay for</span>
@@ -71,13 +64,13 @@ function Hero() {
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 px-4">
-            <Link href="https://docs.usenabla.com">
+            <Link href="mailto:hello@usenabla.com">
             <Button 
               size="lg" 
               className="gap-4 sm:gap-4 px-5 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base" 
               variant="outline"
             >
-              Check out the docs <Book className="w-4 h-4" />
+              Send us an email <Mail className="w-4 h-4" />
             </Button>
             </Link>
             <Link href="https://cal.com/team/nabla/nabla-pilot-interest-call">

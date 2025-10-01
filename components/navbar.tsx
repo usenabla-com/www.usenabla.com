@@ -38,12 +38,6 @@ export function Navbar() {
         {/* Desktop Actions */}
         <div className="hidden md:flex items-center gap-3">
           <Link
-            href="https://docs.usenabla.com"
-            className="text-sm font-medium hover:text-primary transition-colors px-3 py-2"
-          >
-            Docs
-          </Link>
-          <Link
             href="/blog"
             className="text-sm font-medium hover:text-primary transition-colors px-3 py-2"
           >

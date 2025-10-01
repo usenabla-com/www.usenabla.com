@@ -54,7 +54,7 @@ export function Navbar() {
             onClick={() => window.open('https://discord.gg/SYwGtsBT6S', '_blank')}
           >
             <DiscordLogoIcon />
-            Join the Discord
+            Join the GRC Underground
           </Button>
         </div>
 

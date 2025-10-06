@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Nabla Relay™",
-    description: "Nable provides programmatic compliance for vendor solutions and ConMon systems via a simple REST API. Generate FedRamp, CMMC, and FIPS evidence on-demand.",
+    description: "Nabla provides programmatic compliance for vendor solutions and ConMon systems via a simple REST API. Generate FedRamp, CMMC, and FIPS evidence on-demand.",
     images: ["https://www.usenabla.com/og-image.png"]
   },
   robots: {

@@ -4,7 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Menu, X, Settings, BookOpen, Briefcase, Mail, PhoneCallIcon } from "lucide-react"
+import { Menu, X, Settings, BookOpen, Briefcase, Mail, PhoneCallIcon, BookIcon, NotebookIcon, Key, KeyIcon, KeyRound } from "lucide-react"
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -32,6 +32,111 @@ export function Navbar() {
         {/* Desktop Navigation */}
         <NavigationMenu className="hidden md:flex">
           <NavigationMenuList>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>Product</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid gap-3 p-6 w-[400px]">
+                  <li>
+                    <NavigationMenuLink asChild>
+                      <Link
+                        href="/#how-it-works"
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                      >
+                        <div className="flex items-center gap-2">
+                          <Settings className="h-4 w-4" />
+                          <div className="text-sm font-medium leading-none">How It Works</div>
+                        </div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          Learn how Nabla works and what it can do for you
+                        </p>
+                      </Link>
+                    </NavigationMenuLink>
+                  </li>
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid gap-3 p-6 w-[400px]">
+                  <li>
+                    <NavigationMenuLink asChild>
+                      <Link
+                        href="https://docs.usenabla.com"
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                      >
+                        <div className="flex items-center gap-2">
+                          <BookOpen className="h-4 w-4" />
+                          <div className="text-sm font-medium leading-none">Documentation</div>
+                        </div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          Complete guides and API reference
+                        </p>
+                      </Link>
+                    </NavigationMenuLink>
+                  </li>
+                  <li>
+                    <NavigationMenuLink asChild>
+                      <Link
+                        href="/blog"
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                      >
+                        <div className="flex items-center gap-2">
+                          <BookOpen className="h-4 w-4" />
+                          <div className="text-sm font-medium leading-none">Blog</div>
+                        </div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          Latest updates and articles
+                        </p>
+                      </Link>
+                    </NavigationMenuLink>
+                  </li>
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>Community</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid gap-3 p-6 w-[400px]">
+                  <li>
+                    <NavigationMenuLink asChild>
+                      <a
+                        href="https://discord.gg/SYwGtsBT6S"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                      >
+                        <div className="flex items-center gap-2">
+                          <DiscordLogoIcon className="h-4 w-4" />
+                          <div className="text-sm font-medium leading-none">Discord</div>
+                        </div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          Join our community on Discord
+                        </p>
+                      </a>
+                    </NavigationMenuLink>
+                  </li>
+                  <li>
+                    <NavigationMenuLink asChild>
+                      <Link
+                        href="https://cal.com/team/nabla/nabla-pilot-interest-call"
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                      >
+                        <div className="flex items-center gap-2">
+                          <Mail className="h-4 w-4" />
+                          <div className="text-sm font-medium leading-none">Get a API Key</div>
+                        </div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          Start a 30-day Pilot
+                        </p>
+                      </Link>
+                    </NavigationMenuLink>
+                  </li>
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
 
@@ -45,10 +150,10 @@ export function Navbar() {
           </Link>
           <Button
             className="gap-2 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
-            onClick={() => window.open('https://discord.gg/SYwGtsBT6S', '_blank')}
+            onClick={() => window.open('https://docs.usenabla.com', '_blank')}
           >
-            <DiscordLogoIcon />
-            Join the GRC Underground
+            <KeyRound />
+            Get an API Key
           </Button>
         </div>
 

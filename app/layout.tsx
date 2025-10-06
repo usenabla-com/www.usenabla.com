@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   creator: 'Nabla',
   openGraph: {
     title: "Nabla Relay™",
-    description: "We assess your customers .tfstate (And other IaC) to auto-generate FedRamp 20x-ready OSCAL and architectural diagrams.",
+    description: "Nabla provides programmatic compliance for vendor solutions and ConMon systems via a simple REST API. Generate FedRamp, CMMC, and FIPS evidence on-demand.",
     url: "https://www.www.usenabla.com",
     siteName: "Nabla",
     images: [
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Nabla Relay™",
-    description: "We assess your customers .tfstate (And other IaC) to auto-generate FedRamp 20x-ready OSCAL and architectural diagrams.",
+    description: "Nable provides programmatic compliance for vendor solutions and ConMon systems via a simple REST API. Generate FedRamp, CMMC, and FIPS evidence on-demand.",
     images: ["https://www.usenabla.com/og-image.png"]
   },
   robots: {

@@ -19,13 +19,13 @@ export function Features() {
               Features
             </div>
             <h2 className="font-display text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl">
-             Generate FedRamp-ready evidence{" "}  
+             Programmatic evidence generation{" "}  
               <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-foreground">
                 via a stateless API{" "}
               </span>
             </h2>
             <p className="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground lg:text-xl">
-              Whether for internal use or for your customers, Nabla automates the generation of critical FedRamp documentation and reports, enabling you to focus on what matters most: building secure and compliant products.
+              Whether embedding into a customer facing compliance tool or integrating into internal ConMon systems, Nabla provides a simple REST API to generate compliance evidence on-demand.
             </p>
           </div>
         </div>
@@ -71,7 +71,7 @@ export function Features() {
                 20x Ready
               </h3>
               <p className="text-sm leading-relaxed text-muted-foreground lg:text-base">
-                We generate OSCAL and support KSI mappings out of the box
+                We (can) generate OSCAL and support KSI mappings out of the box
               </p>
             </div>
           </div>

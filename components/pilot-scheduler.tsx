@@ -49,7 +49,7 @@ export function PilotScheduler() {
             </h2>
             <div className="w-full flex justify-center">
               <p className="max-w-4xl text-sm sm:text-base lg:text-lg text-muted-foreground px-4">
-                Start a 30-day pilot to begin enriching your evidence pipeline with FedRamp-ready assessments, ABDs, and firmware analysis.
+                Start a 30-day pilot to begin enriching your evidence pipeline with programmatic assessments, ABDs, and firmware analysis.
               </p>
             </div>
           </div>
@@ -57,7 +57,7 @@ export function PilotScheduler() {
           <CTA 
           badge="Start a Pilot"
           title="Start enriching your evidence pipeline today"
-          description="Request a 30-day pilot to begin enriching your evidence pipeline with FedRamp-ready assessments, ABDs, and firmware analysis."
+          description="Request a 30-day pilot to begin enriching your evidence pipeline with programmatic assessments, ABDs, and firmware analysis."
           primaryButtonText="Join Discord Community"
           primaryButtonTextMobile="Join Discord"
           secondaryButtonText="Request 30-day pilot"

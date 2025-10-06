@@ -229,7 +229,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <CTA
           badge="Ready to Start?"
           title="Start ingesting missing critical evidence today"
-          description="Request a 30-day pilot to begin enriching your evidence pipeline with FedRamp-ready assessments, ABDs, and firmware analysis."
+          description="Request a 30-day pilot to begin enriching your evidence pipeline with programmatic assessments, ABDs, and firmware analysis."
           primaryButtonText="Download a evidence sample"
           primaryButtonTextMobile="Download Sample"
           secondaryButtonText="Request 30-day pilot"

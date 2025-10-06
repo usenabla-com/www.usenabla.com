@@ -1,7 +1,7 @@
 {
-  "name": "Nabla | The FedRamp 20x evidence relay.",
+  "name": "Nabla | The Programmatic Compliance Relay for FedRamp, CMMC, and FIPS ✅",
   "short_name": "Nabla",
-  "description": "The FedRamp 20x evidence relay.",
+  "description": "Nable provides programmatic compliance for vendor solutions and ConMon systems via a simple REST API. Generate FedRamp, CMMC, and FIPS evidence on-demand.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

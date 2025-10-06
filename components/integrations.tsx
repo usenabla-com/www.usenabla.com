@@ -26,7 +26,7 @@ export function Integrations() {
               </span>
             </h2>
             <p className="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground lg:text-xl">
-              Whether for internal use or for your customers, Nabla automates the generation of critical FedRamp documentation and reports, enabling you to focus on what matters most: building secure and compliant products.
+              Whether for internal use or for your customers, Nabla automates the generation of critical evidence documentation and reports, enabling you to focus on what matters most: building secure and compliant products.
             </p>
           </div>
         </div>

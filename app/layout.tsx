@@ -67,13 +67,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable}`}>
       <head>
-        <title>{title}</title>
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:image" content="https://www.usenabla.com/og-image.png" />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.www.usenabla.com" />
-
         <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
         <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

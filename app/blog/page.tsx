@@ -2,6 +2,12 @@ import { getAllPosts } from '@/lib/blog'
 import { Blog8 } from '@/components/blocks/blog8'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Blog | Nabla',
+  description: 'Insights and tutorials about modern GRC engineering, FedRamp, and compliance best practices.',
+}
 
 export default async function BlogPage() {
   const posts = await getAllPosts()

@@ -1,5 +1,5 @@
 ---
-title: ""
+title: "5 things FedRamp 20x needs to mass adoption"
 summary: "FedRamp 20x is coming fast, and 2025 is almost over already (I know right?). This means 20x is going to be here sooner than many care to admit, with NIST 800-53 being phased out in nearly a year and 1/2. Here's what FedRamp needs to do to make GRC-as-code work seamlessly"
 author: "Admin"
 published: "2025-10-1"

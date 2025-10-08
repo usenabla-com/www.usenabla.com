@@ -72,6 +72,7 @@
     "next": "^15.5.4",
     "next-share": "^0.27.0",
     "next-themes": "latest",
+    "posthog-js": "^1.273.0",
     "puppeteer": "^24.13.0",
     "react": "^19",
     "react-dom": "^19",

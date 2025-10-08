@@ -10,6 +10,7 @@ import { siSonarqube, siGithub, siSlack, siJson, siMarkdown } from "simple-icons
 
 function Hero() {
   const [titleNumber, setTitleNumber] = useState(0);
+  const [calUrl, setCalUrl] = useState("https://cal.com/team/nabla/nabla-pilot-interest-call");
   const titles = useMemo(
     () => ["FedRamp", "CMMC", "FIPS 140-3", "And more?" ],
     []
@@ -25,6 +26,16 @@ function Hero() {
     }, 2000);
     return () => clearTimeout(timeoutId);
   }, [titleNumber, titles]);
+
+  useEffect(() => {
+    // Get PostHog distinct_id
+    const posthogId = (window as any).posthog?.get_distinct_id();
+
+    // Build URL with PostHog ID
+    if (posthogId) {
+      setCalUrl(`https://cal.com/team/nabla/nabla-pilot-interest-call?posthog_id=${encodeURIComponent(posthogId)}`);
+    }
+  }, []);
 
   return (
     <div className="w-full">
@@ -73,7 +84,7 @@ function Hero() {
               Read the Docs <BookOpen className="w-4 h-4" />
             </Button>
             </Link>
-            <Link href="https://cal.com/team/nabla/nabla-pilot-interest-call">
+            <Link href={calUrl}>
               <Button size="lg" className="gap-4 sm:gap-4 px-5 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base">
                Request a 30-day Pilot <Calendar className="w-4 h-4" />
               </Button>

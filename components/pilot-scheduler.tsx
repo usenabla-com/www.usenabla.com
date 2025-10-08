@@ -8,10 +8,25 @@ import { Blog8 } from "@/components/blocks/blog8"
 
 export function PilotScheduler() {
     const [posts, setPosts] = useState([])
+    const [calUrl, setCalUrl] = useState("https://cal.com/team/nabla/nabla-pilot-interest-call")
+
     useEffect(() => {
     (async function () {
+      // Get PostHog distinct_id
+      const posthogId = (window as any).posthog?.get_distinct_id();
+
       const cal = await getCalApi({"namespace":"nabla-pilot-interest-call"});
-      cal("ui", {"theme":"light","cssVarsPerTheme":{"light":{"cal-brand":"#FF5F1F"},"dark":{"cal-brand":"#FF5F1F"}},"hideEventTypeDetails":false,"layout":"month_view"});
+      cal("ui", {
+        "theme":"light",
+        "cssVarsPerTheme":{"light":{"cal-brand":"#FF5F1F"},"dark":{"cal-brand":"#FF5F1F"}},
+        "hideEventTypeDetails":false,
+        "layout":"month_view"
+      });
+
+      // Build URL with PostHog ID for direct link
+      if (posthogId) {
+        setCalUrl(`https://cal.com/team/nabla/nabla-pilot-interest-call?posthog_id=${posthogId}`);
+      }
     })();
   }, [])
 
@@ -54,7 +69,7 @@ export function PilotScheduler() {
             </div>
           </div>
         </div>
-          <CTA 
+          <CTA
           badge="Start a Pilot"
           title="Start enriching your evidence pipeline today"
           description="Request a 30-day pilot to begin enriching your evidence pipeline with programmatic assessments, ABDs, and firmware analysis."
@@ -63,7 +78,7 @@ export function PilotScheduler() {
           secondaryButtonText="Request 30-day pilot"
           secondaryButtonTextMobile="Request Pilot"
           primaryButtonHref="https://discord.gg/SYwGtsBT6S"
-          secondaryButtonHref="https://cal.com/team/nabla/nabla-pilot-interest-call"
+          secondaryButtonHref={calUrl}
         />
         {/* Blog Section */}
         <section className="relative py-8 lg:py-16">

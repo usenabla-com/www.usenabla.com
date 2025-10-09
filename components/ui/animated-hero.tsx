@@ -28,11 +28,14 @@ function Hero() {
   }, [titleNumber, titles]);
 
   useEffect(() => {
-    // Get PostHog distinct_id
+    // Get PostHog distinct_id and session_id
     const posthogId = (window as any).posthog?.get_distinct_id();
+    const sessionId = (window as any).posthog?.get_session_id();
 
-    // Build URL with PostHog ID
-    if (posthogId) {
+    // Build URL with PostHog ID and session ID
+    if (posthogId && sessionId) {
+      setCalUrl(`https://cal.com/team/nabla/nabla-pilot-interest-call?posthog_id=${encodeURIComponent(posthogId)}&session_id=${encodeURIComponent(sessionId)}`);
+    } else if (posthogId) {
       setCalUrl(`https://cal.com/team/nabla/nabla-pilot-interest-call?posthog_id=${encodeURIComponent(posthogId)}`);
     }
   }, []);

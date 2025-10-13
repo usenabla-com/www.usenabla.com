@@ -8,7 +8,7 @@ import { Footer } from "@/components/footer"
 import { useAnalytics } from '@/hooks/use-analytics'
 import { useEffect, useState } from "react"
 import { getCalApi } from "@calcom/embed-react";
-import { Integrations } from "@/components/integrations"
+import { PricingCard } from "@/components/ui/pricing-card-1"
 
 export default function Home() {
   useAnalytics().page()
@@ -36,11 +36,59 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Integrations Section with subtle separation */}
-        <section className="relative py-8 lg:py-8">
+        {/* Pricing Section with subtle separation */}
+        <section className="relative py-8 lg:py-12">
           <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/20 to-background pointer-events-none" />
           <div className="relative z-10">
-            <Integrations />
+            <div className="container px-4 md:px-6">
+              <div className="flex flex-col items-center justify-center text-center space-y-4">
+                <h2 className="font-display text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+                  Simple, transparent pricing
+                </h2>
+                <p className="mx-auto max-w-2xl text-muted-foreground text-base sm:text-lg">
+                  Choose a plan that fits your team. No hidden fees.
+                </p>
+              </div>
+
+              <div className="mx-auto max-w-6xl grid grid-cols-1 gap-6 md:grid-cols-2 mt-10">
+                <PricingCard
+                  title="Relay"
+                  price="$4500/mo"
+                  description="Per month, billed annually"
+                  features={[
+                    "Unlimited API calls",
+                    "Regular updates",
+                    "All Control Frameworks",
+                    "Standard SLAs",
+                    "Email support",
+                  ]}
+                  buttonText="Get started"
+                  buttonHref="https://cal.com/team/nabla/nabla-pilot-interest-call"
+                  className="h-full"
+                  imageSrc="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-odVnLFkrL5eGiSzOAkNOacimjB4f3H.png&w=1000&q=75"
+                  imageAlt="Starter Plan"
+                />
+
+                <PricingCard
+                  title="Fabric"
+                  price="$9,450"
+                  priceDescription="Per month, billed annually"
+                  description="Everything you need for firmware security at scale."
+                  features={[
+                    "Custom API integrations",
+                    "Dashboard Creation (We do this manually)",
+                    "Cloud connectors",
+                    "Binary CFG generation",
+                    "Priority support",
+                  ]}
+                  buttonText="Start 30-day trial"
+                  buttonHref="https://cal.com/team/nabla/nabla-pilot-interest-call"
+                  className="h-full"
+                  imageSrc="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-2x1NIEDETqhyZz9kxfkDV3pTJ7v0eI.png&w=1000&q=75"
+                  imageAlt="Professional Plan"
+                />
+              </div>
+            </div>
           </div>
         </section>
         

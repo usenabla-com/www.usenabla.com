@@ -4,7 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Menu, X, Settings, BookOpen, Briefcase, Mail, PhoneCallIcon, BookIcon, NotebookIcon, Key, KeyIcon, KeyRound } from "lucide-react"
+import { Menu, X, Settings, BookOpen, Briefcase, Mail, PhoneCallIcon, BookIcon, NotebookIcon, Key, KeyIcon, KeyRound, LigatureIcon, LightbulbIcon } from "lucide-react"
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -33,21 +33,87 @@ export function Navbar() {
         <NavigationMenu className="hidden md:flex">
           <NavigationMenuList>
             <NavigationMenuItem>
-              <NavigationMenuTrigger>Product</NavigationMenuTrigger>
+              <NavigationMenuTrigger>Use Cases</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid gap-3 p-6 w-[400px]">
                   <li>
                     <NavigationMenuLink asChild>
                       <Link
-                        href="/#how-it-works"
+                        href="/use-cases/excel-automation"
                         className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                       >
                         <div className="flex items-center gap-2">
-                          <Settings className="h-4 w-4" />
-                          <div className="text-sm font-medium leading-none">How It Works</div>
+                          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRt__gdZwhO3aSPCNy6b8HwnR5E5AARVCA1wQ&sg" alt="Excel Icon" className="h-4 w-4" />
+                          <div className="text-sm font-medium leading-none">Excel Compliance Automation</div>
                         </div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                          Learn how Nabla works and what it can do for you
+                          Programmatically enrich reports without leaving Excel
+                        </p>
+                      </Link>
+                    </NavigationMenuLink>
+                      <NavigationMenuLink asChild>
+                      <Link
+                        href="/use-cases/firmware-security"
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                      >
+                        <div className="flex items-center gap-2">
+                          <img src="https://cdn-icons-png.freepik.com/512/10817/10817532.png" alt="Firmware Icon" className="h-4 w-4" />
+                          <div className="text-sm font-medium leading-none">Firmware Security</div>
+                        </div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          Deep inspect, assess, and secure your device firmware
+                        </p>
+                      </Link>
+                    </NavigationMenuLink>
+                    <NavigationMenuLink asChild>
+                      <Link
+                        href="/use-cases/diagrams-as-code"
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                      >
+                        <div className="flex items-center gap-2">
+                          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Mermaid_Logo.svg/2048px-Mermaid_Logo.svg.png" alt="Firmware Icon" className="h-4 w-4" />
+                          <div className="text-sm font-medium leading-none">Mermaid Diagrans</div>
+                        </div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          Create your own custom Drata-like dashboards for 90% less effort
+                        </p>
+                      </Link>
+                    </NavigationMenuLink>
+                  </li>
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+
+             <NavigationMenuItem>
+              <NavigationMenuTrigger>Alternative To</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid gap-3 p-6 w-[400px]">
+                  <li>
+                    <NavigationMenuLink asChild>
+                      <Link
+                        href="/vs/drata"
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                      >
+                        <div className="flex items-center gap-2">
+                          <img src="https://d3cfmt5dlbf1me.cloudfront.net/app_ecosystem/apps/logos/000/000/103/original/Drata-Logo.svg?1609778497" alt="Excel Icon" className="h-4 w-4" />
+                          <div className="text-sm font-medium leading-none">Drata</div>
+                        </div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          Not just another checkbox engine
+                        </p>
+                      </Link>
+                    </NavigationMenuLink>
+                      <NavigationMenuLink asChild>
+                      <Link
+                        href="/vs/paramify"
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                      >
+                        <div className="flex items-center gap-2">
+                          <img src="https://d7umqicpi7263.cloudfront.net/img/product/df5aea50-c7eb-45f0-863b-570fd4ab3a03.com/d863d078679bdc220426b682ff8e6b06" alt="Firmware Icon" className="h-4 w-4" />
+                          <div className="text-sm font-medium leading-none">Paramify</div>
+                        </div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          A Evidence Fabric vs a documentation vault
                         </p>
                       </Link>
                     </NavigationMenuLink>
@@ -176,12 +242,12 @@ export function Navbar() {
             {/* Navigation Links */}
             <nav className="space-y-3">
               <Link
-                href="/#how-it-works"
+                href="/vs/drata"
                 className="flex items-center gap-3 py-2 text-sm font-medium hover:text-primary transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
-                <Settings size={16} />
-                How It Works
+                <img src="https://static.vecteezy.com/system/resources/thumbnails/027/179/363/small/microsoft-excel-icon-logo-symbol-free-png.png" width={16} />
+                Excel Enrichment
               </Link>
               <Link
                 href="https://docs.usenabla.com"
@@ -205,7 +271,7 @@ export function Navbar() {
                 onClick={() => setIsMenuOpen(false)}
               >
                 <Mail size={16} />
-                Get a 14-day Trial License
+                Get a 30-day Trial License
               </Link>
 
               {/* Action buttons */}

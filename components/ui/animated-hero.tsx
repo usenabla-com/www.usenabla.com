@@ -46,35 +46,11 @@ function Hero() {
         <div className="flex gap-8 py-20 lg:py-40 items-center justify-center flex-col">
           <div className="flex gap-4 flex-col">
             <h1 className="text-5xl md:text-7xl max-w-5xl tracking-tighter text-center font-bold">
-              <span className="text-spektr-cyan-50 font-bold">The programmatic relay for</span>
-              <span className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1">
-                &nbsp;
-                {titles.map((title, index) => (
-                  <motion.span
-                    key={index}
-                    className="absolute font-bold"
-                    initial={{ opacity: 0, y: "-100" }}
-                    transition={{ type: "spring", stiffness: 50 }}
-                    animate={
-                      titleNumber === index
-                        ? {
-                            y: 0,
-                            opacity: 1,
-                          }
-                        : {
-                            y: titleNumber > index ? -150 : 150,
-                            opacity: 0,
-                          }
-                    }
-                  >
-                    {title}
-                  </motion.span>
-                ))}
-              </span>
+              <span className="text-spektr-cyan-50 font-bold">The evidence fabric for programmatic compliance</span>
             </h1>
 
             <p className="text-lg md:text-xl leading-relaxed tracking-tight text-foreground max-w-2xl text-center mx-auto">
-              Integrate programmatic evidence collection for key guidelines such as control assessments, boundary diagrams, SBOMs, and firmware analysis reports with ease via an intuitive REST API.
+              Pull, push, transform, and analyze your infrastructure and application evidence to meet compliance requirements faster and with less effort.
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 px-4">

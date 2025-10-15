@@ -64,7 +64,7 @@ export default function DiagramsAsCodePage() {
               <Badge>Diagrams as Code</Badge>
               <div className="flex gap-4 flex-col">
                 <h1 className="text-4xl md:text-6xl lg:text-7xl max-w-4xl tracking-tighter font-regular">
-                  Generate diagrams from your IaC and firmware progratically
+                  Generate diagrams from your IaC and firmware programmatically
                 </h1>
                 <p className="text-lg md:text-xl max-w-2xl leading-relaxed tracking-tight text-muted-foreground mx-auto">
                   Turn Terraform and other IaC into consistent, version-controlled diagrams. Eliminate manual diagramming; keep architecture documentation always in sync with code.
@@ -72,16 +72,16 @@ export default function DiagramsAsCodePage() {
               </div>
               <div className="flex flex-row gap-3">
                 <a
-                  href="https://docs.usenabla.com"
+                  href="https://cal.com/jbohrman/45-min-meeting"
                   className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-10 px-8"
                 >
-                  Get API Access
+                  Get a customized demo
                 </a>
                 <a
-                  href="https://cal.com/jbohrman/45-min-meeting"
+                  href="https://docs.usenabla.com"
                   className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-10 px-8"
                 >
-                  Book a Demo
+                  Read the docs
                 </a>
               </div>
             </div>
@@ -157,7 +157,7 @@ export default function DiagramsAsCodePage() {
       <CTA
         badge="Ready to start?"
         title="Turn IaC into accurate diagrams"
-        description="Start a 30-day pilot to evaluate architecture diagram generation in your workflows. Keep docs and reviews in sync with your code."
+        description="Start a 14-day trial to evaluate architecture diagram generation in your workflows. Keep docs and reviews in sync with your code."
       />
     </PageLayout>
   )

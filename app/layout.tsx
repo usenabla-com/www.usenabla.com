@@ -82,7 +82,7 @@ export default function RootLayout({
         {/* Preconnect to external domains for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-
+        <script src="https://widget.thena.ai/shim.js"></script>
         {/* PostHog Analytics */}
         <script
           dangerouslySetInnerHTML={{

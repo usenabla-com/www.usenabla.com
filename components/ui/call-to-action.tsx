@@ -59,10 +59,10 @@ function CTA({
               </div>
             </div>
             <Cal namespace="nabla-pilot-interest-call"
-    calLink="team/nabla/nabla-pilot-interest-call"
-    style={{width:"100%",height:"100%",overflow:"scroll"}}
-    config={{"layout":"month_view"}}
-  />;
+                calLink="team/nabla/nabla-pilot-interest-call"
+                style={{width:"100%",height:"100%",overflow:"scroll"}}
+                config={{"layout":"month_view"}}
+              />
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import { Resend } from 'resend';
 import { NextRequest, NextResponse } from 'next/server';
+import { renderEmailFrame, escapeHtml } from '@/lib/email-template';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -58,13 +59,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const emailContent = `
-      <h2>New Contact Form Submission</h2>
-      <p><strong>Name:</strong> ${firstName} ${lastName}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      ${company ? `<p><strong>Company:</strong> ${company}</p>` : ''}
-      <p><strong>Message:</strong></p>
-      <p>${message.replace(/\n/g, '<br>')}</p>
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.usenabla.com';
+    const contentHtml = `
+      <h1 style=\"margin:0 0 12px;font-size:18px;line-height:1.4;color:#0f172a;\">New Contact Form Submission</h1>
+      <p style=\"margin:0 0 10px;font-size:14px;color:#334155;\"><strong>Name:</strong> ${escapeHtml(firstName)} ${escapeHtml(lastName)}</p>
+      <p style=\"margin:0 0 10px;font-size:14px;color:#334155;\"><strong>Email:</strong> ${escapeHtml(email)}</p>
+      ${company ? `<p style=\"margin:0 0 10px;font-size:14px;color:#334155;\"><strong>Company:</strong> ${escapeHtml(company)}</p>` : ''}
+      <p style=\"margin:12px 0 6px;font-size:14px;color:#0f172a;font-weight:600;\">Message</p>
+      <div style=\"font-size:14px;color:#334155;line-height:1.55;\">${escapeHtml(message).replace(/\n/g, '<br>')}</div>
     `;
 
     console.log('Attempting to send email with Resend...');
@@ -72,9 +74,14 @@ export async function POST(request: NextRequest) {
     
     const data = await resend.emails.send({
       from: 'Contact Form <noreply@notifications.usenabla.com>',
-      to: ['trial@usenabla.com'],
+      to: ['trial@notifications.usenabla.com'],
       subject: `New contact from ${firstName} ${lastName}`,
-      html: emailContent,
+      html: renderEmailFrame({
+        baseUrl,
+        subject: `New contact from ${escapeHtml(firstName)} ${escapeHtml(lastName)}`,
+        preheader: 'New website contact submission',
+        contentHtml,
+      }),
       replyTo: email,
     });
 

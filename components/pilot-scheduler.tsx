@@ -73,9 +73,9 @@ export function PilotScheduler() {
           </div>
         </div>
           <CTA
-          badge="Start a Pilot"
+          badge="Start a 14-day trial"
           title="Start enriching your evidence pipeline today"
-          description="Request a 30-day pilot to begin enriching your evidence pipeline with programmatic assessments, ABDs, and firmware analysis."
+          description="Start a 14-day trial to begin enriching your evidence pipeline with programmatic assessments, ABDs, and firmware analysis."
           primaryButtonText="Join Discord Community"
           primaryButtonTextMobile="Join Discord"
           secondaryButtonText="Request 30-day pilot"

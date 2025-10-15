@@ -13,6 +13,7 @@ interface PricingCardProps {
   features?: string[];
   buttonText: string;
   buttonHref?: string;
+  onClick?: () => void;
   imageSrc?: string;
   imageAlt?: string;
   isUnique?: boolean; // A prop to handle the unique request card style
@@ -45,6 +46,7 @@ const PricingCard = React.forwardRef<HTMLDivElement, PricingCardProps>(
       className,
       title,
       buttonHref = "#",
+      onClick,
       price,
       priceDescription,
       description,
@@ -113,7 +115,7 @@ const PricingCard = React.forwardRef<HTMLDivElement, PricingCardProps>(
 
         {/* Card Footer with Button */}
         <div className="mt-6">
-         <a href={buttonHref}> <Button className="w-full"> {buttonText}</Button></a>
+         <a href={buttonHref}> <Button onClick={onClick} className="w-full"> {buttonText}</Button></a>
         </div>
       </motion.div>
     );

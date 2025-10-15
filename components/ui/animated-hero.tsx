@@ -7,10 +7,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { AnimatedBeam } from "@/components/ui/animated-beam";
 import { siSonarqube, siGithub, siSlack, siJson, siMarkdown } from "simple-icons";
+import { useRouter } from "next/navigation";
 
 function Hero() {
   const [titleNumber, setTitleNumber] = useState(0);
-  const [calUrl, setCalUrl] = useState("https://cal.com/team/nabla/nabla-pilot-interest-call");
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const [posthogInfo, setPosthogInfo] = useState<{ id?: string; sessionId?: string }>({});
   const titles = useMemo(
     () => ["FedRamp", "CMMC", "FIPS 140-3", "And more?" ],
     []
@@ -28,17 +31,28 @@ function Hero() {
   }, [titleNumber, titles]);
 
   useEffect(() => {
-    // Get PostHog distinct_id and session_id
-    const posthogId = (window as any).posthog?.get_distinct_id();
-    const sessionId = (window as any).posthog?.get_session_id();
-
-    // Build URL with PostHog ID and session ID
-    if (posthogId && sessionId) {
-      setCalUrl(`https://cal.com/team/nabla/nabla-pilot-interest-call?posthog_id=${encodeURIComponent(posthogId)}&session_id=${encodeURIComponent(sessionId)}`);
-    } else if (posthogId) {
-      setCalUrl(`https://cal.com/team/nabla/nabla-pilot-interest-call?posthog_id=${encodeURIComponent(posthogId)}`);
-    }
+    // Capture PostHog identifiers for checkout metadata and return params
+    const ph = (window as any).posthog;
+    const posthogId = ph?.get_distinct_id?.();
+    const sessionId = ph?.get_session_id?.();
+    setPosthogInfo({ id: posthogId, sessionId });
   }, []);
+
+  const handleCheckout = () => {
+    try {
+      setLoading(true);
+      const url = new URL(window.location.href);
+      const params = new URLSearchParams(url.search);
+      if (posthogInfo.id && !params.has("posthog_id")) params.set("posthog_id", posthogInfo.id);
+      if (posthogInfo.sessionId && !params.has("session_id")) params.set("session_id", posthogInfo.sessionId);
+      const qs = params.toString();
+      router.push(`/onboarding${qs ? `?${qs}` : ""}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Dedicated checkout page handles embedded Stripe Checkout
 
   return (
     <div className="w-full">
@@ -63,14 +77,15 @@ function Hero() {
               Read the Docs <BookOpen className="w-4 h-4" />
             </Button>
             </Link>
-            <Link href={calUrl}>
-              <Button size="lg" className="gap-4 sm:gap-4 px-5 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base">
-               Request a 30-day Pilot <Calendar className="w-4 h-4" />
-              </Button>
-            </Link>
+            <Button
+              size="lg"
+              onClick={handleCheckout}
+              disabled={loading}
+              className="gap-4 sm:gap-4 px-5 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base"
+            >
+              {loading ? "Redirecting…" : "Start a 14-day trial"} <Calendar className="w-4 h-4" />
+            </Button>
           </div>
-          
-          
           
         </div>
       </div>

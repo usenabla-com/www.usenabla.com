@@ -5,12 +5,39 @@ import { Features } from "@/components/features"
 import { PilotScheduler } from "@/components/pilot-scheduler"
 import { Blog8 } from "@/components/blocks/blog8"
 import { Footer } from "@/components/footer"
+import { useRouter } from "next/navigation"
 import { useAnalytics } from '@/hooks/use-analytics'
 import { useEffect, useState } from "react"
 import { getCalApi } from "@calcom/embed-react";
 import { PricingCard } from "@/components/ui/pricing-card-1"
 
 export default function Home() {
+  const [titleNumber, setTitleNumber] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const [posthogInfo, setPosthogInfo] = useState<{ id?: string; sessionId?: string }>({});
+
+    useEffect(() => {
+      // Capture PostHog identifiers for checkout metadata and return params
+      const ph = (window as any).posthog;
+      const posthogId = ph?.get_distinct_id?.();
+      const sessionId = ph?.get_session_id?.();
+      setPosthogInfo({ id: posthogId, sessionId });
+    }, []);
+
+    const handleCheckout = () => {
+      try {
+        setLoading(true);
+        const url = new URL(window.location.href);
+        const params = new URLSearchParams(url.search);
+        if (posthogInfo.id && !params.has("posthog_id")) params.set("posthog_id", posthogInfo.id);
+        if (posthogInfo.sessionId && !params.has("session_id")) params.set("session_id", posthogInfo.sessionId);
+        const qs = params.toString();
+        router.push(`/onboarding${qs ? `?${qs}` : ""}`);
+      } finally {
+        setLoading(false);
+      }
+    };
   useAnalytics().page()
   return (
     <div className="relative min-h-screen overflow-hidden">
@@ -62,8 +89,9 @@ export default function Home() {
                     "Standard SLAs",
                     "Email support",
                   ]}
-                  buttonText="Get started"
-                  buttonHref="https://cal.com/team/nabla/nabla-pilot-interest-call"
+                  buttonText="Start a 14-day trial"
+                  onClick={handleCheckout}
+                  buttonHref="/onboarding"
                   className="h-full"
                   imageSrc="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-odVnLFkrL5eGiSzOAkNOacimjB4f3H.png&w=1000&q=75"
                   imageAlt="Starter Plan"
@@ -81,8 +109,9 @@ export default function Home() {
                     "Binary CFG generation",
                     "Priority support",
                   ]}
-                  buttonText="Start 30-day trial"
-                  buttonHref="https://cal.com/team/nabla/nabla-pilot-interest-call"
+                  buttonText="Start a 14-day trial"
+                  onClick={handleCheckout}
+                  buttonHref="/onboarding"
                   className="h-full"
                   imageSrc="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-2x1NIEDETqhyZz9kxfkDV3pTJ7v0eI.png&w=1000&q=75"
                   imageAlt="Professional Plan"

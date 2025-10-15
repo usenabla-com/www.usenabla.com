@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/trial-over",
+      "schedule": "0 0 * * *"
+    }
+  ]
+}

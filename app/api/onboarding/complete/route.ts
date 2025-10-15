@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { randomBytes } from "crypto";
 import { Resend } from "resend";
 import { renderEmailFrame, renderKeyBlock, renderCtas, escapeHtml } from "@/lib/email-template";
+import { useAnalytics } from "@/hooks/use-analytics";
 
 export const runtime = "nodejs";
 
@@ -126,7 +127,15 @@ export async function POST(req: NextRequest) {
     } catch (e) {
       console.warn("Failed to email API key", e);
     }
-
+    
+    useAnalytics().track("onboarding_completed", {
+      plan,
+      email,
+      name: displayName,
+      org_slug: orgSlug,
+      posthog_id,
+      session_id,
+    });
     // No external event dispatch: this route is the completion handler.
 
     return NextResponse.json({

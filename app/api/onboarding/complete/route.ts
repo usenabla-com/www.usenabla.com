@@ -88,22 +88,12 @@ export async function POST(req: NextRequest) {
           }),
         });
       }
-    } catch (e) {
-      console.warn("Failed to email API key", e);
-    }
-
-        // Schedule the trial end notification email with Resend
-    try {
-      const resendKey = process.env.RESEND_API_KEY;
-      if (resendKey) {
-        const resend = new Resend(resendKey);
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.usenabla.com';
-        const fourteenDaysFromNow = new Date(Date.now() + 1000 * 60 * 60 * 24 * 14).toISOString();
-        const displayName = name || "there";
-        const planLabel = (plan || "Relay").toString();
-
-        const calUrl = "https://cal.com/jbohrman/45-min-meeting";
-        await resend.emails.send({
+      const resend = new Resend(resendKey);
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.usenabla.com';
+      const fourteenDaysFromNow = new Date(Date.now() + 1000 * 60 * 60 * 24 * 14).toISOString();
+      const planLabel = (plan || "Relay").toString();
+      const calUrl = "https://cal.com/jbohrman/45-min-meeting";      
+      await resend.emails.send({
           from: "Nabla <hello@notifications.usenabla.com>",
           to: email,
           subject: "Welcome to Nabla — Your API Key and Next Steps",
@@ -123,10 +113,10 @@ export async function POST(req: NextRequest) {
               }),
           scheduledAt: fourteenDaysFromNow,
         });
-      }
     } catch (e) {
       console.warn("Failed to email API key", e);
     }
+
     
     useAnalytics().track("onboarding_completed", {
       plan,

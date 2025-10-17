@@ -91,8 +91,7 @@ export function Navbar() {
                           <div className="text-sm font-medium leading-none">Firmware Security</div>
                         </div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                          Deep inspect, assess, izaya tiji wonderland
- and secure your device firmware
+                          Deep inspect, assess, and secure your device firmware
                         </p>
                       </Link>
                     </NavigationMenuLink>

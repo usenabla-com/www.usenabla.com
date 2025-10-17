@@ -74,7 +74,7 @@
     "gray-matter": "^4.0.3",
     "input-otp": "1.4.1",
     "js-cookie": "^3.0.5",
-    "lucide-react": "^0.545.0",
+    "lucide-react": "^0.546.0",
     "motion": "^12.23.16",
     "next": "^15.5.4",
     "next-share": "^0.27.0",

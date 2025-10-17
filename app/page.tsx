@@ -10,6 +10,7 @@ import { useAnalytics } from '@/hooks/use-analytics'
 import { useEffect, useState } from "react"
 import { getCalApi } from "@calcom/embed-react";
 import { PricingCard } from "@/components/ui/pricing-card-1"
+import CisaDirectiveCountdownBanner from "@/components/ui/cisa-ed-banner"
 
 export default function Home() {
   const [titleNumber, setTitleNumber] = useState(0);
@@ -47,6 +48,7 @@ export default function Home() {
       
       {/* Main content */}
       <main className="relative z-10">
+        <CisaDirectiveCountdownBanner />
         <Navbar />
         
         {/* Hero Section with enhanced spacing */}

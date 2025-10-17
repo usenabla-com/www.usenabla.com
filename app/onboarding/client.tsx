@@ -93,6 +93,15 @@ export default function OnboardingPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error || "Failed to save onboarding");
 
+      // Track analytics after successful onboarding
+      ph?.capture("onboarding_completed", {
+        plan,
+        email,
+        org,
+        posthog_id,
+        session_id,
+      });
+
       // Stay on this page and show success with Cal.com embed
       setFinished(true);
       setStep(4);

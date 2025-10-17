@@ -1,6 +1,6 @@
 ---
 title: "Nabla October Changelog"
-summary: "Self-service triak keys ⚙️, templates being cooked 🧑‍🍳, and /v1/firmware endpoints"
+summary: "Self-service trial keys ⚙️, templates being cooked 🧑‍🍳, and /v1/firmware endpoints"
 author: "Admin"
 published: "2025-10-15"
 image: "/october.png"

@@ -102,7 +102,7 @@ export function Navbar() {
                       >
                         <div className="flex items-center gap-2">
                           <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Mermaid_Logo.svg/2048px-Mermaid_Logo.svg.png" alt="Firmware Icon" className="h-4 w-4" />
-                          <div className="text-sm font-medium leading-none">Mermaid Diagrans</div>
+                          <div className="text-sm font-medium leading-none">Mermaid Diagrams</div>
                         </div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           Create your own custom Drata-like dashboards for 90% less effort

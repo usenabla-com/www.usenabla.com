@@ -196,7 +196,7 @@ export function Navbar() {
                       >
                         <div className="flex items-center gap-2">
                           <Briefcase className="h-4 w-4" />
-                          <div className="text-sm font-medium leading-none">Professional Services</div>
+                          <div className="text-sm font-medium leading-none">Professional Services </div>
                         </div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           Get help with compliance automation

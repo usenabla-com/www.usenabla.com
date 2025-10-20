@@ -14,7 +14,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
-import { DiscordLogoIcon, GitHubLogoIcon } from "@radix-ui/react-icons"
+import { DiscordLogoIcon, GitHubLogoIcon, Pencil1Icon, SpeakerLoudIcon } from "@radix-ui/react-icons"
 import { useRouter } from "next/navigation"
 import { useAnalytics } from '@/hooks/use-analytics'
 import { useEffect } from "react"
@@ -179,7 +179,7 @@ export function Navbar() {
                         className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                       >
                         <div className="flex items-center gap-2">
-                          <BookOpen className="h-4 w-4" />
+                          <Pencil1Icon className="h-4 w-4" />
                           <div className="text-sm font-medium leading-none">Blog</div>
                         </div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
@@ -188,6 +188,22 @@ export function Navbar() {
                       </Link>
                     </NavigationMenuLink>
                   </li>
+                  {/* <li>
+                    <NavigationMenuLink asChild>
+                      <Link
+                        href="/professional-services"
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                      >
+                        <div className="flex items-center gap-2">
+                          <Briefcase className="h-4 w-4" />
+                          <div className="text-sm font-medium leading-none">Professional Services</div>
+                        </div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          Get help with compliance automation
+                        </p>
+                      </Link>
+                    </NavigationMenuLink>
+                  </li> */}
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>
@@ -272,7 +288,7 @@ export function Navbar() {
             {/* Navigation Links */}
             <nav className="space-y-3">
               <Link
-                href="/vs/drata"
+                href="/use-cases/excel-automation"
                 className="flex items-center gap-3 py-2 text-sm font-medium hover:text-primary transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >

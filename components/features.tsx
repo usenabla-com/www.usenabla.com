@@ -18,14 +18,14 @@ export function Features() {
               <Sparkles className="mr-2 h-4 w-4" />
               Features
             </div>
-            <h2 className="font-display text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl">
-             Programmatic evidence generation{" "}  
+            <h2 className="font-display text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl">
+             Generate audit reports for CMMC and FedRamp{" "}
               <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-foreground">
-                via a stateless API{" "}
+                90% faster{" "}
               </span>
             </h2>
             <p className="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground lg:text-xl">
-              Whether embedding into a customer facing compliance tool or integrating into internal ConMon systems, Nabla provides a simple REST API to generate compliance evidence on-demand.
+              Automate the generation of compliance evidence from your infrastructure and application evidence with our programmatic assessment engine.
             </p>
           </div>
         </div>

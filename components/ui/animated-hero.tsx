@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import { motion } from "framer-motion";
 import { Book, Calendar, DownloadIcon, KeyIcon, KeyRound, MailPlus, MoveRight, PhoneCall, MicrochipIcon, Notebook, Mail, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -8,27 +7,16 @@ import Image from "next/image";
 import { AnimatedBeam } from "@/components/ui/animated-beam";
 import { siSonarqube, siGithub, siSlack, siJson, siMarkdown } from "simple-icons";
 import { useRouter } from "next/navigation";
+import { Typewriter } from "@/components/ui/typewriter-text";
 
 function Hero() {
-  const [titleNumber, setTitleNumber] = useState(0);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const [posthogInfo, setPosthogInfo] = useState<{ id?: string; sessionId?: string }>({});
   const titles = useMemo(
-    () => ["FedRamp", "CMMC", "FIPS 140-3", "And more?" ],
+    () => [".tfstate", "firmware binaries", "Azure Context", "And more?" ],
     []
   );
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      if (titleNumber === titles.length - 1) {
-        setTitleNumber(0);
-      } else {
-        setTitleNumber(titleNumber + 1);
-      }
-    }, 2000);
-    return () => clearTimeout(timeoutId);
-  }, [titleNumber, titles]);
 
   useEffect(() => {
     // Capture PostHog identifiers for checkout metadata and return params
@@ -59,11 +47,22 @@ function Hero() {
       <div className="container mx-auto">
         <div className="flex gap-8 py-20 lg:py-40 items-center justify-center flex-col">
           <div className="flex gap-4 flex-col">
-            <h1 className="text-5xl md:text-7xl max-w-5xl tracking-tighter text-center font-bold">
-              <span className="text-spektr-cyan-50 font-bold">The evidence fabric for programmatic compliance</span>
+            <h1 className="text-5xl md:text-7xl max-w-5xl tracking-tighter text-center font-semibold">
+              We generate compliance evidence programmatically from{" "}
+              <span className="inline-block min-w-[280px] text-left" style={{ color: '#FF5F1F' }}>
+                <Typewriter
+                  text={titles}
+                  speed={80}
+                  deleteSpeed={50}
+                  delay={2000}
+                  loop={true}
+                  cursor="|"
+                  className="inline-block"
+                />
+              </span>
             </h1>
 
-            <p className="text-lg md:text-xl leading-relaxed tracking-tight text-foreground max-w-2xl text-center mx-auto">
+            <p className="text-lg md:text-xl leading-relaxed tracking-tight text-muted-foreground max-w-2xl text-center mx-auto">
               Pull, push, transform, and analyze your infrastructure and application evidence to meet compliance requirements faster and with less effort.
             </p>
           </div>

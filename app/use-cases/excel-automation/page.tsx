@@ -18,7 +18,7 @@ export default function ExcelAutomationPage() {
                 </span>
               </div>
               <div className="flex gap-4 flex-col text-center">
-                <h1 className="text-4xl md:text-6xl lg:text-7xl max-w-4xl tracking-tighter text-center font-regular">
+                <h1 className="text-4xl md:text-6xl lg:text-7xl max-w-4xl tracking-tighter text-center font-bold">
                   Automate 80% of your technical controls
                 </h1>
                 <p className="text-lg md:text-xl max-w-2xl leading-relaxed tracking-tight text-muted-foreground text-center mx-auto">

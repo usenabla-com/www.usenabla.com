@@ -2,7 +2,12 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 import { remark } from 'remark'
-import html from 'remark-html'
+import remarkGfm from 'remark-gfm'
+import remarkRehype from 'remark-rehype'
+import rehypeReact from 'rehype-react'
+import * as prod from 'react/jsx-runtime'
+import React from 'react'
+import { blogMarkdownComponents } from '@/components/blog-markdown'
 
 const postsDirectory = path.join(process.cwd(), 'app/blog/content')
 
@@ -14,7 +19,7 @@ export interface BlogPost {
   published: string
   image: string
   tags: string[]
-  content: string
+  content: React.ReactElement
   url: string
 }
 
@@ -36,11 +41,19 @@ export async function getAllPosts(): Promise<BlogPost[]> {
         // Use gray-matter to parse the post metadata section
         const matterResult = matter(fileContents)
 
-        // Use remark to convert markdown into HTML string
+        // Use remark to convert markdown into React elements with table support
         const processedContent = await remark()
-          .use(html)
+          .use(remarkGfm) // Enable GitHub Flavored Markdown (tables, strikethrough, etc.)
+          .use(remarkRehype) // Convert to rehype (HTML AST)
+          .use(rehypeReact, {
+            // @ts-ignore
+            Fragment: prod.Fragment,
+            jsx: prod.jsx,
+            jsxs: prod.jsxs,
+            components: blogMarkdownComponents,
+          })
           .process(matterResult.content)
-        const content = processedContent.toString()
+        const content = processedContent.result as React.ReactElement
 
         // Combine the data with the id and content
         return {
@@ -73,11 +86,19 @@ export async function getPostData(id: string): Promise<BlogPost | null> {
     // Use gray-matter to parse the post metadata section
     const matterResult = matter(fileContents)
 
-    // Use remark to convert markdown into HTML string
+    // Use remark to convert markdown into React elements with table support
     const processedContent = await remark()
-      .use(html)
+      .use(remarkGfm) // Enable GitHub Flavored Markdown (tables, strikethrough, etc.)
+      .use(remarkRehype) // Convert to rehype (HTML AST)
+      .use(rehypeReact, {
+        // @ts-ignore
+        Fragment: prod.Fragment,
+        jsx: prod.jsx,
+        jsxs: prod.jsxs,
+        components: blogMarkdownComponents,
+      })
       .process(matterResult.content)
-    const content = processedContent.toString()
+    const content = processedContent.result as React.ReactElement
 
     // Combine the data with the id and content
     return {

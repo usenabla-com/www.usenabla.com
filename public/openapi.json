@@ -1,0 +1,633 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Nabla Evidence Engine API",
+    "version": "1.0.0",
+    "description": "Compliance evidence orchestration and security analysis API. Analyze firmware binaries, infrastructure-as-code, and cloud configurations for FedRAMP, CMMC, FIPS, and other compliance frameworks.",
+    "contact": {
+      "name": "Nabla",
+      "url": "https://www.usenabla.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.usenabla.com",
+      "description": "Production"
+    },
+    {
+      "url": "https://api.gov.usenabla.com",
+      "description": "GovCloud"
+    },
+    {
+      "url": "http://localhost:8080",
+      "description": "Local Development"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Evidence",
+      "description": "Compliance evidence generation and analysis"
+    },
+    {
+      "name": "Firmware",
+      "description": "Binary firmware security analysis"
+    },
+    {
+      "name": "FIPS",
+      "description": "FIPS 140-2/140-3 cryptographic compliance"
+    }
+  ],
+  "security": [
+    {
+      "CustomerKey": []
+    }
+  ],
+  "paths": {
+    "/v1/evidence/terraform": {
+      "post": {
+        "tags": ["Evidence"],
+        "summary": "Analyze Terraform state for compliance",
+        "operationId": "assessTerraformState",
+        "description": "Generate NIST 800-53 compliance assessment from Terraform state file with optional architecture diagram",
+        "security": [{"CustomerKey": []}],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "format", "content_base64"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name for the evidence assessment",
+                    "example": "production-infrastructure"
+                  },
+                  "format": {
+                    "type": "string",
+                    "enum": ["oscal", "yaml", "json"],
+                    "description": "Output format for the assessment",
+                    "example": "json"
+                  },
+                  "content_base64": {
+                    "type": "string",
+                    "description": "Base64-encoded Terraform state file (JSON)",
+                    "example": "eyJ2ZXJzaW9uIjo0LCJ0ZXJyYWZvcm1fdmVyc2lvbiI6IjEuMC4wIiwicmVzb3VyY2VzIjpbXX0="
+                  },
+                  "include_diagram": {
+                    "type": "boolean",
+                    "description": "Include Mermaid architecture diagram in artifacts",
+                    "default": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/EvidenceResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "422": {
+            "$ref": "#/components/responses/Unprocessable"
+          }
+        }
+      }
+    },
+    "/v1/evidence/azure": {
+      "post": {
+        "tags": ["Evidence"],
+        "summary": "Analyze Azure environment for compliance (live)",
+        "operationId": "assessAzureEnvironment",
+        "description": "Generate NIST 800-53 compliance assessment from live Azure environment using Workload Identity Federation. Requires Fabric plan.",
+        "security": [{"CustomerKey": []}],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "format", "azure_wif"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name for the evidence assessment",
+                    "example": "azure-production"
+                  },
+                  "format": {
+                    "type": "string",
+                    "enum": ["oscal", "yaml", "json"],
+                    "description": "Output format for the assessment",
+                    "example": "json"
+                  },
+                  "azure_wif": {
+                    "type": "object",
+                    "description": "Azure Workload Identity Federation configuration",
+                    "required": ["tenant_id", "client_id", "oidc_token", "subscription_ids"],
+                    "properties": {
+                      "tenant_id": {
+                        "type": "string",
+                        "description": "Azure AD tenant ID",
+                        "example": "00000000-0000-0000-0000-000000000000"
+                      },
+                      "client_id": {
+                        "type": "string",
+                        "description": "Azure AD application (client) ID",
+                        "example": "00000000-0000-0000-0000-000000000000"
+                      },
+                      "oidc_token": {
+                        "type": "string",
+                        "description": "OIDC JWT token from identity provider (e.g., GitHub Actions)"
+                      },
+                      "subscription_ids": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "List of Azure subscription IDs to analyze",
+                        "example": ["00000000-0000-0000-0000-000000000000"]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/EvidenceResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "422": {
+            "$ref": "#/components/responses/Unprocessable"
+          }
+        }
+      }
+    },
+    "/v1/evidence/firmware": {
+      "post": {
+        "tags": ["Firmware"],
+        "summary": "Analyze firmware binary for security",
+        "operationId": "analyzeFirmwareBinary",
+        "description": "Perform security analysis on firmware/binary files. Detects format (ELF, PE, Mach-O, WebAssembly), identifies security features (NX, ASLR, stack canaries, CFI), extracts strings, generates control flow graphs, and maps findings to NIST 800-53 and NIST SP 800-193 (Platform Firmware Resilience).",
+        "security": [{"CustomerKey": []}],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "content_base64"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name for the firmware analysis",
+                    "example": "iot-device-firmware"
+                  },
+                  "file_name": {
+                    "type": "string",
+                    "description": "Original filename (optional)",
+                    "example": "firmware-v2.6.11.bin"
+                  },
+                  "content_base64": {
+                    "type": "string",
+                    "description": "Base64-encoded firmware binary",
+                    "example": "f0VMRgIBAQAAAAAAAAAAAA=="
+                  }
+                }
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name for the firmware analysis"
+                  },
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Firmware binary file"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Firmware analysis completed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FirmwareResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/v1/fips": {
+      "post": {
+        "tags": ["FIPS"],
+        "summary": "Generate FIPS cryptographic assessment from ZIP bundle",
+        "operationId": "generateFipsAssessment",
+        "description": "Upload a ZIP archive containing multiple evidence sources (SBOMs, Terraform state, Kubernetes manifests, Ansible playbooks, package locks, system info) and generate FIPS 140-2/140-3 cryptographic compliance assessment. Detects cryptographic libraries, validates FIPS compliance, and checks for weak algorithms.",
+        "security": [{"CustomerKey": []}],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "format", "zip_content"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name for the FIPS assessment",
+                    "example": "production-crypto-audit"
+                  },
+                  "format": {
+                    "type": "string",
+                    "enum": ["oscal", "yaml", "json"],
+                    "description": "Output format for the assessment",
+                    "example": "json"
+                  },
+                  "zip_content": {
+                    "type": "string",
+                    "description": "Base64-encoded ZIP archive. Supported file types: sbom.json/spdx.json (SBOM), *.tfstate (Terraform), *.yaml/manifest.yaml (Kubernetes), playbook.yaml (Ansible), package-lock.json/Cargo.lock/go.mod/poetry.lock (package managers), system_info.json/openssl.json (system crypto info)",
+                    "example": "UEsDBBQAAAAIAA=="
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/EvidenceResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "422": {
+            "$ref": "#/components/responses/Unprocessable"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "CustomerKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Customer-Key",
+        "description": "Customer API key for authentication"
+      }
+    },
+    "schemas": {
+      "EvidenceResponse": {
+        "type": "object",
+        "required": ["id", "status", "created_at", "assessment", "artifacts"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Unique identifier for this assessment"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["completed", "failed"],
+            "description": "Assessment status"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp when assessment was created"
+          },
+          "assessment": {
+            "$ref": "#/components/schemas/ComplianceAssessment"
+          },
+          "artifacts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Artifact"
+            },
+            "description": "Generated artifacts (assessment files, diagrams)"
+          }
+        }
+      },
+      "ComplianceAssessment": {
+        "type": "object",
+        "required": ["id", "framework", "version", "timestamp", "controls", "summary"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "framework": {
+            "type": "string",
+            "description": "Compliance framework name",
+            "enum": ["NIST 800-53", "NIST 800-171", "NIST 800-172", "CMMC", "FIPS 140-2", "FIPS 140-3", "NIST SP 800-193"],
+            "example": "NIST 800-53"
+          },
+          "version": {
+            "type": "string",
+            "description": "Framework version",
+            "example": "Rev. 5"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "controls": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ControlAssessment"
+            }
+          },
+          "summary": {
+            "$ref": "#/components/schemas/AssessmentSummary"
+          }
+        }
+      },
+      "ControlAssessment": {
+        "type": "object",
+        "required": ["control_id", "title", "status", "findings", "evidence"],
+        "properties": {
+          "control_id": {
+            "type": "string",
+            "description": "Control identifier",
+            "example": "SC-13"
+          },
+          "title": {
+            "type": "string",
+            "description": "Control title",
+            "example": "Cryptographic Protection"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["satisfied", "not-satisfied", "not-applicable"],
+            "description": "Control satisfaction status"
+          },
+          "findings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of findings or issues"
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Evidence supporting the assessment"
+          }
+        }
+      },
+      "AssessmentSummary": {
+        "type": "object",
+        "required": ["total_controls", "satisfied", "not_satisfied", "not_applicable"],
+        "properties": {
+          "total_controls": {
+            "type": "integer",
+            "description": "Total number of controls assessed"
+          },
+          "satisfied": {
+            "type": "integer",
+            "description": "Number of satisfied controls"
+          },
+          "not_satisfied": {
+            "type": "integer",
+            "description": "Number of not-satisfied controls"
+          },
+          "not_applicable": {
+            "type": "integer",
+            "description": "Number of not-applicable controls"
+          }
+        }
+      },
+      "Artifact": {
+        "type": "object",
+        "required": ["filename", "content_type", "content_base64", "size_bytes"],
+        "properties": {
+          "filename": {
+            "type": "string",
+            "description": "Artifact filename",
+            "example": "nist80053-assessment.json"
+          },
+          "content_type": {
+            "type": "string",
+            "description": "MIME type",
+            "example": "application/json"
+          },
+          "content_base64": {
+            "type": "string",
+            "description": "Base64-encoded artifact content"
+          },
+          "size_bytes": {
+            "type": "integer",
+            "description": "Size in bytes"
+          },
+          "diagram": {
+            "type": "string",
+            "description": "Mermaid diagram content (if applicable)"
+          }
+        }
+      },
+      "FirmwareResponse": {
+        "type": "object",
+        "required": ["id", "name", "detected_format", "strings", "security_features", "findings"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "description": "Firmware name"
+          },
+          "detected_format": {
+            "type": "string",
+            "enum": ["elf", "pe", "mach_o", "wasm", "raw"],
+            "description": "Detected binary format"
+          },
+          "architecture": {
+            "type": "string",
+            "description": "CPU architecture",
+            "example": "x86_64"
+          },
+          "entry_point": {
+            "type": "string",
+            "description": "Entry point address",
+            "example": "0x401000"
+          },
+          "strings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Extracted ASCII strings (max 200)"
+          },
+          "security_features": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["nx", "aslr", "stack_canary", "cfi", "fortify", "pie", "relro", "signed"]
+            },
+            "description": "Detected security features"
+          },
+          "findings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Security findings with severity (CRITICAL, HIGH, MED, LOW, INFO)",
+            "example": ["MED: NX/DEP bit not enabled", "LOW: Stack canaries not detected"]
+          },
+          "cfg_mermaid": {
+            "type": "string",
+            "description": "Control Flow Graph in Mermaid format (if available)"
+          },
+          "mappings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MappingHit"
+            },
+            "description": "Mappings to compliance frameworks"
+          },
+          "pfr_assessment": {
+            "type": "object",
+            "description": "NIST SP 800-193 Platform Firmware Resilience assessment"
+          },
+          "artifacts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Artifact"
+            }
+          }
+        }
+      },
+      "MappingHit": {
+        "type": "object",
+        "required": ["framework", "control", "rationale"],
+        "properties": {
+          "framework": {
+            "type": "string",
+            "example": "nist_800_53"
+          },
+          "control": {
+            "type": "string",
+            "example": "SI-16"
+          },
+          "rationale": {
+            "type": "string",
+            "example": "Binary hardening feature 'nx' contributes to memory protection"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": ["error", "message"],
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Error type"
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message"
+          },
+          "code": {
+            "type": "string",
+            "description": "HTTP status code"
+          },
+          "requestId": {
+            "type": "string",
+            "description": "Request identifier for debugging"
+          }
+        }
+      }
+    },
+    "responses": {
+      "EvidenceResponse": {
+        "description": "Evidence assessment completed successfully",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/EvidenceResponse"
+            }
+          }
+        }
+      },
+      "BadRequest": {
+        "description": "Bad request - invalid input",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Unauthorized - invalid or missing API key",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "Forbidden - insufficient plan or permissions",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "Unprocessable": {
+        "description": "Unprocessable entity - unable to parse evidence",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      }
+    }
+  }
+}

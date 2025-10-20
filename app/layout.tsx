@@ -5,9 +5,9 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/toaster"
 
-const inter = Inter({ 
-  subsets: ["latin"], 
-  weight: ["400"],
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
   variable: "--font-inter",
   display: "swap"
 })
@@ -95,7 +95,7 @@ export default function RootLayout({
         />
 
       </head>
-      <body className={`${inter.className} antialiased min-h-screen bg-gradient-to-br from-background to-background/95 text-foreground selection:bg-primary selection:text-primary-foreground`}>
+      <body className={`${inter.className} antialiased min-h-screen bg-background text-foreground selection:bg-primary selection:text-primary-foreground`}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} disableTransitionOnChange>
           <div className="relative flex min-h-screen flex-col">
             <div className="flex-1">

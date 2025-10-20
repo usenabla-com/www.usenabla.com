@@ -63,7 +63,7 @@ export default function DiagramsAsCodePage() {
             <div className="flex gap-4 flex-col items-center text-center">
               <Badge>Diagrams as Code</Badge>
               <div className="flex gap-4 flex-col">
-                <h1 className="text-4xl md:text-6xl lg:text-7xl max-w-4xl tracking-tighter font-regular">
+                <h1 className="text-4xl md:text-6xl lg:text-7xl max-w-4xl tracking-tighter font-bold">
                   Generate diagrams from your IaC and firmware programmatically
                 </h1>
                 <p className="text-lg md:text-xl max-w-2xl leading-relaxed tracking-tight text-muted-foreground mx-auto">

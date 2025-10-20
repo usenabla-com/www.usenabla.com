@@ -48,12 +48,10 @@ export default function Home() {
       
       {/* Main content */}
       <main className="relative z-10">
-        <CisaDirectiveCountdownBanner />
         <Navbar />
         
         {/* Hero Section with enhanced spacing */}
         <section className="relative">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background pointer-events-none" />
           <Hero />
         </section>
         
@@ -71,7 +69,7 @@ export default function Home() {
           <div className="relative z-10">
             <div className="container px-4 md:px-6">
               <div className="flex flex-col items-center justify-center text-center space-y-4">
-                <h2 className="font-display text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+                <h2 className="font-display text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
                   Simple, transparent pricing
                 </h2>
                 <p className="mx-auto max-w-2xl text-muted-foreground text-base sm:text-lg">

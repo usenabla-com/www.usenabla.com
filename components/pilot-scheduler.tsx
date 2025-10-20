@@ -62,7 +62,7 @@ export function PilotScheduler() {
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="w-full flex flex-col items-center justify-center space-y-4 text-center">
           <div className="w-full space-y-2">
-            <h2 className="w-full text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold tracking-tighter">
+            <h2 className="w-full text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-semibold tracking-tighter">
               Ready to get started?
             </h2>
             <div className="w-full flex justify-center">

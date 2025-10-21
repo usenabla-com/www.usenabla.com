@@ -1,46 +1,18 @@
 "use client"
+import { useMemo } from "react"
 import { PageLayout } from "@/components/page-layout"
 import { Feature } from "@/components/ui/feature-with-advantages"
 import { CTA } from "@/components/ui/call-to-action"
-import { Shield, Cpu, FileSearch, AlertTriangle, PackageCheck, Lock, Binary, Layers, Scan, CheckCircle2 } from "lucide-react"
-import { useEffect, useMemo } from "react"
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { BookOpen } from "lucide-react"
-import { Calendar } from "lucide-react"
+import { Shield, Users, FileCheck, Target, Wrench, GraduationCap, Search, Clock, CheckCircle2, AlertTriangle, Calendar, BookOpen } from "lucide-react"
+import Link from "next/link"
+import { Typewriter } from "@/components/ui/typewriter-text"
 
-export default function FirmwareSecurityPage() {
-      const [loading, setLoading] = useState(false);
-      const router = useRouter();
-      const [posthogInfo, setPosthogInfo] = useState<{ id?: string; sessionId?: string }>({});
-      const titles = useMemo(
-        () => [".tfstate", "firmware binaries", "Azure Context", "And more?" ],
-        []
-      );
-    
-      useEffect(() => {
-        // Capture PostHog identifiers for checkout metadata and return params
-        const ph = (window as any).posthog;
-        const posthogId = ph?.get_distinct_id?.();
-        const sessionId = ph?.get_session_id?.();
-        setPosthogInfo({ id: posthogId, sessionId });
-      }, []);
-    
-      const handleCheckout = () => {
-        try {
-          setLoading(true);
-          const url = new URL(window.location.href);
-          const params = new URLSearchParams(url.search);
-          if (posthogInfo.id && !params.has("posthog_id")) params.set("posthog_id", posthogInfo.id);
-          if (posthogInfo.sessionId && !params.has("session_id")) params.set("session_id", posthogInfo.sessionId);
-          const qs = params.toString();
-          router.push(`/onboarding${qs ? `?${qs}` : ""}`);
-        } finally {
-          setLoading(false);
-        }
-      };
+export default function ProfessionalServicesPage() {
+  const titles = useMemo(
+    () => ["Asset Inventories", "Vulnerability Scanning", "SSP Generation", "Continuous Monitoring", ],
+    []
+  )
   return (
     <PageLayout>
       {/* Hero Section */}
@@ -50,82 +22,93 @@ export default function FirmwareSecurityPage() {
             <div className="flex gap-4 flex-col items-center">
               <div>
                 <span className="inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground shadow hover:bg-primary/80">
-                  Firmware Security
+                  Professional Services
                 </span>
               </div>
               <div className="flex gap-4 flex-col text-center">
-                <h1 className="text-4xl md:text-6xl lg:text-7xl max-w-4xl tracking-tighter text-center font-normal">
-                  Programmatic Binary Composition Analysis
+                <h1 className="text-5xl md:text-7xl max-w-5xl tracking-tighter text-center font-normal">
+                  Audit prep support for{" "}
+                  <span className="inline-block min-w-[280px] text-left" style={{ color: '#FF5F1F' }}>
+                    <Typewriter
+                      text={titles}
+                      speed={80}
+                      deleteSpeed={50}
+                      delay={2000}
+                      loop={true}
+                      cursor="|"
+                      className="inline-block"
+                    />
+                  </span>
                 </h1>
                 <p className="text-lg md:text-xl max-w-2xl leading-relaxed tracking-tight text-muted-foreground text-center mx-auto">
-                  Automated firmware analysis, SBOM generation, and vulnerability detection for embedded systems. Know exactly what's in your binaries and prove it to auditors.
+                  Partner with our compliance experts to accelerate your certification journey and maintain continuous compliance with less effort.
                 </p>
               </div>
-              <div className="flex flex-row gap-3">
+              <div className="flex flex-col sm:flex-row gap-3 px-4">
                 <Link href="https://docs.usenabla.com">
                   <Button
                     size="lg"
                     className="gap-4 sm:gap-4 px-5 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base"
                     variant="outline"
                   >
-                    Read the Docs <BookOpen className="w-4 h-4" />
+                    View Blog <BookOpen className="w-4 h-4" />
                   </Button>
                 </Link>
-                <Button
-                  size="lg"
-                  onClick={handleCheckout}
-                  disabled={loading}
-                  className="gap-4 sm:gap-4 px-5 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base"
-                >
-                  {loading ? "Redirecting…" : "Start a 14-day trial"} <Calendar className="w-4 h-4" />
-                </Button>
+                <Link href="https://cal.com/team/nabla/45-min-intro-call">
+                  <Button
+                    size="lg"
+                    className="gap-4 sm:gap-4 px-5 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base"
+                  >
+                    Schedule Consultation <Calendar className="w-4 h-4" />
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Analysis Process */}
+      {/* Engagement Process */}
       <div className="w-full py-20 lg:py-40 bg-muted/30">
         <div className="container mx-auto">
           <div className="flex flex-col gap-10">
             <div className="flex gap-4 flex-col items-center text-center">
               <div>
                 <span className="inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground shadow hover:bg-primary/80">
-                  Analysis Pipeline
+                  Our Process
                 </span>
               </div>
               <h2 className="text-3xl md:text-5xl tracking-tighter max-w-2xl font-regular">
-                From firmware upload to security report
+                From initial assessment to audit readiness
               </h2>
               <p className="text-lg max-w-xl leading-relaxed tracking-tight text-muted-foreground">
-                Our automated pipeline extracts, analyzes, and documents every component in your firmware
+                Our proven methodology gets you audit-ready faster with comprehensive documentation and evidence collection
               </p>
             </div>
 
-            {/* Analysis Steps */}
+            {/* Process Steps */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8">
               <div className="relative">
                 <div className="bg-background border-2 border-primary/20 rounded-xl p-6 hover:border-primary/40 transition-all h-full">
                   <div className="flex flex-col gap-4">
                     <div className="bg-primary/10 w-14 h-14 rounded-xl flex items-center justify-center">
-                      <Binary className="w-7 h-7 text-primary" />
+                      <Search className="w-7 h-7 text-primary" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold mb-2">1. Extract</h3>
+                      <h3 className="text-xl font-normal mb-2">1. Gap Analysis</h3>
                       <p className="text-muted-foreground text-sm leading-relaxed">
-                        Decompress and unpack firmware images. Support for all major formats and file systems.
+                        Assess your current compliance posture and identify gaps against target framework requirements.
                       </p>
                     </div>
                     <div className="pt-4 border-t">
                       <p className="text-xs font-mono text-muted-foreground">
-                        " ELF binaries
+                        • Framework mapping
                         <br />
-                        " Compressed images
+                        • Control assessment
                         <br />
-                        " Embedded filesystems
+                        • Gap identification
                         <br />
-                        " Boot loaders
+                        • Remediation roadmap
                       </p>
                     </div>
                   </div>
@@ -140,23 +123,23 @@ export default function FirmwareSecurityPage() {
                 <div className="bg-background border-2 border-primary/20 rounded-xl p-6 hover:border-primary/40 transition-all h-full">
                   <div className="flex flex-col gap-4">
                     <div className="bg-primary/10 w-14 h-14 rounded-xl flex items-center justify-center">
-                      <Layers className="w-7 h-7 text-primary" />
+                      <Target className="w-7 h-7 text-primary" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold mb-2">2. Inventory</h3>
+                      <h3 className="text-xl font-normal mb-2">2. Evidence Collection</h3>
                       <p className="text-muted-foreground text-sm leading-relaxed">
-                        Identify all libraries, packages, and dependencies. Build complete component catalog.
+                        Gather and organize compliance evidence using automated tools and infrastructure scanning.
                       </p>
                     </div>
                     <div className="pt-4 border-t">
                       <p className="text-xs font-mono text-muted-foreground">
-                        " Library versions
+                        • Asset inventories
                         <br />
-                        " Package managers
+                        • Vulnerability scanning
                         <br />
-                        " Static analysis
+                        • Configuration audits
                         <br />
-                        " Signature matching
+                        • Evidence artifacts
                       </p>
                     </div>
                   </div>
@@ -171,23 +154,23 @@ export default function FirmwareSecurityPage() {
                 <div className="bg-background border-2 border-primary/20 rounded-xl p-6 hover:border-primary/40 transition-all h-full">
                   <div className="flex flex-col gap-4">
                     <div className="bg-primary/10 w-14 h-14 rounded-xl flex items-center justify-center">
-                      <Scan className="w-7 h-7 text-primary" />
+                      <FileCheck className="w-7 h-7 text-primary" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold mb-2">3. Scan</h3>
+                      <h3 className="text-xl font-normal mb-2">3. Documentation</h3>
                       <p className="text-muted-foreground text-sm leading-relaxed">
-                        Cross-reference against CVE databases. Identify known vulnerabilities and exposures.
+                        Generate audit-ready documentation including SSPs, policies, and control implementation statements.
                       </p>
                     </div>
                     <div className="pt-4 border-t">
                       <p className="text-xs font-mono text-muted-foreground">
-                        " NVD database
+                        • SSP generation
                         <br />
-                        " OSV integration
+                        • Policy templates
                         <br />
-                        " Risk scoring
+                        • Control narratives
                         <br />
-                        " Exploit availability
+                        • Evidence packages
                       </p>
                     </div>
                   </div>
@@ -202,23 +185,23 @@ export default function FirmwareSecurityPage() {
                 <div className="bg-background border-2 border-primary/20 rounded-xl p-6 hover:border-primary/40 transition-all h-full">
                   <div className="flex flex-col gap-4">
                     <div className="bg-primary/10 w-14 h-14 rounded-xl flex items-center justify-center">
-                      <PackageCheck className="w-7 h-7 text-primary" />
+                      <Wrench className="w-7 h-7 text-primary" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold mb-2">4. Report</h3>
+                      <h3 className="text-xl font-normal mb-2">4. Ongoing Support</h3>
                       <p className="text-muted-foreground text-sm leading-relaxed">
-                        Generate compliance-ready SBOMs and security reports in multiple formats.
+                        Maintain compliance with continuous monitoring, evidence updates, and annual audit preparation.
                       </p>
                     </div>
                     <div className="pt-4 border-t">
                       <p className="text-xs font-mono text-muted-foreground">
-                        " SPDX format
+                        • Continuous monitoring
                         <br />
-                        " CycloneDX
+                        • Evidence automation
                         <br />
-                        " JSON/CSV/Excel
+                        • Annual readiness
                         <br />
-                        " PDF reports
+                        • Change management
                       </p>
                     </div>
                   </div>
@@ -229,80 +212,81 @@ export default function FirmwareSecurityPage() {
         </div>
       </div>
 
-      {/* Feature Advantages */}
+      {/* Service Offerings */}
       <Feature
-        badge="Key Capabilities"
-        title="Enterprise-grade firmware analysis"
-        description="Everything you need to secure your embedded systems and satisfy compliance requirements."
+        badge="What We Offer"
+        title="Comprehensive audit preparation services"
+        description="Expert-led compliance consulting to accelerate your certification and maintain continuous compliance with automated evidence collection."
         features={[
           {
-            title: "Automated SBOM Generation",
-            description: "Generate comprehensive Software Bill of Materials in SPDX and CycloneDX formats. Meet executive order and regulatory requirements automatically."
+            title: "System Security Plan (SSP) Generation",
+            description: "Automated generation of comprehensive SSPs tailored to your framework requirements. We help document your security controls, system architecture, and compliance posture in audit-ready format."
           },
           {
-            title: "Vulnerability Detection",
-            description: "Identify known CVEs across all firmware components. Get CVSS scores, exploit availability, and remediation guidance."
+            title: "Asset Inventory & Discovery",
+            description: "Complete visibility into your infrastructure with automated asset discovery and inventory management. Track cloud resources, servers, containers, and SaaS applications across your entire environment."
           },
           {
-            title: "Multi-Format Support",
-            description: "Analyze firmware from any platform: ARM, x86, MIPS, PowerPC. Support for compressed images, filesystems, and bootloaders."
+            title: "Vulnerability Management",
+            description: "Continuous vulnerability scanning and remediation tracking aligned with compliance requirements. Automated evidence collection showing your vulnerability management program in action."
           },
           {
-            title: "Control Flow Analysis",
-            description: "Understand binary behavior with static and dynamic analysis. Identify dead code, hidden functions, and potential backdoors."
+            title: "Continuous Monitoring Setup",
+            description: "Implement automated continuous monitoring for ongoing compliance. Real-time evidence collection, automated control validation, and continuous compliance posture assessment."
           },
           {
-            title: "Cryptographic Analysis",
-            description: "Identify weak crypto implementations, hardcoded keys, and certificate issues. Ensure your encryption is actually secure."
+            title: "Gap Assessment & Remediation",
+            description: "Comprehensive gap analysis against your target framework (SOC 2, FedRAMP, ISO 27001, HIPAA). Clear remediation roadmap with prioritized action items to achieve compliance."
           },
           {
-            title: "API Integration",
-            description: "Integrate firmware analysis into your CI/CD pipeline. Scan every build automatically and fail on critical vulnerabilities."
+            title: "Audit Support & Response",
+            description: "Expert guidance during your audit engagement. We help prepare evidence packages, respond to auditor requests, and ensure smooth audit completion with minimal delays."
           }
         ]}
       />
-      {/* Use Cases */}
+
+      {/* Who We Serve */}
       <div className="w-full py-20 lg:py-40">
         <div className="container mx-auto">
           <div className="flex flex-col gap-10">
             <div className="flex gap-4 flex-col items-start">
               <div>
                 <span className="inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground shadow hover:bg-primary/80">
-                  Common Use Cases
+                  Who We Serve
                 </span>
               </div>
               <div className="flex gap-2 flex-col">
                 <h2 className="text-3xl md:text-5xl tracking-tighter max-w-xl font-regular">
-                  Who needs firmware security analysis?
+                  Frameworks we support
                 </h2>
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               <div className="flex flex-col gap-2">
                 <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center">
-                  <Cpu className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="text-xl font-semibold">IoT & Embedded Devices</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Smart home devices, industrial sensors, medical equipment. Ensure your embedded Linux or RTOS firmware is secure.
-                </p>
-              </div>
-              <div className="flex flex-col gap-2">
-                <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center">
                   <Shield className="w-6 h-6 text-primary" />
                 </div>
-                <h3 className="text-xl font-semibold">Critical Infrastructure</h3>
+                <h3 className="text-xl font-semibold">FedRAMP</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  SCADA systems, network appliances, industrial controllers. Meet NERC CIP and IEC 62443 compliance requirements.
+                  Federal Risk and Authorization Management Program compliance for cloud service providers. Complete SSP generation, continuous monitoring implementation, and authorization support for Low, Moderate, and High impact levels.
                 </p>
               </div>
               <div className="flex flex-col gap-2">
                 <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center">
-                  <Lock className="w-6 h-6 text-primary" />
+                  <Target className="w-6 h-6 text-primary" />
                 </div>
-                <h3 className="text-xl font-semibold">Supply Chain Security</h3>
+                <h3 className="text-xl font-semibold">CMMC</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  Verify third-party firmware, validate vendor claims, and maintain complete chain of custody for all components.
+                  Cybersecurity Maturity Model Certification for Department of Defense contractors. Gap assessments, control implementation, evidence collection, and assessment preparation for CMMC Level 1, 2, and 3 certification.
+                </p>
+              </div>
+              <div className="flex flex-col gap-2">
+                <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center">
+                  <Users className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="text-xl font-semibold">ISO 27001</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  International standard for information security management systems (ISMS). Complete ISMS implementation, risk assessment, statement of applicability development, and certification audit preparation.
                 </p>
               </div>
             </div>
@@ -312,13 +296,13 @@ export default function FirmwareSecurityPage() {
 
       {/* CTA */}
       <CTA
-        badge="Ready to Analyze?"
-        title="Start securing your firmware today"
-        description="Join organizations using automated firmware analysis to meet compliance requirements and secure their embedded systems. Generate SBOMs and vulnerability reports in minutes."
-        primaryButtonText="Get API Access"
-        secondaryButtonText="Schedule Analysis Demo"
-        primaryButtonHref="https://docs.usenabla.com"
-        secondaryButtonHref="https://cal.com/team/nabla/nabla-pilot-interest-call"
+        badge="Ready to Get Started?"
+        title="Accelerate your compliance journey with expert support"
+        description="Schedule a consultation to discuss your audit preparation needs. Our team combines deep compliance expertise with automated evidence collection to get you audit-ready faster."
+        primaryButtonText="Schedule Consultation"
+        secondaryButtonText="Read Our Blog"
+        primaryButtonHref="https://cal.com/team/nabla/45-min-intro-call"
+        secondaryButtonHref="https://docs.usenabla.com"
       />
     </PageLayout>
   )

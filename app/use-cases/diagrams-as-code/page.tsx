@@ -1,8 +1,16 @@
+"use client"
 import { PageLayout } from "@/components/page-layout"
 import { Feature } from "@/components/ui/feature-with-advantages"
 import { CTA } from "@/components/ui/call-to-action"
 import { Badge } from "@/components/ui/badge"
 import { TerraformMermaidComparison } from "@/components/ui/terraform-mermaid-comparison"
+import { useEffect, useMemo } from "react"
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { BookOpen } from "lucide-react"
+import { Calendar } from "lucide-react"
 
 const terraformExample = `# Minimal Terraform example
 provider "aws" {
@@ -54,6 +62,35 @@ graph TD
 `
 
 export default function DiagramsAsCodePage() {
+    const [loading, setLoading] = useState(false);
+    const router = useRouter();
+    const [posthogInfo, setPosthogInfo] = useState<{ id?: string; sessionId?: string }>({});
+    const titles = useMemo(
+      () => [".tfstate", "firmware binaries", "Azure Context", "And more?" ],
+      []
+    );
+  
+    useEffect(() => {
+      // Capture PostHog identifiers for checkout metadata and return params
+      const ph = (window as any).posthog;
+      const posthogId = ph?.get_distinct_id?.();
+      const sessionId = ph?.get_session_id?.();
+      setPosthogInfo({ id: posthogId, sessionId });
+    }, []);
+  
+    const handleCheckout = () => {
+      try {
+        setLoading(true);
+        const url = new URL(window.location.href);
+        const params = new URLSearchParams(url.search);
+        if (posthogInfo.id && !params.has("posthog_id")) params.set("posthog_id", posthogInfo.id);
+        if (posthogInfo.sessionId && !params.has("session_id")) params.set("session_id", posthogInfo.sessionId);
+        const qs = params.toString();
+        router.push(`/onboarding${qs ? `?${qs}` : ""}`);
+      } finally {
+        setLoading(false);
+      }
+    };
   return (
     <PageLayout>
       {/* Hero */}
@@ -63,7 +100,7 @@ export default function DiagramsAsCodePage() {
             <div className="flex gap-4 flex-col items-center text-center">
               <Badge>Diagrams as Code</Badge>
               <div className="flex gap-4 flex-col">
-                <h1 className="text-4xl md:text-6xl lg:text-7xl max-w-4xl tracking-tighter font-bold">
+                <h1 className="text-4xl md:text-6xl lg:text-7xl max-w-4xl tracking-tighter font-normal">
                   Generate diagrams from your IaC and firmware programmatically
                 </h1>
                 <p className="text-lg md:text-xl max-w-2xl leading-relaxed tracking-tight text-muted-foreground mx-auto">
@@ -71,18 +108,23 @@ export default function DiagramsAsCodePage() {
                 </p>
               </div>
               <div className="flex flex-row gap-3">
-                <a
-                  href="https://cal.com/jbohrman/45-min-meeting"
-                  className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-10 px-8"
+                <Link href="https://docs.usenabla.com">
+                  <Button
+                    size="lg"
+                    className="gap-4 sm:gap-4 px-5 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base"
+                    variant="outline"
+                  >
+                    Read the Docs <BookOpen className="w-4 h-4" />
+                  </Button>
+                </Link>
+                <Button
+                  size="lg"
+                  onClick={handleCheckout}
+                  disabled={loading}
+                  className="gap-4 sm:gap-4 px-5 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base"
                 >
-                  Get a customized demo
-                </a>
-                <a
-                  href="https://docs.usenabla.com"
-                  className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-10 px-8"
-                >
-                  Read the docs
-                </a>
+                  {loading ? "Redirecting…" : "Start a 14-day trial"} <Calendar className="w-4 h-4" />
+                </Button>
               </div>
             </div>
           </div>

@@ -47,7 +47,7 @@ function Hero() {
       <div className="container mx-auto">
         <div className="flex gap-8 py-20 lg:py-40 items-center justify-center flex-col">
           <div className="flex gap-4 flex-col">
-            <h1 className="text-5xl md:text-7xl max-w-5xl tracking-tighter text-center font-semibold">
+            <h1 className="text-5xl md:text-7xl max-w-5xl tracking-tighter text-center font-normal">
               We generate compliance evidence programmatically from{" "}
               <span className="inline-block min-w-[280px] text-left" style={{ color: '#FF5F1F' }}>
                 <Typewriter

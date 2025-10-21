@@ -28,8 +28,8 @@ export default function NablaVsDrataPage() {
                 </span>
               </div>
               <div className="flex gap-4 flex-col text-center">
-                <h1 className="text-4xl md:text-6xl lg:text-7xl max-w-4xl tracking-tighter text-center font-bold">
-                  Not just another checkbox engine 
+                <h1 className="text-4xl md:text-6xl lg:text-7xl max-w-4xl tracking-tighter text-center font-normal">
+                  {'Programmability > Dashboards'}
                 </h1>
                 <p className="text-lg md:text-xl max-w-2xl leading-relaxed tracking-tight text-muted-foreground text-center mx-auto">
                   While Drata focuses on compliance managers, Nabla is built API-first for engineering teams. Integrate compliance into your existing workflows instead of adopting another dashboard.

@@ -18,7 +18,7 @@ export function Features() {
               <Sparkles className="mr-2 h-4 w-4" />
               Features
             </div>
-            <h2 className="font-display text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl">
+            <h2 className="font-display text-4xl font-normal tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl">
              Generate audit reports for CMMC and FedRamp{" "}
               <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-foreground">
                 90% faster{" "}

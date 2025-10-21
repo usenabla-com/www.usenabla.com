@@ -50,7 +50,7 @@ function CTA({
               </div>
               
               <div className="space-y-3 sm:space-y-4">
-                <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-semibold tracking-tight max-w-4xl mx-auto leading-tight">
+                <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-normal tracking-tight max-w-4xl mx-auto leading-tight">
                   {title}
                 </h3>
                 <p className="text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed text-muted-foreground max-w-3xl mx-auto px-2 sm:px-4 md:px-0">

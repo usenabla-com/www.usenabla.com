@@ -25,7 +25,7 @@ export function SimplePricing() {
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-8 md:mb-12 px-2">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-normal tracking-tight mb-4">
             Simple, transparent pricing
           </h2>
           <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">

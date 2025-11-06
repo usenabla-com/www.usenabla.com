@@ -19,13 +19,13 @@ export function Features() {
               Features
             </div>
             <h2 className="font-display text-4xl font-normal tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl">
-             Generate audit reports for CMMC and FedRamp{" "}
+             Like Zapier and n8n for FedRamp,{" "}
               <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-foreground">
-                90% faster{" "}
+                with endless automation possibilities{" "}
               </span>
             </h2>
             <p className="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground lg:text-xl">
-              Automate the generation of compliance evidence from your infrastructure and application evidence with our programmatic assessment engine.
+              Create visual workflows for your FedRamp 20x workflows and automate the pulling and pushing of key compliance data
             </p>
           </div>
         </div>
@@ -38,10 +38,10 @@ export function Features() {
                 <BrainCircuit className="h-7 w-7 text-primary-foreground" />
               </div>
               <h3 className="font-display text-xl font-semibold tracking-tight text-foreground lg:text-2xl">
-                Deterministic
+                Visual Builder
               </h3>
               <p className="text-sm leading-relaxed text-muted-foreground lg:text-base">
-                No LLMs, no randomness. Just pure deterministic analysis that you can trust
+                Experiment with different configurations using a beautiful visual builder
               </p>
             </div>
           </div>

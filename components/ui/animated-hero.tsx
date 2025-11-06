@@ -8,13 +8,14 @@ import { AnimatedBeam } from "@/components/ui/animated-beam";
 import { siSonarqube, siGithub, siSlack, siJson, siMarkdown } from "simple-icons";
 import { useRouter } from "next/navigation";
 import { Typewriter } from "@/components/ui/typewriter-text";
+import { ArcadeEmbed } from "../arcade-embed";
 
 function Hero() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const [posthogInfo, setPosthogInfo] = useState<{ id?: string; sessionId?: string }>({});
   const titles = useMemo(
-    () => [".tfstate", "firmware binaries", "Azure Context", "And more?" ],
+    () => ["Terraform Analysis", "Component Inventory", "SSPs", "POA&M Reports", "Trust Centers" ],
     []
   );
 
@@ -48,7 +49,7 @@ function Hero() {
         <div className="flex gap-8 py-20 lg:py-40 items-center justify-center flex-col">
           <div className="flex gap-4 flex-col">
             <h1 className="text-5xl md:text-7xl max-w-5xl tracking-tighter text-center font-normal">
-              We generate compliance evidence programmatically from{" "}
+              The FedRamp 20x Workflow Engine for{" "}
               <span className="inline-block min-w-[280px] text-left" style={{ color: '#FF5F1F' }}>
                 <Typewriter
                   text={titles}
@@ -63,7 +64,7 @@ function Hero() {
             </h1>
 
             <p className="text-lg md:text-xl leading-relaxed tracking-tight text-muted-foreground max-w-2xl text-center mx-auto">
-              Pull, push, transform, and analyze your infrastructure and application evidence to meet compliance requirements faster and with less effort.
+              Create workflows for your infrastructure documents in a multidude of ways to communicate your organizations changing security story
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 px-4">
@@ -85,6 +86,7 @@ function Hero() {
               {loading ? "Redirecting…" : "Start a 14-day trial"} <Calendar className="w-4 h-4" />
             </Button>
           </div>
+          <ArcadeEmbed />
           
         </div>
       </div>

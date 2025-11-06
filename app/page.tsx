@@ -16,25 +16,11 @@ export default function Home() {
   const [titleNumber, setTitleNumber] = useState(0);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const [posthogInfo, setPosthogInfo] = useState<{ id?: string; sessionId?: string }>({});
-
-    useEffect(() => {
-      // Capture PostHog identifiers for checkout metadata and return params
-      const ph = (window as any).posthog;
-      const posthogId = ph?.get_distinct_id?.();
-      const sessionId = ph?.get_session_id?.();
-      setPosthogInfo({ id: posthogId, sessionId });
-    }, []);
 
     const handleCheckout = () => {
       try {
         setLoading(true);
-        const url = new URL(window.location.href);
-        const params = new URLSearchParams(url.search);
-        if (posthogInfo.id && !params.has("posthog_id")) params.set("posthog_id", posthogInfo.id);
-        if (posthogInfo.sessionId && !params.has("session_id")) params.set("session_id", posthogInfo.sessionId);
-        const qs = params.toString();
-        router.push(`/onboarding${qs ? `?${qs}` : ""}`);
+        router.push('/schedule-a-demo');
       } finally {
         setLoading(false);
       }
@@ -77,43 +63,59 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="mx-auto max-w-6xl grid grid-cols-1 gap-6 md:grid-cols-2 mt-10">
+              <div className="mx-auto max-w-6xl grid grid-cols-1 gap-6 md:grid-cols-3 mt-10">
                 <PricingCard
                   title="Relay"
-                  price="$4500/mo"
+                  price="$4,500/mo"
                   description="Per month, billed annually"
                   features={[
-                    "Unlimited API calls",
+                    "Unlimited workflows",
                     "Regular updates",
-                    "All Control Frameworks",
+                    "KSI-driven mappings",
                     "Standard SLAs",
                     "Email support",
                   ]}
-                  buttonText="Start a 14-day trial"
-                  onClick={handleCheckout}
-                  buttonHref="/onboarding"
+                  buttonText="Request a demo"
+                  buttonHref="https://cal.com/team/nabla/nabla-pilot-interest-call"
                   className="h-full"
-                  imageSrc="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-odVnLFkrL5eGiSzOAkNOacimjB4f3H.png&w=1000&q=75"
+                  imageSrc="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-E6UN0DhtLJwxusfI6hIZaLplYkWH2W.png&w=320&q=75"
                   imageAlt="Starter Plan"
                 />
 
                 <PricingCard
                   title="Fabric"
-                  price="$9,450"
+                  price="$6,450/mo"
                   priceDescription="Per month, billed annually"
                   description="Everything you need for firmware security at scale."
                   features={[
-                    "Custom API integrations",
-                    "Dashboard Creation (We do this manually)",
-                    "Cloud connectors",
-                    "Binary CFG generation",
+                    "2 Custom Node Requests/mo",
+                    "Trust Center",
+                    "Custom Azure AI Endpoints",
+                    "Firmware analysis",
                     "Priority support",
                   ]}
-                  buttonText="Start a 14-day trial"
-                  onClick={handleCheckout}
-                  buttonHref="/onboarding"
+                  buttonText="Request a demo"
+                  buttonHref="https://cal.com/team/nabla/nabla-pilot-interest-call"
                   className="h-full"
-                  imageSrc="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-2x1NIEDETqhyZz9kxfkDV3pTJ7v0eI.png&w=1000&q=75"
+                  imageSrc="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-dV91Dv10GSnCQam0qvqFmuuNRABTg2.png&w=320&q=75"
+                  imageAlt="Professional Plan"
+                />
+                <PricingCard
+                  title="Private Deployments"
+                  price="Contact Us"
+                  priceDescription="Not published"
+                  description="Everything you need for firmware security at scale."
+                  features={[
+                    "Terraform Deployment",
+                    "Air-gapped capable",
+                    "JWT Licensing",
+                    "Priced Annually",
+                    "Priority SLAs",
+                  ]}
+                  buttonText="Request a demo"
+                  buttonHref="https://cal.com/team/nabla/nabla-pilot-interest-call"
+                  className="h-full"
+                  imageSrc="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-JBUag2yPlsDSZnqg9gVZQMhuS05vMX.png&w=320&q=75"
                   imageAlt="Professional Plan"
                 />
               </div>

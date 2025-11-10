@@ -51,15 +51,15 @@ export default function ExcelAutomationPage() {
             <div className="flex gap-4 flex-col items-center">
               <div>
                 <span className="inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground shadow hover:bg-primary/80">
-                  Excel Automation
+                  Zapier + Paramify
                 </span>
               </div>
               <div className="flex gap-4 flex-col text-center">
                 <h1 className="text-4xl md:text-6xl lg:text-7xl max-w-4xl tracking-tighter text-center font-normal">
-                  Automate 80% of your technical controls
+                  What if Zapier and Paramify had a consultant baby?
                 </h1>
                 <p className="text-lg md:text-xl max-w-2xl leading-relaxed tracking-tight text-muted-foreground text-center mx-auto">
-                  Replace manual Excel evidence collection with a single API call. Transform hours of spreadsheet work into seconds of automated compliance.
+                  Automate and visually build complex (And simple) workflows to power FedRamp 20x Trust Center
                 </p>
               </div>
               <div className="flex flex-row gap-3">
@@ -69,7 +69,7 @@ export default function ExcelAutomationPage() {
                     className="gap-4 sm:gap-4 px-5 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base"
                     variant="outline"
                   >
-                    Read the Docs <BookOpen className="w-4 h-4" />
+                    See the Node Registry <BookOpen className="w-4 h-4" />
                   </Button>
                 </Link>
                 <Button
@@ -182,7 +182,7 @@ export default function ExcelAutomationPage() {
         primaryButtonText="Get API Access"
         secondaryButtonText="Talk to Sales"
         primaryButtonHref="https://docs.usenabla.com"
-        secondaryButtonHref="https://cal.com/team/nabla/nabla-pilot-interest-call"
+        secondaryButtonHref="https://cal.com/team/nabla/45-min-intro"
       />
     </PageLayout>
   )

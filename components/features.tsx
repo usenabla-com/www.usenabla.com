@@ -16,16 +16,16 @@ export function Features() {
           <div className="space-y-4">
             <div className="inline-flex items-center rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary ring-1 ring-primary/20">
               <Sparkles className="mr-2 h-4 w-4" />
-              Features
+              Your Shift Left GRC Team
             </div>
             <h2 className="font-display text-4xl font-normal tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl">
-             Like Zapier and n8n for FedRamp,{" "}
+             Compliance is shifting left,{" "}
               <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-foreground">
-                with endless automation possibilities{" "}
+                are you ready?{" "}
               </span>
             </h2>
             <p className="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground lg:text-xl">
-              Create visual workflows for your FedRamp 20x workflows and automate the pulling and pushing of key compliance data
+              The demands of todays regulatory landscape no longer mesh with static fire-and-forget assessments
             </p>
           </div>
         </div>
@@ -38,10 +38,10 @@ export function Features() {
                 <BrainCircuit className="h-7 w-7 text-primary-foreground" />
               </div>
               <h3 className="font-display text-xl font-semibold tracking-tight text-foreground lg:text-2xl">
-                Visual Builder
+                Creative Mapping
               </h3>
               <p className="text-sm leading-relaxed text-muted-foreground lg:text-base">
-                Experiment with different configurations using a beautiful visual builder
+                Let us create plans for you to automatically assess and map your compliance standings
               </p>
             </div>
           </div>
@@ -53,10 +53,10 @@ export function Features() {
                 <ActivitySquare className="h-7 w-7 text-primary-foreground" />
               </div>
               <h3 className="font-display text-xl font-semibold tracking-tight text-foreground lg:text-2xl">
-                CI Integration
+                GRC Heartbeat
               </h3>
               <p className="text-sm leading-relaxed text-muted-foreground lg:text-base">
-               Integrates seamliessly into your existing CI/CD workflows
+               We can show you the modern way of getting a GRC heartbeat on your organization
               </p>
             </div>
           </div>
@@ -71,7 +71,7 @@ export function Features() {
                 20x Ready
               </h3>
               <p className="text-sm leading-relaxed text-muted-foreground lg:text-base">
-                We (can) generate OSCAL and support KSI mappings out of the box
+                We (can) automate OSCAL and support KSI mappings with ease
               </p>
             </div>
           </div>
@@ -86,7 +86,7 @@ export function Features() {
                 ABD Diagrams
               </h3>
               <p className="text-sm leading-relaxed text-muted-foreground lg:text-base">
-                Generate architecture boundary diagrams from IaC files
+                We have internal tools for generating ABD diagrams from your Terraform state
               </p>
             </div>
           </div>

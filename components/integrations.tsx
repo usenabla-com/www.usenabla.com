@@ -15,7 +15,7 @@ export function Integrations() {
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-6 text-center">
           <div className="space-y-4">
-            <div className="inline-flex items-center rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary ring-1 ring-primary/20">
+            <div className="inline-flex items-center rounded-full bg-white px-4 py-2 text-sm font-medium text-primary ring-1 ring-primary/20">
               <Plug className="mr-2 h-4 w-4" />
               Integrations
             </div>

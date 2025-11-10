@@ -29,7 +29,7 @@ function CTA({
 }: CTAProps) {
     useEffect(() => {
     (async function () {
-      const cal = await getCalApi({"namespace":"nabla-pilot-interest-call"});
+      const cal = await getCalApi({"namespace":"nabla-intro"});
       cal("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#FF5F1F"},"dark":{"cal-brand":"#FF5F1F"}},"hideEventTypeDetails":false,"layout":"month_view"});
     })();
   }, [])
@@ -58,8 +58,8 @@ function CTA({
                 </p>
               </div>
             </div>
-            <Cal namespace="nabla-pilot-interest-call"
-                calLink="team/nabla/nabla-pilot-interest-call"
+            <Cal namespace="nabla-intro"
+                calLink="team/nabla/nabla-intro"
                 style={{width:"100%",height:"100%",overflow:"scroll"}}
                 config={{"layout":"month_view"}}
               />

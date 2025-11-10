@@ -4,13 +4,13 @@ import { PageLayout } from "@/components/page-layout"
 import { Feature } from "@/components/ui/feature-with-advantages"
 import { CTA } from "@/components/ui/call-to-action"
 import { Button } from "@/components/ui/button"
-import { Shield, Users, FileCheck, Target, Wrench, GraduationCap, Search, Clock, CheckCircle2, AlertTriangle, Calendar, BookOpen } from "lucide-react"
+import { Shield, Users, FileCheck, Target, Wrench, GraduationCap, Search, Clock, CheckCircle2, AlertTriangle, Calendar, BookOpen, RocketIcon } from "lucide-react"
 import Link from "next/link"
 import { Typewriter } from "@/components/ui/typewriter-text"
 
 export default function ProfessionalServicesPage() {
   const titles = useMemo(
-    () => ["Asset Inventories", "Vulnerability Scanning", "SSP Generation", "Continuous Monitoring", ],
+    () => ["OSCAL Conversion", "VEX Enrichment", "SSP Analysis", "NIST BOD Fetching", ],
     []
   )
   return (
@@ -22,12 +22,12 @@ export default function ProfessionalServicesPage() {
             <div className="flex gap-4 flex-col items-center">
               <div>
                 <span className="inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground shadow hover:bg-primary/80">
-                  Professional Services
+                  Internal Tool Development
                 </span>
               </div>
               <div className="flex gap-4 flex-col text-center">
                 <h1 className="text-5xl md:text-7xl max-w-5xl tracking-tighter text-center font-normal">
-                  Audit prep support for{" "}
+                  Tooling development support for{" "}
                   <span className="inline-block min-w-[280px] text-left" style={{ color: '#FF5F1F' }}>
                     <Typewriter
                       text={titles}
@@ -41,11 +41,11 @@ export default function ProfessionalServicesPage() {
                   </span>
                 </h1>
                 <p className="text-lg md:text-xl max-w-2xl leading-relaxed tracking-tight text-muted-foreground text-center mx-auto">
-                  Partner with our compliance experts to accelerate your certification journey and maintain continuous compliance with less effort.
+                  Lean on our team for your GRC Engineering project planning and implemention support. We can build with anything that has an endpoint. 
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-3 px-4">
-                <Link href="https://docs.usenabla.com">
+                <Link href="/blog">
                   <Button
                     size="lg"
                     className="gap-4 sm:gap-4 px-5 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base"
@@ -54,7 +54,7 @@ export default function ProfessionalServicesPage() {
                     View Blog <BookOpen className="w-4 h-4" />
                   </Button>
                 </Link>
-                <Link href="https://cal.com/team/nabla/45-min-intro-call">
+                <Link href="https://cal.com/team/nabla/nabla-intro">
                   <Button
                     size="lg"
                     className="gap-4 sm:gap-4 px-5 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base"
@@ -75,14 +75,14 @@ export default function ProfessionalServicesPage() {
             <div className="flex gap-4 flex-col items-center text-center">
               <div>
                 <span className="inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground shadow hover:bg-primary/80">
-                  Our Process
+                  The JSON must flow
                 </span>
               </div>
               <h2 className="text-3xl md:text-5xl tracking-tighter max-w-2xl font-regular">
-                From initial assessment to audit readiness
+                From simple webhooks for complex workers
               </h2>
               <p className="text-lg max-w-xl leading-relaxed tracking-tight text-muted-foreground">
-                Our proven methodology gets you audit-ready faster with comprehensive documentation and evidence collection
+                Our proven methodology can get your evidence going everywhere it needs to go. 
               </p>
             </div>
 
@@ -95,9 +95,9 @@ export default function ProfessionalServicesPage() {
                       <Search className="w-7 h-7 text-primary" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-normal mb-2">1. Gap Analysis</h3>
+                      <h3 className="text-xl font-normal mb-2">1. Analyze Goals </h3>
                       <p className="text-muted-foreground text-sm leading-relaxed">
-                        Assess your current compliance posture and identify gaps against target framework requirements.
+                        Assess your current goals and what you want to assess and compile
                       </p>
                     </div>
                     <div className="pt-4 border-t">
@@ -108,7 +108,7 @@ export default function ProfessionalServicesPage() {
                         <br />
                         • Gap identification
                         <br />
-                        • Remediation roadmap
+                        • Enrichment plan
                       </p>
                     </div>
                   </div>
@@ -126,20 +126,20 @@ export default function ProfessionalServicesPage() {
                       <Target className="w-7 h-7 text-primary" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-normal mb-2">2. Evidence Collection</h3>
+                      <h3 className="text-xl font-normal mb-2">2. Identify Targets </h3>
                       <p className="text-muted-foreground text-sm leading-relaxed">
-                        Gather and organize compliance evidence using automated tools and infrastructure scanning.
+                        Plan your targets and where you want to send your data once it's mapped
                       </p>
                     </div>
                     <div className="pt-4 border-t">
                       <p className="text-xs font-mono text-muted-foreground">
-                        • Asset inventories
+                        • Destination planning
                         <br />
-                        • Vulnerability scanning
+                        • Solidify Goals
                         <br />
-                        • Configuration audits
+                        • Plan automation schema
                         <br />
-                        • Evidence artifacts
+                        • Map artifacts
                       </p>
                     </div>
                   </div>
@@ -157,20 +157,20 @@ export default function ProfessionalServicesPage() {
                       <FileCheck className="w-7 h-7 text-primary" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-normal mb-2">3. Documentation</h3>
+                      <h3 className="text-xl font-normal mb-2">3. Plan workflows + Functions</h3>
                       <p className="text-muted-foreground text-sm leading-relaxed">
-                        Generate audit-ready documentation including SSPs, policies, and control implementation statements.
+                        Plan the workflows and function schemas that will be implemented in your evidence engine
                       </p>
                     </div>
                     <div className="pt-4 border-t">
                       <p className="text-xs font-mono text-muted-foreground">
-                        • SSP generation
+                        • Data mapping
                         <br />
-                        • Policy templates
+                        • API planning
                         <br />
-                        • Control narratives
+                        • Predicate planning
                         <br />
-                        • Evidence packages
+                        • Project scaffolding
                       </p>
                     </div>
                   </div>
@@ -185,12 +185,12 @@ export default function ProfessionalServicesPage() {
                 <div className="bg-background border-2 border-primary/20 rounded-xl p-6 hover:border-primary/40 transition-all h-full">
                   <div className="flex flex-col gap-4">
                     <div className="bg-primary/10 w-14 h-14 rounded-xl flex items-center justify-center">
-                      <Wrench className="w-7 h-7 text-primary" />
+                      <RocketIcon className="w-7 h-7 text-primary" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-normal mb-2">4. Ongoing Support</h3>
+                      <h3 className="text-xl font-normal mb-2">4. Implement solution</h3>
                       <p className="text-muted-foreground text-sm leading-relaxed">
-                        Maintain compliance with continuous monitoring, evidence updates, and annual audit preparation.
+                       Implement, deploy, and support automation solution into production for ConMon 
                       </p>
                     </div>
                     <div className="pt-4 border-t">
@@ -215,11 +215,11 @@ export default function ProfessionalServicesPage() {
       {/* Service Offerings */}
       <Feature
         badge="What We Offer"
-        title="Comprehensive audit preparation services"
-        description="Expert-led compliance consulting to accelerate your certification and maintain continuous compliance with automated evidence collection."
+        title="Comprehensive GRC automation services"
+        description="Highly technical GRC automation support to accelerate your ConMon goals and maintain continuous compliance with automated evidence collection."
         features={[
           {
-            title: "System Security Plan (SSP) Generation",
+            title: "System Security Plan (SSP) Analysis",
             description: "Automated generation of comprehensive SSPs tailored to your framework requirements. We help document your security controls, system architecture, and compliance posture in audit-ready format."
           },
           {
@@ -301,7 +301,7 @@ export default function ProfessionalServicesPage() {
         description="Schedule a consultation to discuss your audit preparation needs. Our team combines deep compliance expertise with automated evidence collection to get you audit-ready faster."
         primaryButtonText="Schedule Consultation"
         secondaryButtonText="Read Our Blog"
-        primaryButtonHref="https://cal.com/team/nabla/45-min-intro-call"
+        primaryButtonHref="https://cal.com/team/nabla/nabla-intro"
         secondaryButtonHref="https://docs.usenabla.com"
       />
     </PageLayout>

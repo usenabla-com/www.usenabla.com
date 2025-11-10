@@ -43,7 +43,7 @@ export default function NablaVsDrataPage() {
                   Get API Access
                 </a>
                 <a
-                  href="https://cal.com/team/nabla/nabla-pilot-interest-call"
+                  href="https://cal.com/team/nabla/45-min-intro"
                   className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-10 px-8"
                 >
                   Schedule Demo
@@ -457,7 +457,7 @@ jobs:
         primaryButtonText="Get API Access"
         secondaryButtonText="Compare Plans"
         primaryButtonHref="https://docs.usenabla.com"
-        secondaryButtonHref="https://cal.com/team/nabla/nabla-pilot-interest-call"
+        secondaryButtonHref="https://cal.com/team/nabla/45-min-intro"
       />
     </PageLayout>
   )

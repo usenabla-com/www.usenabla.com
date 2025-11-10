@@ -69,8 +69,8 @@ export function NablaSecureHero() {
                 const posthogId = (window as any).posthog?.get_distinct_id();
                 console.log('PostHog ID:', posthogId);
                 const url = posthogId
-                  ? `https://cal.com/jbohrman/30-min?posthog_id=${encodeURIComponent(posthogId)}`
-                  : 'https://cal.com/jbohrman/30-min';
+                  ? `https://cal.com/team/nabla/45-min-intro?posthog_id=${encodeURIComponent(posthogId)}`
+                  : 'https://cal.com/team/nabla/45-min-intro';
                 console.log('Opening URL:', url);
                 window.open(url, '_blank')
               }}

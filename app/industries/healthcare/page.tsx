@@ -30,7 +30,7 @@ export default function HealthcarePage() {
           }
         ]}
         cta={{
-          onClick: () => window.open('https://cal.com/jbohrman/30-min', '_blank'),
+          onClick: () => window.open('https://cal.com/team/nabla/45-min-intro', '_blank'),
           icon: <Heart className="h-6 w-6" />,
           subtitle: "Ready to secure healthcare devices?",
           title: "Request a consultation",

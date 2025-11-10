@@ -207,7 +207,7 @@ export const PricingSlider: React.FC = () => {
 
               <div className="absolute bottom-5 sm:bottom-6 md:bottom-8 left-5 sm:left-6 md:left-8 right-5 sm:right-6 md:right-8">
                 <a
-                  href={price === null ? "mailto:hello@usenabla.com?subject=Enterprise%20pricing" : "https://cal.com/jbohrman/30-min"}
+                  href={price === null ? "mailto:hello@usenabla.com?subject=Enterprise%20pricing" : "https://cal.com/team/nabla/45-min-intro"}
                   className="block w-full bg-primary text-primary-foreground hover:bg-primary/90 px-4 sm:px-6 py-3.5 sm:py-4 rounded-xl font-semibold text-sm sm:text-base text-center transition-all duration-200 hover:scale-105 hover:shadow-lg active:scale-95"
                 >
                   {price === null ? "Contact Sales" : "Start Free Trial"}

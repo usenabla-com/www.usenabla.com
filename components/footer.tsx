@@ -14,7 +14,7 @@ export function Footer() {
               <span className="text-lg font-bold">Nabla</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              The programmatic compliance relay
+              The GRC Automation Agency
             </p>
             <div className="flex gap-4">
               <Link href="https://github.com/usenabla-com" className="text-muted-foreground hover:text-foreground transition-colors">

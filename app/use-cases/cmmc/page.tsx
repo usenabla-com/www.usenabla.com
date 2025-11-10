@@ -10,6 +10,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { BookOpen } from "lucide-react"
 import { Calendar } from "lucide-react"
+import { MagnifyingGlassIcon } from "@radix-ui/react-icons"
 
 export default function FirmwareSecurityPage() {
       const [loading, setLoading] = useState(false);
@@ -50,25 +51,25 @@ export default function FirmwareSecurityPage() {
             <div className="flex gap-4 flex-col items-center">
               <div>
                 <span className="inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground shadow hover:bg-primary/80">
-                  Firmware Security
+                  CMMC
                 </span>
               </div>
               <div className="flex gap-4 flex-col text-center">
                 <h1 className="text-4xl md:text-6xl lg:text-7xl max-w-4xl tracking-tighter text-center font-normal">
-                  Programmatic Binary Composition Analysis
+                  Tell your CMMC story with a comprehensive visual builder
                 </h1>
                 <p className="text-lg md:text-xl max-w-2xl leading-relaxed tracking-tight text-muted-foreground text-center mx-auto">
-                  Automated firmware analysis, SBOM generation, and vulnerability detection for embedded systems. Know exactly what's in your binaries and prove it to auditors.
+                  Start from a SSP, and let the rest of the story be told via a growing registry of connectors and evidence sources
                 </p>
               </div>
               <div className="flex flex-row gap-3">
-                <Link href="https://docs.usenabla.com">
+                <Link href="/webinars/creative-ksis">
                   <Button
                     size="lg"
                     className="gap-4 sm:gap-4 px-5 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base"
                     variant="outline"
                   >
-                    Read the Docs <BookOpen className="w-4 h-4" />
+                    Learn More <MagnifyingGlassIcon className="w-4 h-4" />
                   </Button>
                 </Link>
                 <Button
@@ -318,7 +319,7 @@ export default function FirmwareSecurityPage() {
         primaryButtonText="Get API Access"
         secondaryButtonText="Schedule Analysis Demo"
         primaryButtonHref="https://docs.usenabla.com"
-        secondaryButtonHref="https://cal.com/team/nabla/nabla-pilot-interest-call"
+        secondaryButtonHref="https://cal.com/team/nabla/45-min-intro"
       />
     </PageLayout>
   )

@@ -91,7 +91,7 @@ export default function FeaturesPage() {
         primaryButtonText="Install the GitHub App"
         secondaryButtonText="Book a Demo"
         primaryButtonHref="https://github.com/apps/nabla-secure/"
-        secondaryButtonHref="https://cal.com/jbohrman/45-min-meeting"
+        secondaryButtonHref="https://cal.com/team/nabla/45-min-intro"
       />
     </PageLayout>
   )

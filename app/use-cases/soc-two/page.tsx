@@ -98,13 +98,13 @@ export default function DiagramsAsCodePage() {
         <div className="container mx-auto">
           <div className="flex flex-col gap-10">
             <div className="flex gap-4 flex-col items-center text-center">
-              <Badge>Diagrams as Code</Badge>
+              <Badge>Visual SOC II Builder</Badge>
               <div className="flex gap-4 flex-col">
                 <h1 className="text-4xl md:text-6xl lg:text-7xl max-w-4xl tracking-tighter font-normal">
-                  Generate diagrams from your IaC and firmware programmatically
+                  Visually build your SOC II Trust Portal with Nabla
                 </h1>
                 <p className="text-lg md:text-xl max-w-2xl leading-relaxed tracking-tight text-muted-foreground mx-auto">
-                  Turn Terraform and other IaC into consistent, version-controlled diagrams. Eliminate manual diagramming; keep architecture documentation always in sync with code.
+                  Use a intuitive visual builder to connect your data sources to your Trust Portal
                 </p>
               </div>
               <div className="flex flex-row gap-3">
@@ -114,7 +114,7 @@ export default function DiagramsAsCodePage() {
                     className="gap-4 sm:gap-4 px-5 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base"
                     variant="outline"
                   >
-                    Read the Docs <BookOpen className="w-4 h-4" />
+                    See the Node Registry <BookOpen className="w-4 h-4" />
                   </Button>
                 </Link>
                 <Button
@@ -123,7 +123,7 @@ export default function DiagramsAsCodePage() {
                   disabled={loading}
                   className="gap-4 sm:gap-4 px-5 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base"
                 >
-                  {loading ? "Redirecting…" : "Start a 14-day trial"} <Calendar className="w-4 h-4" />
+                  Schedule a demo <Calendar className="w-4 h-4" />
                 </Button>
               </div>
             </div>
@@ -136,14 +136,14 @@ export default function DiagramsAsCodePage() {
         <div className="container mx-auto">
           <div className="flex flex-col gap-6">
             <div>
-              <Badge>From IaC to Diagrams</Badge>
+              <Badge>Modern and intuitive</Badge>
             </div>
             <div className="flex gap-2 flex-col">
               <h2 className="text-3xl md:text-5xl tracking-tighter lg:max-w-3xl font-regular">
-                Parse Terraform, generate boundary diagrams
+                Build your perfect SOC II story with simple nodes with upstream inheritance
               </h2>
               <p className="text-lg max-w-3xl leading-relaxed tracking-tight text-muted-foreground">
-                Feed your Terraform into the API and receive a clear, standards-aligned architecture boundary diagram you can embed in docs, PRs, or wikis. Drag the slider to compare the input and generated output.
+                Start with root SSP node and then connect the data you want to send downstream to your Trust Center. We map NIST 800-53 Rev 5 controls to SOC 2 Trust Services Criteria by default. 
               </p>
             </div>
 
@@ -164,9 +164,9 @@ export default function DiagramsAsCodePage() {
 
       {/* Advantages */}
       <Feature
-        badge="Why it matters"
-        title="Always-relevant diagrams that match production"
-        description="Diagram generation that follows your source of truth – infrastructure as code. No more stale draw.io files or screenshot archaeology."
+        badge="Multi-guideline mapping"
+        title="Why stop at SOC II?"
+        description="With Nabla, you can see your standing across NIST 800-53 Rev 5, SOC-II, CMMC, and FedRamp 20x."
         features={[
           {
             title: "Parse popular IaC",

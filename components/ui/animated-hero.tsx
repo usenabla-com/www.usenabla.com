@@ -15,7 +15,7 @@ function Hero() {
   const router = useRouter();
   const [posthogInfo, setPosthogInfo] = useState<{ id?: string; sessionId?: string }>({});
   const titles = useMemo(
-    () => ["Terraform Analysis", "Component Inventory", "SSPs", "POA&M Reports", "Trust Centers" ],
+    () => ["OSCAL", "Component Inventories", "FedRamp 20x", "Evidence Relays", "ConMon" ],
     []
   );
 
@@ -49,7 +49,7 @@ function Hero() {
         <div className="flex gap-8 py-20 lg:py-40 items-center justify-center flex-col">
           <div className="flex gap-4 flex-col">
             <h1 className="text-5xl md:text-7xl max-w-5xl tracking-tighter text-center font-normal">
-              The FedRamp 20x Workflow Engine for{" "}
+              The GRC Automation Agency for{" "}
               <span className="inline-block min-w-[280px] text-left" style={{ color: '#FF5F1F' }}>
                 <Typewriter
                   text={titles}
@@ -64,30 +64,29 @@ function Hero() {
             </h1>
 
             <p className="text-lg md:text-xl leading-relaxed tracking-tight text-muted-foreground max-w-2xl text-center mx-auto">
-              Create workflows for your infrastructure documents in a multidude of ways to communicate your organizations changing security story
-            </p>
+              Get premium GRC engineering support for your mission-critical projects. We help you continuously update the right people (And endpoints) at the right time. 
+              </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 px-4">
-            <Link href="https://docs.usenabla.com">
+            <Link href="/blog">
             <Button 
               size="lg" 
               className="gap-4 sm:gap-4 px-5 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base" 
               variant="outline"
             >
-              Read the Docs <BookOpen className="w-4 h-4" />
+              See the blog <BookOpen className="w-4 h-4" />
             </Button>
             </Link>
+            <Link href="https://cal.com/team/nabla/nabla-intro">
             <Button
               size="lg"
-              onClick={handleCheckout}
               disabled={loading}
               className="gap-4 sm:gap-4 px-5 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base"
             >
-              {loading ? "Redirecting…" : "Start a 14-day trial"} <Calendar className="w-4 h-4" />
+              Schedule a consultation <Calendar className="w-4 h-4" />
             </Button>
-          </div>
-          <ArcadeEmbed />
-          
+            </Link>
+          </div>          
         </div>
       </div>
     </div>

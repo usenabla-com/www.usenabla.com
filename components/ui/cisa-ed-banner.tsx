@@ -153,7 +153,7 @@ export default function CisaDirectiveCountdownBanner({
           onClick={() => {
             analytics.track("cisa_ed_primary_cta_click", { deadline: activeDeadline.key })
             if (onPrimaryClick) return onPrimaryClick(activeDeadline.key as "summary" | "detail") 
-            window.open("https://cal.com/team/nabla/emergency-directive-scan", "_blank", "noreferrer")
+            window.open("https://cal.com/team/nabla/45-min-intro", "_blank", "noreferrer")
           }}
         >
           Schedule an emergency scan

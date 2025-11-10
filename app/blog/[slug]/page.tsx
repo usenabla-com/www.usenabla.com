@@ -193,7 +193,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           secondaryButtonText="Request 30-day pilot"
           secondaryButtonTextMobile="Request Pilot"
           primaryButtonHref="https://cdn.usenabla.com/assessment_results.json"
-          secondaryButtonHref="https://cal.com/team/nabla/nabla-pilot-interest-call"
+          secondaryButtonHref="https://cal.com/team/nabla/45-min-intro"
         />
       </div>
       

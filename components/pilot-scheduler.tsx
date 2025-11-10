@@ -8,7 +8,7 @@ import { Blog8 } from "@/components/blocks/blog8"
 
 export function PilotScheduler() {
     const [posts, setPosts] = useState([])
-    const [calUrl, setCalUrl] = useState("https://cal.com/team/nabla/nabla-pilot-interest-call")
+    const [calUrl, setCalUrl] = useState("https://cal.com/team/nabla/nabla-intro")
 
     useEffect(() => {
     (async function () {
@@ -16,7 +16,7 @@ export function PilotScheduler() {
       const posthogId = (window as any).posthog?.get_distinct_id();
       const sessionId = (window as any).posthog?.get_session_id();
 
-      const cal = await getCalApi({"namespace":"nabla-pilot-interest-call"});
+      const cal = await getCalApi({"namespace":"nabla-intro"});
       cal("ui", {
         "theme":"light",
         "cssVarsPerTheme":{"light":{"cal-brand":"#FF5F1F"},"dark":{"cal-brand":"#FF5F1F"}},
@@ -26,9 +26,9 @@ export function PilotScheduler() {
 
       // Build URL with PostHog ID and session ID for direct link
       if (posthogId && sessionId) {
-        setCalUrl(`https://cal.com/team/nabla/nabla-pilot-interest-call?posthog_id=${posthogId}&session_id=${encodeURIComponent(sessionId)}`);
+        setCalUrl(`https://cal.com/team/nabla/nabla-intro?posthog_id=${posthogId}&session_id=${encodeURIComponent(sessionId)}`);
       } else if (posthogId) {
-        setCalUrl(`https://cal.com/team/nabla/nabla-pilot-interest-call?posthog_id=${posthogId}`);
+        setCalUrl(`https://cal.com/team/nabla/nabla-intro?posthog_id=${posthogId}`);
       }
     })();
   }, [])
@@ -73,15 +73,15 @@ export function PilotScheduler() {
           </div>
         </div>
           <CTA
-          badge="Start a 14-day trial"
-          title="Start enriching your evidence pipeline today"
-          description="Start a 14-day trial to begin enriching your evidence pipeline with programmatic assessments, ABDs, and firmware analysis."
-          primaryButtonText="Join Discord Community"
-          primaryButtonTextMobile="Join Discord"
-          secondaryButtonText="Request 30-day pilot"
-          secondaryButtonTextMobile="Request Pilot"
-          primaryButtonHref="https://discord.gg/SYwGtsBT6S"
-          secondaryButtonHref={calUrl}
+          badge="Schedule a consultation"
+          title="Learn how to future-proof your GRC"
+          description="Get a initial consultation to learn if we can help you future-proof your GRC processes"
+          primaryButtonText="Schedule a 45-min chat"
+          primaryButtonTextMobile="Schedule Call"
+          secondaryButtonText="See the blog"
+          secondaryButtonTextMobile="See blog"
+          primaryButtonHref={calUrl}
+          secondaryButtonHref="/blog"
         />
         {/* Blog Section */}
         <section className="relative py-8 lg:py-16">

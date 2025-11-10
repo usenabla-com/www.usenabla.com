@@ -11,6 +11,8 @@ import { useEffect, useState } from "react"
 import { getCalApi } from "@calcom/embed-react";
 import { PricingCard } from "@/components/ui/pricing-card-1"
 import CisaDirectiveCountdownBanner from "@/components/ui/cisa-ed-banner"
+import IntegrationsSection from "@/components/ui/integrations-section"
+import FeatureSection from "@/components/stack-feature-section"
 
 export default function Home() {
   const [titleNumber, setTitleNumber] = useState(0);
@@ -49,79 +51,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Pricing Section with subtle separation */}
-        <section className="relative py-8 lg:py-12">
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/20 to-background pointer-events-none" />
-          <div className="relative z-10">
-            <div className="container px-4 md:px-6">
-              <div className="flex flex-col items-center justify-center text-center space-y-4">
-                <h2 className="font-display text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
-                  Simple, transparent pricing
-                </h2>
-                <p className="mx-auto max-w-2xl text-muted-foreground text-base sm:text-lg">
-                  Choose a plan that fits your team. No hidden fees.
-                </p>
-              </div>
-
-              <div className="mx-auto max-w-6xl grid grid-cols-1 gap-6 md:grid-cols-3 mt-10">
-                <PricingCard
-                  title="Relay"
-                  price="$4,500/mo"
-                  description="Per month, billed annually"
-                  features={[
-                    "Unlimited workflows",
-                    "Regular updates",
-                    "KSI-driven mappings",
-                    "Standard SLAs",
-                    "Email support",
-                  ]}
-                  buttonText="Request a demo"
-                  buttonHref="https://cal.com/team/nabla/nabla-pilot-interest-call"
-                  className="h-full"
-                  imageSrc="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-E6UN0DhtLJwxusfI6hIZaLplYkWH2W.png&w=320&q=75"
-                  imageAlt="Starter Plan"
-                />
-
-                <PricingCard
-                  title="Fabric"
-                  price="$6,450/mo"
-                  priceDescription="Per month, billed annually"
-                  description="Everything you need for firmware security at scale."
-                  features={[
-                    "2 Custom Node Requests/mo",
-                    "Trust Center",
-                    "Custom Azure AI Endpoints",
-                    "Firmware analysis",
-                    "Priority support",
-                  ]}
-                  buttonText="Request a demo"
-                  buttonHref="https://cal.com/team/nabla/nabla-pilot-interest-call"
-                  className="h-full"
-                  imageSrc="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-dV91Dv10GSnCQam0qvqFmuuNRABTg2.png&w=320&q=75"
-                  imageAlt="Professional Plan"
-                />
-                <PricingCard
-                  title="Private Deployments"
-                  price="Contact Us"
-                  priceDescription="Not published"
-                  description="Everything you need for firmware security at scale."
-                  features={[
-                    "Terraform Deployment",
-                    "Air-gapped capable",
-                    "JWT Licensing",
-                    "Priced Annually",
-                    "Priority SLAs",
-                  ]}
-                  buttonText="Request a demo"
-                  buttonHref="https://cal.com/team/nabla/nabla-pilot-interest-call"
-                  className="h-full"
-                  imageSrc="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-JBUag2yPlsDSZnqg9gVZQMhuS05vMX.png&w=320&q=75"
-                  imageAlt="Professional Plan"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
+        <FeatureSection />
         
         {/* How It Works Section with distinct background */}
         <section className="relative py-8 lg:py-16 bg-gradient-to-b from-background to-muted/30">

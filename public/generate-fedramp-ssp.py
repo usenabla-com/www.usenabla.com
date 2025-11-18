@@ -13,7 +13,7 @@ Usage:
 
 Environment variables:
     NABLA_CUSTOMER_KEY: Customer API key (required)
-    NABLA_API_URL: API endpoint (default: https://api.usenabla.com)
+    NABLA_API_URL: API endpoint (default: https://api.joindelta.com)
 
 Examples:
     # Generate SSP from the example Terraform state
@@ -46,7 +46,7 @@ from nabla_py import models
 class FedRAMPSSPGenerator:
     """Generate FedRAMP SSP and Asset Inventory from Terraform state"""
 
-    def __init__(self, api_key: str, api_url: str = "https://api.usenabla.com"):
+    def __init__(self, api_key: str, api_url: str = "https://api.joindelta.com"):
         self.client = Nabla(
             customer_key=api_key,
             server_url=api_url
@@ -500,7 +500,7 @@ def main():
         sys.exit(1)
 
     # Get API URL from environment or use default
-    api_url = os.environ.get('NABLA_API_URL', 'https://api.usenabla.com')
+    api_url = os.environ.get('NABLA_API_URL', 'https://api.joindelta.com')
 
     # Resolve paths
     script_dir = Path(__file__).parent.parent

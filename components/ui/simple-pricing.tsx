@@ -100,7 +100,7 @@ export function SimplePricing() {
                   <Button 
                     size="lg" 
                     className="w-full text-sm sm:text-base lg:text-lg py-3 sm:py-4 lg:py-6 px-4"
-                    onClick={() => window.open('mailto:trial@usenabla.com', '_blank')}
+                    onClick={() => window.open('mailto:trial@joindelta.com', '_blank')}
                   >
                     <span className="block sm:hidden">Get trial license</span>
                     <span className="hidden sm:block">Get 14-day trial license</span>

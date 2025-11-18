@@ -13,24 +13,24 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "Nabla Relay™" as const,
+  title: "Delta Δ | The Revolutionary Network" as const,
   description: "" as const,
   generator: 'v0.dev',
 
-  keywords: ['FedRamp', 'Cloud', 'GRC', 'Compliance', 'FISMA'],
-  authors: [{ name: 'Nabla' }],
-  creator: 'Nabla',
+  keywords: ['anrchism', 'leftism', 'black cat', 'individualism', 'revolutionary'],
+  authors: [{ name: 'Delta' }],
+  creator: 'Delta',
   openGraph: {
-    title: "Nabla Relay™",
-    description: "Nabla provides programmatic compliance for vendor solutions and ConMon systems via a simple REST API. Generate FedRamp, CMMC, and FIPS evidence on-demand.",
-    url: "https://www.www.usenabla.com",
-    siteName: "Nabla",
+    title: "Delta Δ | The Revolutionary Network",
+    description: "Create your space in the changing world.",
+    url: "https://www.www.joindelta.com",
+    siteName: "Delta",
     images: [
       {
-        url: "https://www.usenabla.com/og-image.png",
+        url: "https://www.joindelta.com/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Nabla Relay™"
+        alt: "Delta Δ | The Revolutionary Network"
       }
     ],
     locale: "en_US",
@@ -38,9 +38,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nabla Relay™",
-    description: "Nabla provides programmatic compliance for vendor solutions and ConMon systems via a simple REST API. Generate FedRamp, CMMC, and FIPS evidence on-demand.",
-    images: ["https://www.usenabla.com/og-image.png"]
+    title: "Delta Δ | The Revolutionary Network",
+    description: "Create your space in the changing world. ",
+    images: ["https://www.joindelta.com/og-image.png"]
   },
   robots: {
     index: true,
@@ -73,7 +73,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="apple-mobile-web-app-title" content="Nabla" />
+        <meta name="apple-mobile-web-app-title" content="Delta" />
       
         
         {/* Preconnect to external domains for performance */}

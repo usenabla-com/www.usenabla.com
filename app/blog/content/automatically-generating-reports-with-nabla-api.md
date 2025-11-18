@@ -76,7 +76,7 @@ Let's walk through the Python script that automates this entire workflow. The fu
 from nabla_py.sdk import Nabla
 
 class ComplianceCSVGenerator:
-    def __init__(self, api_key: str, api_url: str = "https://api.usenabla.com"):
+    def __init__(self, api_key: str, api_url: str = "https://api.joindelta.com"):
         self.client = Nabla(
             customer_key=api_key,
             server_url=api_url

@@ -5,7 +5,7 @@ import { Footer } from '@/components/footer'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Blog | Nabla',
+  title: 'Blog | Delta',
   description: 'Insights and tutorials about modern GRC engineering, FedRamp, and compliance best practices.',
 }
 

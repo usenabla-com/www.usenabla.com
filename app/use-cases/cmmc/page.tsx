@@ -318,7 +318,7 @@ export default function FirmwareSecurityPage() {
         description="Join organizations using automated firmware analysis to meet compliance requirements and secure their embedded systems. Generate SBOMs and vulnerability reports in minutes."
         primaryButtonText="Get API Access"
         secondaryButtonText="Schedule Analysis Demo"
-        primaryButtonHref="https://docs.usenabla.com"
+        primaryButtonHref="https://docs.joindelta.com"
         secondaryButtonHref="https://cal.com/team/nabla/45-min-intro"
       />
     </PageLayout>

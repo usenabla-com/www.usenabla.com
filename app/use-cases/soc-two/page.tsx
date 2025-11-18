@@ -108,7 +108,7 @@ export default function DiagramsAsCodePage() {
                 </p>
               </div>
               <div className="flex flex-row gap-3">
-                <Link href="https://docs.usenabla.com">
+                <Link href="https://docs.joindelta.com">
                   <Button
                     size="lg"
                     className="gap-4 sm:gap-4 px-5 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base"

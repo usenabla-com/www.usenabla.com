@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.usenabla.com';
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.joindelta.com';
     const contentHtml = `
       <h1 style=\"margin:0 0 12px;font-size:18px;line-height:1.4;color:#0f172a;\">New Contact Form Submission</h1>
       <p style=\"margin:0 0 10px;font-size:14px;color:#334155;\"><strong>Name:</strong> ${escapeHtml(firstName)} ${escapeHtml(lastName)}</p>
@@ -73,8 +73,8 @@ export async function POST(request: NextRequest) {
     console.log('RESEND_API_KEY exists:', !!process.env.RESEND_API_KEY);
     
     const data = await resend.emails.send({
-      from: 'Contact Form <noreply@notifications.usenabla.com>',
-      to: ['trial@notifications.usenabla.com'],
+      from: 'Contact Form <noreply@notifications.joindelta.com>',
+      to: ['trial@notifications.joindelta.com'],
       subject: `New contact from ${firstName} ${lastName}`,
       html: renderEmailFrame({
         baseUrl,

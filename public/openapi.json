@@ -6,16 +6,16 @@
     "description": "Compliance evidence orchestration and security analysis API. Analyze firmware binaries, infrastructure-as-code, and cloud configurations for FedRAMP, CMMC, FIPS, and other compliance frameworks.",
     "contact": {
       "name": "Nabla",
-      "url": "https://www.usenabla.com"
+      "url": "https://www.joindelta.com"
     }
   },
   "servers": [
     {
-      "url": "https://api.usenabla.com",
+      "url": "https://api.joindelta.com",
       "description": "Production"
     },
     {
-      "url": "https://api.gov.usenabla.com",
+      "url": "https://api.gov.joindelta.com",
       "description": "GovCloud"
     },
     {

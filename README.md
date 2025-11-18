@@ -37,9 +37,9 @@ Nabla is a specialized GRC (Governance, Risk, and Compliance) platform that tran
 **Get a 30-day Pilot** - Email us for a 30-day pilot to try the CLI in your workflows.
 
 ### Contact Information
-- **Email**: [trial@usenabla.com](mailto:trial@usenabla.com)
+- **Email**: [trial@joindelta.com](mailto:trial@joindelta.com)
 - **Discord Community**: [https://discord.gg/SYwGtsBT6S](https://discord.gg/SYwGtsBT6S)
-- **Website**: [https://www.usenabla.com](https://www.usenabla.com)
+- **Website**: [https://www.joindelta.com](https://www.joindelta.com)
 
 ### Ready to Transform Your Firmware Audits?
 Talk to us about a Pilot today and experience the power of AI-driven firmware GRC tooling. Save thousands of compliance man hours by identifying the exact areas you're covered and need to work on to pass audits.

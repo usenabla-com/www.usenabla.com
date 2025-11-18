@@ -3,11 +3,11 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import {
-  FaReact, FaAws, FaDocker, FaNodeJs, FaGithub,
+  FaJira, FaAws, FaDocker, FaNodeJs, FaGithub,
   FaTwitter, FaLinkedin, FaInstagram, FaGoogle, FaApple
 } from "react-icons/fa";
 import {
-  SiNextdotjs, SiVercel, SiRedux, SiTypescript, SiFacebook
+  SiAuth0, SiChainguard, SiOpenapiinitiative, SiRedis, SiOpenai, SiOpenfaas, SiJson, SiTemporal, SiClaude, SiTerraform, SiKubernetes
 } from "react-icons/si";
 
 const fallbackUrls = [
@@ -16,23 +16,21 @@ const fallbackUrls = [
 ];
 
 const iconConfigs = [
-  { Icon: FaReact, color: "#61DAFB" },
+  { Icon: SiChainguard, color: "#6226fb" },
   { Icon: FaAws, color: "#FF9900" },
   { Icon: FaDocker, color: "#2496ED" },
-  { Icon: FaNodeJs, color: "#339933" },
-  { Icon: SiNextdotjs, color: "#000000" },
-  { Icon: SiVercel, color: "#000000" },
-  { Icon: SiRedux, color: "#764ABC" },
-  { Icon: SiTypescript, color: "#3178C6" },
+  { Icon: FaJira, color: "#2c87ff" },
+  { Icon: SiAuth0, color: "#eb592a" },
+  { Icon: SiOpenai, color: "#000000" },
+  { Icon: SiRedis, color: "#d93227" },
+  { Icon: SiTerraform, color: "#6642e4" },
   { Icon: FaGithub, color: "#181717" },
-  { Icon: FaTwitter, color: "#1DA1F2" },
-  { Icon: FaLinkedin, color: "#0077B5" },
-  { Icon: FaInstagram, color: "#E1306C" },
-  { Icon: FaGoogle, color: "#DB4437" },
-  { Icon: FaApple, color: "#000000" },
-  { Icon: SiFacebook, color: "#1877F2" },
-  { Icon: null, img: fallbackUrls[0] },
-  { Icon: null, img: fallbackUrls[1] },
+  { Icon: SiOpenfaas, color: "#1DA1F2" },
+  { Icon: SiKubernetes, color: "#0077B5" },
+  { Icon: SiTemporal, color: "#8a5bf6" },
+  { Icon: SiClaude, color: "#d97656" },
+  { Icon: SiOpenapiinitiative, color: "#8ece00" },
+  { Icon: SiJson, color: "#1877F2" },
 ];
 
 export default function FeatureSection() {
@@ -45,10 +43,10 @@ export default function FeatureSection() {
       {/* Left side: Heading and Text */}
       <div className="w-1/2 z-10">
         <h1 className="text-4xl sm:text-6xl font-bold mb-4 text-gray-900 dark:text-white">
-          Deep ecosystem knowledge
+          Infra-to-OSCAL Advisory
         </h1>
         <p className="text-gray-500 dark:text-gray-300 mb-6 max-w-lg">
-          The GRC ecosystem is a expansive space that touches a multitude of other ecosystems, and we stay up to date with all of it
+          Our team uses custom internal tools and LLMs to map your infrastructure to OSCAL component definitions across various ecosystems
         </p>
         <div className="flex items-center gap-3">
           <Button variant="default">
@@ -61,8 +59,8 @@ export default function FeatureSection() {
       <div className="relative w-1/2 h-full flex items-center justify-start overflow-hidden">
         <div className="relative w-[50rem] h-[50rem] translate-x-[50%] flex items-center justify-center">
           {/* Center Circle */}
-          <div className="w-24 h-24 rounded-full bg-gray-50 dark:bg-gray-800 shadow-lg flex items-center justify-center">
-            <FaReact className="w-12 h-12 text-blue-400" />
+          <div className="w-24 h-24 rounded-full bg-[#FFFFF0] dark:bg-gray-800 shadow-lg flex items-center justify-center">
+            <SiChainguard className="w-12 h-12 text-blue-400" />
           </div>
 
           {/* Generate Orbits */}
@@ -90,7 +88,7 @@ export default function FeatureSection() {
                     return (
                       <div
                         key={iconIdx}
-                        className="absolute bg-white dark:bg-gray-800 rounded-full p-1 shadow-md"
+                        className="absolute bg-[#FFFFF0] dark:bg-gray-800 rounded-full p-1 shadow-md"
                         style={{
                           left: `${x}%`,
                           top: `${y}%`,

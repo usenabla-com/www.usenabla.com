@@ -36,7 +36,7 @@ export default function NablaVsParamifyPage() {
               </div>
               <div className="flex flex-row gap-3">
                 <a
-                  href="https://docs.usenabla.com"
+                  href="https://docs.joindelta.com"
                   className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-10 px-8"
                 >
                   Get API Access
@@ -371,7 +371,7 @@ export default function NablaVsParamifyPage() {
         description="Join engineering teams that have moved from dashboard-driven compliance to API-first evidence generation. Get your API key and start automating today."
         primaryButtonText="Get API Access"
         secondaryButtonText="Compare Plans"
-        primaryButtonHref="https://docs.usenabla.com"
+        primaryButtonHref="https://docs.joindelta.com"
         secondaryButtonHref="https://cal.com/team/nabla/45-min-intro"
       />
     </PageLayout>

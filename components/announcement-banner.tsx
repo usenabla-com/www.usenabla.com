@@ -12,7 +12,7 @@ export function AnnouncementBanner() {
 
   useEffect(() => {
     // Don't show banner on platform pages
-    if (pathname.startsWith('/nabla')) {
+    if (pathname.startsWith('/delta')) {
       setIsVisible(false)
       return
     }

@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     }
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.usenabla.com'
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.joindelta.com'
   const postUrl = `${baseUrl}/blog/${params.slug}`
   
   // Ensure the image URL is absolute
@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     : `${baseUrl}${post.image}`
 
   return {
-    title: `${post.title} | Nabla Blog`,
+    title: `${post.title} | Delta Blog`,
     description: post.summary,
     keywords: post.tags,
     authors: [{ name: post.author }],
@@ -55,7 +55,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       title: post.title,
       description: post.summary,
       url: postUrl,
-      siteName: 'Nabla',
+      siteName: 'Delta',
       type: 'article',
       publishedTime: post.published,
       authors: [post.author],
@@ -106,7 +106,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   // Create the full URL for sharing
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.usenabla.com'
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.joindelta.com'
   const postUrl = `${baseUrl}/blog/${params.slug}`
 
   return (
@@ -192,7 +192,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           primaryButtonTextMobile="Download Sample"
           secondaryButtonText="Request 30-day pilot"
           secondaryButtonTextMobile="Request Pilot"
-          primaryButtonHref="https://cdn.usenabla.com/assessment_results.json"
+          primaryButtonHref="https://cdn.joindelta.com/assessment_results.json"
           secondaryButtonHref="https://cal.com/team/nabla/45-min-intro"
         />
       </div>

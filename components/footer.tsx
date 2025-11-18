@@ -29,7 +29,7 @@ export function Footer() {
                 </svg>
                 <span className="sr-only">Slack</span>
               </Link>
-              <Link href="mailto:hello@usenabla.com" className="text-muted-foreground hover:text-foreground transition-colors">
+              <Link href="mailto:hello@joindelta.com" className="text-muted-foreground hover:text-foreground transition-colors">
                 <MailIcon className="h-5 w-5" />
               </Link>
             </div>
@@ -52,10 +52,10 @@ export function Footer() {
               {/* <Link href="/trial-terms" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
                 Trial Terms
               </Link> */}
-              <Link href="mailto:media@usenabla.com" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
+              <Link href="mailto:media@joindelta.com" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
                 Press
               </Link>
-              <Link href="mailto:support@usenabla.com" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
+              <Link href="mailto:support@joindelta.com" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
                 Support
               </Link>
             </nav>

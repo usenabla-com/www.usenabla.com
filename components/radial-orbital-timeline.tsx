@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { FaTools } from "react-icons/fa";
 
 interface TimelineItem {
   id: number;
@@ -281,9 +282,9 @@ export default function RadialOrbitalTimeline({
                       {item.currentClients.length > 0 && (
                         <div className="mt-4 pt-3 border-t border-white/10">
                           <div className="flex items-center mb-2">
-                            <Users size={10} className="text-black mr-1" />
+                            <FaTools size={10} className="text-black mr-1" />
                             <h4 className="text-xs uppercase tracking-wider font-medium text-black">
-                              Current Clients
+                              Tools Used
                             </h4>
                           </div>
                           <div className="flex flex-wrap gap-2">

@@ -302,7 +302,7 @@ export default function ProfessionalServicesPage() {
         primaryButtonText="Schedule Consultation"
         secondaryButtonText="Read Our Blog"
         primaryButtonHref="https://cal.com/team/nabla/nabla-intro"
-        secondaryButtonHref="https://docs.joindelta.com"
+        secondaryButtonHref="https://docs.usenabla.com"
       />
     </PageLayout>
   )

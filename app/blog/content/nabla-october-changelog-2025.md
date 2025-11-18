@@ -20,7 +20,7 @@ This forms the foundation of the trial for our Relay and Fabric plans, designed 
 
 ### 🧠 Firmware Intelligence Endpoints
 
-The new [`/v1/firmware`](https://api.joindelta.com/docs#/firmware) endpoint supports **automatic Binary Composition Analysis (BCA)** for ELF, PE, Mach-O, and raw binary images.  
+The new [`/v1/firmware`](https://api.usenabla.com/docs#/firmware) endpoint supports **automatic Binary Composition Analysis (BCA)** for ELF, PE, Mach-O, and raw binary images.  
 
 Each upload can produce:
 

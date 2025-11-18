@@ -25,13 +25,13 @@ function Hero() {
     {
       id: 1,
       title: "OSCAL Integration",
-      date: "2024",
+      date: "2025",
       content: "Implement OSCAL for compliance automation",
       category: "Compliance",
       icon: Shield,
       relatedIds: [2, 3],
-      currentClients: [{ name: "Client A", logo: "/logos/microsoft.svg" }, { name: "Client B", logo: "/logos/github.svg" }],
-      hourlyRate: 150,
+      currentClients: [{ name: "Github", logo: "https://images.seeklogo.com/logo-png/30/2/github-logo-png_seeklogo-304612.png" }, { name: "Azure AI Foundry", logo: "https://ai.azure.com/favicon.ico" }, { name: "JSON", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/JSON_vector_logo.svg/1024px-JSON_vector_logo.svg.png" }, { name: "NIST", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/NIST_logo.svg/1280px-NIST_logo.svg.png" }, ],
+      hourlyRate: 200,
     },
     {
       id: 2,
@@ -41,8 +41,8 @@ function Hero() {
       category: "Inventory",
       icon: Notebook,
       relatedIds: [1, 3],
-      currentClients: [{ name: "Client C", logo: "/logos/sonarqube.svg" }, { name: "Client D", logo: "/logos/microsoft.svg" }],
-      hourlyRate: 175,
+      currentClients: [{ name: "Claude", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Claude_AI_symbol.svg/1024px-Claude_AI_symbol.svg.png" }, { name: "Azure", logo: "https://brandlogos.net/wp-content/uploads/2022/07/microsoft_azure-logo_brandlogos.net_mlyt6-512x512.png" }, { name: "Tines", logo: "https://favicons.statusgator.com/tines.png" } ],
+      hourlyRate: 240,
     },
     {
       id: 3,
@@ -52,8 +52,8 @@ function Hero() {
       category: "FedRamp",
       icon: KeyIcon,
       relatedIds: [1, 2],
-      currentClients: [{ name: "Client E", logo: "/logos/github.svg" }],
-      hourlyRate: 200,
+      currentClients: [{ name: "NIST 800-53", logo: "https://upload.wikimedia.org/wikipedia/commons/e/ee/NIST_logo.svg" }, { name: "Chainguard", logo: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/chainguard.png" }, { name: "Docker", logo: "https://e7.pngegg.com/pngimages/514/232/png-clipart-docker-logo-thumbnail-tech-companies-thumbnail.png" }, { name: "Rust", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Rust_programming_language_black_logo.svg/1200px-Rust_programming_language_black_logo.svg.png" }, { name: "PDF", logo: "https://play-lh.googleusercontent.com/kXHLqzBASXjDuVVEVPRuFvdLRDU2GAiS7BBA9uOLB-uiKByzt4-YDhmBfuLaWIV_7xJ6=w240-h480-rw" }],
+      hourlyRate: 260,
     },
     {
       id: 4,
@@ -63,8 +63,8 @@ function Hero() {
       category: "Evidence",
       icon: Zap,
       relatedIds: [5],
-      currentClients: [{ name: "Client F", logo: "/logos/microsoft.svg" }],
-      hourlyRate: 180,
+      currentClients: [{ name: "Temporal", logo: "https://images.ctfassets.net/0uuz8ydxyd9p/2W8B7bcLSPX9YaSwkfrhmv/eade3fc61520b8cee84cf8605dce3056/Temporal_Symbol_dark_1_2x.png" }, { name: "OPA", logo: "https://www.openpolicyagent.org/img/nav/logo.png" }, { name: "Tines", logo: "https://favicons.statusgator.com/tines.png" }],
+      hourlyRate: 280,
     },
     {
       id: 5,
@@ -74,8 +74,8 @@ function Hero() {
       category: "Monitoring",
       icon: Users,
       relatedIds: [4],
-      currentClients: [{ name: "Client G", logo: "/logos/sonarqube.svg" }],
-      hourlyRate: 160,
+      currentClients: [{ name: "Tines", logo: "https://favicons.statusgator.com/tines.png" }, { name: "Temporal", logo: "https://images.ctfassets.net/0uuz8ydxyd9p/2W8B7bcLSPX9YaSwkfrhmv/eade3fc61520b8cee84cf8605dce3056/Temporal_Symbol_dark_1_2x.png" }, { name: "NIST 800-53", logo: "https://upload.wikimedia.org/wikipedia/commons/e/ee/NIST_logo.svg" }, { name: "Claude", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Claude_AI_symbol.svg/1024px-Claude_AI_symbol.svg.png" }],
+      hourlyRate: 260,
     },
   ];
 

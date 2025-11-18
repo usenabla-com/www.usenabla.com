@@ -200,7 +200,7 @@ export function Navbar() {
               </Link>
 
               <Link
-                href="https://docs.joindelta.com"
+                href="https://docs.usenabla.com"
                 className="flex items-center gap-3 py-2 text-sm font-medium hover:text-primary transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -216,7 +216,7 @@ export function Navbar() {
               </Link>
 
               <Link
-                href="mailto:trial@joindelta.com"
+                href="mailto:trial@usenabla.com"
                 className="flex items-center gap-3 py-2 text-sm font-medium hover:text-primary transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >

@@ -37,7 +37,7 @@ export default function NablaVsDrataPage() {
               </div>
               <div className="flex flex-row gap-3">
                 <a
-                  href="https://docs.joindelta.com"
+                  href="https://docs.usenabla.com"
                   className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-10 px-8"
                 >
                   Get API Access
@@ -424,14 +424,14 @@ jobs:
 
       - name: Generate Terraform Evidence
         run: |
-          curl -X POST https://api.joindelta.com/v1/evidence/terraform \\
+          curl -X POST https://api.usenabla.com/v1/evidence/terraform \\
             -H "X-Customer-Key: \${{ secrets.NABLA_API_KEY }}" \\
             -H "Content-Type: application/json" \\
             -d @terraform.json
 
       - name: Generate SBOM
         run: |
-          curl -X POST https://api.joindelta.com/v1/evidence/sbom \\
+          curl -X POST https://api.usenabla.com/v1/evidence/sbom \\
             -H "X-Customer-Key: \${{ secrets.NABLA_API_KEY }}" \\
             -F "firmware=@firmware.bin"
 
@@ -456,7 +456,7 @@ jobs:
         description="Join engineering teams that have moved from dashboard-driven compliance to API-first evidence generation. Get your API key and start automating today."
         primaryButtonText="Get API Access"
         secondaryButtonText="Compare Plans"
-        primaryButtonHref="https://docs.joindelta.com"
+        primaryButtonHref="https://docs.usenabla.com"
         secondaryButtonHref="https://cal.com/team/nabla/45-min-intro"
       />
     </PageLayout>

@@ -306,12 +306,12 @@ export default function TrialTermsPage() {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <h4 className="font-semibold mb-2">Technical Support</h4>
-                    <p className="text-sm text-muted-foreground">Email: support@joindelta.com</p>
+                    <p className="text-sm text-muted-foreground">Email: support@usenabla.com</p>
                     <p className="text-sm text-muted-foreground">Response time: Within 24 hours</p>
                   </div>
                   <div>
                     <h4 className="font-semibold mb-2">Sales & Billing</h4>
-                    <p className="text-sm text-muted-foreground">Email: sales@joindelta.com</p>
+                    <p className="text-sm text-muted-foreground">Email: sales@usenabla.com</p>
                     <p className="text-sm text-muted-foreground">For enterprise inquiries and pricing</p>
                   </div>
                 </div>

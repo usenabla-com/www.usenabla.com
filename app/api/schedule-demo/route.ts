@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.joindelta.com';
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.usenabla.com';
 
     const frameworksList = frameworks && frameworks.length > 0
       ? frameworks.map((f: string) => escapeHtml(f)).join(', ')
@@ -80,8 +80,8 @@ export async function POST(request: NextRequest) {
     console.log('RESEND_API_KEY exists:', !!process.env.RESEND_API_KEY);
 
     const data = await resend.emails.send({
-      from: 'Demo Requests <noreply@notifications.joindelta.com>',
-      to: ['trial@notifications.joindelta.com'],
+      from: 'Demo Requests <noreply@notifications.usenabla.com>',
+      to: ['trial@notifications.usenabla.com'],
       subject: `New demo request from ${email}`,
       html: renderEmailFrame({
         baseUrl,

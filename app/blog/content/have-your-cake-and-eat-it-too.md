@@ -7,9 +7,9 @@ image: "https://substackcdn.com/image/fetch/$s_!oVRB!,f_auto,q_auto:good,fl_prog
 tags: ["Startups", "Governance", "Compliance", "FedRamp", "Risk"]
 ---
 
-When I think of traditional GRC tools that require me to stare at Microsoft Excel and input control documentation and screenshots manually, I literally break out into hives. Maybe it's my ADHD, and maybe I'm also being dramatic, but I really do not think that we as GRC professionals have to accept the idea that these processes can't be automated ([nor can we with changes like FedRamp 20x](https://www.joindelta.com/blog/the-ouroboros-of-grc)). 
+When I think of traditional GRC tools that require me to stare at Microsoft Excel and input control documentation and screenshots manually, I literally break out into hives. Maybe it's my ADHD, and maybe I'm also being dramatic, but I really do not think that we as GRC professionals have to accept the idea that these processes can't be automated ([nor can we with changes like FedRamp 20x](https://www.usenabla.com/blog/the-ouroboros-of-grc)). 
 
-What if those of use who wanted to opt for the flexibility of Excel could keep that flexibility AND still have the benifits of automation. That's the beauty of [programmatic evidence automation](https://www.joindelta.com/roi-of-evidence-automation). 
+What if those of use who wanted to opt for the flexibility of Excel could keep that flexibility AND still have the benifits of automation. That's the beauty of [programmatic evidence automation](https://www.usenabla.com/roi-of-evidence-automation). 
 
 ## It's all JSON, so just dump that 🎂 baby
 

@@ -19,6 +19,13 @@ export function useAnalytics() {
     }
   }
 
+  const reset = () => {
+    const posthog = getPostHog()
+    if (posthog) {
+      posthog.reset()
+    }
+  }
+
   const track = (event: string, properties?: Record<string, any>) => {
     const posthog = getPostHog()
     if (posthog) {
@@ -33,5 +40,5 @@ export function useAnalytics() {
     }
   }
 
-  return { identify, track, page }
+  return { identify, track, page, reset }
 } 
